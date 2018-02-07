@@ -20,6 +20,7 @@ Tables:
     - Email
     - Niveau
     - Signalement (3 = Ban)
+    - Admin (boolean)
 
 - Offres:
     - Matière

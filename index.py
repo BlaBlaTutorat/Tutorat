@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import *
 
 app = Flask(__name__)
 
@@ -12,13 +12,13 @@ def index():
 # Page de connection
 @app.route('/login')
 def connection():
-    return "connection"
+    return render_template("connexion.html")
 
 
 # Page d'inscription
 @app.route('/register')
 def inscription():
-    return "inscription"
+    return render_template("inscription.html")
 
 
 # Lancement du serveur lors de l'exécution du fichier
