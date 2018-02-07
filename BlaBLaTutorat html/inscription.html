@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html>
+    
+    <head>
+       <meta charset="utf-8" />
+	   <title>Inscription</title>
+    </head>
+    
+	<body>
+        
+        <h4>Inscrivez vous :</h4>
+        
+        <p>
+            Choisissez un identifiant :
+            <TEXTAREA name="login" rows=1 cols=40></TEXTAREA>    
+        </p>
+        
+		<p>
+        Entrez une adresse email valide :
+            <TEXTAREA name="email" rows=1 cols=40></TEXTAREA>
+        </p>
+        
+        
+        <p>
+            Choisissez un mot de passe :
+            <TEXTAREA name="Mot de passe" rows=1 cols=20></TEXTAREA>
+        </p>
+		
+		<p>
+             (Entre 6 et 12 caractères)
+        </p>
+        
+		<p>
+            Entrez votre niveau scolaire :
+
+				<SELECT name="Niveau" size="1">
+					<option selected>-sélectionnez un niveau scolaire-
+					<option>seconde
+					<option>première
+					<option>terminale
+					<option>première année de prépa
+					<option>deuxième année de prépa
+				</SELECT>
+<!-- Les menus déroulants des filières qui suivent doivent s'afficher en fonction du niveau sélectionné -->
+        </p>
+		  
+		<p>
+            Entrez votre filière :
+
+				<SELECT name="filière_Lycée" size="1">
+					<option selected>-sélectionnez une filière-
+					<option>S
+					<option>ES
+					<option>L	
+				</SELECT>
+
+        </p>
+		
+		<p>
+            Entrez votre filière :
+
+				<SELECT name="filière_prépa_première_année" size="1">
+					<option selected>-sélectionnez une filière-
+					<option>MPSI
+					<option>PCSI
+					<option>HK
+					<option>ECE
+					<option>ECS
+					<option>BCPST
+				</SELECT>
+
+        </p>
+		
+		<p>
+            Entrez votre filière :
+
+				<SELECT name="filière_prépa_deuxième_année" size="1">
+					<option selected>-sélectionnez une filière-
+					<option>MP
+					<option>PSI
+					<option>K
+					<option>ECE
+					<option>ECS
+					<option>BCPST
+					
+				</SELECT>
+
+        </p>
+     <!-- FIN de la partie dépendante du niveau sélectionné -->  
+	   <p>Finalisez votre inscription en cliquant ici : <a href="validation.html"><button onclick="ClicBouton();">Inscription</button></a></p>
+    </body>
+</html>
+
