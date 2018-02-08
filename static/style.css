@@ -8,11 +8,11 @@ textarea {
 @font-face
 {
     font-family: 'Dayrom';
-    src: url('polices/dayrom.eot');
-    src: url('polices/dayrom.eot?#iefix') format('embedded-opentype'),
-         url('polices/dayrom.woff') format('woff'),
-         url('polices/dayrom.ttf') format('truetype'),
-         url('polices/dayrom.svg#Dayrom') format('svg');
+    src: url('/static/polices/dayrom.eot');
+    src: url('/static/polices/dayrom.eot?#iefix') format('embedded-opentype'),
+    url('/static/polices/dayrom.woff') format('woff'),
+    url('/static/polices/dayrom.ttf') format('truetype'),
+    url('/static/polices/dayrom.svg#Dayrom') format('svg');
     font-weight: normal;
     font-style: normal;
 }
