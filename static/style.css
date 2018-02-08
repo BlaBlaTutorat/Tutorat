@@ -1,5 +1,6 @@
 /* Fichier css principal */
-textarea {
+textarea 
+{
     resize: none;
 }
 
@@ -26,9 +27,8 @@ header
     box-shadow: 0px 4px 4px #1c1a19;
     border-radius: 5px;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     flex-direction: column;
-    align-items: center;
     color: rgb(255,245,234);
 }
 
@@ -40,20 +40,21 @@ header h1
     margin: 0 0 0 10px;
 }
 
-nav ul
+header nav
 {
-	color: #fff;
-    list-style-type: none;
     display: flex;
+    flex-direction: row;
     justify-content: center;
+	color: #fff;
+    list-style-type: none;  
 }
 
-nav li
+header nav li
 {
-    margin-right: 15px;
+    margin-right: 10px;
 }
 
-nav a
+header nav a
 {
     font-size: 1.3em;
     color: rgb(255,245,234);
@@ -61,7 +62,7 @@ nav a
     text-decoration: none;
 }
 
-nav a:hover
+header nav a:hover
 {
     color: #fff;
     text-shadow: #000;
@@ -71,7 +72,7 @@ nav a:hover
 
 
 /* Footer */
-footer
+footer 
 {
     background: #615a5f;  
     box-shadow: 0px 4px 4px #1c1a19;
@@ -83,23 +84,23 @@ footer
     color: rgb(255,245,234);
 }
 
-.G
+footer .G
 {
     font-weight: bold;
 }
 
-.lycee
+footer .lycee
 {
     margin-left: 10px;
 }
 
-.lycee p
+footer .lycee p
 {
     margin-top: 5px;
     margin-bottom: 0px;
 }
 
-.copyright
+footer .copyright
 {
     font-family: 'Dayrom', serif;
     align-self: flex-end;
@@ -108,7 +109,7 @@ footer
     font-size: 1em
 }
 
-.copyright ul
+footer .copyright ul
 {
     display: flex;
     flex-direction: row;
@@ -117,7 +118,7 @@ footer
     margin-bottom: 5px;
 }
 
-.copyright li
+footer .copyright li
 {
     font-size: 0.8em;
     margin-left: 20px;
