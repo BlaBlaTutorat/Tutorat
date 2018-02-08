@@ -27,6 +27,12 @@ def profil():
     return "Mon profil"
 
 
+# Administration
+@app.route('/administration')
+def admin():
+    return "Administration"
+
+
 # Mot de passe oublié
 @app.route('/forgot')
 def mdp_oublie():
