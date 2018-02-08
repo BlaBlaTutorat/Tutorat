@@ -12,13 +12,13 @@ def index():
 # Page de connection
 @app.route('/login')
 def connection():
-    return render_template("connexion.html")
+    return render_template("connexion.html", admin=False)
 
 
 # Page d'inscription
 @app.route('/register')
 def inscription():
-    return render_template("inscription.html")
+    return render_template("inscription.html", admin=False)
 
 
 # Profil
@@ -36,25 +36,25 @@ def admin():
 # Mot de passe oublié
 @app.route('/forgot')
 def mdp_oublie():
-    return render_template("mdp_oublie.html")
+    return render_template("mdp_oublie.html", admin=False)
 
 
 # Page de validation
 @app.route('/validate')
 def validation():
-    return render_template("validation.html")
+    return render_template("validation.html", admin=False)
 
 
 # Page de recherche d'offres
 @app.route('/search')
 def recherche():
-    return render_template("recherche.html")
+    return render_template("recherche.html", admin=False)
 
 
 # Affichage du formulaire de création d'une offre
 @app.route('/create', methods=['GET'])
 def creation():
-    return render_template("creation.html")
+    return render_template("creation.html", admin=False)
 
 
 # Traitement du formulaire + upload bdd
