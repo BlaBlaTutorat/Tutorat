@@ -63,6 +63,18 @@ def traitement_creation():
     return "Processing"
 
 
+# Gestion des erreurs 404
+@app.errorhandler(404)
+def not_found(error):
+    return "Erreur 404: Ressource non trouvée"
+
+
+# Gestion des erreurs 403
+@app.errorhandler(403)
+def forbidden(error):
+    return "Erreur 403: Accès Interdit"
+
+
 # Lancement du serveur lors de l'exécution du fichier
 if __name__ == '__main__':
     app.run()
