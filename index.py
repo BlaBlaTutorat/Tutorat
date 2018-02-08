@@ -28,7 +28,7 @@ def profil():
 
 
 # Administration
-@app.route('/administration')
+@app.route('/admin')
 def admin():
     return "Administration"
 
