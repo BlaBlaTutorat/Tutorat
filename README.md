@@ -33,3 +33,8 @@ Tables:
 
 - Matières:
     - Nom(PRIMARY)
+
+
+ - Niveaux:
+    - ID (PRIMARY)
+    - Nom
