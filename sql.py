@@ -9,7 +9,10 @@ class MysqlObject:
 
         try:
 
-            self.conn = mysql.connector.connect("172.21.1.203", "isn", "0C5PH2iBfMy3l6o3", "tutorat")
+            self.conn = mysql.connector.connect(host="172.21.1.203",
+                                user="isn",
+                                password="0C5PH2iBfMy3l6o3",
+                                database="tutorat")
             self.cursor = self.conn.cursor()
 
         except mysql.connector.errors.InterfaceError as e:
@@ -19,12 +22,13 @@ class MysqlObject:
 
     # Liste des niveaux
     def operation1(self):
-
-        self.cursor.execute("""SELECT id,nom FROM niveaux""")
+        l = []
+        self.cursor.execute("""SELECT nom FROM niveaux ORDER BY id""")
 
         rows = self.cursor.fetchall()
         for row in rows:
-            print('Niveau {0}: {1}'.format(row[0], row[1]))
+            l.append(row[0])
+        return l
 
     # Méthode exécutée à la suppression de l'bbjet
     def __del__(self):
