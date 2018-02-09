@@ -1,4 +1,5 @@
 from flask import *
+import sql
 
 app = Flask(__name__)
 
@@ -18,7 +19,9 @@ def connection():
 # Page d'inscription
 @app.route('/register')
 def inscription():
-    return render_template("inscription.html", admin=False)
+    sql_obj = sql.MysqlObject()
+    niveaux = sql_obj.operation1()
+    return render_template("inscription.html", admin=False, niveaux=niveaux)
 
 
 # Profil
