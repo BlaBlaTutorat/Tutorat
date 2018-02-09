@@ -16,9 +16,9 @@
 	<h2>Auteur: {{ auteur }}</h2>
 	<p>Matière :
 	<SELECT name="matiere" size="1">
-	    <option selected>-sélectionnez une matiere-
+		<option selected>-sélectionnez une matiere-</option>
 		{% for matiere in matieres %}
-		<option>{{ matiere }}
+		<option>{{ matiere }}</option>
 		{% endfor %}
     </SELECT>
 	</p>

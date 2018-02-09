@@ -16,18 +16,18 @@
 
 <p>
     Choisissez un identifiant :
-    <TEXTAREA name="login" rows=1 cols=40></TEXTAREA>
+    <TEXTAREA name="login" rows=1 cols=40/>
 </p>
 
 <p>
     Entrez une adresse email valide :
-    <TEXTAREA name="email" rows=1 cols=40></TEXTAREA>
+    <TEXTAREA name="email" rows=1 cols=40/>
 </p>
 
 
 <p>
     Choisissez un mot de passe :
-    <TEXTAREA name="Mot de passe" rows=1 cols=20></TEXTAREA>
+    <TEXTAREA name="Mot de passe" rows=1 cols=20/>
 </p>
 
 <p>
@@ -38,9 +38,9 @@
     Entrez votre niveau scolaire :
 
     <SELECT name="Niveau" size="1">
-	    <option selected>-sélectionnez un niveau scolaire-
+        <option selected>-sélectionnez un niveau scolaire-</option>
 		{% for niveau in niveaux %}
-		<option>{{ niveau }}
+        <option>{{ niveau }}</option>
 		{% endfor %}
     </SELECT>
     <!-- Les menus déroulants des filières qui suivent doivent s'afficher en fonction du niveau sélectionné -->
@@ -51,9 +51,9 @@
 
     <SELECT name="filière_Lycée" size="1">
         <option selected>-sélectionnez une filière-
-        <option>S
-        <option>ES
-        <option>L
+        <option>S</option>
+        <option>ES</option>
+        <option>L</option>
     </SELECT>
 
 </p>
@@ -62,13 +62,13 @@
     Entrez votre filière :
 
     <SELECT name="filière_prépa_première_année" size="1">
-        <option selected>-sélectionnez une filière-
-        <option>MPSI
-        <option>PCSI
-        <option>HK
-        <option>ECE
-        <option>ECS
-        <option>BCPST
+        <option selected>-sélectionnez une filière-</option>
+        <option>MPSI</option>
+        <option>PCSI</option>
+        <option>HK</option>
+        <option>ECE</option>
+        <option>ECS</option>
+        <option>BCPST</option>
     </SELECT>
 
 </p>
@@ -77,13 +77,13 @@
     Entrez votre filière :
 
     <SELECT name="filière_prépa_deuxième_année" size="1">
-        <option selected>-sélectionnez une filière-
-        <option>MP
-        <option>PSI
-        <option>K
-        <option>ECE
-        <option>ECS
-        <option>BCPST
+        <option selected>-sélectionnez une filière-</option>
+        <option>MP</option>
+        <option>PSI</option>
+        <option>K</option>
+        <option>ECE</option>
+        <option>ECS</option>
+        <option>BCPST</option>
 
     </SELECT>
 
