@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -38,12 +38,10 @@
     Entrez votre niveau scolaire :
 
     <SELECT name="Niveau" size="1">
-        <option selected>-sélectionnez un niveau scolaire-
-        <option>seconde
-        <option>première
-        <option>terminale
-        <option>première année de prépa
-        <option>deuxième année de prépa
+	    <option selected>-sélectionnez un niveau scolaire-
+		{% for niveau in niveaux %}
+		<option>{{ niveau }}
+		{% endfor %}
     </SELECT>
     <!-- Les menus déroulants des filières qui suivent doivent s'afficher en fonction du niveau sélectionné -->
 </p>
