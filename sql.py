@@ -29,6 +29,16 @@ class MysqlObject:
         for row in rows:
             l.append(row[0])
         return l
+        
+    # Liste des matières
+    def operation2(self):
+        l = []
+        self.cursor.execute("""SELECT * FROM matieres""")
+
+        rows = self.cursor.fetchall()
+        for row in rows:
+            l.append(row[0])
+        return l
 
     # Méthode exécutée à la suppression de l'bbjet
     def __del__(self):
