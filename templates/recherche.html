@@ -11,38 +11,24 @@
 {% include 'HEADER.html' %}
 
 <!-- Liste des offres + critères de recherche -->
-<table>
-    <!-- Titre -->
-    <caption>Liste des offres de tutorat</caption>
-
-    <!-- Entête -->
-    <thead>
-    <tr>
-        <th>Auteur</th>
-        <th>Niveau</th>
-        <th>Matière</th>
-        <th>Postuler</th>
-    </tr>
-    </thead>
-
-    <!-- Données -->
-    <tbody>
+<div class="offres">
     {% for offre in offres %}
-        <tr>
-            <td>{{ offre[1] }}</td>
-            <td>{{ offre[2] }}</td>
-            <td>{{ offre[3] }}</td>
-            <td>
+        </br>
+        <div>
+            <p class="element"><strong class="G">Auteur:</strong> {{ offre[1] }}</p>
+            <p class="element"><strong class="G">Niveau:</strong> {{ offre[2] }}</p>
+            <p class="element"><strong class="G">Matière:</strong> {{ offre[3] }}</p>
+            <p class="bouton">
                 <form method="post" action="apply">
                     <input type="hidden" name="id" value="{{ offre[0] }}">
                     <input type="submit" value="Accepter l'offre"/>
                 </form>
-            </td>
-        </tr>
+            </p>
+        </div>
+        </br>
     {% endfor %}
-    </tbody>
+</div>
 
-</table>
 
 {% include 'FOOTER.html' %}
 
