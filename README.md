@@ -27,14 +27,22 @@ Tables:
     - Auteur
     - Créneaux horaires
     - Niveau
-    - Numéro d'offre (PRIMARY) -> nombre qui s'incrémente
+    - id (PRIMARY)
     - Disponible (boolean)
     - Participant(s) 2MAX
 
 - Matières:
     - Nom(PRIMARY)
 
+- Classes:
+    - id (PRIMARY)
+    - niveau
+    - specialite
+    - numero
 
+- Specialites:
+    - Nom (PRIMARY)
+    
  - Niveaux:
     - ID (PRIMARY)
     - Nom
