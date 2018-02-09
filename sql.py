@@ -21,17 +21,17 @@ class MysqlObject:
             sys.exit(1)
 
     # Liste des niveaux
-    def operation1(self):
-        l = []
+    def niveaux_liste(self):
+        niveaux = []
         self.cursor.execute("""SELECT nom FROM niveaux ORDER BY id""")
 
         rows = self.cursor.fetchall()
         for row in rows:
-            l.append(row[0])
-        return l
+            niveaux.append(row[0])
+        return niveaux
 
     # Liste des matières
-    def operation2(self):
+    def matieres_liste(self):
         matieres = []
         self.cursor.execute("""SELECT * FROM matieres""")
 
@@ -39,6 +39,10 @@ class MysqlObject:
         for row in rows:
             matieres.append(row[0])
         return matieres
+
+    def offres_liste(self):
+        self.cursor.execute("""SELECT * FROM offres""")
+        return self.cursor.fetchall()
 
     # Méthode exécutée à la suppression de l'bbjet
     def __del__(self):

@@ -50,21 +50,29 @@ def validation():
 # Page de recherche d'offres
 @app.route('/search')
 def recherche():
-    return render_template("recherche.html", admin=False)
+    sql_obj = sql.MysqlObject()
+    return render_template("recherche.html", admin=False, user="Moi", offres=sql_obj.offres_liste())
+
+
+# Page d'enregistrement (s'enregistrer en tant que participant)
+@app.route('/apply', methods=['POST'])
+def enregistrement():
+    return "Processing id: " + request.form.get("id")
 
 
 # Affichage du formulaire de création d'une offre
 @app.route('/create', methods=['GET'])
 def creation():
     sql_obj = sql.MysqlObject()
-    return render_template("creation.html", admin=False, auteur="Moi", niveaux=sql_obj.operation1(),
-                           matieres=sql_obj.operation2())
+    return render_template("creation.html", admin=False, user="Moi", niveaux=sql_obj.niveaux_liste(),
+                           matieres=sql_obj.matieres_liste())
 
 
 # Traitement du formulaire + upload bdd
 @app.route('/create', methods=['POST'])
 def traitement_creation():
-    return "Processing"
+    return "Processing auteur: " + request.form.get('auteur') + " niveau: " + request.form.get(
+        'niveau') + " matière: " + request.form.get('matiere')
 
 
 # Gestion des erreurs 404

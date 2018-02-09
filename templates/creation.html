@@ -13,7 +13,8 @@
 <!-- Formulaire de création -->
 <form method="post" action="create">
     <h1>Création d'une offre de Tutorat:</h1>
-    <h2>Auteur: {{ auteur }}</h2>
+    <h2>Auteur: {{ user }}</h2>
+    <input type="hidden" name="auteur" value="{{ user }}">
     <p>Vous voulez aider un elève ayant un niveau :
         <SELECT name="niveau" size="1">
             <option selected>-sélectionnez un niveau-</option>
