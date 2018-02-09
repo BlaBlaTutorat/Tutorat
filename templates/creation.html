@@ -2,7 +2,7 @@
 
 <head>
     <meta charset="utf-8"/>
-    <title>Recherche d'offres</title>
+    <title>Création d'offre</title>
     <link rel=stylesheet type=text/css href="/static/style.css">
     <link rel="icon" type="image/png" href="/static/favicon.png"/>
 </head>
@@ -13,15 +13,23 @@
 <!-- Formulaire de création -->
 <form method="post" action="create">
     <h1>Création d'une offre de Tutorat:</h1>
-	<h2>Auteur: {{ auteur }}</h2>
-	<p>Matière :
-	<SELECT name="matiere" size="1">
-		<option selected>-sélectionnez une matiere-</option>
-		{% for matiere in matieres %}
-		<option>{{ matiere }}</option>
-		{% endfor %}
-    </SELECT>
-	</p>
+    <h2>Auteur: {{ auteur }}</h2>
+    <p>Vous voulez aider un elève ayant un niveau :
+        <SELECT name="niveau" size="1">
+            <option selected>-sélectionnez un niveau-</option>
+            {% for niveau in niveaux %}
+                <option>{{ niveau }}</option>
+            {% endfor %}
+        </SELECT>
+    </p>
+    <p>Vous souhaitez l'aider en :
+        <SELECT name="matiere" size="1">
+            <option selected>-sélectionnez une matiere-</option>
+            {% for matiere in matieres %}
+                <option>{{ matiere }}</option>
+            {% endfor %}
+        </SELECT>
+    </p>
     <input type="submit" value="Créer mon offre"/>
 </form>
 

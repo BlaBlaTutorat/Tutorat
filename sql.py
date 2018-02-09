@@ -9,10 +9,10 @@ class MysqlObject:
 
         try:
 
-            self.conn = mysql.connector.connect(host="172.21.1.203",
-                                user="isn",
-                                password="0C5PH2iBfMy3l6o3",
-                                database="tutorat")
+            # self.conn = mysql.connector.connect(host="172.21.1.203", user="isn", password="0C5PH2iBfMy3l6o3",
+            #                                    database="tutorat")
+            self.conn = mysql.connector.connect(host="127.0.0.1", user="root", password="",
+                                                database="tutorat")
             self.cursor = self.conn.cursor()
 
         except mysql.connector.errors.InterfaceError as e:
@@ -29,16 +29,16 @@ class MysqlObject:
         for row in rows:
             l.append(row[0])
         return l
-        
+
     # Liste des matières
     def operation2(self):
-        l = []
+        matieres = []
         self.cursor.execute("""SELECT * FROM matieres""")
 
         rows = self.cursor.fetchall()
         for row in rows:
-            l.append(row[0])
-        return l
+            matieres.append(row[0])
+        return matieres
 
     # Méthode exécutée à la suppression de l'bbjet
     def __del__(self):

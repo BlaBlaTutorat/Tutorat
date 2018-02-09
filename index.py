@@ -57,7 +57,8 @@ def recherche():
 @app.route('/create', methods=['GET'])
 def creation():
     sql_obj = sql.MysqlObject()
-    return render_template("creation.html", admin=False, auteur="Moi",matieres=sql_obj.operation2())
+    return render_template("creation.html", admin=False, auteur="Moi", niveaux=sql_obj.operation1(),
+                           matieres=sql_obj.operation2())
 
 
 # Traitement du formulaire + upload bdd
