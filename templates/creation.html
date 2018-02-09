@@ -12,8 +12,16 @@
 
 <!-- Formulaire de création -->
 <form method="post" action="create">
-    <p>Création d'une offre de Tutorat:</p>
-
+    <h1>Création d'une offre de Tutorat:</h1>
+	<h2>Auteur: {{ auteur }}</h2>
+	<p>Matière :
+	<SELECT name="matiere" size="1">
+	    <option selected>-sélectionnez une matiere-
+		{% for matiere in matieres %}
+		<option>{{ matiere }}
+		{% endfor %}
+    </SELECT>
+	</p>
     <input type="submit" value="Créer mon offre"/>
 </form>
 
