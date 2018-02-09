@@ -20,8 +20,7 @@ def connection():
 @app.route('/register')
 def inscription():
     sql_obj = sql.MysqlObject()
-    niveaux = sql_obj.operation1()
-    return render_template("inscription.html", admin=False, niveaux=niveaux)
+    return render_template("inscription.html", admin=False, niveaux=sql_obj.operation1())
 
 
 # Profil
@@ -57,7 +56,8 @@ def recherche():
 # Affichage du formulaire de création d'une offre
 @app.route('/create', methods=['GET'])
 def creation():
-    return render_template("creation.html", admin=False)
+    sql_obj = sql.MysqlObject()
+    return render_template("creation.html", admin=False, auteur="Moi",matieres=sql_obj.operation2())
 
 
 # Traitement du formulaire + upload bdd
