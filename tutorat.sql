@@ -1,20 +1,22 @@
 -- phpMyAdmin SQL Dump
--- version 4.2.12deb2+deb8u2
--- http://www.phpmyadmin.net
+-- version 4.7.4
+-- https://www.phpmyadmin.net/
 --
--- Client :  localhost
--- Généré le :  Ven 09 Février 2018 à 10:37
--- Version du serveur :  5.5.59-0+deb8u1
--- Version de PHP :  5.6.33-0+deb8u1
+-- Hôte : 127.0.0.1:3306
+-- Généré le :  ven. 09 fév. 2018 à 19:57
+-- Version du serveur :  5.7.19
+-- Version de PHP :  5.6.31
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Base de données :  `tutorat`
@@ -26,15 +28,17 @@ SET time_zone = "+00:00";
 -- Structure de la table `classes`
 --
 
+DROP TABLE IF EXISTS `classes`;
 CREATE TABLE IF NOT EXISTS `classes` (
-`id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `niveau` varchar(50) NOT NULL,
   `specialites` varchar(50) NOT NULL,
-  `numero` int(11) NOT NULL
+  `numero` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `classes`
+-- Déchargement des données de la table `classes`
 --
 
 INSERT INTO `classes` (`id`, `niveau`, `specialites`, `numero`) VALUES
@@ -46,19 +50,21 @@ INSERT INTO `classes` (`id`, `niveau`, `specialites`, `numero`) VALUES
 -- Structure de la table `matieres`
 --
 
+DROP TABLE IF EXISTS `matieres`;
 CREATE TABLE IF NOT EXISTS `matieres` (
-  `nom` varchar(50) NOT NULL
+  `nom` varchar(50) NOT NULL,
+  PRIMARY KEY (`nom`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `matieres`
+-- Déchargement des données de la table `matieres`
 --
 
 INSERT INTO `matieres` (`nom`) VALUES
 ('Français'),
 ('ISN'),
 ('Mathématiques'),
-('Science de l''ingénieur');
+('Science de l\'ingénieur');
 
 -- --------------------------------------------------------
 
@@ -66,13 +72,15 @@ INSERT INTO `matieres` (`nom`) VALUES
 -- Structure de la table `niveaux`
 --
 
+DROP TABLE IF EXISTS `niveaux`;
 CREATE TABLE IF NOT EXISTS `niveaux` (
-`id` int(11) NOT NULL,
-  `nom` varchar(50) NOT NULL
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nom` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `niveaux`
+-- Déchargement des données de la table `niveaux`
 --
 
 INSERT INTO `niveaux` (`id`, `nom`) VALUES
@@ -88,18 +96,27 @@ INSERT INTO `niveaux` (`id`, `nom`) VALUES
 -- Structure de la table `offres`
 --
 
+DROP TABLE IF EXISTS `offres`;
 CREATE TABLE IF NOT EXISTS `offres` (
-`id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `auteur` varchar(50) NOT NULL,
   `niveau` varchar(15) NOT NULL,
   `matiere` varchar(15) NOT NULL,
   `date_time` datetime NOT NULL COMMENT 'date de la demande',
-  `participant` varchar(50) NOT NULL,
+  `participant` varchar(50) DEFAULT NULL,
   `participant2` varchar(50) DEFAULT NULL,
   `disponible` tinyint(1) NOT NULL DEFAULT '0',
   `debut_j1` time DEFAULT NULL,
-  `fin_j1` time DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `fin_j1` time DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `offres`
+--
+
+INSERT INTO `offres` (`id`, `auteur`, `niveau`, `matiere`, `date_time`, `participant`, `participant2`, `disponible`, `debut_j1`, `fin_j1`) VALUES
+(1, 'antoine', '2nde', 'anglais', '2018-02-22 00:00:00', '', NULL, 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -107,12 +124,14 @@ CREATE TABLE IF NOT EXISTS `offres` (
 -- Structure de la table `specialites`
 --
 
+DROP TABLE IF EXISTS `specialites`;
 CREATE TABLE IF NOT EXISTS `specialites` (
-  `nom` varchar(50) NOT NULL
+  `nom` varchar(50) NOT NULL,
+  PRIMARY KEY (`nom`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `specialites`
+-- Déchargement des données de la table `specialites`
 --
 
 INSERT INTO `specialites` (`nom`) VALUES
@@ -126,81 +145,25 @@ INSERT INTO `specialites` (`nom`) VALUES
 -- Structure de la table `users`
 --
 
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `nom` varchar(50) NOT NULL DEFAULT '',
   `mdp` varchar(15) NOT NULL,
   `mail` varchar(50) NOT NULL,
   `niveau` varchar(15) NOT NULL,
-  `admin` tinyint(1) NOT NULL DEFAULT '0'
+  `admin` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`nom`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `users`
+-- Déchargement des données de la table `users`
 --
 
 INSERT INTO `users` (`nom`, `mdp`, `mail`, `niveau`, `admin`) VALUES
 ('ced', '', '', '', 0),
 ('olivier', '', '', '', 0);
+COMMIT;
 
---
--- Index pour les tables exportées
---
-
---
--- Index pour la table `classes`
---
-ALTER TABLE `classes`
- ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `matieres`
---
-ALTER TABLE `matieres`
- ADD PRIMARY KEY (`nom`);
-
---
--- Index pour la table `niveaux`
---
-ALTER TABLE `niveaux`
- ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `offres`
---
-ALTER TABLE `offres`
- ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `specialites`
---
-ALTER TABLE `specialites`
- ADD PRIMARY KEY (`nom`);
-
---
--- Index pour la table `users`
---
-ALTER TABLE `users`
- ADD PRIMARY KEY (`nom`);
-
---
--- AUTO_INCREMENT pour les tables exportées
---
-
---
--- AUTO_INCREMENT pour la table `classes`
---
-ALTER TABLE `classes`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT pour la table `niveaux`
---
-ALTER TABLE `niveaux`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
---
--- AUTO_INCREMENT pour la table `offres`
---
-ALTER TABLE `offres`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
