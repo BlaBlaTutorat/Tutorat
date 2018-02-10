@@ -98,14 +98,14 @@ INSERT INTO `niveaux` (`id`, `nom`) VALUES
 
 DROP TABLE IF EXISTS `offres`;
 CREATE TABLE IF NOT EXISTS `offres` (
-  `id`           int(11) NOT NULL AUTO_INCREMENT,
+  `id`           int(11)     NOT NULL AUTO_INCREMENT,
   `auteur`       varchar(50) NOT NULL,
-  `niveau`       varchar(15) NOT NULL,
-  `matiere`      varchar(15) NOT NULL,
-  `date_time`    datetime NOT NULL COMMENT 'date de la demande',
+  `niveau`       VARCHAR(30) NOT NULL,
+  `matiere`      VARCHAR(30) NOT NULL,
+  `date_time`    datetime    NOT NULL COMMENT 'date de la demande',
   `participant`  varchar(50)      DEFAULT NULL,
   `participant2` varchar(50)      DEFAULT NULL,
-  `disponible`   tinyint(1) NOT NULL DEFAULT '0',
+  `disponible`   tinyint(1)  NOT NULL DEFAULT '0',
   `debut_j1`     time DEFAULT NULL,
   `fin_j1`       time DEFAULT NULL,
   `debut_j2`     TIME DEFAULT NULL,
