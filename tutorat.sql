@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  ven. 09 fév. 2018 à 22:25
+-- Généré le :  sam. 10 fév. 2018 à 07:01
 -- Version du serveur :  5.7.19
 -- Version de PHP :  5.6.31
 
@@ -21,8 +21,6 @@ SET time_zone = "+00:00";
 --
 -- Base de données :  `tutorat`
 --
-CREATE DATABASE IF NOT EXISTS `tutorat` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE `tutorat`;
 
 -- --------------------------------------------------------
 
@@ -118,12 +116,12 @@ CREATE TABLE IF NOT EXISTS `offres` (
 --
 
 INSERT INTO `offres` (`id`, `auteur`, `niveau`, `matiere`, `date_time`, `participant`, `participant2`, `disponible`, `debut_j1`, `fin_j1`) VALUES
-(3, 'Marco Desmoulins', 'Terminale', 'Mathèmatiques', '2018-02-22 00:00:00', '', NULL, 0, NULL, NULL),
-(4, 'Tao Blancheton', 'Terminale', 'ISN', '2018-02-19 14:15:41', '', NULL, 0, NULL, NULL),
-(5, 'Antoine Labarussias', 'Terminale', 'Anglais', '2018-02-22 00:00:00', '', NULL, 0, NULL, NULL),
-(6, 'Jean Kévin', 'Seconde', 'Français', '2018-02-22 00:00:00', '', NULL, 0, NULL, NULL),
-(7, 'Alexis Ducont', 'Première', 'Espagnol', '2018-02-19 14:15:41', '', NULL, 0, NULL, NULL),
-(8, 'Lola Blachard', 'Seconde', 'Anglais', '2018-02-22 00:00:00', '', NULL, 0, NULL, NULL);
+  (3, 'Marco Desmoulins', 'Terminale', 'Mathèmatiques', '2018-02-22 00:00:00', NULL, NULL, 0, NULL, NULL),
+  (4, 'Tao Blancheton', 'Terminale', 'ISN', '2018-02-19 14:15:41', NULL, NULL, 0, NULL, NULL),
+  (5, 'Antoine Labarussias', 'Terminale', 'Anglais', '2018-02-22 00:00:00', NULL, NULL, 0, NULL, NULL),
+  (6, 'Jean Kévin', 'Seconde', 'Français', '2018-02-22 00:00:00', NULL, NULL, 0, NULL, NULL),
+  (7, 'Alexis Ducont', 'Première', 'Espagnol', '2018-02-19 14:15:41', NULL, NULL, 0, NULL, NULL),
+  (8, 'Lola Blachard', 'Seconde', 'Anglais', '2018-02-22 00:00:00', NULL, NULL, 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
