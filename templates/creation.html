@@ -15,22 +15,64 @@
     <h1>Création d'une offre de Tutorat:</h1>
     <h2>Auteur: {{ user }}</h2>
     <input type="hidden" name="auteur" value="{{ user }}">
+
+    <!-- Niveau -->
     <p>Vous voulez aider un elève ayant un niveau :
-        <SELECT name="niveau" size="1">
-            <option selected>-sélectionnez un niveau-</option>
+        <SELECT name="niveau" size="1" required>
+            <option value="" disabled selected>-sélectionnez un niveau-</option>
             {% for niveau in niveaux %}
                 <option>{{ niveau }}</option>
             {% endfor %}
         </SELECT>
     </p>
+
+    <!-- Matière -->
     <p>Vous souhaitez l'aider en :
-        <SELECT name="matiere" size="1">
-            <option selected>-sélectionnez une matiere-</option>
+        <SELECT name="matiere" size="1" required>
+            <option value="" disabled selected>-sélectionnez une matiere-</option>
             {% for matiere in matieres %}
                 <option>{{ matiere }}</option>
             {% endfor %}
         </SELECT>
     </p>
+
+    <fieldset><!-- Horaires -->
+        <legend>Vos disponibilités (laissez vide en cas d'impossibilité)</legend>
+        <table>
+            <tr>
+                <td>Lundi</td>
+                <td>Début <input type="time" name="j1_debut" step="600" min="07:00" max="20:00"/></td>
+                <td>Fin <input type="time" name="j1_fin" step="600" min="07:00" max="20:00"/></td>
+            </tr>
+            <tr>
+                <td>Mardi</td>
+                <td>Début <input type="time" name="j2_debut" step="600" min="07:00" max="20:00"/></td>
+                <td>Fin <input type="time" name="j2_fin" step="600" min="07:00" max="20:00"/></td>
+            </tr>
+            <tr>
+                <td>Mercredi</td>
+                <td>Début <input type="time" name="j3_debut" step="600" min="07:00" max="20:00"/></td>
+                <td>Fin <input type="time" name="j3_fin" step="600" min="07:00" max="20:00"/></td>
+            </tr>
+            <tr>
+                <td>Jeudi</td>
+                <td>Début <input type="time" name="j4_debut" step="600" min="07:00" max="20:00"/></td>
+                <td>Fin <input type="time" name="j4_fin" step="600" min="07:00" max="20:00"/></td>
+            </tr>
+            <tr>
+                <td>Vendredi</td>
+                <td>Début <input type="time" name="j5_debut" step="600" min="07:00" max="20:00"/></td>
+                <td>Fin <input type="time" name="j5_fin" step="600" min="07:00" max="20:00"/></td>
+            </tr>
+            <tr>
+                <td>Samedi</td>
+                <td>Début <input type="time" name="j6_debut" step="600" min="07:00" max="13:00"/></td>
+                <td>Fin <input type="time" name="j6_fin" step="600" min="07:00" max="13:00"/></td>
+            </tr>
+        </table>
+
+    </fieldset>
+
     <input type="submit" value="Créer mon offre"/>
 </form>
 
