@@ -10,7 +10,27 @@
 
 {% include 'HEADER.html' %}
 
-<!-- Liste des offres + critères de recherche -->
+{% if created %}
+    <!-- Message d'information -->
+    <div>Votre offre a bien été créée</div>
+{% endif %}
+
+
+<!-- Critères de recherche -->
+<form method="post" action="search">
+    <fieldset>
+        <legend>Critères de recherche</legend>
+        <!-- Rechargement de la page lors du changement de la méthode de tri -->
+        <select name="option" required onchange="this.form.submit()">
+            <option value="" disabled {% if not option %}selected{% endif %}>-tri-</option>
+            <option value="date_time" {% if option == "date_time" %}selected{% endif %}>Date croissante</option>
+            <option value="niveau" {% if option == "niveau" %}selected{% endif %}>Niveau</option>
+            <option value="matiere" {% if option == "matiere" %}selected{% endif %}>Matière</option>
+        </select>
+    </fieldset>
+</form>
+
+<!-- Liste des offres -->
 <div class="offres">
     {% for offre in offres %}
         <br/>

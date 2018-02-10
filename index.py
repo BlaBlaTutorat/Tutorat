@@ -48,10 +48,20 @@ def validation():
 
 
 # Page de recherche d'offres
-@app.route('/search')
+@app.route('/search', methods=['GET', 'POST'])
 def recherche():
     sql_obj = sql.MysqlObject()
-    return render_template("recherche.html", admin=False, user="Moi", offres=sql_obj.offres_liste())
+    created = False
+    if request.args.get('created'):
+        created = True
+
+    if len(request.form) > 0:
+        return render_template("recherche.html", admin=False, user="Moi",
+                               offres=sql_obj.offres_liste_tri(request.form.get("option")),
+                               created=created, option=request.form.get("option"))
+    else:
+        return render_template("recherche.html", admin=False, user="Moi", offres=sql_obj.offres_liste(),
+                               created=created)
 
 
 # Page d'enregistrement (s'enregistrer en tant que participant)
@@ -90,7 +100,7 @@ def traitement_creation():
         sql_obj = sql.MysqlObject()
         sql_obj.create_offre(request.form.get('auteur'), request.form.get('niveau'), request.form.get('matiere'),
                              horaires)
-        return redirect(url_for("recherche"))
+        return redirect(url_for("recherche", created=True))
     else:
         return render_template("error.html", message="Vous n'avez pas remplis tous les champs requis (horaires)")
 
