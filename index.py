@@ -13,14 +13,14 @@ def index():
 # Page de connection
 @app.route('/login')
 def connection():
-    return render_template("connexion.html", admin=False)
+    return render_template("connexion.html", admin=False, hidemenu=True)
 
 
 # Page d'inscription
 @app.route('/register')
 def inscription():
     sql_obj = sql.MysqlObject()
-    return render_template("inscription.html", admin=False, niveaux=sql_obj.niveaux_liste())
+    return render_template("inscription.html", admin=False, hidemenu=True, niveaux=sql_obj.niveaux_liste())
 
 
 # Profil

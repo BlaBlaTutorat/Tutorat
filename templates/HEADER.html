@@ -1,15 +1,17 @@
 <header>
     <div>
         <h1 class="nom_du_site">Tutorat - Blaise Pascal</h1>
-        <nav class="page_du_site">
-            <ul>
-                <li><a href="search">Liste des offres</a></li>
-                <li><a href="create">Poster une offre</a></li>
-                <li><a href="profil">Profil</a></li>
-                {% if admin %}
-                <li><a href="admin">Administration</a></li>
-                {% endif %}
-            </ul>
-        </nav>
+        {% if not hidemenu %}
+            <nav class="page_du_site">
+                <ul>
+                    <li><a href="search">Liste des offres</a></li>
+                    <li><a href="create">Poster une offre</a></li>
+                    <li><a href="profil">Profil</a></li>
+                    {% if admin %}
+                        <li><a href="admin">Administration</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        {% endif %}
     </div>
 </header>
