@@ -14,15 +14,19 @@
 <div class="offres">
     {% for offre in offres %}
         <br/>
-        <div>
-            <p class="element"><strong class="G">Auteur:</strong> {{ offre[1] }}</p>
-            <p class="element"><strong class="G">Niveau:</strong> {{ offre[2] }}</p>
-            <p class="element"><strong class="G">Matière:</strong> {{ offre[3] }}</p>
-            <form class="bouton" method="post" action="apply">
-                <input type="hidden" name="id" value="{{ offre[0] }}"/>
-                <input type="submit" value="Accepter l'offre"/>
-            </form>
-            <p class="element"><strong class="G">Date de publication:</strong> {{ offre[4].strftime('%d-%m-%Y') }}</p>
+        <div class="bloc">
+            <div class="not">
+                <p class="element"><strong class="G">Auteur:</strong> {{ offre[1] }}</p>
+                <p class="element"><strong class="G">Niveau:</strong> {{ offre[2] }}</p>
+                <p class="element"><strong class="G">Matière:</strong> {{ offre[3] }}</p>
+                <form class="bouton" method="post" action="apply">
+                    <input type="hidden" name="id" value="{{ offre[0] }}"/>
+                    <input type="submit" value="Accepter l'offre"/>
+                </form>
+            </div>
+            <div class="not">
+            <p class="time"><strong class="G">Publié le:</strong> {{ offre[4].strftime('%d-%m-%Y') }}</p>
+            </div>
         </div>
         <br/>
     {% endfor %}
