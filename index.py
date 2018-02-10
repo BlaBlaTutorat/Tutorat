@@ -71,20 +71,40 @@ def creation():
 # Traitement du formulaire + upload bdd
 @app.route('/create', methods=['POST'])
 def traitement_creation():
-    return "Processing auteur: " + request.form.get('auteur') + " niveau: " + request.form.get(
-        'niveau') + " matière: " + request.form.get('matiere')
+    # On ne triate pas la demande dans le doute ou l'élève n'a pas renseigné de créneau horaire
+    process = False
+    horaires = []
+
+    for i in range(0, 12, 2):
+        if request.form.get(sql.horaires_reference[i], None) != '' and request.form.get(sql.horaires_reference[i + 1],
+                                                                                        None) != '':
+            # L'élève a renseigné au moins un créneau horaire
+            process = True
+            horaires.append(request.form.get(sql.horaires_reference[i]))
+            horaires.append(request.form.get(sql.horaires_reference[i + 1]))
+        else:
+            horaires.append(0)
+            horaires.append(0)
+
+    if process:
+        sql_obj = sql.MysqlObject()
+        sql_obj.create_offre(request.form.get('auteur'), request.form.get('niveau'), request.form.get('matiere'),
+                             horaires)
+        return redirect(url_for("recherche"))
+    else:
+        return render_template("error.html", message="Vous n'avez pas remplis tous les champs requis (horaires)")
 
 
 # Gestion des erreurs 404
 @app.errorhandler(404)
 def not_found(error):
-    return "Erreur 404: Ressource non trouvée"
+    return render_template("error.html", message="Erreur 404: Ressource non trouvée")
 
 
 # Gestion des erreurs 403
 @app.errorhandler(403)
 def forbidden(error):
-    return "Erreur 403: Accès Interdit"
+    return render_template("error.html", message="Erreur 403: Accès Interdit")
 
 
 # Lancement du serveur lors de l'exécution du fichier
