@@ -226,7 +226,7 @@ footer .copyright li
 
 .created
 {
-    position: absolute;
+    position: fixed;
     bottom: 30px;
     right: 20px;
     font-size: 1em;
