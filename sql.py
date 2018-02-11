@@ -80,9 +80,8 @@ class MysqlObject:
         return self.cursor.fetchall()
 
     def offres_liste_tri_2(self, option, option2):
-        self.cursor.execute(
-            """SELECT * FROM offres WHERE disponible=1 ORDER BY CASE """ + option + """ WHEN '""" + option2 + """' 
-            THEN 1 ELSE """ + option + """ END""")
+        self.cursor.execute('SELECT * FROM offres WHERE disponible=1 ORDER BY CASE ' + option + ' WHEN "' + option2 +
+                            '" THEN 1 ELSE ' + option + ' END')
 
         return self.cursor.fetchall()
 
