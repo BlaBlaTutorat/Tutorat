@@ -17,12 +17,11 @@
 
 
 <!-- Critères de recherche -->
-<form method="post" action="search">
+<form class="search" method="post" action="search">
     <fieldset>
-        <legend>Critères de recherche</legend>
         <!-- Rechargement de la page lors du changement de la méthode de tri -->
-        <select name="option" required onchange="this.form.submit()">
-            <option value="" disabled {% if not option %}selected{% endif %}>-tri-</option>
+        <select class="tri" name="option" required onchange="this.form.submit()">
+            <option value="" disabled {% if not option %}selected{% endif %}>- Tri -</option>
             <option value="date_time" {% if option == "date_time" %}selected{% endif %}>Date croissante</option>
             <option value="niveau" {% if option == "niveau" %}selected{% endif %}>Niveau</option>
             <option value="matiere" {% if option == "matiere" %}selected{% endif %}>Matière</option>
@@ -30,9 +29,9 @@
 
         {% if not option2 and (option == "niveau" or option == "matiere") %}
             <!-- Paramètre de tri 2 pas encore défini-->
-            <select name="option2" onchange="this.form.submit()">
+            <select class="tri" name="option2" onchange="this.form.submit()">
 
-                <option value="" disabled selected>-tri-</option>
+                <option value="" disabled selected>- Tri -</option>
                 {% if option == "niveau" %}
                     {% for niveau in niveaux %}
                         <option>{{ niveau }}</option>
@@ -45,8 +44,8 @@
             </select>
         {% elif option2 and option=="niveau" %}
             <!-- Paramètre de tri 2 défini-->
-            <select name="option2" onchange="this.form.submit()">
-                <option value="" disabled selected>-tri-</option>
+            <select class="tri" name="option2" onchange="this.form.submit()">
+                <option value="" disabled selected>- Tri -</option>
                 {% for niveau in niveaux %}
                     <option {% if option2 == niveau %}selected{% endif %}>{{ niveau }}</option>
                 {% endfor %}
@@ -54,8 +53,8 @@
 
         {% elif option2 and option=="matiere" %}
             <!-- Paramètre de tri 2 défini-->
-            <select name="option2" onchange="this.form.submit()">
-                <option value="" disabled selected>-tri-</option>
+            <select class="tri" name="option2" onchange="this.form.submit()">
+                <option value="" disabled selected>- Tri -</option>
                 {% for matiere in matieres %}
                     <option {% if option2 == matiere %}selected{% endif %}>{{ matiere }}</option>
                 {% endfor %}
