@@ -223,6 +223,18 @@ footer .copyright li
     font-size: 0.6em;
     font-family: sans-serif;
 }
+
+.created
+{
+    position: absolute;
+    bottom: 30px;
+    right: 20px;
+    font-size: 1em;
+    margin: auto;
+    height: 100px;
+    width: 200px;
+    background: url("croix.png") top right no-repeat, #3CBC8D;
+}
 /* Fin Recherche des offres */
 
 
