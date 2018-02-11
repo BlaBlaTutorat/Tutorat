@@ -24,7 +24,17 @@ class MysqlObject:
 
             print("Error %d: %s" % (e.args[0], e.args[1]))
             sys.exit(1)
+            
+    # Liste des filieres
+    def filieres_liste(self):
+        filieres = []
+        self.cursor.execute("""SELECT nom FROM filieres ORDER BY id""")
 
+        rows = self.cursor.fetchall()
+        for row in rows:
+            filieres.append(row[0])
+        return filieres
+      
     # Liste des niveaux
     def niveaux_liste(self):
         niveaux = []
