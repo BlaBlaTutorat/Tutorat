@@ -12,86 +12,44 @@
 
 {% include 'HEADER.html' %}
 
-<h4>Inscrivez vous :</h4>
-
-<p>
-    Choisissez un identifiant :
-    <TEXTAREA name="login" rows=1 cols=40></TEXTAREA>
-</p>
-
-<p>
-    Entrez une adresse email valide :
-    <TEXTAREA name="email" rows=1 cols=40></TEXTAREA>
-</p>
-
-
-<p>
-    Choisissez un mot de passe :
-    <TEXTAREA name="Mot de passe" rows=1 cols=20></TEXTAREA>
-</p>
-
-<p>
-    (Entre 6 et 12 caractères)
-</p>
-
-<p>
-    Entrez votre niveau scolaire :
-
-    <SELECT name="Niveau" size="1">
-        <option selected>-sélectionnez un niveau scolaire-</option>
-		{% for niveau in niveaux %}
-        <option>{{ niveau }}</option>
-		{% endfor %}
-    </SELECT>
-    <!-- Les menus déroulants des filières qui suivent doivent s'afficher en fonction du niveau sélectionné -->
-</p>
-
-<p>
-    Entrez votre filière :
-
-    <SELECT name="filière_Lycée" size="1">
-        <option selected>-sélectionnez une filière-
-        <option>S</option>
-        <option>ES</option>
-        <option>L</option>
-    </SELECT>
-
-</p>
-
-<p>
-    Entrez votre filière :
-
-    <SELECT name="filière_prépa_première_année" size="1">
-        <option selected>-sélectionnez une filière-</option>
-        <option>MPSI</option>
-        <option>PCSI</option>
-        <option>HK</option>
-        <option>ECE</option>
-        <option>ECS</option>
-        <option>BCPST</option>
-    </SELECT>
-
-</p>
-
-<p>
-    Entrez votre filière :
-
-    <SELECT name="filière_prépa_deuxième_année" size="1">
-        <option selected>-sélectionnez une filière-</option>
-        <option>MP</option>
-        <option>PSI</option>
-        <option>K</option>
-        <option>ECE</option>
-        <option>ECS</option>
-        <option>BCPST</option>
-
-    </SELECT>
-
-</p>
-<!-- FIN de la partie dépendante du niveau sélectionné -->
-<p>Finalisez votre inscription en cliquant ici : <a href="validate">
-    <button>Inscription</button>
-</a></p>
+<h2>Inscrivez vous :</h2>
+<div class="bloc_inscription">
+    <div class="inscription">
+        <div class="critere">
+            <p class="register">Choisissez un identifiant :</p>
+            <p><TEXTAREA name="login"></TEXTAREA></p>
+        </div>
+        <div class="critere">
+            <p class="register">Entrez une adresse email valide :</p>
+            <p><TEXTAREA name="email"></TEXTAREA></p>
+        </div>
+        <div class="critere">
+            <p class="register">Choisissez un mot de passe :</p>            
+            <p><TEXTAREA name="Mot de passe" type="password"></TEXTAREA></p>
+        </div>
+        <div class="critere">
+            <p class="register">Entrez votre niveau scolaire :</p>
+            <p><SELECT class="tri2">
+                <option selected>- Niveau -</option>
+                {% for niveau in niveaux %}
+                <option>{{ niveau }}</option>
+                {% endfor %}
+            </SELECT></p>
+        </div>
+        <div class="critere">
+            <p class="register">Entrez votre filière :</p>
+            <p><SELECT class="tri2">
+                <option selected>- Filière -</option>
+                {% for filiere in filieres %}
+                <option>{{ filiere }}</option>
+                {% endfor %}
+            </SELECT></p>
+        </div>
+        <div class="critere">
+            <p><a href="validation.html"><button>Inscription</button></a></p>
+        </div>
+    </div>
+</div>
 
 {% include 'FOOTER.html' %}
 
