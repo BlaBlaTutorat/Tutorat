@@ -20,7 +20,7 @@ def connection():
 @app.route('/register')
 def inscription():
     sql_obj = sql.MysqlObject()
-    return render_template("inscription.html", admin=False, hidemenu=True, niveaux=sql_obj.niveaux_liste())
+    return render_template("inscription.html", admin=False, hidemenu=True, niveaux=sql_obj.niveaux_liste(), filieres=sql_obj.filieres_liste())
 
 
 # Profil
