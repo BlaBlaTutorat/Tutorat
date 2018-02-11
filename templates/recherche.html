@@ -27,6 +27,41 @@
             <option value="niveau" {% if option == "niveau" %}selected{% endif %}>Niveau</option>
             <option value="matiere" {% if option == "matiere" %}selected{% endif %}>Matière</option>
         </select>
+
+        {% if not option2 and (option == "niveau" or option == "matiere") %}
+            <!-- Paramètre de tri 2 pas encore défini-->
+            <select name="option2" onchange="this.form.submit()">
+
+                <option value="" disabled selected>-tri-</option>
+                {% if option == "niveau" %}
+                    {% for niveau in niveaux %}
+                        <option>{{ niveau }}</option>
+                    {% endfor %}
+                {% elif option == "matiere" %}
+                    {% for matiere in matieres %}
+                        <option>{{ matiere }}</option>
+                    {% endfor %}
+                {% endif %}
+            </select>
+        {% elif option2 and option=="niveau" %}
+            <!-- Paramètre de tri 2 défini-->
+            <select name="option2" onchange="this.form.submit()">
+                <option value="" disabled selected>-tri-</option>
+                {% for niveau in niveaux %}
+                    <option {% if option2 == niveau %}selected{% endif %}>{{ niveau }}</option>
+                {% endfor %}
+            </select>
+
+        {% elif option2 and option=="matiere" %}
+            <!-- Paramètre de tri 2 défini-->
+            <select name="option2" onchange="this.form.submit()">
+                <option value="" disabled selected>-tri-</option>
+                {% for matiere in matieres %}
+                    <option {% if option2 == matiere %}selected{% endif %}>{{ matiere }}</option>
+                {% endfor %}
+            </select>
+
+        {% endif %}
     </fieldset>
 </form>
 
@@ -45,7 +80,7 @@
                 </form>
             </div>
             <div class="not">
-            <p class="time"><strong class="G">Publié le:</strong> {{ offre[4].strftime('%d-%m-%Y') }}</p>
+                <p class="time"><strong class="G">Publié le:</strong> {{ offre[4].strftime('%d-%m-%Y') }}</p>
             </div>
         </div>
         <br/>

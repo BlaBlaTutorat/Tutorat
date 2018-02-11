@@ -72,10 +72,18 @@ class MysqlObject:
         if option == "niveau":
             # Procédure spéciale pour les niveaux pour avoir un tri cohérent
             self.cursor.execute(
-                """SELECT * FROM offres WHERE disponible=1 ORDER BY CASE """ + option + """ WHEN 'Seconde' THEN 1 WHEN 'Première' THEN 2 WHEN 'Terminale'
-                THEN 3 WHEN 'CPGE première année' THEN 4 WHEN 'CPGE deuxième année' THEN 5 END""")
+                """SELECT * FROM offres WHERE disponible=1 ORDER BY CASE """ + option + """ WHEN 'Seconde'
+                 THEN 1 WHEN 'Première' THEN 2 WHEN 'Terminale' THEN 3 WHEN 'CPGE première année' 
+                 THEN 4 WHEN 'CPGE deuxième année' THEN 5 END""")
         else:
             self.cursor.execute("""SELECT * FROM offres WHERE disponible=1 ORDER BY """ + option)
+        return self.cursor.fetchall()
+
+    def offres_liste_tri_2(self, option, option2):
+        self.cursor.execute(
+            """SELECT * FROM offres WHERE disponible=1 ORDER BY CASE """ + option + """ WHEN '""" + option2 + """' 
+            THEN 1 ELSE """ + option + """ END""")
+
         return self.cursor.fetchall()
 
     # Méthode exécutée à la suppression de l'bbjet

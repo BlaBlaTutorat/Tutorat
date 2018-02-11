@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  sam. 10 fév. 2018 à 07:08
+-- Généré le :  Dim 11 fév. 2018 à 18:19
 -- Version du serveur :  5.7.19
 -- Version de PHP :  5.6.31
 
@@ -98,26 +98,27 @@ INSERT INTO `niveaux` (`id`, `nom`) VALUES
 
 DROP TABLE IF EXISTS `offres`;
 CREATE TABLE IF NOT EXISTS `offres` (
-  `id`           int(11)     NOT NULL AUTO_INCREMENT,
-  `auteur`       varchar(50) NOT NULL,
+  `id`           INT(11)     NOT NULL AUTO_INCREMENT,
+  `auteur`       VARCHAR(50) NOT NULL,
   `niveau`       VARCHAR(30) NOT NULL,
   `matiere`      VARCHAR(30) NOT NULL,
-  `date_time`    datetime    NOT NULL COMMENT 'date de la demande',
-  `participant`  varchar(50)      DEFAULT NULL,
-  `participant2` varchar(50)      DEFAULT NULL,
-  `disponible`   tinyint(1)  NOT NULL DEFAULT '0',
-  `debut_j1`     time DEFAULT NULL,
-  `fin_j1`       time DEFAULT NULL,
-  `debut_j2`     TIME DEFAULT NULL,
-  `fin_j2`       TIME DEFAULT NULL,
-  `debut_j3`     TIME DEFAULT NULL,
-  `fin_j3`       TIME DEFAULT NULL,
-  `debut_j4`     TIME DEFAULT NULL,
-  `fin_j4`       TIME DEFAULT NULL,
-  `debut_j5`     TIME DEFAULT NULL,
-  `fin_j5`       TIME DEFAULT NULL,
-  `debut_j6`     TIME DEFAULT NULL,
-  `fin_j6`       TIME DEFAULT NULL,
+  `date_time`    DATETIME    NOT NULL
+  COMMENT 'date de la demande',
+  `participant`  VARCHAR(50)          DEFAULT NULL,
+  `participant2` VARCHAR(50)          DEFAULT NULL,
+  `disponible`   TINYINT(1)  NOT NULL DEFAULT '0',
+  `debut_j1`     TIME                 DEFAULT NULL,
+  `fin_j1`       TIME                 DEFAULT NULL,
+  `debut_j2`     TIME                 DEFAULT NULL,
+  `fin_j2`       TIME                 DEFAULT NULL,
+  `debut_j3`     TIME                 DEFAULT NULL,
+  `fin_j3`       TIME                 DEFAULT NULL,
+  `debut_j4`     TIME                 DEFAULT NULL,
+  `fin_j4`       TIME                 DEFAULT NULL,
+  `debut_j5`     TIME                 DEFAULT NULL,
+  `fin_j5`       TIME                 DEFAULT NULL,
+  `debut_j6`     TIME                 DEFAULT NULL,
+  `fin_j6`       TIME                 DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
@@ -127,18 +128,18 @@ CREATE TABLE IF NOT EXISTS `offres` (
 
 INSERT INTO `offres` (`id`, `auteur`, `niveau`, `matiere`, `date_time`, `participant`, `participant2`, `disponible`, `debut_j1`, `fin_j1`, `debut_j2`, `fin_j2`, `debut_j3`, `fin_j3`, `debut_j4`, `fin_j4`, `debut_j5`, `fin_j5`, `debut_j6`, `fin_j6`)
 VALUES
-  (3, 'Marco Desmoulins', 'Terminale', 'Mathèmatiques', '2018-02-22 00:00:00', NULL, NULL, 1, NULL, NULL, NULL, NULL,
+  (3, 'Marco Desmoulins', 'Terminale', 'Mathématiques', '2018-02-22 00:00:00', NULL, NULL, 1, NULL, NULL, NULL, NULL,
    NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
   (4, 'Tao Blancheton', 'Terminale', 'ISN', '2018-02-19 14:15:41', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL,
    NULL, NULL, NULL, NULL, NULL, NULL),
-  (5, 'Antoine Labarussias', 'Terminale', 'Anglais', '2018-02-22 00:00:00', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL,
-   NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+  (5, 'Antoine Labarussias', 'Terminale', 'Science de l\'ingénieur', '2018-02-22 00:00:00', NULL, NULL, 1, NULL, NULL,
+      NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
   (6, 'Jean Kévin', 'Seconde', 'Français', '2018-02-22 00:00:00', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL,
    NULL, NULL, NULL, NULL, NULL, NULL),
-  (7, 'Alexis Ducont', 'Première', 'Espagnol', '2018-02-19 14:15:41', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL,
+  (7, 'Alexis Ducont', 'Première', 'ISN', '2018-02-19 14:15:41', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL,
    NULL, NULL, NULL, NULL, NULL, NULL),
-  (8, 'Lola Blachard', 'Seconde', 'Anglais', '2018-02-22 00:00:00', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL,
-   NULL, NULL, NULL, NULL, NULL, NULL);
+  (8, 'Lola Blachard', 'Seconde', 'Science de l\'ingénieur', '2018-02-22 00:00:00', NULL, NULL, 1, NULL, NULL, NULL,
+   NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 

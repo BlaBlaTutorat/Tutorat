@@ -55,11 +55,22 @@ def recherche():
     if request.args.get('created'):
         created = True
 
-    if len(request.form) > 0:
+    if len(request.form) == 1:
+        # Formulaire de tri première étape
         return render_template("recherche.html", admin=False, user="Moi",
                                offres=sql_obj.offres_liste_tri(request.form.get("option")),
-                               created=created, option=request.form.get("option"))
+                               created=created, option=request.form.get("option"), matieres=sql_obj.matieres_liste(),
+                               niveaux=sql_obj.niveaux_liste())
+    elif len(request.form) > 1:
+        # Formulaire de tri deuxième étape
+        return render_template("recherche.html", admin=False, user="Moi",
+                               offres=sql_obj.offres_liste_tri_2(request.form.get("option"),
+                                                                 request.form.get("option2")),
+                               created=created, option=request.form.get("option"), option2=request.form.get("option2"),
+                               matieres=sql_obj.matieres_liste(),
+                               niveaux=sql_obj.niveaux_liste())
     else:
+        # Pas de formulaire de tri
         return render_template("recherche.html", admin=False, user="Moi", offres=sql_obj.offres_liste(),
                                created=created)
 
