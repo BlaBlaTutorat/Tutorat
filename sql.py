@@ -89,6 +89,10 @@ class MysqlObject:
 
         return self.cursor.fetchall()
 
+    def get_user_info(self, name):
+        self.cursor.execute("""SELECT * FROM users WHERE nom=%s""", (name,))
+        return self.cursor.fetchall()
+
     # Méthode exécutée à la suppression de l'bbjet
     def __del__(self):
         self.cursor.close()

@@ -26,7 +26,8 @@ def inscription():
 # Profil
 @app.route('/profil')
 def profil():
-    return "Mon profil"
+    sql_obj = sql.MysqlObject()
+    return render_template("profil.html", infos=sql_obj.get_user_info("Jean Kévin"))
 
 
 # Administration

@@ -1,11 +1,15 @@
 <!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Une erreur est survenue</title>
+    <title>Mon Profil</title>
     <link rel=stylesheet type=text/css href="/static/style.css">
     <link rel="icon" type="image/png" href="/static/favicon.png"/>
 </head>
 <body>
-<p>{{ message }}</p>
+
+{% for info in infos %}
+    <p>{{ info }}</p>
+{% endfor %}
 </body>
 </html>

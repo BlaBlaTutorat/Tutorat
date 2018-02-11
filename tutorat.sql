@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  Dim 11 fév. 2018 à 18:19
+-- Généré le :  Dim 11 fév. 2018 à 20:20
 -- Version du serveur :  5.7.19
 -- Version de PHP :  5.6.31
 
@@ -183,8 +183,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`nom`, `mdp`, `mail`, `niveau`, `admin`) VALUES
-('ced', '', '', '', 0),
-('olivier', '', '', '', 0);
+  ('Jean Kévin', 'mdp', 'jk@gmail.com', 'Terminale', 0);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
