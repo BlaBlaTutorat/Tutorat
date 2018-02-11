@@ -127,17 +127,17 @@ CREATE TABLE IF NOT EXISTS `offres` (
 
 INSERT INTO `offres` (`id`, `auteur`, `niveau`, `matiere`, `date_time`, `participant`, `participant2`, `disponible`, `debut_j1`, `fin_j1`, `debut_j2`, `fin_j2`, `debut_j3`, `fin_j3`, `debut_j4`, `fin_j4`, `debut_j5`, `fin_j5`, `debut_j6`, `fin_j6`)
 VALUES
-  (3, 'Marco Desmoulins', 'Terminale', 'Mathèmatiques', '2018-02-22 00:00:00', NULL, NULL, 0, NULL, NULL, NULL, NULL,
+  (3, 'Marco Desmoulins', 'Terminale', 'Mathèmatiques', '2018-02-22 00:00:00', NULL, NULL, 1, NULL, NULL, NULL, NULL,
    NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-  (4, 'Tao Blancheton', 'Terminale', 'ISN', '2018-02-19 14:15:41', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL,
+  (4, 'Tao Blancheton', 'Terminale', 'ISN', '2018-02-19 14:15:41', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL,
    NULL, NULL, NULL, NULL, NULL, NULL),
-  (5, 'Antoine Labarussias', 'Terminale', 'Anglais', '2018-02-22 00:00:00', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL,
+  (5, 'Antoine Labarussias', 'Terminale', 'Anglais', '2018-02-22 00:00:00', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL,
    NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-  (6, 'Jean Kévin', 'Seconde', 'Français', '2018-02-22 00:00:00', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL,
+  (6, 'Jean Kévin', 'Seconde', 'Français', '2018-02-22 00:00:00', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL,
    NULL, NULL, NULL, NULL, NULL, NULL),
-  (7, 'Alexis Ducont', 'Première', 'Espagnol', '2018-02-19 14:15:41', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL,
+  (7, 'Alexis Ducont', 'Première', 'Espagnol', '2018-02-19 14:15:41', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL,
    NULL, NULL, NULL, NULL, NULL, NULL),
-  (8, 'Lola Blachard', 'Seconde', 'Anglais', '2018-02-22 00:00:00', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL,
+  (8, 'Lola Blachard', 'Seconde', 'Anglais', '2018-02-22 00:00:00', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL,
    NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
