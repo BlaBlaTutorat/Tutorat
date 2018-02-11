@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  Dim 11 fév. 2018 à 20:27
+-- Généré le :  Dim 11 fév. 2018 à 22:18
 -- Version du serveur :  5.7.19
 -- Version de PHP :  5.6.31
 
@@ -30,10 +30,10 @@ SET time_zone = "+00:00";
 
 DROP TABLE IF EXISTS `classes`;
 CREATE TABLE IF NOT EXISTS `classes` (
-  `id`         int(11)     NOT NULL AUTO_INCREMENT,
-  `niveau`     varchar(50) NOT NULL,
-  `specialite` VARCHAR(50) NOT NULL,
-  `numero`     int(11)     NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `niveau` varchar(50) NOT NULL,
+  `specialites` varchar(50) NOT NULL,
+  `numero` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
@@ -41,8 +41,38 @@ CREATE TABLE IF NOT EXISTS `classes` (
 -- Déchargement des données de la table `classes`
 --
 
-INSERT INTO `classes` (`id`, `niveau`, `specialite`, `numero`) VALUES
+INSERT INTO `classes` (`id`, `niveau`, `specialites`, `numero`) VALUES
 (1, 'Terminale', 'Scientifique', 5);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `filieres`
+--
+
+DROP TABLE IF EXISTS `filieres`;
+CREATE TABLE IF NOT EXISTS `filieres` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nom` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `filieres`
+--
+
+INSERT INTO `filieres` (`id`, `nom`) VALUES
+(1, 'Aucune filière (2nd)'),
+(2, 'S'),
+(3, 'SES'),
+(4, 'L'),
+(5, 'MPSI'),
+(6, 'PCSI'),
+(7, 'MP*'),
+(8, 'MP'),
+(9, 'PSI'),
+(10, 'PC*'),
+(11, 'PC');
 
 -- --------------------------------------------------------
 
@@ -87,8 +117,8 @@ INSERT INTO `niveaux` (`id`, `nom`) VALUES
 (1, 'Seconde'),
 (2, 'Première'),
 (3, 'Terminale'),
-(4, 'CPGE première année'),
-(5, 'CPGE deuxième année');
+(4, 'CPGE 1ère année'),
+(5, 'CPGE 2ème année');
 
 -- --------------------------------------------------------
 
@@ -98,27 +128,26 @@ INSERT INTO `niveaux` (`id`, `nom`) VALUES
 
 DROP TABLE IF EXISTS `offres`;
 CREATE TABLE IF NOT EXISTS `offres` (
-  `id`           INT(11)     NOT NULL AUTO_INCREMENT,
-  `auteur`       VARCHAR(50) NOT NULL,
-  `niveau`       VARCHAR(30) NOT NULL,
-  `matiere`      VARCHAR(30) NOT NULL,
-  `date_time`    DATETIME    NOT NULL
-  COMMENT 'date de la demande',
-  `participant`  VARCHAR(50)          DEFAULT NULL,
-  `participant2` VARCHAR(50)          DEFAULT NULL,
-  `disponible`   TINYINT(1)  NOT NULL DEFAULT '0',
-  `debut_j1`     TIME                 DEFAULT NULL,
-  `fin_j1`       TIME                 DEFAULT NULL,
-  `debut_j2`     TIME                 DEFAULT NULL,
-  `fin_j2`       TIME                 DEFAULT NULL,
-  `debut_j3`     TIME                 DEFAULT NULL,
-  `fin_j3`       TIME                 DEFAULT NULL,
-  `debut_j4`     TIME                 DEFAULT NULL,
-  `fin_j4`       TIME                 DEFAULT NULL,
-  `debut_j5`     TIME                 DEFAULT NULL,
-  `fin_j5`       TIME                 DEFAULT NULL,
-  `debut_j6`     TIME                 DEFAULT NULL,
-  `fin_j6`       TIME                 DEFAULT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `auteur` varchar(50) NOT NULL,
+  `niveau` varchar(30) NOT NULL,
+  `matiere` varchar(30) NOT NULL,
+  `date_time` datetime NOT NULL COMMENT 'date de la demande',
+  `participant` varchar(50) DEFAULT NULL,
+  `participant2` varchar(50) DEFAULT NULL,
+  `disponible` tinyint(1) NOT NULL DEFAULT '0',
+  `debut_j1` time DEFAULT NULL,
+  `fin_j1` time DEFAULT NULL,
+  `debut_j2` time DEFAULT NULL,
+  `fin_j2` time DEFAULT NULL,
+  `debut_j3` time DEFAULT NULL,
+  `fin_j3` time DEFAULT NULL,
+  `debut_j4` time DEFAULT NULL,
+  `fin_j4` time DEFAULT NULL,
+  `debut_j5` time DEFAULT NULL,
+  `fin_j5` time DEFAULT NULL,
+  `debut_j6` time DEFAULT NULL,
+  `fin_j6` time DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
@@ -126,20 +155,13 @@ CREATE TABLE IF NOT EXISTS `offres` (
 -- Déchargement des données de la table `offres`
 --
 
-INSERT INTO `offres` (`id`, `auteur`, `niveau`, `matiere`, `date_time`, `participant`, `participant2`, `disponible`, `debut_j1`, `fin_j1`, `debut_j2`, `fin_j2`, `debut_j3`, `fin_j3`, `debut_j4`, `fin_j4`, `debut_j5`, `fin_j5`, `debut_j6`, `fin_j6`)
-VALUES
-  (3, 'Marco Desmoulins', 'Terminale', 'Mathématiques', '2018-02-22 00:00:00', NULL, NULL, 1, NULL, NULL, NULL, NULL,
-   NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-  (4, 'Tao Blancheton', 'Terminale', 'ISN', '2018-02-19 14:15:41', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL,
-   NULL, NULL, NULL, NULL, NULL, NULL),
-  (5, 'Antoine Labarussias', 'Terminale', 'Science de l\'ingénieur', '2018-02-22 00:00:00', NULL, NULL, 1, NULL, NULL,
-      NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-  (6, 'Jean Kévin', 'Seconde', 'Français', '2018-02-22 00:00:00', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL,
-   NULL, NULL, NULL, NULL, NULL, NULL),
-  (7, 'Alexis Ducont', 'Première', 'ISN', '2018-02-19 14:15:41', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL,
-   NULL, NULL, NULL, NULL, NULL, NULL),
-  (8, 'Lola Blachard', 'Seconde', 'Science de l\'ingénieur', '2018-02-22 00:00:00', NULL, NULL, 1, NULL, NULL, NULL,
-   NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `offres` (`id`, `auteur`, `niveau`, `matiere`, `date_time`, `participant`, `participant2`, `disponible`, `debut_j1`, `fin_j1`, `debut_j2`, `fin_j2`, `debut_j3`, `fin_j3`, `debut_j4`, `fin_j4`, `debut_j5`, `fin_j5`, `debut_j6`, `fin_j6`) VALUES
+(3, 'Marco Desmoulins', 'Terminale', 'Mathématiques', '2018-02-22 00:00:00', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(4, 'Tao Blancheton', 'Terminale', 'ISN', '2018-02-19 14:15:41', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(5, 'Antoine Labarussias', 'Terminale', 'Science de l\'ingénieur', '2018-02-22 00:00:00', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(6, 'Jean Kévin', 'Seconde', 'Français', '2018-02-22 00:00:00', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(7, 'Alexis Ducont', 'Première', 'ISN', '2018-02-19 14:15:41', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(8, 'Lola Blachard', 'Seconde', 'Science de l\'ingénieur', '2018-02-22 00:00:00', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -170,11 +192,11 @@ INSERT INTO `specialites` (`nom`) VALUES
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
-  `nom`    varchar(50) NOT NULL DEFAULT '',
-  `mdp`    varchar(15) NOT NULL,
-  `mail`   varchar(50) NOT NULL,
+  `nom` varchar(50) NOT NULL DEFAULT '',
+  `mdp` varchar(15) NOT NULL,
+  `mail` varchar(50) NOT NULL,
   `niveau` varchar(15) NOT NULL,
-  `admin`  tinyint(1)  NOT NULL DEFAULT '0',
+  `admin` tinyint(1) NOT NULL DEFAULT '0',
   `ban`    TINYINT(1)  NOT NULL DEFAULT '0',
   PRIMARY KEY (`nom`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -184,7 +206,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`nom`, `mdp`, `mail`, `niveau`, `admin`, `ban`) VALUES
-  ('Jean Kévin', 'mdp', 'jk@gmail.com', 'Terminale', 0, 0);
+('Jean Kévin', 'mdp', 'jk@gmail.com', 'Terminale', 0, 0);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
