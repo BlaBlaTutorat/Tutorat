@@ -19,17 +19,19 @@ Tables:
     - Mot de passe
     - Email
     - Niveau
-    - Signalement (3 = Ban)
+    - Ban (boolean)
     - Admin (boolean)
 
 - Offres:
     - Matière
     - Auteur
-    - Créneaux horaires
     - Niveau
     - id (PRIMARY)
+    - Date de création
     - Disponible (boolean)
-    - Participant(s) 2MAX
+    - Participant
+    - Participant2
+    - Créneaux horaires
 
 - Matières:
     - Nom(PRIMARY)

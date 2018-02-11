@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  Dim 11 fév. 2018 à 20:20
+-- Généré le :  Dim 11 fév. 2018 à 20:27
 -- Version du serveur :  5.7.19
 -- Version de PHP :  5.6.31
 
@@ -30,10 +30,10 @@ SET time_zone = "+00:00";
 
 DROP TABLE IF EXISTS `classes`;
 CREATE TABLE IF NOT EXISTS `classes` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `niveau` varchar(50) NOT NULL,
-  `specialites` varchar(50) NOT NULL,
-  `numero` int(11) NOT NULL,
+  `id`         int(11)     NOT NULL AUTO_INCREMENT,
+  `niveau`     varchar(50) NOT NULL,
+  `specialite` VARCHAR(50) NOT NULL,
+  `numero`     int(11)     NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `classes` (
 -- Déchargement des données de la table `classes`
 --
 
-INSERT INTO `classes` (`id`, `niveau`, `specialites`, `numero`) VALUES
+INSERT INTO `classes` (`id`, `niveau`, `specialite`, `numero`) VALUES
 (1, 'Terminale', 'Scientifique', 5);
 
 -- --------------------------------------------------------
@@ -170,11 +170,12 @@ INSERT INTO `specialites` (`nom`) VALUES
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
-  `nom` varchar(50) NOT NULL DEFAULT '',
-  `mdp` varchar(15) NOT NULL,
-  `mail` varchar(50) NOT NULL,
+  `nom`    varchar(50) NOT NULL DEFAULT '',
+  `mdp`    varchar(15) NOT NULL,
+  `mail`   varchar(50) NOT NULL,
   `niveau` varchar(15) NOT NULL,
-  `admin` tinyint(1) NOT NULL DEFAULT '0',
+  `admin`  tinyint(1)  NOT NULL DEFAULT '0',
+  `ban`    TINYINT(1)  NOT NULL DEFAULT '0',
   PRIMARY KEY (`nom`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -182,8 +183,8 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Déchargement des données de la table `users`
 --
 
-INSERT INTO `users` (`nom`, `mdp`, `mail`, `niveau`, `admin`) VALUES
-  ('Jean Kévin', 'mdp', 'jk@gmail.com', 'Terminale', 0);
+INSERT INTO `users` (`nom`, `mdp`, `mail`, `niveau`, `admin`, `ban`) VALUES
+  ('Jean Kévin', 'mdp', 'jk@gmail.com', 'Terminale', 0, 0);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
