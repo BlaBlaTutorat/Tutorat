@@ -8,8 +8,14 @@
 </head>
 <body>
 
+{% include 'HEADER.html' %}
+
 {% for info in infos %}
     <p>{{ info }}</p>
 {% endfor %}
+
+
+{% include 'FOOTER.html' %}
+
 </body>
 </html>
