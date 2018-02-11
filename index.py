@@ -104,15 +104,18 @@ def traitement_creation():
             horaires.append(request.form.get(sql.horaires_reference[i]))
             horaires.append(request.form.get(sql.horaires_reference[i + 1]))
         else:
+            # Créneau horaire vide, on remplit avec des zéros
             horaires.append(0)
             horaires.append(0)
 
     if process:
+        # Création
         sql_obj = sql.MysqlObject()
         sql_obj.create_offre(request.form.get('auteur'), request.form.get('niveau'), request.form.get('matiere'),
                              horaires)
         return redirect(url_for("recherche", created=True))
     else:
+        # Erreur
         return render_template("error.html", message="Vous n'avez pas remplis tous les champs requis (horaires)")
 
 

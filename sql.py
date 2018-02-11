@@ -45,10 +45,12 @@ class MysqlObject:
             matieres.append(row[0])
         return matieres
 
+    # Listes des offres
     def offres_liste(self):
         self.cursor.execute("""SELECT * FROM offres WHERE disponible=1""")
         return self.cursor.fetchall()
 
+    # Création d"une offre
     def create_offre(self, author, niveau, matiere, horaires):
         date_time = datetime.datetime.now()
         date_time = date_time.strftime("%Y-%m-%d %H:%M:%S")
@@ -68,6 +70,7 @@ class MysqlObject:
 
         self.conn.commit()
 
+    # Liste des offres selon 1 facteur de tri
     def offres_liste_tri(self, option):
         if option == "niveau":
             # Procédure spéciale pour les niveaux pour avoir un tri cohérent
@@ -79,6 +82,7 @@ class MysqlObject:
             self.cursor.execute("""SELECT * FROM offres WHERE disponible=1 ORDER BY """ + option)
         return self.cursor.fetchall()
 
+    # Liste des offres selon 1 facteur de tri + 1 niveau/matiere préférée
     def offres_liste_tri_2(self, option, option2):
         self.cursor.execute('SELECT * FROM offres WHERE disponible=1 ORDER BY CASE ' + option + ' WHEN "' + option2 +
                             '" THEN 1 ELSE ' + option + ' END')
