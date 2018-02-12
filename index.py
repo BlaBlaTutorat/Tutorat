@@ -40,7 +40,7 @@ def admin():
 # Mot de passe oublié
 @app.route('/forgot')
 def mdp_oublie():
-    return render_template("mdp_oublie.html", admin=False)
+    return render_template("mdp_oublie.html", admin=False, hidemenu=True)
 
 
 # Page de validation
