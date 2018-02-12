@@ -365,3 +365,56 @@ footer .copyright li
     margin-top: 30px;
 }
 /* Fin Connexion */
+
+/* MDP oublié */
+.reset
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    text-align: center;
+    line-height: 2px;
+}
+
+.forgot
+{
+    font-family: sans-serif;
+    font-size: 1em;
+    background: rgb(255,245,234);
+    border-radius: 10px;
+    border-color: #615a5f;
+    border-width: 2px;
+    border-style: solid;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;  
+    padding: 5px 10px 5px 10px;
+    width: 700px;
+}
+
+.bloc_forgot
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: auto;
+    margin-bottom: 470px;
+    margin-top: 200px;
+}
+
+.bloc_forgot textarea 
+{
+    width: 40%;
+    height: 25px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+}
+
+.bloc_forgot button
+{
+    margin-top: 0px;
+}
+/* Fin MDP ouvlié */
