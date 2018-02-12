@@ -30,7 +30,7 @@
         <div class="critere">
             <p class="register">Entrez votre niveau scolaire :</p>
             <p><SELECT class="tri2">
-                <option selected>- Niveau -</option>
+                <option value="" selected disabled>- Niveau -</option>
                 {% for niveau in niveaux %}
                 <option>{{ niveau }}</option>
                 {% endfor %}
@@ -39,7 +39,7 @@
         <div class="critere">
             <p class="register">Entrez votre filière :</p>
             <p><SELECT class="tri2">
-                <option selected>- Filière -</option>
+                <option value="" selected disabled>- Filière -</option>
                 {% for filiere in filieres %}
                 <option>{{ filiere }}</option>
                 {% endfor %}
