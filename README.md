@@ -19,6 +19,7 @@ Tables:
     - Mot de passe
     - Email
     - Niveau
+    - Filière
     - Ban (boolean)
     - Admin (boolean)
 
@@ -26,6 +27,7 @@ Tables:
     - Matière
     - Auteur
     - Niveau
+    - Filière
     - id (PRIMARY)
     - Date de création
     - Disponible (boolean)
