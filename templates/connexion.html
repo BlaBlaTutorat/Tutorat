@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8"/>
@@ -10,40 +10,27 @@
 
 {% include 'HEADER.html' %}
 
-<h4>Connectez vous :</h4>
+<h2>Connectez vous :</h2>
+<div class="bloc_connexion">
+    <div class="connexion">
+        <div class="champs">
+            <p class="login">Identifiant ou adresse e-mail :</p>
+            <p><TEXTAREA value="mail" name="mail"></TEXTAREA></p>
+        </div>
+        <div class="champs">
+            <p>Mot de passe :</p>
+            <p><TEXTAREA value="mdp" name="mdp"></TEXTAREA></p>
+        </div>
+        <div class="champs">
+            <p><button value="connexion">Connexion</button><a href="forgot"><button>Mot de passe oublié</button></a></p>
+        </div>
+        <div class="champs">
+            <p>Pas encore inscrit ! Inscrivez vous en cliquant ici :</p>
+            <p><a href="register"><button>Inscription</button></a></p>
+        </div>
+    </div>
+</div>
 
-<p>
-    Identifiant ou adresse e-mail :
-</p>
-<p>
-    <TEXTAREA name="login" rows=1 cols=40></TEXTAREA>
-</p>
-<p>
-    Mot de passe :
-</p>
-<p>
-    <TEXTAREA name="Mot de passe" rows=1 cols=20></TEXTAREA>
-</p>
-<p>
-    Pour vous connecter, cliquez ici :
-    <button onclick="ClicBouton();">Connexion</button>
-
-    <script type="text/javascript">
-        function ClicBouton() {
-            submit();
-        }
-    </script>
-</p>
-<p>
-    Mot de passe oublié ? <a href="forgot">
-    <button>Mot de passe oublié</button>
-</a>
-</p>
-<p>
-    Pas encore inscrit ! Inscrivez vous en cliquant ici : <a href="register">
-    <button>Inscription</button>
-</a>
-</p>
 
 {% include 'FOOTER.html' %}
 
