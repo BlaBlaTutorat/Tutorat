@@ -275,7 +275,7 @@ footer .copyright li
     flex-direction: column;
     justify-content: center;
     margin: auto;
-    margin-bottom: 20px;
+    margin-bottom: 222px;
 }
 
 .bloc_inscription textarea 
@@ -297,6 +297,11 @@ footer .copyright li
     border-radius: 4px;
     background-color: #f8f8f8;
     border-radius: 4px;
+}
+
+.reg
+{
+    margin-top: 160px;
 }
 /* Fin Inscription */
 
