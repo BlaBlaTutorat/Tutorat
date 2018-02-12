@@ -21,6 +21,18 @@ textarea
 
 
 /* Commun */
+.created
+{
+    position: fixed;
+    bottom: 100px;
+    right: 20px;
+    font-size: 1em;
+    margin: auto;
+    height: 100px;
+    width: 200px;
+    background: url("croix.png") top right no-repeat, #3CBC8D;
+}
+
 h2
 {
     padding: 0px;
@@ -223,18 +235,6 @@ footer .copyright li
     font-size: 0.6em;
     font-family: sans-serif;
 }
-
-.created
-{
-    position: fixed;
-    bottom: 30px;
-    right: 20px;
-    font-size: 1em;
-    margin: auto;
-    height: 100px;
-    width: 200px;
-    background: url("croix.png") top right no-repeat, #3CBC8D;
-}
 /* Fin Recherche des offres */
 
 
@@ -302,6 +302,11 @@ footer .copyright li
 
 
 /* Connexion */
+.log
+{
+    margin-top: 160px;
+}
+
 .login
 {
     margin-top: 20px;
@@ -340,7 +345,7 @@ footer .copyright li
     flex-direction: column;
     justify-content: center;
     margin: auto;
-    margin-bottom: 20px;
+    margin-bottom: 260px;
 }
 
 .bloc_connexion textarea 
@@ -352,4 +357,11 @@ footer .copyright li
     border-radius: 4px;
     background-color: #f8f8f8;
 }
-/* Fin Connesxion */
+
+.not_register
+{
+    font-size: 0.9em;
+    margin-bottom: 2px;
+    margin-top: 30px;
+}
+/* Fin Connexion */
