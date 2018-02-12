@@ -10,7 +10,8 @@ Mise en page:
 - 1 Page d'accueil
 - 1 Page de connexion
 - 1 Page d'inscription
-- 1 Page Recherche / Poster des offres
+- 1 Page Recherche
+- 1 Page Poster des offres
     
 Tables:
 
@@ -24,11 +25,11 @@ Tables:
     - Admin (boolean)
 
 - Offres:
+    - Id (PRIMARY)
     - Matière
     - Auteur
     - Niveau
     - Filière
-    - id (PRIMARY)
     - Date de création
     - Disponible (boolean)
     - Participant
@@ -39,10 +40,10 @@ Tables:
     - Nom(PRIMARY)
 
 - Classes:
-    - id (PRIMARY)
-    - niveau
-    - specialite
-    - numero
+    - Id (PRIMARY)
+    - Niveau
+    - Spécialité
+    - Numéro
 
 - Filières:
     - ID (PRIMARY)
