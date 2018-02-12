@@ -42,8 +42,9 @@ Tables:
     - specialite
     - numero
 
-- Specialites:
-    - Nom (PRIMARY)
+- Filières:
+    - ID (PRIMARY)
+    - Nom
     
  - Niveaux:
     - ID (PRIMARY)
