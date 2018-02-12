@@ -13,7 +13,10 @@ def index():
 # Page de connection
 @app.route('/login')
 def connection():
-    return render_template("connexion.html", admin=False, hidemenu=True)
+    info_msg = None
+    if request.args.get('info_msg'):
+        info_msg = request.args.get('info_msg')
+    return render_template("connexion.html", admin=False, hidemenu=True, info_msg=info_msg)
 
 
 # Page d'inscription
