@@ -62,14 +62,12 @@ class MysqlObject:
         return self.cursor.fetchall()
 
     # Création d"une offre
-    def create_offre(self, author, niveau, matiere, horaires):
+    def create_offre(self, author, niveau, filiere, matiere, horaires):
         date_time = datetime.datetime.now()
         date_time = date_time.strftime("%Y-%m-%d %H:%M:%S")
-        self.cursor.execute("""INSERT INTO offres (auteur, niveau, matiere, date_time) VALUES (%s, %s, %s, %s)""",
-                            (author,
-                             niveau,
-                             matiere,
-                             date_time))
+        self.cursor.execute(
+            """INSERT INTO offres (auteur, niveau, filiere, matiere, date_time) VALUES (%s, %s, %s, %s, %s)""",
+            (author, niveau, filiere, matiere, date_time))
 
         i = 0
         for time in horaires:

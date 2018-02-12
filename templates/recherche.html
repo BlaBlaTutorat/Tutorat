@@ -18,10 +18,11 @@
             <option value="" disabled {% if not option %}selected{% endif %}>- Tri -</option>
             <option value="date_time" {% if option == "date_time" %}selected{% endif %}>Date croissante</option>
             <option value="niveau" {% if option == "niveau" %}selected{% endif %}>Niveau</option>
+            <option value="filiere" {% if option == "filiere" %}selected{% endif %}>Filière</option>
             <option value="matiere" {% if option == "matiere" %}selected{% endif %}>Matière</option>
         </select>
 
-        {% if not option2 and (option == "niveau" or option == "matiere") %}
+        {% if not option2 and (option == "niveau" or option == "matiere" or option == "filiere") %}
             <!-- Paramètre de tri 2 pas encore défini-->
             <select class="tri" name="option2" onchange="this.form.submit()">
 
@@ -33,6 +34,10 @@
                 {% elif option == "matiere" %}
                     {% for matiere in matieres %}
                         <option>{{ matiere }}</option>
+                    {% endfor %}
+                {% elif option == "filiere" %}
+                    {% for filiere in filieres %}
+                        <option>{{ filiere }}</option>
                     {% endfor %}
                 {% endif %}
             </select>
@@ -51,6 +56,15 @@
                 <option value="" disabled selected>- Tri -</option>
                 {% for matiere in matieres %}
                     <option {% if option2 == matiere %}selected{% endif %}>{{ matiere }}</option>
+                {% endfor %}
+            </select>
+
+        {% elif option2 and option=="filiere" %}
+            <!-- Paramètre de tri 2 défini-->
+            <select class="tri" name="option2" onchange="this.form.submit()">
+                <option value="" disabled selected>- Tri -</option>
+                {% for filiere in filieres %}
+                    <option {% if option2 == filiere %}selected{% endif %}>{{ filiere }}</option>
                 {% endfor %}
             </select>
 
@@ -73,6 +87,7 @@
             <div class="not">
                 <p class="element"><strong class="G">Auteur:</strong> {{ offre[1] }}</p>
                 <p class="element"><strong class="G">Niveau:</strong> {{ offre[2] }}</p>
+                <p class="element"><strong class="G">Filière:</strong> {{ offre[3] }}</p>
                 <p class="element"><strong class="G">Matière:</strong> {{ offre[4] }}</p>
                 <form class="bouton" method="post" action="apply">
                     <input type="hidden" name="id" value="{{ offre[0] }}"/>

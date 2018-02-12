@@ -24,6 +24,13 @@
                 <option>{{ niveau }}</option>
             {% endfor %}
         </SELECT>
+        dans la filière :
+        <SELECT name="filiere" size="1" required>
+            <option value="" disabled selected>-sélectionnez une filière-</option>
+            {% for filiere in filieres %}
+                <option>{{ filiere }}</option>
+            {% endfor %}
+        </SELECT>
     </p>
 
     <!-- Matière -->

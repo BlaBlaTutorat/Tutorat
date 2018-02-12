@@ -62,7 +62,7 @@ def recherche():
         return render_template("recherche.html", admin=False, user="Moi",
                                offres=sql_obj.offres_liste_tri(request.form.get("option")),
                                info_msg=info_msg, option=request.form.get("option"), matieres=sql_obj.matieres_liste(),
-                               niveaux=sql_obj.niveaux_liste())
+                               niveaux=sql_obj.niveaux_liste(), filieres=sql_obj.filieres_liste())
     elif len(request.form) > 1:
         # Formulaire de tri deuxième étape
         return render_template("recherche.html", admin=False, user="Moi",
@@ -70,8 +70,8 @@ def recherche():
                                                                  request.form.get("option2")),
                                info_msg=info_msg, option=request.form.get("option"),
                                option2=request.form.get("option2"),
-                               matieres=sql_obj.matieres_liste(),
-                               niveaux=sql_obj.niveaux_liste())
+                               matieres=sql_obj.matieres_liste(), niveaux=sql_obj.niveaux_liste(),
+                               filieres=sql_obj.filieres_liste())
     else:
         # Pas de formulaire de tri
         return render_template("recherche.html", admin=False, user="Moi", offres=sql_obj.offres_liste(),
@@ -100,7 +100,7 @@ def enregistrement():
 def creation():
     sql_obj = sql.MysqlObject()
     return render_template("creation.html", admin=False, user="Moi", niveaux=sql_obj.niveaux_liste(),
-                           matieres=sql_obj.matieres_liste())
+                           matieres=sql_obj.matieres_liste(), filieres=sql_obj.filieres_liste())
 
 
 # Traitement du formulaire + upload bdd
@@ -125,8 +125,8 @@ def traitement_creation():
     if process:
         # Création
         sql_obj = sql.MysqlObject()
-        sql_obj.create_offre(request.form.get('auteur'), request.form.get('niveau'), request.form.get('matiere'),
-                             horaires)
+        sql_obj.create_offre(request.form.get('auteur'), request.form.get('niveau'), request.form.get('filiere'),
+                             request.form.get('matiere'), horaires)
         return redirect(url_for("recherche",
                                 info_msg="Votre offre a bien été créée. Elle est actuellement en attente de validation."))
     else:
