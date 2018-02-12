@@ -55,7 +55,10 @@ CREATE TABLE IF NOT EXISTS `filieres` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+)
+  ENGINE = InnoDB
+  AUTO_INCREMENT = 16
+  DEFAULT CHARSET = utf8;
 
 --
 -- Déchargement des données de la table `filieres`
@@ -76,8 +79,7 @@ INSERT INTO `filieres` (`id`, `nom`) VALUES
 (12, 'BCPST'),
 (13, 'ECE'),
 (14, 'ECS'),
-(15, 'Hypokhâgne'),
-(16, 'Khâgne');
+  (15, 'HK/K');
 
 -- --------------------------------------------------------
 
@@ -177,41 +179,39 @@ CREATE TABLE IF NOT EXISTS `offres` (
   `debut_j6` time DEFAULT NULL,
   `fin_j6` time DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+)
+  ENGINE = InnoDB
+  AUTO_INCREMENT = 7
+  DEFAULT CHARSET = utf8;
 
 --
 -- Déchargement des données de la table `offres`
 --
 
 INSERT INTO `offres` (`id`, `auteur`, `niveau`, `filiere`, `matiere`, `date_time`, `participant`, `participant2`, `disponible`, `debut_j1`, `fin_j1`, `debut_j2`, `fin_j2`, `debut_j3`, `fin_j3`, `debut_j4`, `fin_j4`, `debut_j5`, `fin_j5`, `debut_j6`, `fin_j6`) VALUES
-(3, 'Marco Desmoulins', 'Terminale', 'S', 'Mathématiques', '2018-02-22 00:00:00', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(4, 'Tao Blancheton', 'Terminale', 'S', 'ISN', '2018-02-19 14:15:41', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(5, 'Antoine Labarussias', 'Terminale', 'S', 'Science de l\'ingénieur', '2018-02-22 00:00:00', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(6, 'Jean Kévin', 'Seconde', 'Aucune filière (2nd)', 'Français', '2018-02-22 00:00:00', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(7, 'Alexis Ducont', 'Première', 'L', 'ISN', '2018-02-19 14:15:41', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(8, 'Lola Blachard', 'Seconde', 'Aucune filière (2nd)', 'Science de l\'ingénieur', '2018-02-22 00:00:00', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(12, 'Moi', 'Terminale', 'S', 'Mathématiques', '2018-02-12 13:38:38', NULL, NULL, 0, '07:00:00', '08:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-
--- --------------------------------------------------------
-
---
--- Structure de la table `specialites`
---
-
-DROP TABLE IF EXISTS `specialites`;
-CREATE TABLE IF NOT EXISTS `specialites` (
-  `nom` varchar(50) NOT NULL,
-  PRIMARY KEY (`nom`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Déchargement des données de la table `specialites`
---
-
-INSERT INTO `specialites` (`nom`) VALUES
-('Economique et sociale'),
-('Littéraire'),
-('Scientifique');
+  (1, 'Marco Desmoulins', 'Terminale', 'S', 'Mathématiques', '2018-02-22 00:00:00', NULL, NULL, 1, NULL, NULL, NULL,
+                                                                                                               NULL,
+                                                                                                               NULL,
+                                                                                                               NULL,
+                                                                                                               NULL,
+                                                                                                               NULL,
+                                                                                                               NULL,
+                                                                                                               NULL,
+                                                                                                               NULL,
+                                                                                                               NULL),
+  (2, 'Tao Blancheton', 'Terminale', 'S', 'ISN', '2018-02-19 14:15:41', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL,
+                                                                                                   NULL, NULL, NULL,
+                                                                                                   NULL, NULL, NULL,
+                                                                                                   NULL),
+  (3, 'Antoine Labarussias', 'Terminale', 'S', 'Science de l\'ingénieur', '2018-02-22 00:00:00', NULL, NULL, 1, NULL,
+      NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+  (4, 'Jean Kévin', 'Seconde', 'Aucune filière (2nd)', 'Français', '2018-02-22 00:00:00', NULL, NULL, 1, NULL, NULL,
+    NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+  (5, 'Alexis Ducont', 'Première', 'L', 'ISN', '2018-02-19 14:15:41', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL,
+                                                                                                 NULL, NULL, NULL, NULL,
+                                                                                                 NULL, NULL),
+  (6, 'Lola Blachard', 'Seconde', 'Aucune filière (2nd)', 'Science de l\'ingénieur', '2018-02-22 00:00:00', NULL, NULL,
+      1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
