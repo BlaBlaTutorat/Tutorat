@@ -20,7 +20,8 @@ def connection():
 @app.route('/register')
 def inscription():
     sql_obj = sql.MysqlObject()
-    return render_template("inscription.html", admin=False, hidemenu=True, niveaux=sql_obj.niveaux_liste(), filieres=sql_obj.filieres_liste())
+    return render_template("inscription.html", admin=False, hidemenu=True, niveaux=sql_obj.niveaux_liste(),
+                           filieres=sql_obj.filieres_liste())
 
 
 # Profil
@@ -52,34 +53,46 @@ def validation():
 @app.route('/search', methods=['GET', 'POST'])
 def recherche():
     sql_obj = sql.MysqlObject()
-    created = False
-    if request.args.get('created'):
-        created = True
+    info_msg = None
+    if request.args.get('info_msg'):
+        info_msg = request.args.get('info_msg')
 
     if len(request.form) == 1:
         # Formulaire de tri première étape
         return render_template("recherche.html", admin=False, user="Moi",
                                offres=sql_obj.offres_liste_tri(request.form.get("option")),
-                               created=created, option=request.form.get("option"), matieres=sql_obj.matieres_liste(),
+                               info_msg=info_msg, option=request.form.get("option"), matieres=sql_obj.matieres_liste(),
                                niveaux=sql_obj.niveaux_liste())
     elif len(request.form) > 1:
         # Formulaire de tri deuxième étape
         return render_template("recherche.html", admin=False, user="Moi",
                                offres=sql_obj.offres_liste_tri_2(request.form.get("option"),
                                                                  request.form.get("option2")),
-                               created=created, option=request.form.get("option"), option2=request.form.get("option2"),
+                               info_msg=info_msg, option=request.form.get("option"),
+                               option2=request.form.get("option2"),
                                matieres=sql_obj.matieres_liste(),
                                niveaux=sql_obj.niveaux_liste())
     else:
         # Pas de formulaire de tri
         return render_template("recherche.html", admin=False, user="Moi", offres=sql_obj.offres_liste(),
-                               created=created)
+                               info_msg=info_msg)
 
 
 # Page d'enregistrement (s'enregistrer en tant que participant)
 @app.route('/apply', methods=['POST'])
 def enregistrement():
-    return "Processing id: " + request.form.get("id")
+    participant = "Moi"
+    sql_obj = sql.MysqlObject()
+    result_code = sql_obj.add_participant(request.form.get("id"), participant)
+    if result_code == 0:
+        # Pas d'erreur
+        return redirect(url_for("recherche", info_msg="Votre participation à ce tutorat a bien été prise en compte"))
+    elif result_code == 1:
+        # Erreur l'utilisateur participe déjà à l'offre
+        return render_template("error.html", message="Vous vous êtes déjà enregistrés pour ce Tutorat.")
+    elif result_code == 2:
+        # Erreur (cas très rare ou l'utilisateur accepte une offre qui est deja pleine)
+        return render_template("error.html", message="Ce Tutorat est déjà plein.")
 
 
 # Affichage du formulaire de création d'une offre
@@ -114,22 +127,29 @@ def traitement_creation():
         sql_obj = sql.MysqlObject()
         sql_obj.create_offre(request.form.get('auteur'), request.form.get('niveau'), request.form.get('matiere'),
                              horaires)
-        return redirect(url_for("recherche", created=True))
+        return redirect(url_for("recherche",
+                                info_msg="Votre offre a bien été créée. Elle est actuellement en attente de validation."))
     else:
         # Erreur
         return render_template("error.html", message="Vous n'avez pas remplis tous les champs requis (horaires)")
 
 
-# Gestion des erreurs 404
+# Gestion de l'erreur 404
 @app.errorhandler(404)
 def not_found(error):
-    return render_template("error.html", message="Erreur 404: Ressource non trouvée")
+    return render_template("error.html", message="Erreur 404: Ressource non trouvée.")
 
 
-# Gestion des erreurs 403
+# Gestion de l'erreur 403
 @app.errorhandler(403)
 def forbidden(error):
-    return render_template("error.html", message="Erreur 403: Accès Interdit")
+    return render_template("error.html", message="Erreur 403: Accès Interdit.")
+
+
+# Gestion de l'erreur 405
+@app.errorhandler(405)
+def method_not_allowed(error):
+    return render_template("error.html", message="Erreur 405: Méthode de requête non autorisée.")
 
 
 # Lancement du serveur lors de l'exécution du fichier
