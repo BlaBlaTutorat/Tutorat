@@ -1,10 +1,10 @@
-import mysql.connector
-import sys
 import datetime
+import sys
 
-horaires_reference = ["debut_j1", "fin_j1", "debut_j2", "fin_j2", "debut_j3", "fin_j3", "debut_j4", "fin_j4",
-                      "debut_j5",
-                      "fin_j5", "debut_j6", "fin_j6"]
+import mysql.connector
+
+horaires_reference = ["debut_j0", "fin_j0", "debut_j1", "fin_j1", "debut_j2", "fin_j2", "debut_j3", "fin_j3",
+                      "debut_j4", "fin_j4", "debut_j5", "fin_j5"]
 
 
 class MysqlObject:
@@ -99,7 +99,7 @@ class MysqlObject:
 
         return self.cursor.fetchall()
 
-    # Recupérations des infos utilisateurs pour page de profil
+    # Récupérations des infos utilisateurs pour page de profil
     def get_user_info(self, name):
         self.cursor.execute("""SELECT * FROM users WHERE nom=%s""", (name,))
         return self.cursor.fetchall()

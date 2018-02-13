@@ -3,6 +3,7 @@ from flask import *
 import sql
 
 app = Flask(__name__)
+days = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
 
 
 # Page d'accueil qui redirige vers la page de recherche si l'utilisateur est connecté
@@ -32,7 +33,7 @@ def inscription():
 @app.route('/profil')
 def profil():
     sql_obj = sql.MysqlObject()
-    return render_template("profil.html", infos=sql_obj.get_user_info("Jean Kévin"))
+    return render_template("profil.html", infos=sql_obj.get_user_info("Antoine Labarussias"))
 
 
 # Administration
@@ -60,20 +61,20 @@ def recherche():
         return render_template("recherche.html", admin=False, user="Moi",
                                offres=sql_obj.offres_liste_tri(request.form.get("option")),
                                info_msg=info_msg, option=request.form.get("option"), matieres=sql_obj.matieres_liste(),
-                               niveaux=sql_obj.niveaux_liste(), filieres=sql_obj.filieres_liste())
+                               niveaux=sql_obj.niveaux_liste(), filieres=sql_obj.filieres_liste(), days=days)
     elif len(request.form) > 1:
         # Formulaire de tri deuxième étape
         return render_template("recherche.html", admin=False, user="Moi",
                                offres=sql_obj.offres_liste_tri_2(request.form.get("option"),
                                                                  request.form.get("option2")),
                                info_msg=info_msg, option=request.form.get("option"),
-                               option2=request.form.get("option2"),
+                               option2=request.form.get("option2"), days=days,
                                matieres=sql_obj.matieres_liste(), niveaux=sql_obj.niveaux_liste(),
                                filieres=sql_obj.filieres_liste())
     else:
         # Pas de formulaire de tri
         return render_template("recherche.html", admin=False, user="Moi", offres=sql_obj.offres_liste(),
-                               info_msg=info_msg)
+                               info_msg=info_msg, days=days)
 
 
 # Page d'enregistrement (s'enregistrer en tant que participant)
@@ -98,13 +99,13 @@ def enregistrement():
 def creation():
     sql_obj = sql.MysqlObject()
     return render_template("creation.html", admin=False, user="Moi", niveaux=sql_obj.niveaux_liste(),
-                           matieres=sql_obj.matieres_liste(), filieres=sql_obj.filieres_liste())
+                           matieres=sql_obj.matieres_liste(), filieres=sql_obj.filieres_liste(), days=days)
 
 
 # Traitement du formulaire + upload bdd
 @app.route('/create', methods=['POST'])
 def traitement_creation():
-    # On ne triate pas la demande dans le doute ou l'élève n'a pas renseigné de créneau horaire
+    # On ne traite pas la demande dans le doute ou l'élève n'a pas renseigné de créneau horaire
     process = False
     horaires = []
 
