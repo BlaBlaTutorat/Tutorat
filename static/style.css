@@ -193,6 +193,11 @@ footer .copyright li
 
 
 /* Recherche des offres */
+.search
+{
+    margin-top: 10px;
+}
+
 .tri 
 {
     display: flex;
