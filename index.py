@@ -86,7 +86,6 @@ def recherche():
                                filieres=sql_obj.filieres_liste(), days=days)
     elif request.form.get("option") and request.form.get("option2"):
         # Formulaire de tri deuxième étape
-        print("2")
         option = request.form.get("option")
         option2 = request.form.get("option2")
         return render_template("recherche.html",
