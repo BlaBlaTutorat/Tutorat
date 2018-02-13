@@ -13,16 +13,6 @@
 <!-- Critères de recherche -->
 <form class="search" method="post" action="search">
 
-    <!-- Gestion des pages-->
-    <div class="pages">
-        <p>
-            <input type="hidden" name="page" value="{{ page }}">
-            {% if page>0 %}<input type="submit" name="precedent" value="Page précédente">{% endif %}
-            <strong class="G">{{ page }}</strong>
-            <input type="submit" name="suivant" value="Page suivante">
-        </p>
-    </div>
-
     <!-- Rechargement de la page lors du changement de la méthode de tri -->
     <select class="tri" name="option" onchange="this.form.submit()">
         <option value="" disabled {% if not option %}selected{% endif %}>- Tri -</option>
@@ -77,8 +67,17 @@
                 <option {% if option2 == filiere %}selected{% endif %}>{{ filiere }}</option>
             {% endfor %}
         </select>
-
     {% endif %}
+    
+    <!-- Gestion des pages-->
+    <div class="pages">
+        <p>
+            <input type="hidden" name="page" value="{{ page }}">
+            {% if page>0 %}<input type="submit" name="precedent" value="Page précédente">{% endif %}
+            <strong class="G">{{ page }}</strong>
+            <input type="submit" name="suivant" value="Page suivante">
+        </p>
+    </div>
 </form>
 
 {% if info_msg %}
