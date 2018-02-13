@@ -106,9 +106,9 @@ class MysqlObject:
         return self.cursor.fetchall()
 
     # Récupérations des infos utilisateurs pour page de profil
-    def get_user_info(self, name):
-        self.cursor.execute("""SELECT * FROM users WHERE nom=%s""", (name,))
-        return self.cursor.fetchall()
+    def get_user_info(self, mail):
+        self.cursor.execute("""SELECT * FROM users WHERE mail=%s""", (mail,))
+        return self.cursor.fetchall()[0]
 
     def add_participant(self, offre_id, participant):
         self.cursor.execute("""SELECT * FROM offres WHERE id=%s""", (offre_id,))

@@ -10,9 +10,10 @@
 
 {% include 'HEADER.html' %}
 
-{% for info in infos %}
-    <p>{{ info }}</p>
-{% endfor %}
+<p>Nom: {{ infos[0] }}</p>
+<p>Mail: {{ infos[2] }}</p>
+<p>Niveau: {{ infos[3] }}</p>
+<p>Filière: {{ infos[4] }}</p>
 
 
 {% include 'FOOTER.html' %}

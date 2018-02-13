@@ -43,7 +43,7 @@ def inscription():
 def profil():
     sql_obj = sql.MysqlObject()
     admin_user = False
-    return render_template("profil.html", **locals(), infos=sql_obj.get_user_info("Antoine Labarussias"))
+    return render_template("profil.html", **locals(), infos=sql_obj.get_user_info("antoinelabarussias@orange.fr"))
 
 
 # Page d'Administration
