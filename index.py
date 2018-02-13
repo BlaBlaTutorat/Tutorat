@@ -5,10 +5,10 @@ import sql
 app = Flask(__name__)
 
 
-# Page d'accueil
+# Page d'accueil qui redirige vers la page de recherche si l'utilisateur est connecté
 @app.route('/')
 def index():
-    return "Accueil"
+    return redirect(url_for("recherche"))
 
 
 # Page de connection
@@ -125,8 +125,8 @@ def traitement_creation():
         sql_obj = sql.MysqlObject()
         sql_obj.create_offre(request.form.get('auteur'), request.form.get('niveau'), request.form.get('filiere'),
                              request.form.get('matiere'), horaires)
-        return redirect(url_for("recherche",
-                                info_msg="Votre offre a bien été créée. Elle est actuellement en attente de validation."))
+        return redirect(url_for(
+            "recherche", info_msg="Votre offre a bien été créée. Elle est actuellement en attente de validation."))
     else:
         # Erreur
         return render_template("error.html", message="Vous n'avez pas remplis tous les champs requis (horaires)")

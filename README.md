@@ -7,11 +7,11 @@ Langages:
 - CSS
 
 Mise en page:
-- 1 Page d'accueil
 - 1 Page de connexion
 - 1 Page d'inscription
 - 1 Page Recherche
 - 1 Page Poster des offres
+- 1 Page Gestion administrateur
     
 Tables:
 
