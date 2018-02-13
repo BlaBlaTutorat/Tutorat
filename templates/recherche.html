@@ -90,21 +90,22 @@
                     <p class="element"><strong class="G">Niveau:</strong> {{ offre[2] }}</p>
                     <p class="element"><strong class="G">Filière:</strong> {{ offre[3] }}</p>
                     <p class="element"><strong class="G">Matière:</strong> {{ offre[4] }}</p>
-                    <div class="element"><strong class="G">Horaires:</strong>
-                        <table>{% for i in range(0,12,2) %}{% if offre[9+i] is not none and offre[10+i] is not none %}
-                            <tr>
-                                <th>{{ days[i//2] }}</th>
-                                <!-- Conversion hh-mm-ss vers hh-mm -->
-                                <td>Début:{{ ':'.join((offre[9+i]|string).split(':')[:2]) }}</td>
-                                <td>Fin:{{ ':'.join((offre[10+i]|string).split(':')[:2]) }}</td>
-                            </tr>
-                        {% endif %}{% endfor %}
-                        </table>
-                    </div>
                     <form class="bouton" method="post" action="apply">
                         <input type="hidden" name="id" value="{{ offre[0] }}"/>
                         <input type="submit" value="Accepter l'offre"/>
                     </form>
+                </div>
+                <div class="horraire">
+                    <div class="table">
+                        {% for i in range(0,12,2) %}{% if offre[9+i] is not none and offre[10+i] is not none %}
+                            <p>{{ days[i//2] }}:</p>
+                        {% endif %}{% endfor %}
+                    </div>
+                    <div class="table">
+                        {% for i in range(0,12,2) %}{% if offre[9+i] is not none and offre[10+i] is not none %}
+                            <p>{{ 'h'.join((offre[9+i]|string).split(':')[:2]) }} - {{ 'h'.join((offre[10+i]|string).split(':')[:2]) }}</p>
+                        {% endif %}{% endfor %}
+                    </div>
                 </div>
                 <div class="not">
                     <p class="time"><strong class="G">Publié le:</strong> {{ offre[5].strftime('%d-%m-%Y') }}</p>
