@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  mar. 13 fév. 2018 à 15:53
+-- Généré le :  mar. 13 fév. 2018 à 20:50
 -- Version du serveur :  5.7.19
 -- Version de PHP :  5.6.31
 
@@ -226,7 +226,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `filiere` varchar(15) NOT NULL,
   `admin` tinyint(1) NOT NULL DEFAULT '0',
   `ban` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`nom`)
+  PRIMARY KEY (`mail`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -234,8 +234,8 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`nom`, `mdp`, `mail`, `niveau`, `filiere`, `admin`, `ban`) VALUES
-('Antoine Labarussias', 'antoine', '?', 'Terminale', 'S', 1, 0),
-('Marco Desmoulins', 'marco', '?', 'Terminale', 'S', 1, 0),
+  ('Antoine Labarussias', 'antoine', 'antoinelabarussias@orange.fr', 'Terminale', 'S', 1, 0),
+  ('Marco Desmoulins', 'marco', 'markopelo@gmail.com', 'Terminale', 'S', 1, 0),
 ('Tao Blancheton', 'notehcnalb.oat', 'taotom63@gmail.com', 'Terminale', 'S', 1, 0);
 COMMIT;
 
