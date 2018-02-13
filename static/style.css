@@ -21,6 +21,20 @@ textarea
 
 
 /* Commun */
+.password
+{
+    background-color: #f8f8f8;
+    border: 2px solid #ccc;
+    color: black;
+    text-decoration: none;
+    cursor: text;    
+    border-radius: 4px;
+    width: 40%;
+    height: 25px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+}
+
 .created
 {
     position: fixed;
