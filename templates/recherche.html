@@ -85,7 +85,7 @@
         {% for offre in offres %}
             <br/>
             <div class="bloc">
-                <div class="not">
+                <div class="info">
                     <p class="element"><strong class="G">Auteur:</strong> {{ offre[1] }}</p>
                     <p class="element"><strong class="G">Niveau:</strong> {{ offre[2] }}</p>
                     <p class="element"><strong class="G">Filière:</strong> {{ offre[3] }}</p>
@@ -95,19 +95,21 @@
                         <input type="submit" value="Accepter l'offre"/>
                     </form>
                 </div>
-                <div class="horaire">
-                    <div class="table">
-                        {% for i in range(0,12,2) %}{% if offre[9+i] is not none and offre[10+i] is not none %}
-                            <p>{{ days[i//2] }}:</p>
-                        {% endif %}{% endfor %}
-                    </div>
-                    <div class="table">
-                        {% for i in range(0,12,2) %}{% if offre[9+i] is not none and offre[10+i] is not none %}
-                            <p>{{ 'h'.join((offre[9+i]|string).split(':')[:2]) }} - {{ 'h'.join((offre[10+i]|string).split(':')[:2]) }}</p>
-                        {% endif %}{% endfor %}
+                <div id="horraires">
+                    <div class="horraire">
+                        <div class="table">
+                            {% for i in range(0,12,2) %}{% if offre[9+i] is not none and offre[10+i] is not none %}
+                                <p>{{ days[i//2] }}:</p>
+                            {% endif %}{% endfor %}
+                        </div>
+                        <div class="table" id="table_horraires">
+                            {% for i in range(0,12,2) %}{% if offre[9+i] is not none and offre[10+i] is not none %}
+                                <p>{{ 'h'.join((offre[9+i]|string).split(':')[:2]) }} - {{ 'h'.join((offre[10+i]|string).split(':')[:2]) }}</p>
+                            {% endif %}{% endfor %}
+                        </div>
                     </div>
                 </div>
-                <div>
+                <div class="date">
                     <p class="time"><strong class="G">Publié le:</strong> {{ offre[5].strftime('%d-%m-%Y') }}</p>
                 </div>
             </div>
@@ -118,9 +120,12 @@
     {% endif %}
 </div>
 
-<div>
-    <p>{% if page>0 %}<a href="search?page={{ page-1 }}">Page précédente</a>{% endif %} {{ page }} <a
-            href="search?page={{ 1+page }}">Page suivante</a></p>
+<div class="pages">
+    {% if page>0 %}
+        <p><a href="search?page={{ page-1 }}">Page précédente</a><strong class="G" id="nb_page">{{ page }}</strong><a href="search?page={{ 1+page }}">Page suivante</a></p>
+    {% else %}
+        <p><strong class="G">{{ page }}</strong><a href="search?page={{ 1+page }}">Page suivante</a></p>
+    {% endif %}
 </div>
 
 {% include 'FOOTER.html' %}
