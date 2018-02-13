@@ -5,6 +5,7 @@ import mysql.connector
 
 horaires_reference = ["debut_j0", "fin_j0", "debut_j1", "fin_j1", "debut_j2", "fin_j2", "debut_j3", "fin_j3",
                       "debut_j4", "fin_j4", "debut_j5", "fin_j5"]
+offre_par_page = 5
 
 
 class MysqlObject:
@@ -55,12 +56,6 @@ class MysqlObject:
             matieres.append(row[0])
         return matieres
 
-    # Listes des offres
-    def offres_liste(self):
-        self.cursor.execute(
-            """SELECT * FROM offres WHERE disponible=1 AND (participant IS NULL OR participant2 IS NULL)""")
-        return self.cursor.fetchall()
-
     # Création d"une offre
     def create_offre(self, author, niveau, filiere, matiere, horaires):
         date_time = datetime.datetime.now()
@@ -79,23 +74,34 @@ class MysqlObject:
 
         self.conn.commit()
 
+    # Listes des offres
+    def offres_liste(self, page):
+        self.cursor.execute(
+            """SELECT * FROM offres WHERE disponible=1 AND (participant IS NULL OR participant2 IS NULL) LIMIT """ +
+            str(offre_par_page) + """ OFFSET """ + str(page * offre_par_page))
+        return self.cursor.fetchall()
+
     # Liste des offres selon 1 facteur de tri
-    def offres_liste_tri(self, option):
+    def offres_liste_tri(self, option, page):
         if option == "niveau":
             # Procédure spéciale pour les niveaux pour avoir un tri cohérent
             self.cursor.execute(
                 """SELECT * FROM offres WHERE disponible=1 AND (participant IS NULL OR participant2 IS NULL) 
-                ORDER BY CASE """ + option + """ WHEN 'Seconde' THEN 1 WHEN 'Première' THEN 2 WHEN 'Terminale'
-                 THEN 3 WHEN 'CPGE première année' THEN 4 WHEN 'CPGE deuxième année' THEN 5 END""")
+                ORDER BY CASE niveau WHEN 'Seconde' THEN 1 WHEN 'Première' THEN 2 WHEN 'Terminale'
+                 THEN 3 WHEN 'CPGE première année' THEN 4 WHEN 'CPGE deuxième année' THEN 5 END LIMIT """ +
+                str(offre_par_page) + """ OFFSET """ + str(page * offre_par_page))
         else:
-            self.cursor.execute("""SELECT * FROM offres WHERE disponible=1 ORDER BY """ + option)
+            self.cursor.execute(
+                """SELECT * FROM offres WHERE disponible=1 ORDER BY """ + option + """ LIMIT """ +
+                str(offre_par_page) + """ OFFSET """ + str(page * offre_par_page))
         return self.cursor.fetchall()
 
     # Liste des offres selon 1 facteur de tri + 1 niveau/matiere préférée
-    def offres_liste_tri_2(self, option, option2):
+    def offres_liste_tri_2(self, option, option2, page):
         self.cursor.execute(
             'SELECT * FROM offres WHERE disponible=1 AND (participant IS NULL OR participant2 IS NULL) ORDER BY CASE ' +
-            option + ' WHEN "' + option2 + '" THEN 1 ELSE ' + option + ' END')
+            option + ' WHEN "' + option2 + '" THEN 1 ELSE ' + option + ' END LIMIT ' +
+            str(offre_par_page) + ' OFFSET ' + str(page * offre_par_page))
 
         return self.cursor.fetchall()
 

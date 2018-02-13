@@ -15,17 +15,26 @@ def index():
 # Page de connection
 @app.route('/login')
 def connection():
+    # Propre à cette page
+    hidemenu = True
+
+    admin_user = False
     info_msg = None
     if request.args.get('info_msg'):
         info_msg = request.args.get('info_msg')
-    return render_template("connexion.html", admin=False, hidemenu=True, info_msg=info_msg)
+    return render_template("connexion.html", **locals())
 
 
 # Page d'inscription
 @app.route('/register')
 def inscription():
     sql_obj = sql.MysqlObject()
-    return render_template("inscription.html", admin=False, hidemenu=True, niveaux=sql_obj.niveaux_liste(),
+    # Propre à cette page
+    hidemenu = True
+
+    admin_user = False
+
+    return render_template("inscription.html", **locals(), niveaux=sql_obj.niveaux_liste(),
                            filieres=sql_obj.filieres_liste())
 
 
@@ -33,7 +42,8 @@ def inscription():
 @app.route('/profil')
 def profil():
     sql_obj = sql.MysqlObject()
-    return render_template("profil.html", infos=sql_obj.get_user_info("Antoine Labarussias"))
+    admin_user = False
+    return render_template("profil.html", **locals(), infos=sql_obj.get_user_info("Antoine Labarussias"))
 
 
 # Administration
@@ -45,36 +55,44 @@ def admin():
 # Mot de passe oublié
 @app.route('/forgot')
 def mdp_oublie():
-    return render_template("mdp_oublie.html", admin=False, hidemenu=True)
+    # Propre à cette page
+    hidemenu = True
+
+    admin_user = False
+    return render_template("mdp_oublie.html", **locals())
 
 
 # Page de recherche d'offres
 @app.route('/search', methods=['GET', 'POST'])
 def recherche():
     sql_obj = sql.MysqlObject()
+    admin_user = False
     info_msg = None
     if request.args.get('info_msg'):
         info_msg = request.args.get('info_msg')
 
+    if request.args.get('page'):
+        page = int(request.args.get('page'))
+    else:
+        page = 0
+
     if len(request.form) == 1:
         # Formulaire de tri première étape
-        return render_template("recherche.html", admin=False, user="Moi",
-                               offres=sql_obj.offres_liste_tri(request.form.get("option")),
-                               info_msg=info_msg, option=request.form.get("option"), matieres=sql_obj.matieres_liste(),
-                               niveaux=sql_obj.niveaux_liste(), filieres=sql_obj.filieres_liste(), days=days)
+        option = request.form.get("option")
+        return render_template("recherche.html", **locals(), offres=sql_obj.offres_liste_tri(option, page),
+                               matieres=sql_obj.matieres_liste(), niveaux=sql_obj.niveaux_liste(),
+                               filieres=sql_obj.filieres_liste(), days=days)
     elif len(request.form) > 1:
         # Formulaire de tri deuxième étape
-        return render_template("recherche.html", admin=False, user="Moi",
-                               offres=sql_obj.offres_liste_tri_2(request.form.get("option"),
-                                                                 request.form.get("option2")),
-                               info_msg=info_msg, option=request.form.get("option"),
-                               option2=request.form.get("option2"), days=days,
+        option = request.form.get("option")
+        option2 = request.form.get("option2")
+        return render_template("recherche.html",
+                               offres=sql_obj.offres_liste_tri_2(option, option2, page), **locals(), days=days,
                                matieres=sql_obj.matieres_liste(), niveaux=sql_obj.niveaux_liste(),
                                filieres=sql_obj.filieres_liste())
     else:
         # Pas de formulaire de tri
-        return render_template("recherche.html", admin=False, user="Moi", offres=sql_obj.offres_liste(),
-                               info_msg=info_msg, days=days)
+        return render_template("recherche.html", **locals(), offres=sql_obj.offres_liste(page), days=days)
 
 
 # Page d'enregistrement (s'enregistrer en tant que participant)
@@ -98,7 +116,9 @@ def enregistrement():
 @app.route('/create', methods=['GET'])
 def creation():
     sql_obj = sql.MysqlObject()
-    return render_template("creation.html", admin=False, user="Moi", niveaux=sql_obj.niveaux_liste(),
+    admin_user = False
+    user = "Moi"
+    return render_template("creation.html", **locals(), niveaux=sql_obj.niveaux_liste(),
                            matieres=sql_obj.matieres_liste(), filieres=sql_obj.filieres_liste(), days=days)
 
 
