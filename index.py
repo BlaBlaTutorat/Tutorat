@@ -38,7 +38,7 @@ def inscription():
                            filieres=sql_obj.filieres_liste())
 
 
-# Profil
+# Page de Profil
 @app.route('/profil')
 def profil():
     sql_obj = sql.MysqlObject()
@@ -46,7 +46,7 @@ def profil():
     return render_template("profil.html", **locals(), infos=sql_obj.get_user_info("Antoine Labarussias"))
 
 
-# Administration
+# Page d'Administration
 @app.route('/admin')
 def admin():
     return "Administration"
