@@ -16,9 +16,9 @@ Mise en page:
 Tables:
 
 - Utilisateurs:
-    - Login(PRIMARY)
+    - Nom
     - Mot de passe
-    - Email
+    - Email (PRIMARY)
     - Niveau
     - Filière
     - Ban (boolean)
@@ -37,7 +37,7 @@ Tables:
     - Créneaux horaires
 
 - Matières:
-    - Nom(PRIMARY)
+    - Nom (PRIMARY)
 
 - Classes:
     - Id (PRIMARY)
