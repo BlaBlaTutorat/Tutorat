@@ -516,3 +516,36 @@ footer .copyright li
     margin-top: 0px;
 }
 /* Fin MDP ouvlié */
+
+
+/* Erreur */
+.error
+{
+    margin: auto;
+    margin-top: 50px;
+    margin-bottom: 54px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.error p
+{
+    text-align: center;
+    color: #615a5f;
+    font-size: 3em;
+    font-family: sans-serif;
+    font-weight: bold;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+    margin-top: 0px;
+}
+
+.error img
+{
+    margin-top: 0px;
+    margin-bottom: 0px;
+    height: 560px;
+    width: 980px;
+}
+/* Fin Erreur */
