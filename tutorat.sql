@@ -108,7 +108,7 @@ INSERT INTO `matieres` (`nom`) VALUES
 ('Littérature'),
 ('Littérature en langue vivante étrangère'),
 ('LVA'),
-('Mathèmatiques'),
+  ('Mathématiques'),
 ('Philosophie'),
 ('Physique-Chime'),
 ('Russe'),
