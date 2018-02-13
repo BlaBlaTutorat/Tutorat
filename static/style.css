@@ -249,6 +249,29 @@ footer .copyright li
     font-size: 0.6em;
     font-family: sans-serif;
 }
+
+.offres .table
+{
+    margin: auto;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.table p
+{
+    margin-bottom: 4px;
+    margin-top: 4px;
+}
+
+.offres .horraire
+{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 3px;
+    background: #615a5f;
+    border-radius: 5px;
+    color: rgb(255,245,234);
+}
 /* Fin Recherche des offres */
 
 
