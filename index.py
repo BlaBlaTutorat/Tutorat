@@ -1,4 +1,5 @@
 from flask import *
+
 import sql
 
 app = Flask(__name__)
@@ -44,12 +45,6 @@ def admin():
 @app.route('/forgot')
 def mdp_oublie():
     return render_template("mdp_oublie.html", admin=False, hidemenu=True)
-
-
-# Page de validation
-@app.route('/validate')
-def validation():
-    return render_template("validation.html", admin=False)
 
 
 # Page de recherche d'offres
