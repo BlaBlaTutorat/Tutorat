@@ -158,19 +158,19 @@ def traitement_creation():
 # Gestion de l'erreur 404
 @app.errorhandler(404)
 def not_found(error):
-    return render_template("error.html", message="Erreur 404: Ressource non trouvée.")
+    return render_template("error.html", message="Erreur 404 - Ressource non trouvée")
 
 
 # Gestion de l'erreur 403
 @app.errorhandler(403)
 def forbidden(error):
-    return render_template("error.html", message="Erreur 403: Accès Interdit.")
+    return render_template("error.html", message="Erreur 403 - Accès Interdit")
 
 
 # Gestion de l'erreur 405
 @app.errorhandler(405)
 def method_not_allowed(error):
-    return render_template("error.html", message="Erreur 405: Méthode de requête non autorisée.")
+    return render_template("error.html", message="Erreur 405 - Méthode de requête non autorisée")
 
 
 # Lancement du serveur lors de l'exécution du fichier
