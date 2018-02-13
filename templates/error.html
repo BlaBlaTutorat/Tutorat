@@ -9,9 +9,10 @@
 
 {% include 'HEADER.html' %}
 
-<p>Une erreur est survenue</p>
-
-<p>{{ message }}</p>
+<div class="error">
+	<p>{{ message }}</p>
+	<p><img src="/static/error.png" alt=""</p>	
+</div>
 
 {% include 'FOOTER.html' %}
 
