@@ -12,64 +12,73 @@
 
 <!-- Critères de recherche -->
 <form class="search" method="post" action="search">
-    <fieldset>
-        <!-- Rechargement de la page lors du changement de la méthode de tri -->
-        <select class="tri" name="option" required onchange="this.form.submit()">
-            <option value="" disabled {% if not option %}selected{% endif %}>- Tri -</option>
-            <option value="date_time" {% if option == "date_time" %}selected{% endif %}>Date croissante</option>
-            <option value="niveau" {% if option == "niveau" %}selected{% endif %}>Niveau</option>
-            <option value="filiere" {% if option == "filiere" %}selected{% endif %}>Filière</option>
-            <option value="matiere" {% if option == "matiere" %}selected{% endif %}>Matière</option>
+
+    <!-- Gestion des pages-->
+    <div class="pages">
+        <p>
+            <input type="hidden" name="page" value="{{ page }}">
+            {% if page>0 %}<input type="submit" name="precedent" value="Page précédente">{% endif %}
+            <strong class="G">{{ page }}</strong>
+            <input type="submit" name="suivant" value="Page suivante">
+        </p>
+    </div>
+
+    <!-- Rechargement de la page lors du changement de la méthode de tri -->
+    <select class="tri" name="option" onchange="this.form.submit()">
+        <option value="" disabled {% if not option %}selected{% endif %}>- Tri -</option>
+        <option value="date_time" {% if option == "date_time" %}selected{% endif %}>Date croissante</option>
+        <option value="niveau" {% if option == "niveau" %}selected{% endif %}>Niveau</option>
+        <option value="filiere" {% if option == "filiere" %}selected{% endif %}>Filière</option>
+        <option value="matiere" {% if option == "matiere" %}selected{% endif %}>Matière</option>
+    </select>
+
+    {% if not option2 and (option == "niveau" or option == "matiere" or option == "filiere") %}
+        <!-- Paramètre de tri 2 pas encore défini-->
+        <select class="tri" name="option2" onchange="this.form.submit()">
+
+            <option value="" disabled selected>- Tri -</option>
+            {% if option == "niveau" %}
+                {% for niveau in niveaux %}
+                    <option>{{ niveau }}</option>
+                {% endfor %}
+            {% elif option == "matiere" %}
+                {% for matiere in matieres %}
+                    <option>{{ matiere }}</option>
+                {% endfor %}
+            {% elif option == "filiere" %}
+                {% for filiere in filieres %}
+                    <option>{{ filiere }}</option>
+                {% endfor %}
+            {% endif %}
+        </select>
+    {% elif option2 and option=="niveau" %}
+        <!-- Paramètre de tri 2 défini-->
+        <select class="tri" name="option2" onchange="this.form.submit()">
+            <option value="" disabled selected>- Tri -</option>
+            {% for niveau in niveaux %}
+                <option {% if option2 == niveau %}selected{% endif %}>{{ niveau }}</option>
+            {% endfor %}
         </select>
 
-        {% if not option2 and (option == "niveau" or option == "matiere" or option == "filiere") %}
-            <!-- Paramètre de tri 2 pas encore défini-->
-            <select class="tri" name="option2" onchange="this.form.submit()">
+    {% elif option2 and option=="matiere" %}
+        <!-- Paramètre de tri 2 défini-->
+        <select class="tri" name="option2" onchange="this.form.submit()">
+            <option value="" disabled selected>- Tri -</option>
+            {% for matiere in matieres %}
+                <option {% if option2 == matiere %}selected{% endif %}>{{ matiere }}</option>
+            {% endfor %}
+        </select>
 
-                <option value="" disabled selected>- Tri -</option>
-                {% if option == "niveau" %}
-                    {% for niveau in niveaux %}
-                        <option>{{ niveau }}</option>
-                    {% endfor %}
-                {% elif option == "matiere" %}
-                    {% for matiere in matieres %}
-                        <option>{{ matiere }}</option>
-                    {% endfor %}
-                {% elif option == "filiere" %}
-                    {% for filiere in filieres %}
-                        <option>{{ filiere }}</option>
-                    {% endfor %}
-                {% endif %}
-            </select>
-        {% elif option2 and option=="niveau" %}
-            <!-- Paramètre de tri 2 défini-->
-            <select class="tri" name="option2" onchange="this.form.submit()">
-                <option value="" disabled selected>- Tri -</option>
-                {% for niveau in niveaux %}
-                    <option {% if option2 == niveau %}selected{% endif %}>{{ niveau }}</option>
-                {% endfor %}
-            </select>
+    {% elif option2 and option=="filiere" %}
+        <!-- Paramètre de tri 2 défini-->
+        <select class="tri" name="option2" onchange="this.form.submit()">
+            <option value="" disabled selected>- Tri -</option>
+            {% for filiere in filieres %}
+                <option {% if option2 == filiere %}selected{% endif %}>{{ filiere }}</option>
+            {% endfor %}
+        </select>
 
-        {% elif option2 and option=="matiere" %}
-            <!-- Paramètre de tri 2 défini-->
-            <select class="tri" name="option2" onchange="this.form.submit()">
-                <option value="" disabled selected>- Tri -</option>
-                {% for matiere in matieres %}
-                    <option {% if option2 == matiere %}selected{% endif %}>{{ matiere }}</option>
-                {% endfor %}
-            </select>
-
-        {% elif option2 and option=="filiere" %}
-            <!-- Paramètre de tri 2 défini-->
-            <select class="tri" name="option2" onchange="this.form.submit()">
-                <option value="" disabled selected>- Tri -</option>
-                {% for filiere in filieres %}
-                    <option {% if option2 == filiere %}selected{% endif %}>{{ filiere }}</option>
-                {% endfor %}
-            </select>
-
-        {% endif %}
-    </fieldset>
+    {% endif %}
 </form>
 
 {% if info_msg %}
@@ -104,7 +113,8 @@
                         </div>
                         <div class="table" id="table_horraires">
                             {% for i in range(0,12,2) %}{% if offre[9+i] is not none and offre[10+i] is not none %}
-                                <p>{{ 'h'.join((offre[9+i]|string).split(':')[:2]) }} - {{ 'h'.join((offre[10+i]|string).split(':')[:2]) }}</p>
+                                <p>{{ 'h'.join((offre[9+i]|string).split(':')[:2]) }}
+                                    - {{ 'h'.join((offre[10+i]|string).split(':')[:2]) }}</p>
                             {% endif %}{% endfor %}
                         </div>
                     </div>
@@ -117,14 +127,6 @@
         {% endfor %}
     {% else %}
         <p>Aucune offre n'a été trouvée</p>
-    {% endif %}
-</div>
-
-<div class="pages">
-    {% if page>0 %}
-        <p><a href="search?page={{ page-1 }}">Page précédente</a><strong class="G" id="nb_page">{{ page }}</strong><a href="search?page={{ 1+page }}">Page suivante</a></p>
-    {% else %}
-        <p><strong class="G">{{ page }}</strong><a href="search?page={{ 1+page }}">Page suivante</a></p>
     {% endif %}
 </div>
 

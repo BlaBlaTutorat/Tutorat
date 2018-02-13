@@ -71,19 +71,22 @@ def recherche():
     if request.args.get('info_msg'):
         info_msg = request.args.get('info_msg')
 
-    if request.args.get('page'):
-        page = int(request.args.get('page'))
+    if request.form.get('precedent'):
+        page = int(request.form.get('page')) - 1
+    elif request.form.get('suivant'):
+        page = int(request.form.get('page')) + 1
     else:
         page = 0
 
-    if len(request.form) == 1:
+    if request.form.get("option") and not request.form.get("option2"):
         # Formulaire de tri première étape
         option = request.form.get("option")
         return render_template("recherche.html", **locals(), offres=sql_obj.offres_liste_tri(option, page),
                                matieres=sql_obj.matieres_liste(), niveaux=sql_obj.niveaux_liste(),
                                filieres=sql_obj.filieres_liste(), days=days)
-    elif len(request.form) > 1:
+    elif request.form.get("option") and request.form.get("option2"):
         # Formulaire de tri deuxième étape
+        print("2")
         option = request.form.get("option")
         option2 = request.form.get("option2")
         return render_template("recherche.html",
