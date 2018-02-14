@@ -14,10 +14,10 @@
 <h2 class="crea_title">Création d'une offre de Tutorat</h2>
 
 <!-- Formulaire de création -->
-<div class="creation">
-    <div class="bloc">
-        <div class="info_crea">            
-            <form method="post" action="create">
+<form method="post" action="create" class="form_crea">
+    <div class="creation">
+        <div class="bloc">
+            <div class="info_crea">            
                 <input type="hidden" name="auteur" value="{{ user }}">
                 <!-- Elève -->
                 <p class="element"><strong class="G">Vous voulez aider un élève de : </strong> <SELECT name="niveau" class="tri3" required>
@@ -40,26 +40,25 @@
                     {% endfor %}
                 </SELECT></p>
                 <input type="submit" class="crea_offre" value="Créer mon offre"/>
-            </form>
-        </div>
-        <!-- Horaires -->
-        <div id="horraires_crea">
-            <div class="horraire">
-                <div class="table_crea">
-                    {% for i in range(0,6) %}
-                        <p class="jours">{{ days[i] }}: </p>
-                    {% endfor %}
-                </div>
-                <div class="table_crea" id="table_horraires_crea">
-                    {% for i in range(0,6) %}
-                        <p><input type="time" name="debut_j{{ i }}" step="600" min="07:00" max="20:00"/><input type="time" name="fin_j{{ i }}" step="600" min="07:00" max="20:00"/></p>
-                    {% endfor %}
+            </div>
+            <!-- Horaires -->
+            <div id="horraires_crea">
+                <div class="horraire">
+                    <div class="table_crea">
+                        {% for i in range(0,6) %}
+                            <p class="jours">{{ days[i] }}: </p>
+                        {% endfor %}
+                    </div>
+                    <div class="table_crea" id="table_horraires_crea">
+                        {% for i in range(0,6) %}
+                            <p><input type="time" name="debut_j{{ i }}" step="600" min="07:00" max="20:00"/><input type="time" name="fin_j{{ i }}" step="600" min="07:00" max="20:00"/></p>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
+</form>
 {% include 'FOOTER.html' %}
 
 </body>
