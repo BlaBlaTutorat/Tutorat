@@ -5,7 +5,7 @@ import mysql.connector
 
 horaires_reference = ["debut_j0", "fin_j0", "debut_j1", "fin_j1", "debut_j2", "fin_j2", "debut_j3", "fin_j3",
                       "debut_j4", "fin_j4", "debut_j5", "fin_j5"]
-offre_par_page = 5
+offre_par_page = 4
 
 
 class MysqlObject:
