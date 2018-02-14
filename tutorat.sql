@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  mar. 13 fév. 2018 à 20:50
+-- Généré le :  mer. 14 fév. 2018 à 23:10
 -- Version du serveur :  5.7.19
 -- Version de PHP :  5.6.31
 
@@ -108,7 +108,7 @@ INSERT INTO `matieres` (`nom`) VALUES
 ('Littérature'),
 ('Littérature en langue vivante étrangère'),
 ('LVA'),
-  ('Mathématiques'),
+('Mathématiques'),
 ('Philosophie'),
 ('Physique-Chime'),
 ('Russe'),
@@ -176,7 +176,7 @@ CREATE TABLE IF NOT EXISTS `offres` (
   `debut_j5` time DEFAULT NULL,
   `fin_j5` time DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `offres`
@@ -188,7 +188,11 @@ INSERT INTO `offres` (`id`, `auteur`, `niveau`, `filiere`, `matiere`, `date_time
 (3, 'Antoine Labarussias', 'Terminale', 'S', 'Science de l\'ingénieur', '2018-02-22 00:00:00', NULL, NULL, 1, '13:00:00', '14:00:00', '17:00:00', '18:00:00', NULL, NULL, '14:00:00', '15:00:00', NULL, NULL, '08:00:00', '09:00:00'),
 (4, 'Jean Kévin', 'Seconde', 'Aucune filière (2nd)', 'Français', '2018-02-22 00:00:00', NULL, NULL, 1, '08:00:00', '10:00:00', '11:00:00', '13:00:00', NULL, NULL, '15:00:00', '16:00:00', NULL, NULL, '08:00:00', '09:00:00'),
 (5, 'Alexis Ducont', 'Première', 'L', 'ISN', '2018-02-19 14:15:41', NULL, NULL, 1, '10:00:00', '11:00:00', NULL, NULL, NULL, NULL, '08:00:00', '09:00:00', NULL, NULL, NULL, NULL),
-(6, 'Lola Blachard', 'Seconde', 'Aucune filière (2nd)', 'Science de l\'ingénieur', '2018-02-22 00:00:00', NULL, NULL, 1, '15:00:00', '16:00:00', NULL, NULL, '17:00:00', '18:00:00', '10:00:00', '11:00:00', NULL, NULL, '09:00:00', '10:00:00');
+(6, 'Lola Blachard', 'Seconde', 'Aucune filière (2nd)', 'Science de l\'ingénieur', '2018-02-22 00:00:00', NULL, NULL, 1, '15:00:00', '16:00:00', NULL, NULL, '17:00:00', '18:00:00', '10:00:00', '11:00:00', NULL, NULL, '09:00:00', '10:00:00'),
+(7, 'Tao Blancheton', 'Première', 'S', 'Mathématiques', '2018-02-14 23:49:13', NULL, NULL, 1, '08:00:00', '10:00:00', NULL, NULL, '11:00:00', '12:00:00', NULL, NULL, NULL, NULL, '09:00:00', '10:00:00'),
+(8, 'Tao Blancheton', 'Seconde', 'L', 'Anglais', '2018-02-14 23:52:44', NULL, NULL, 1, NULL, NULL, '09:00:00', '10:00:00', NULL, NULL, NULL, NULL, NULL, NULL, '08:00:00', '09:00:00'),
+(9, 'Tao Blancheton', 'Première', 'ES', 'Allemand', '2018-02-15 00:03:54', NULL, NULL, 1, '07:00:00', '08:00:00', NULL, NULL, NULL, NULL, '15:00:00', '16:00:00', NULL, NULL, NULL, NULL),
+(10, 'Tao Blancheton', 'Terminale', 'ES', 'SES', '2018-02-15 00:06:55', NULL, NULL, 1, NULL, NULL, '07:10:00', '10:40:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -234,8 +238,8 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`nom`, `mdp`, `mail`, `niveau`, `filiere`, `admin`, `ban`) VALUES
-  ('Antoine Labarussias', 'antoine', 'antoinelabarussias@orange.fr', 'Terminale', 'S', 1, 0),
-  ('Marco Desmoulins', 'marco', 'markopelo@gmail.com', 'Terminale', 'S', 1, 0),
+('Antoine Labarussias', 'antoine', 'antoinelabarussias@orange.fr', 'Terminale', 'S', 1, 0),
+('Marco Desmoulins', 'marco', 'markopelo@gmail.com', 'Terminale', 'S', 1, 0),
 ('Tao Blancheton', 'tao', 'taotom63@gmail.com', 'Terminale', 'S', 1, 0);
 COMMIT;
 
