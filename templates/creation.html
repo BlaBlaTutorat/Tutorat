@@ -10,55 +10,52 @@
 
 {% include 'HEADER.html' %}
 
+
+<h2 class="crea_title">Création d'une offre de Tutorat</h2>
+<input type="hidden" name="auteur" value="{{ user }}">
+
 <!-- Formulaire de création -->
-<form method="post" action="create">
-    <h1>Création d'une offre de Tutorat:</h1>
-    <h2>Auteur: {{ user }}</h2>
-    <input type="hidden" name="auteur" value="{{ user }}">
-
-    <!-- Niveau -->
-    <p>Vous voulez aider un élève ayant un niveau :
-        <SELECT name="niveau" size="1" required>
-            <option value="" disabled selected>-sélectionnez un niveau-</option>
-            {% for niveau in niveaux %}
-                <option>{{ niveau }}</option>
-            {% endfor %}
-        </SELECT>
-        dans la filière :
-        <SELECT name="filiere" size="1" required>
-            <option value="" disabled selected>-sélectionnez une filière-</option>
-            {% for filiere in filieres %}
-                <option>{{ filiere }}</option>
-            {% endfor %}
-        </SELECT>
-    </p>
-
-    <!-- Matière -->
-    <p>Vous souhaitez l'aider en :
-        <SELECT name="matiere" size="1" required>
-            <option value="" disabled selected>-sélectionnez une matiere-</option>
-            {% for matiere in matieres %}
-                <option>{{ matiere }}</option>
-            {% endfor %}
-        </SELECT>
-    </p>
-
-    <fieldset><!-- Horaires -->
-        <legend>Vos disponibilités (laissez vide en cas d'impossibilité)</legend>
-        <table>
-            {% for i in range(0,6) %}
-                <tr>
-                    <th>{{ days[i] }}</th>
-                    <td>Début <input type="time" name="debut_j{{ i }}" step="600" min="07:00" max="20:00"/></td>
-                    <td>Fin <input type="time" name="fin_j{{ i }}" step="600" min="07:00" max="20:00"/></td>
-                </tr>
-            {% endfor %}
-        </table>
-
-    </fieldset>
-
-    <input type="submit" value="Créer mon offre"/>
-</form>
+<div class="creation">
+    <div class="bloc">
+        <div class="info_crea">
+            <p class="element"><strong class="G">Vous voulez aider un élève de : </strong> <SELECT name="niveau" class="tri3" required>
+                <option value="" disabled selected>- Niveau -</option>
+                {% for niveau in niveaux %}
+                    <option>{{ niveau }}</option>
+                {% endfor %}
+            </SELECT>
+            <SELECT name="filiere" class="tri3" required>
+                <option value="" disabled selected>- Filière -</option>
+                {% for filiere in filieres %}
+                    <option>{{ filiere }}</option>
+                {% endfor %}
+            </SELECT></p>
+            <p class="element"><strong class="G">Vous souhaitez l'aider en : </strong> <SELECT name="matiere" class="tri3" required>
+                <option value="" disabled selected>- Matiere -</option>
+                {% for matiere in matieres %}
+                    <option>{{ matiere }}</option>
+                {% endfor %}
+            </SELECT></p>
+            <form class="bouton" method="post" action="apply">
+                <input type="submit" class="crea_offre" value="Créer mon offre"/>
+            </form>
+        </div>
+        <div id="horraires_crea">
+            <div class="horraire">
+                <div class="table_crea">
+                    {% for i in range(0,6) %}
+                        <p class="jours">{{ days[i] }}: </p>
+                    {% endfor %}
+                </div>
+                <div class="table_crea" id="table_horraires_crea">
+                    {% for i in range(0,6) %}
+                        <p><input type="time" name="debut_j{{ i }}" step="600" min="07:00" max="20:00"/><input type="time" name="fin_j{{ i }}" step="600" min="07:00" max="20:00"/></p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% include 'FOOTER.html' %}
 
