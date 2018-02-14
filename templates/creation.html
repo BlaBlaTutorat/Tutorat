@@ -12,34 +12,37 @@
 
 
 <h2 class="crea_title">Création d'une offre de Tutorat</h2>
-<input type="hidden" name="auteur" value="{{ user }}">
 
 <!-- Formulaire de création -->
 <div class="creation">
     <div class="bloc">
-        <div class="info_crea">
-            <p class="element"><strong class="G">Vous voulez aider un élève de : </strong> <SELECT name="niveau" class="tri3" required>
-                <option value="" disabled selected>- Niveau -</option>
-                {% for niveau in niveaux %}
-                    <option>{{ niveau }}</option>
-                {% endfor %}
-            </SELECT>
-            <SELECT name="filiere" class="tri3" required>
-                <option value="" disabled selected>- Filière -</option>
-                {% for filiere in filieres %}
-                    <option>{{ filiere }}</option>
-                {% endfor %}
-            </SELECT></p>
-            <p class="element"><strong class="G">Vous souhaitez l'aider en : </strong> <SELECT name="matiere" class="tri3" required>
-                <option value="" disabled selected>- Matiere -</option>
-                {% for matiere in matieres %}
-                    <option>{{ matiere }}</option>
-                {% endfor %}
-            </SELECT></p>
-            <form class="bouton" method="post" action="apply">
+        <div class="info_crea">            
+            <form method="post" action="create">
+                <input type="hidden" name="auteur" value="{{ user }}">
+                <!-- Elève -->
+                <p class="element"><strong class="G">Vous voulez aider un élève de : </strong> <SELECT name="niveau" class="tri3" required>
+                    <option value="" disabled selected>- Niveau -</option>
+                    {% for niveau in niveaux %}
+                        <option>{{ niveau }}</option>
+                    {% endfor %}
+                </SELECT>
+                <SELECT name="filiere" class="tri3" required>
+                    <option value="" disabled selected>- Filière -</option>
+                    {% for filiere in filieres %}
+                        <option>{{ filiere }}</option>
+                    {% endfor %}
+                </SELECT></p>
+                <!-- Matière -->
+                <p class="element"><strong class="G">Vous souhaitez l'aider en : </strong> <SELECT name="matiere" class="tri3" required>
+                    <option value="" disabled selected>- Matiere -</option>
+                    {% for matiere in matieres %}
+                        <option>{{ matiere }}</option>
+                    {% endfor %}
+                </SELECT></p>
                 <input type="submit" class="crea_offre" value="Créer mon offre"/>
             </form>
         </div>
+        <!-- Horaires -->
         <div id="horraires_crea">
             <div class="horraire">
                 <div class="table_crea">
