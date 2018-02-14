@@ -236,7 +236,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 INSERT INTO `users` (`nom`, `mdp`, `mail`, `niveau`, `filiere`, `admin`, `ban`) VALUES
   ('Antoine Labarussias', 'antoine', 'antoinelabarussias@orange.fr', 'Terminale', 'S', 1, 0),
   ('Marco Desmoulins', 'marco', 'markopelo@gmail.com', 'Terminale', 'S', 1, 0),
-('Tao Blancheton', 'notehcnalb.oat', 'taotom63@gmail.com', 'Terminale', 'S', 1, 0);
+('Tao Blancheton', 'tao', 'taotom63@gmail.com', 'Terminale', 'S', 1, 0);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
