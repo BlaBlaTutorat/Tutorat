@@ -583,3 +583,101 @@ footer .copyright li
     font-size: 1.5em;
 }
 /* Fin Profil */
+
+
+/* Création */
+.creation
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: auto;
+}
+
+.creation .bloc
+{
+    background: rgb(255,245,234);
+    border-radius: 10px;
+    border-color: #615a5f;
+    border-width: 2px;
+    border-style: solid;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;  
+    padding: 5px 10px 5px 10px;
+    width: 800px;
+    margin-bottom: 234px;
+}
+
+.creation .element
+{
+    margin-bottom: 2px;
+    margin-top: 2px;
+    padding: 0px 0px 5px 0px;
+    color: #615a5f;
+    font-size: 1.3em;
+    font-family: sans-serif;
+}
+
+.creation .table_crea
+{
+    margin: auto;
+    margin-left: 10px;
+    margin-right: 10px;
+    line-height: 30px;
+}
+
+.info_crea
+{
+    line-height: 50px;
+    padding-right: 0;
+    margin-right: 0;
+    max-width: 40%;
+    min-width: 40%;
+}
+
+.creation .horraire
+{
+    margin-right: 10px;
+    display: flex;
+    justify-content: space-around;
+    margin-top: 3px;
+    background: #615a5f;
+    border-radius: 15px;
+    color: rgb(255,245,234);
+}
+
+#table_horraires_crea
+{
+    text-align: center;
+}
+
+.tri3
+{
+    width: 45%;
+    height: 40px;
+    box-sizing: border-box;
+    border: 2px solid #615a5f;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    border-radius: 4px;
+}
+
+.crea_offre
+{
+    margin-top: 65px;
+    margin-bottom: 0px;
+}
+
+#horraires_crea
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.crea_title
+{
+    margin-top: 120px;
+}
+/* Fin Création */
