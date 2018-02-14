@@ -549,3 +549,37 @@ footer .copyright li
     width: 980px;
 }
 /* Fin Erreur */
+
+/* Profil */
+.profil
+{
+    font-family: sans-serif;
+    font-size: 1em;
+    background: rgb(255,245,234);
+    border-radius: 10px;
+    border-color: #615a5f;
+    border-width: 2px;
+    border-style: solid;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;  
+    padding: 5px 10px 5px 10px;
+    width: 550px;
+}
+
+.bloc_profil
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: auto;
+    margin-bottom: 300px;
+    margin-top: 184px;
+}
+
+.info_profil
+{
+    color: #615a5f;
+    font-size: 1.5em;
+}
+/* Fin Profil */
