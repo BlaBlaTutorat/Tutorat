@@ -10,11 +10,22 @@
 
 {% include 'HEADER.html' %}
 
-<p>Nom: {{ infos[0] }}</p>
-<p>Mail: {{ infos[2] }}</p>
-<p>Niveau: {{ infos[3] }}</p>
-<p>Filière: {{ infos[4] }}</p>
-
+<div class="bloc_profil">
+	<div class="profil">
+		<div class="info_profil">
+			<p><strong class="G">Nom:</strong></p>
+			<p><strong class="G">Mail:</strong></p>
+			<p><strong class="G">Niveau:</strong></p>
+			<p><strong class="G">Filière:</strong></p>
+		</div>
+		<div class="info_profil">
+			<p>{{ infos[0] }}</p>
+			<p>{{ infos[2] }}</p>
+			<p>{{ infos[3] }}</p>
+			<p>{{ infos[4] }}</p>
+		</div>
+	</div>
+</div>
 
 {% include 'FOOTER.html' %}
 
