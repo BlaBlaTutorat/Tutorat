@@ -45,7 +45,7 @@
                             <p class="element"><strong class="G">Matière:</strong> {{ offre[4] }}</p>
                             <p class="element"><strong class="G">Participants:</strong>
                                 {% if offre[6] is none and offre[7] is none %}
-                                    Personne.
+                                    Personne
                                 {% else %}
                                     {% if offre[6] is not none %}{{ offre[6] }}{% endif %}{% if offre[7] is not none %},
                                         {{ offre[7] }}{% endif %}
