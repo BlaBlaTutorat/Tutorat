@@ -72,15 +72,15 @@
                         <div class="date">
                             <p class="time"><strong class="G">Publié le:</strong> {{ offre[5].strftime('%d-%m-%Y') }}
                             </p>
-                            <p class="supr_offre"><a href="delete?id={{ offre[0] }}"><input type="submit" value="Suprimer l'offre"/></a></p>
+                            <p class="supr_offre"><a href="delete?id={{ offre[0] }}"><button>Suprimer l'offre</button></a></p>
                         </div>                        
                     </div>
                     <br/>
                 {% endfor %}
             {% else %}
                 <div class="bloc" id="none_offre">
-                    <p class="none_offre">Vous n'avez pas encore crée d'offre.</p>
-                    <p class="none_offre"><a href="create"><input type="submit" value="Créer une offre"/></a></p>
+                    <p class="none_offre">Vous n'avez pas encore crée d'offre</p>
+                    <p class="none_offre"><a href="create"><button>Créer une offre</button></a></p>
                 </div>
             {% endif %}
         </div>
