@@ -43,7 +43,7 @@ def inscription():
 def profil():
     sql_obj = sql.MysqlObject()
     admin_user = False
-    return render_template("profil.html", **locals(), infos=sql_obj.get_user_info("antoinelabarussias@orange.fr"))
+    return render_template("profil.html", **locals(), infos=sql_obj.get_user_info("taotom63@gmail.com"))
 
 
 # Page d'Administration
@@ -105,13 +105,13 @@ def enregistrement():
     result_code = sql_obj.add_participant(request.form.get("id"), participant)
     if result_code == 0:
         # Pas d'erreur
-        return redirect(url_for("recherche", info_msg="Votre participation à ce tutorat a bien été prise en compte"))
+        return redirect(url_for("recherche", info_msg="Votre participation à ce tutorat a bien été prise en compte."))
     elif result_code == 1:
         # Erreur l'utilisateur participe déjà à l'offre
-        return render_template("error.html", message="Vous vous êtes déjà enregistrés pour ce Tutorat.")
+        return render_template("error.html", message="Erreur - Vous vous êtes déjà enregistrés pour ce Tutorat")
     elif result_code == 2:
         # Erreur (cas très rare ou l'utilisateur accepte une offre qui est deja pleine)
-        return render_template("error.html", message="Ce Tutorat est déjà plein.")
+        return render_template("error.html", message="Erreur - Ce Tutorat est déjà plein")
 
 
 # Affichage du formulaire de création d'une offre
