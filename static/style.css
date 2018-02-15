@@ -612,6 +612,70 @@ footer .copyright li
     flex-direction: column;
     justify-content: center;
 }
+
+@media screen and (max-width: 1350px)
+{
+       .profil
+    {
+        font-family: sans-serif;
+        font-size: 1em;
+        background: rgb(255,245,234);
+        border-radius: 10px;
+        border-color: #615a5f;
+        border-width: 2px;
+        border-style: solid;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;  
+        padding: 5px 10px 5px 10px;
+        width: 550px;
+    }
+
+    .bloc_profil
+    {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin: auto;
+        margin-top: 100px;
+    }
+
+    .page_profil .offres
+    {
+        margin-top: 100px;
+    }
+
+    .info_profil
+    {
+        color: #615a5f;
+        font-size: 1.5em;
+    }
+
+    .bloc_page_profil
+    {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .page_profil
+    {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    #none_offre, .none_offre
+    {
+        text-align: center;
+        font-family: sans-serif;
+        color: #615a5f;
+        font-size: 1em;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    } 
+}
 /* Fin Profil */
 
 
