@@ -42,14 +42,14 @@
                 <input type="submit" class="crea_offre" value="Créer mon offre"/>
             </div>
             <!-- Horaires -->
-            <div id="horraires_crea">
-                <div class="horraire">
+            <div id="horaires_crea">
+                <div class="horaire">
                     <div class="table_crea">
                         {% for i in range(0,6) %}
                             <p class="jours">{{ days[i] }}: </p>
                         {% endfor %}
                     </div>
-                    <div class="table_crea" id="table_horraires_crea">
+                    <div class="table_crea" id="table_horaires_crea">
                         {% for i in range(0,6) %}
                             <p><input type="time" name="debut_j{{ i }}" step="600" min="07:00" max="20:00"/><input type="time" name="fin_j{{ i }}" step="600" min="07:00" max="20:00"/></p>
                         {% endfor %}
