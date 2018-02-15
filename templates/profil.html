@@ -10,68 +10,78 @@
 
 {% include 'HEADER.html' %}
 
-<div class="bloc_profil">
-    <div class="profil">
-        <div class="info_profil">
-            <p><strong class="G">Nom:</strong></p>
-            <p><strong class="G">Mail:</strong></p>
-            <p><strong class="G">Niveau:</strong></p>
-            <p><strong class="G">Filière:</strong></p>
+<div class="bloc_page_profil">
+    <div class="page_profil">
+        <div class="bloc_profil">
+            <h2>Vos informations</h2>
+            <div class="profil">
+                <div class="info_profil">
+                    <p><strong class="G">Nom:</strong></p>
+                    <p><strong class="G">Mail:</strong></p>
+                    <p><strong class="G">Niveau:</strong></p>
+                    <p><strong class="G">Filière:</strong></p>
+                </div>
+                <div class="info_profil">
+                    <p>{{ infos[0] }}</p>
+                    <p>{{ infos[2] }}</p>
+                    <p>{{ infos[3] }}</p>
+                    <p>{{ infos[4] }}</p>
+                </div>
+            </div>
         </div>
-        <div class="info_profil">
-            <p>{{ infos[0] }}</p>
-            <p>{{ infos[2] }}</p>
-            <p>{{ infos[3] }}</p>
-            <p>{{ infos[4] }}</p>
+    </div>
+    <div class="page_profil">
+        <!-- Liste des offres crées par l'utilisateur -->
+        <div class="offres">
+            <h2>Vos offres en cours</h2>
+            {% if offres|length>0 %}
+                {% for offre in offres %}
+                    <br/>
+                    <div class="bloc">
+                        <div class="info">
+                            <p class="element"><strong class="G">Auteur:</strong> {{ offre[1] }}</p>
+                            <p class="element"><strong class="G">Niveau:</strong> {{ offre[2] }}</p>
+                            <p class="element"><strong class="G">Filière:</strong> {{ offre[3] }}</p>
+                            <p class="element"><strong class="G">Matière:</strong> {{ offre[4] }}</p>
+                            <p class="element"><strong class="G">Participants:</strong>
+                                {% if offre[6] is none and offre[7] is none %}
+                                    Personne ne s'est encore inscrit.
+                                {% else %}
+                                    {% if offre[6] is not none %}{{ offre[6] }}{% endif %}{% if offre[7] is not none %},
+                                        {{ offre[7] }}{% endif %}
+                                {% endif %}
+                            </p>
+                        </div>
+                        <div id="horaires">
+                            <div class="horaire">
+                                <div class="table">
+                                    {% for i in range(0,12,2) %}{% if offre[9+i] is not none and offre[10+i] is not none %}
+                                        <p>{{ days[i//2] }}:</p>
+                                    {% endif %}{% endfor %}
+                                </div>
+                                <div class="table" id="table_horaires">
+                                    {% for i in range(0,12,2) %}{% if offre[9+i] is not none and offre[10+i] is not none %}
+                                        <p>{{ 'h'.join((offre[9+i]|string).split(':')[:2]) }}
+                                            - {{ 'h'.join((offre[10+i]|string).split(':')[:2]) }}</p>
+                                    {% endif %}{% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="date">
+                            <p class="time"><strong class="G">Publié le:</strong> {{ offre[5].strftime('%d-%m-%Y') }}</p>
+                        </div>
+                    </div>
+                    <br/>
+                {% endfor %}
+            {% else %}
+                <div class="bloc">
+                    <p>Vous n'avez pas encore crée une offre</p>
+                </div>
+            {% endif %}
         </div>
     </div>
 </div>
 
-<!-- Liste des offres crées par l'utilisateur -->
-<div class="offres">
-    {% if offres|length>0 %}
-        {% for offre in offres %}
-            <br/>
-            <div class="bloc">
-                <div class="info">
-                    <p class="element"><strong class="G">Auteur:</strong> {{ offre[1] }}</p>
-                    <p class="element"><strong class="G">Niveau:</strong> {{ offre[2] }}</p>
-                    <p class="element"><strong class="G">Filière:</strong> {{ offre[3] }}</p>
-                    <p class="element"><strong class="G">Matière:</strong> {{ offre[4] }}</p>
-                    <p class="element"><strong class="G">Participants:</strong>
-                        {% if offre[6] is none and offre[7] is none %}
-                            Personne ne s'est encore inscrit.
-                        {% else %}
-                            {% if offre[6] is not none %}{{ offre[6] }}{% endif %}{% if offre[7] is not none %},
-                                {{ offre[7] }}{% endif %}
-                        {% endif %}
-                    </p>
-                </div>
-                <div id="horaires">
-                    <div class="horaire">
-                        <div class="table">
-                            {% for i in range(0,12,2) %}{% if offre[9+i] is not none and offre[10+i] is not none %}
-                                <p>{{ days[i//2] }}:</p>
-                            {% endif %}{% endfor %}
-                        </div>
-                        <div class="table" id="table_horaires">
-                            {% for i in range(0,12,2) %}{% if offre[9+i] is not none and offre[10+i] is not none %}
-                                <p>{{ 'h'.join((offre[9+i]|string).split(':')[:2]) }}
-                                    - {{ 'h'.join((offre[10+i]|string).split(':')[:2]) }}</p>
-                            {% endif %}{% endfor %}
-                        </div>
-                    </div>
-                </div>
-                <div class="date">
-                    <p class="time"><strong class="G">Publié le:</strong> {{ offre[5].strftime('%d-%m-%Y') }}</p>
-                </div>
-            </div>
-            <br/>
-        {% endfor %}
-    {% else %}
-        <p>Vous n'avez pas encore crée une offre</p>
-    {% endif %}
-</div>
 {% include 'FOOTER.html' %}
 
 </body>
