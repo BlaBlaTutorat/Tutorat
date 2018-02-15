@@ -163,8 +163,9 @@ def delete():
     if request.args.get('id'):
         offre_id = request.args.get('id')
         sql_obj = sql.MysqlObject()
-        admin_user = True
+        # TODO A OPTIMISER AVEC L'AUTHENTIFICATION
         user = "Tao Blancheton"
+
         sql_obj.delete_offer(offre_id)
         return redirect(url_for("recherche", info_msg="Votre offre a bien été supprimée."))
     else:
