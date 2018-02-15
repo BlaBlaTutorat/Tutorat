@@ -283,7 +283,7 @@ footer .copyright li
     min-width: 35%
 }
 
-.offres .horraire
+.offres .horaire
 {
     margin-right: 10px;
     display: flex;
@@ -294,7 +294,7 @@ footer .copyright li
     color: rgb(255,245,234);
 }
 
-#table_horraires
+#table_horaires
 {
     text-align: center;
 }
@@ -573,7 +573,7 @@ footer .copyright li
     flex-direction: column;
     justify-content: center;
     margin: auto;
-    margin-bottom: 300px;
+    margin-bottom: 150px;
     margin-top: 184px;
 }
 
@@ -636,7 +636,7 @@ footer .copyright li
     min-width: 40%;
 }
 
-.creation .horraire
+.creation .horaire
 {
     margin-right: 10px;
     display: flex;
@@ -647,7 +647,7 @@ footer .copyright li
     color: rgb(255,245,234);
 }
 
-#table_horraires_crea
+#table_horaires_crea
 {
     text-align: center;
 }
@@ -669,7 +669,7 @@ footer .copyright li
     margin-bottom: 0px;
 }
 
-#horraires_crea
+#horaires_crea
 {
     display: flex;
     flex-direction: column;

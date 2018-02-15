@@ -106,10 +106,11 @@ class MysqlObject:
         return self.cursor.fetchall()
 
     # Récupérations des infos utilisateurs pour page de profil
-    def get_user_info(self, mail):
-        self.cursor.execute("""SELECT * FROM users WHERE mail=%s""", (mail,))
+    def get_user_info(self, user_name):
+        self.cursor.execute("""SELECT * FROM users WHERE nom=%s""", (user_name,))
         return self.cursor.fetchall()[0]
 
+    # Ajout de participant à une offre
     def add_participant(self, offre_id, participant):
         self.cursor.execute("""SELECT * FROM offres WHERE id=%s""", (offre_id,))
         offre = self.cursor.fetchall()[0]
@@ -130,6 +131,11 @@ class MysqlObject:
         else:
             # Erreur l'offre est pleine
             return 2
+
+    # Récupération des offres propres à un utilisateur
+    def get_user_offre(self, user_name):
+        self.cursor.execute("""SELECT * FROM offres WHERE auteur=%s""", (user_name,))
+        return self.cursor.fetchall()
 
     # Méthode exécutée à la suppression de l'bbjet
     def __del__(self):

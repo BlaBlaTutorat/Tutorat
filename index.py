@@ -43,7 +43,9 @@ def inscription():
 def profil():
     sql_obj = sql.MysqlObject()
     admin_user = False
-    return render_template("profil.html", **locals(), infos=sql_obj.get_user_info("taotom63@gmail.com"))
+    user_name = "Tao Blancheton"
+    return render_template("profil.html", **locals(), infos=sql_obj.get_user_info(user_name),
+                           offres=sql_obj.get_user_offre(user_name), days=days)
 
 
 # Page d'Administration
