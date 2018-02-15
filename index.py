@@ -157,6 +157,20 @@ def traitement_creation():
         return render_template("error.html", message="Vous n'avez pas remplis tous les champs requis (horaires)")
 
 
+# Suppression d'un offre
+@app.route('/delete')
+def delete():
+    if request.args.get('id'):
+        offre_id = request.args.get('id')
+        sql_obj = sql.MysqlObject()
+        admin_user = True
+        user = "Tao Blancheton"
+        sql_obj.delete_offer(offre_id)
+        return redirect(url_for("recherche", info_msg="Votre offre a bien été supprimée."))
+    else:
+        abort(403)
+
+
 # Gestion de l'erreur 404
 @app.errorhandler(404)
 def not_found(error):

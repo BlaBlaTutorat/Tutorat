@@ -137,6 +137,11 @@ class MysqlObject:
         self.cursor.execute("""SELECT * FROM offres WHERE auteur=%s""", (user_name,))
         return self.cursor.fetchall()
 
+    # Suppression d'une offre
+    def delete_offer(self, offre_id):
+        self.cursor.execute("""DELETE FROM offres WHERE id = %s""", (offre_id,))
+        self.conn.commit()
+
     # Méthode exécutée à la suppression de l'bbjet
     def __del__(self):
         self.cursor.close()
