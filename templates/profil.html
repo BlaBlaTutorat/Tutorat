@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-
+<html lang="en">
 <head>
-    <meta charset="utf-8"/>
-    <title>Poster une offre</title>
+    <meta charset="UTF-8">
+    <title>Mon Profil</title>
     <link rel=stylesheet type=text/css href="/static/style.css">
     <link rel="icon" type="image/png" href="/static/favicon.png"/>
 </head>
@@ -10,55 +10,80 @@
 
 {% include 'HEADER.html' %}
 
-
-<h2 class="crea_title">Création d'une offre de Tutorat</h2>
-
-<!-- Formulaire de création -->
-<form method="post" action="create" class="form_crea">
-    <div class="creation">
-        <div class="bloc">
-            <div class="info_crea">            
-                <input type="hidden" name="auteur" value="{{ user }}">
-                <!-- Elève -->
-                <p class="element"><strong class="G">Vous voulez aider un élève de : </strong> <SELECT name="niveau" class="tri3" required>
-                    <option value="" disabled selected>- Niveau -</option>
-                    {% for niveau in niveaux %}
-                        <option>{{ niveau }}</option>
-                    {% endfor %}
-                </SELECT>
-                <SELECT name="filiere" class="tri3" required>
-                    <option value="" disabled selected>- Filière -</option>
-                    {% for filiere in filieres %}
-                        <option>{{ filiere }}</option>
-                    {% endfor %}
-                </SELECT></p>
-                <!-- Matière -->
-                <p class="element"><strong class="G">Vous souhaitez l'aider en : </strong> <SELECT name="matiere" class="tri3" required>
-                    <option value="" disabled selected>- Matiere -</option>
-                    {% for matiere in matieres %}
-                        <option>{{ matiere }}</option>
-                    {% endfor %}
-                </SELECT></p>
-                <input type="submit" class="crea_offre" value="Créer mon offre"/>
-            </div>
-            <!-- Horaires -->
-            <div id="horaires_crea">
-                <div class="horaire">
-                    <div class="table_crea">
-                        {% for i in range(0,6) %}
-                            <p class="jours">{{ days[i] }}: </p>
-                        {% endfor %}
-                    </div>
-                    <div class="table_crea" id="table_horaires_crea">
-                        {% for i in range(0,6) %}
-                            <p><input type="time" name="debut_j{{ i }}" step="600" min="07:00" max="20:00"/><input type="time" name="fin_j{{ i }}" step="600" min="07:00" max="20:00"/></p>
-                        {% endfor %}
-                    </div>
+<div class="bloc_page_profil">
+    <div class="page_profil">
+        <div class="bloc_profil">
+            <h2>Vos informations</h2>
+            <div class="profil">
+                <div class="info_profil">
+                    <p><strong class="G">Nom:</strong></p>
+                    <p><strong class="G">Mail:</strong></p>
+                    <p><strong class="G">Niveau:</strong></p>
+                    <p><strong class="G">Filière:</strong></p>
+                </div>
+                <div class="info_profil">
+                    <p>{{ infos[0] }}</p>
+                    <p>{{ infos[2] }}</p>
+                    <p>{{ infos[3] }}</p>
+                    <p>{{ infos[4] }}</p>
                 </div>
             </div>
         </div>
     </div>
-</form>
+    <div class="page_profil">
+        <!-- Liste des offres crées par l'utilisateur -->
+        <div class="offres">
+            <h2>Vos offres en cours</h2>
+            {% if offres|length>0 %}
+                {% for offre in offres %}
+                    <br/>
+                    <div class="bloc">
+                        <div class="info">
+                            <p class="element"><strong class="G">Auteur:</strong> {{ offre[1] }}</p>
+                            <p class="element"><strong class="G">Niveau:</strong> {{ offre[2] }}</p>
+                            <p class="element"><strong class="G">Filière:</strong> {{ offre[3] }}</p>
+                            <p class="element"><strong class="G">Matière:</strong> {{ offre[4] }}</p>
+                            <p class="element"><strong class="G">Participants:</strong>
+                                {% if offre[6] is none and offre[7] is none %}
+                                    Personne.
+                                {% else %}
+                                    {% if offre[6] is not none %}{{ offre[6] }}{% endif %}{% if offre[7] is not none %},
+                                        {{ offre[7] }}{% endif %}
+                                {% endif %}
+                            </p>
+                        </div>
+                        <div id="horaires">
+                            <div class="horaire">
+                                <div class="table">
+                                    {% for i in range(0,12,2) %}{% if offre[9+i] is not none and offre[10+i] is not none %}
+                                        <p>{{ days[i//2] }}:</p>
+                                    {% endif %}{% endfor %}
+                                </div>
+                                <div class="table" id="table_horaires">
+                                    {% for i in range(0,12,2) %}{% if offre[9+i] is not none and offre[10+i] is not none %}
+                                        <p>{{ 'h'.join((offre[9+i]|string).split(':')[:2]) }}
+                                            - {{ 'h'.join((offre[10+i]|string).split(':')[:2]) }}</p>
+                                    {% endif %}{% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="date">
+                            <p class="time"><strong class="G">Publié le:</strong> {{ offre[5].strftime('%d-%m-%Y') }}</p>
+                        </div>
+                    </div>
+                    <br/>
+                {% endfor %}
+            {% else %}
+                <div class="bloc" id="none_offre"">
+                    <p class="none_offre">Vous n'avez pas encore crée d'offre.</p>
+                    <p class="none_offre"><a href="create"><input type="submit" value="Créer une offre"/></a></p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
 {% include 'FOOTER.html' %}
 
 </body>
+</html>
