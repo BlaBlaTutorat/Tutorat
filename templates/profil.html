@@ -72,10 +72,8 @@
                         <div class="date">
                             <p class="time"><strong class="G">Publié le:</strong> {{ offre[5].strftime('%d-%m-%Y') }}
                             </p>
-                        </div>
-                        <div>
-                            <a href="delete?id={{ offre[0] }}">Supprimer l'offre</a>
-                        </div>
+                            <p class="supr_offre"><a href="delete?id={{ offre[0] }}"><input type="submit" value="Suprimer l'offre"/></a></p>
+                        </div>                        
                     </div>
                     <br/>
                 {% endfor %}
