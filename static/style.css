@@ -572,15 +572,34 @@ footer .copyright li
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin: auto;
-    margin-bottom: 150px;
-    margin-top: 184px;
+    margin: auto;    
+    margin-bottom: 317px;
+    margin-top: 100px;
+}
+
+.page_profil .offres
+{
+    margin-top: 100px;
 }
 
 .info_profil
 {
     color: #615a5f;
     font-size: 1.5em;
+}
+
+.bloc_page_profil
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.page_profil
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
 }
 /* Fin Profil */
 
