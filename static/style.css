@@ -613,6 +613,12 @@ footer .copyright li
     justify-content: center;
 }
 
+.supr_offre
+{
+    margin-top: 120px;
+    margin-bottom: 0px;
+}
+
 @media screen and (max-width: 1350px)
 {
        .profil
@@ -675,6 +681,13 @@ footer .copyright li
         flex-direction: column;
         justify-content: center;
     } 
+
+    
+    .supr_offre
+    {
+        margin-top: 120px;
+        margin-bottom: 0px;
+    }
 }
 /* Fin Profil */
 
