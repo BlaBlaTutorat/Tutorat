@@ -18,7 +18,7 @@ def connection():
     # Propre à cette page
     hidemenu = True
 
-    admin_user = False
+    admin_user = True
     info_msg = None
     if request.args.get('info_msg'):
         info_msg = request.args.get('info_msg')
@@ -32,7 +32,7 @@ def inscription():
     # Propre à cette page
     hidemenu = True
 
-    admin_user = False
+    admin_user = True
 
     return render_template("inscription.html", **locals(), niveaux=sql_obj.niveaux_liste(),
                            filieres=sql_obj.filieres_liste())
@@ -42,7 +42,7 @@ def inscription():
 @app.route('/profil')
 def profil():
     sql_obj = sql.MysqlObject()
-    admin_user = False
+    admin_user = True
     user_name = "Tao Blancheton"
     return render_template("profil.html", **locals(), infos=sql_obj.get_user_info(user_name),
                            offres=sql_obj.get_user_offre(user_name), days=days)
@@ -60,7 +60,7 @@ def mdp_oublie():
     # Propre à cette page
     hidemenu = True
 
-    admin_user = False
+    admin_user = True
     return render_template("mdp_oublie.html", **locals())
 
 
@@ -68,7 +68,7 @@ def mdp_oublie():
 @app.route('/search', methods=['GET', 'POST'])
 def recherche():
     sql_obj = sql.MysqlObject()
-    admin_user = False
+    admin_user = True
     info_msg = None
     if request.args.get('info_msg'):
         info_msg = request.args.get('info_msg')
@@ -102,7 +102,7 @@ def recherche():
 # Page d'enregistrement (s'enregistrer en tant que participant)
 @app.route('/apply', methods=['POST'])
 def enregistrement():
-    participant = "Moi"
+    participant = "Tao Blancheton"
     sql_obj = sql.MysqlObject()
     result_code = sql_obj.add_participant(request.form.get("id"), participant)
     if result_code == 0:
@@ -120,8 +120,8 @@ def enregistrement():
 @app.route('/create', methods=['GET'])
 def creation():
     sql_obj = sql.MysqlObject()
-    admin_user = False
-    user = "Moi"
+    admin_user = True
+    user = "Tao Blancheton"
     return render_template("creation.html", **locals(), niveaux=sql_obj.niveaux_liste(),
                            matieres=sql_obj.matieres_liste(), filieres=sql_obj.filieres_liste(), days=days)
 
