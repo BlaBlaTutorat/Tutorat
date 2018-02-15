@@ -682,6 +682,10 @@ footer .copyright li
         justify-content: center;
     } 
 
+    #none_offre
+    {
+        margin-bottom: 88px;
+    }
     
     .supr_offre
     {
