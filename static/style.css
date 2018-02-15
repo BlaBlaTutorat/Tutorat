@@ -601,6 +601,17 @@ footer .copyright li
     flex-direction: row;
     justify-content: space-around;
 }
+
+#none_offre, .none_offre
+{
+    text-align: center;
+    font-family: sans-serif;
+    color: #615a5f;
+    font-size: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
 /* Fin Profil */
 
 
