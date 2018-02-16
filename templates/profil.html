@@ -10,6 +10,13 @@
 
 {% include 'HEADER.html' %}
 
+{% if info_msg %}
+    <!-- Message d'information -->
+    <a href="/profile/view">
+        <button class="created">{{ info_msg }}</button>
+    </a>
+{% endif %}
+
 <div class="bloc_page_profil">
     <!-- Infos de l'utilisateur -->
     <div class="page_profil" id="info_profil">
