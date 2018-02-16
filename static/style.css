@@ -572,10 +572,14 @@ footer .copyright li
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin: auto;    
+    margin: auto;  
     margin-top: 100px;
-    margin-bottom: 317px;
     align-items: center;
+}
+
+#info_profil
+{        
+    margin-bottom: 317px;
 }
 
 .info_profil
@@ -619,6 +623,11 @@ footer .copyright li
     justify-content: center;
 }
 
+#none_offre
+{
+    margin-bottom: 20px;
+}
+
 .supr_offre
 {
     margin-top: 135px;
@@ -650,7 +659,6 @@ footer .copyright li
         justify-content: center;
         margin: auto;
         margin-top: 70px;
-        margin-bottom: 50px;
     }
 
     .page_profil .offres
@@ -691,7 +699,7 @@ footer .copyright li
 
     #none_offre
     {
-        margin-bottom: 88px;
+        margin-bottom: 20px;
     }
     
     .supr_offre
