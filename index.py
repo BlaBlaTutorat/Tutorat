@@ -72,7 +72,7 @@ def profil_update():
 
             sql_obj.modify_user_info(user_name, request.form.get('mail'), request.form.get('niveau'),
                                      request.form.get('filiere'))
-            return redirect(url_for("profil", info_msg="Votre profil a bien été modifié"))
+            return redirect(url_for("profil", info_msg="Votre profil a bien été modifié."))
         else:
 
             return render_template("error.html", message="Erreur - Veuillez revérifier les champs du formulaire")
