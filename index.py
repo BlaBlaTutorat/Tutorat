@@ -75,7 +75,7 @@ def profil_update():
 
 # Page d'Administration
 @app.route('/admin')
-def admin():    
+def admin():
     info_msg = None
     sql_obj = sql.MysqlObject()
     admin_user = True
@@ -85,7 +85,8 @@ def admin():
     if request.args.get('info_msg'):
         info_msg = request.args.get('info_msg')
 
-    return render_template("administration.html", users=sql_obj.liste_user(), offres_V=sql_obj.offres_liste_valider(), tutorats_actifs=sql_obj.get_tutorats(none), days=days, **locals())
+    return render_template("administration.html", users=sql_obj.liste_user(), offres_V=sql_obj.offres_liste_valider(),
+                           tutorats_actifs=sql_obj.get_tutorats(none), days=days, **locals())
 
 
 # Mot de passe oublié
@@ -265,6 +266,7 @@ def quit_tutorat():
     else:
         abort(403)
 
+
 # Ban
 @app.route('/unban')
 def unban():
@@ -275,9 +277,10 @@ def unban():
         user = "Tao Blancheton"
 
         sql_obj.ban(user_name, ban)
-        return redirect(url_for("admin", info_msg="Cet utilisateur a bien été débani."))
+        return redirect(url_for("admin", info_msg="Cet utilisateur a bien été débanni."))
     else:
         abort(403)
+
 
 # Ban
 @app.route('/ban')
@@ -289,7 +292,7 @@ def ban():
         user = "Tao Blancheton"
 
         sql_obj.ban(user_name, ban)
-        return redirect(url_for("admin", info_msg="Cet utilisateur a bien été bani."))
+        return redirect(url_for("admin", info_msg="Cet utilisateur a bien été banni."))
     else:
         abort(403)
 
