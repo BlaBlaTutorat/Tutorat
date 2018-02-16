@@ -95,7 +95,7 @@
             {% endif %}
         </div>
         <div class="offres" id="tutorat_en_cours">
-            <!-- TODO Liste des offres auxquelles participe l'utilisateur -->
+            <!-- Liste des offres auxquelles participe l'utilisateur -->
             <h2>Vos Tutorats en cours</h2>
             {% if tutorats_actifs|length>0 %}
                 {% for tutorat in tutorats_actifs %}
@@ -103,7 +103,8 @@
                     <div class="bloc">
                         <div class="info">
                             <p class="element"><strong class="G">Auteur:</strong> {{ tutorat[1] }}</p>
-                            <p class="element"><strong class="G">Mail de l'auteur:</strong> {{ sql_obj.get_user_info(user_name)[2] }}</p>
+                            <p class="element"><strong class="G">Mail de
+                                l'auteur:</strong> {{ sql_obj.get_user_info(tutorat[1])[2] }}</p>
                             <p class="element"><strong class="G">Niveau:</strong> {{ tutorat[2] }}</p>
                             <p class="element"><strong class="G">Filière:</strong> {{ tutorat[3] }}</p>
                             <p class="element"><strong class="G">Matière:</strong> {{ tutorat[4] }}</p>
