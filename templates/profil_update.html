@@ -11,7 +11,7 @@
 <form method="post" action="/profile/update">
     <div class="bloc_page_profil">
         <div class="page_profil">
-            <div class="bloc_profil">
+            <div class="bloc_profil" id="maj_profil">
                 <h2>Vos informations</h2>
                 <div class="profil">
                     <div class="info_profil">
@@ -24,15 +24,15 @@
                         <!-- Nom non modifiable -->
                         <p>{{ infos[0] }}</p>
                         <!-- Mail modifiable -->
-                        <p><input name="mail" type="text" required value="{{ infos[2] }}"></p>
+                        <p><input class="tri5" name="mail" type="text" required value="{{ infos[2] }}"></p>
                         <!-- Niveau modifiable -->
-                        <p><select required name="niveau">
+                        <p><select class="tri4" required name="niveau">
                             {% for niveau in niveaux %}
                                 <option {% if niveau == infos[3] %}selected{% endif %}>{{ niveau }}</option>
                             {% endfor %}
                         </select></p>
                         <!-- Filière modifiable -->
-                        <p><select required name="filiere">
+                        <p><select class="tri4" required name="filiere">
                             {% for filiere in filieres %}
                                 <option {% if filiere == infos[4] %}selected{% endif %}>{{ filiere }}</option>
                             {% endfor %}
