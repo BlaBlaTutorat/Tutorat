@@ -148,10 +148,47 @@ class MysqlObject:
                             (mail, niveau, filiere, user_name))
         self.conn.commit()
 
-    # Méthode exécutée à la suppression de l'bbjet
-    def __del__(self):
-        self.cursor.close()
-        self.conn.close()
+    # Recherche des offres auxquelles participe l'utilisateur
+    def get_user_tutorats(self, user_name):
+        self.cursor.execute("""SELECT * FROM offres WHERE participant=%s OR participant2=%s""", (user_name, user_name))
+        return self.cursor.fetchall()
+
+    # Suppression d'un participant à une offre
+    def delete_participant(self, offre_id, user):
+        self.cursor.execute("""SELECT * FROM offres WHERE id=%s""", (offre_id,))
+        offre_a_modif = self.cursor.fetchall()[0]
+        places_dispo = check_availability(offre_a_modif)
+        if places_dispo == 0:
+            if offre_a_modif[6] == user:
+                self.cursor.execute(
+                    """UPDATE offres SET participant = participant2, participant2 = NULL WHERE id = %s """, (offre_id,))
+                self.conn.commit()
+                return True
+            elif offre_a_modif[7] == user:
+                self.cursor.execute("""UPDATE offres SET participant2 = NULL WHERE id = %s """, (offre_id,))
+                self.conn.commit()
+                return True
+            else:
+                # L'utilisateur ne participe pas au Tutorat
+                return False
+
+        elif places_dispo == 1:
+            if offre_a_modif[6] == user:
+                self.cursor.execute("""UPDATE offres SET participant = NULL WHERE id = %s """, (offre_id,))
+                self.conn.commit()
+                return True
+            else:
+                # L'utilisateur ne participe pas au Tutorat
+                return False
+        else:
+            # L'utilisateur ne participe pas au Tutorat
+            return False
+
+
+# Méthode exécutée à la suppression de l'bbjet
+def __del__(self):
+    self.cursor.close()
+    self.conn.close()
 
 
 # Retourne le nombre de places dispo

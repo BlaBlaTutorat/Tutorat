@@ -10,6 +10,7 @@
 {% include 'HEADER.html' %}
 
 <div class="bloc_page_profil">
+    <!-- Infos de l'utilisateur -->
     <div class="page_profil">
         <div class="bloc_profil">
             <h2>Vos informations</h2>
@@ -32,8 +33,8 @@
             </div>
         </div>
     </div>
+    <!-- Liste des offres crées par l'utilisateur -->
     <div class="page_profil">
-        <!-- Liste des offres crées par l'utilisateur -->
         <div class="offres">
             <h2>Vos offres en cours</h2>
             {% if offres_creees|length>0 %}
@@ -86,6 +87,65 @@
                     <p class="none_offre">Vous n'avez pas encore crée d'offre</p>
                     <p class="none_offre"><a href="/create">
                         <button>Créer une offre</button>
+                    </a></p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <!-- Liste des offres auxquelles participe l'utilisateur -->
+    <div class="page_profil">
+        <div class="offres">
+            <h2>Vos Tutorats en cours</h2>
+            {% if tutorats_actifs|length>0 %}
+                {% for tutorat in tutorats_actifs %}
+                    <br/>
+                    <div class="bloc">
+                        <div class="info">
+                            <p class="element"><strong class="G">Auteur:</strong> {{ tutorat[1] }}</p>
+                            <p class="element"><strong class="G">Niveau:</strong> {{ tutorat[2] }}</p>
+                            <p class="element"><strong class="G">Filière:</strong> {{ tutorat[3] }}</p>
+                            <p class="element"><strong class="G">Matière:</strong> {{ tutorat[4] }}</p>
+                            <p class="element"><strong class="G">Participants:</strong>
+                                {% if tutorat[6] is none and tutorat[7] is none %}
+                                    Personne
+                                {% else %}
+                                    {% if tutorat[6] is not none %}{{ tutorat[6] }}{% endif %}
+                                    {% if tutorat[7] is not none %}, {{ tutorat[7] }}{% endif %}
+                                {% endif %}
+                            </p>
+                        </div>
+                        <div id="horaires">
+                            <div class="horaire">
+                                <div class="table">
+                                    {% for i in range(0,12,2) %}
+                                        {% if tutorat[9+i] is not none and tutorat[10+i] is not none %}
+                                            <p>{{ days[i//2] }}:</p>
+                                        {% endif %}{% endfor %}
+                                </div>
+                                <div class="table" id="table_horaires">
+                                    {% for i in range(0,12,2) %}
+                                        {% if tutorat[9+i] is not none and tutorat[10+i] is not none %}
+                                            <p>{{ 'h'.join((tutorat[9+i]|string).split(':')[:2]) }}
+                                                - {{ 'h'.join((tutorat[10+i]|string).split(':')[:2]) }}</p>
+                                        {% endif %}{% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="date">
+                            <p class="time"><strong class="G">Publié le:</strong> {{ tutorat[5].strftime('%d-%m-%Y') }}
+                            </p>
+                            <p class="supr_offre"><a href="/quit?id={{ tutorat[0] }}">
+                                <button>Quitter ce tutorat</button>
+                            </a></p>
+                        </div>
+                    </div>
+                    <br/>
+                {% endfor %}
+            {% else %}
+                <div class="bloc" id="none_offre">
+                    <p class="none_offre">Vous ne participez à aucun Tutorat</p>
+                    <p class="none_offre"><a href="/search">
+                        <button>Rechercher une offre</button>
                     </a></p>
                 </div>
             {% endif %}

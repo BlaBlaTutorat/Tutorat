@@ -45,7 +45,8 @@ def profil():
     admin_user = True
     user_name = "Tao Blancheton"
     return render_template("profil.html", **locals(), infos=sql_obj.get_user_info(user_name),
-                           offres_creees=sql_obj.get_user_offre(user_name), days=days)
+                           offres_creees=sql_obj.get_user_offre(user_name),
+                           tutorats_actifs=sql_obj.get_user_tutorats(user_name), days=days)
 
 
 # Page de modification du profil
@@ -202,6 +203,22 @@ def delete():
 
         sql_obj.delete_offer(offre_id)
         return redirect(url_for("recherche", info_msg="Votre offre a bien été supprimée."))
+    else:
+        abort(403)
+
+
+# Suppression de la participation d'un utilisateur à une offre
+@app.route('/quit')
+def quit_tutorat():
+    if request.args.get('id'):
+        offre_id = request.args.get('id')
+        sql_obj = sql.MysqlObject()
+        user = "Tao Blancheton"
+
+        if sql_obj.delete_participant(offre_id, user):
+            return redirect(url_for("recherche", info_msg="Votre retrait de ce Tutorat a bien été enregistré."))
+        else:
+            return render_template("error.html", message="Erreur - Vous ne participez pas à ce Tutorat")
     else:
         abort(403)
 
