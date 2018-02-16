@@ -103,6 +103,7 @@
                     <div class="bloc">
                         <div class="info">
                             <p class="element"><strong class="G">Auteur:</strong> {{ tutorat[1] }}</p>
+                            <p class="element"><strong class="G">Mail de l'auteur:</strong> {{ sql_obj.get_user_info(user_name)[2] }}</p>
                             <p class="element"><strong class="G">Niveau:</strong> {{ tutorat[2] }}</p>
                             <p class="element"><strong class="G">Filière:</strong> {{ tutorat[3] }}</p>
                             <p class="element"><strong class="G">Matière:</strong> {{ tutorat[4] }}</p>
@@ -131,7 +132,6 @@
                                         {% endif %}{% endfor %}
                                 </div>
                             </div>
-                            <p>Mail de l'auteur: {{ sql_obj.get_user_info(user_name)[2] }}</p>
                         </div>
                         <div class="date">
                             <p class="time"><strong class="G">Publié le:</strong> {{ tutorat[5].strftime('%d-%m-%Y') }}
