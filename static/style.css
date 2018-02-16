@@ -770,6 +770,7 @@ footer .copyright li
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     margin: auto;
 }
 
@@ -865,6 +866,7 @@ footer .copyright li
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
 }
 /* Fin Création */
 
