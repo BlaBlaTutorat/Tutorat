@@ -172,10 +172,20 @@ def traitement_creation():
     if process:
         # Création
         sql_obj = sql.MysqlObject()
-        sql_obj.create_offre(request.form.get('auteur'), request.form.get('niveau'), request.form.get('filiere'),
-                             request.form.get('matiere'), horaires)
-        return redirect(url_for(
-            "recherche", info_msg="Votre offre a bien été créée. Elle est actuellement en attente de validation."))
+        niveaux = sql_obj.niveaux_liste()
+        matieres = sql_obj.matieres_liste()
+        filieres = sql_obj.filieres_liste()
+
+        if request.form.get("niveau") in niveaux and request.form.get("matiere") in matieres and request.form.get(
+                "filiere") in filieres:
+
+            sql_obj.create_offre(request.form.get('auteur'), request.form.get('niveau'), request.form.get('filiere'),
+                                 request.form.get('matiere'), horaires)
+            return redirect(url_for(
+                "recherche", info_msg="Votre offre a bien été créée. Elle est actuellement en attente de validation."))
+
+        else:
+            return render_template("error.html", message="Erreur - Veuillez revérifier les champs du formulaire")
     else:
         # Erreur
         return render_template("error.html", message="Vous n'avez pas remplis tous les champs requis (horaires)")
