@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Mon Profil</title>
+    <link rel=stylesheet type=text/css href="/static/style.css">
+    <link rel="icon" type="image/png" href="/static/favicon.png"/>
+</head>
+<body>
+
+{% include 'HEADER.html' %}
+<form method="post" action="/profile/update">
+    <div class="bloc_page_profil">
+        <div class="page_profil">
+            <div class="bloc_profil">
+                <h2>Vos informations</h2>
+                <div class="profil">
+                    <div class="info_profil">
+                        <p><strong class="G">Nom:</strong></p>
+                        <p><strong class="G">Mail:</strong></p>
+                        <p><strong class="G">Niveau:</strong></p>
+                        <p><strong class="G">Filière:</strong></p>
+                    </div>
+                    <div class="info_profil">
+                        <!-- Nom non modifiable -->
+                        <p>{{ infos[0] }}</p>
+                        <!-- Mail modifiable -->
+                        <p><input name="mail" type="text" required value="{{ infos[2] }}"></p>
+                        <!-- Niveau modifiable -->
+                        <p><select required name="niveau">
+                            {% for niveau in niveaux %}
+                                <option {% if niveau == infos[3] %}selected{% endif %}>{{ niveau }}</option>
+                            {% endfor %}
+                        </select></p>
+                        <!-- Filière modifiable -->
+                        <p><select required name="filiere">
+                            {% for filiere in filieres %}
+                                <option {% if filiere == infos[4] %}selected{% endif %}>{{ filiere }}</option>
+                            {% endfor %}
+                        </select></p>
+                    </div>
+                </div>
+                <input type="submit" value="Enregistrer les changements">
+            </div>
+        </div>
+    </div>
+</form>
+{% include 'FOOTER.html' %}
+
+</body>
+</html>

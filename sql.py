@@ -142,6 +142,12 @@ class MysqlObject:
         self.cursor.execute("""DELETE FROM offres WHERE id = %s""", (offre_id,))
         self.conn.commit()
 
+    # Modification du profil
+    def modify_user_info(self, user_name, mail, niveau, filiere):
+        self.cursor.execute("""UPDATE users SET mail = %s, niveau = %s, filiere = %s WHERE nom = %s """,
+                            (mail, niveau, filiere, user_name))
+        self.conn.commit()
+
     # Méthode exécutée à la suppression de l'bbjet
     def __del__(self):
         self.cursor.close()

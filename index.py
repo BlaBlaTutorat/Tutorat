@@ -49,12 +49,27 @@ def profil():
 
 
 # Page de modification du profil
-@app.route('/profile/update')
+@app.route('/profile/update', methods=['GET', 'POST'])
 def profil_update():
     sql_obj = sql.MysqlObject()
     admin_user = True
     user_name = "Tao Blancheton"
-    return "modif_profil"
+
+    niveaux = sql_obj.niveaux_liste()
+    filieres = sql_obj.filieres_liste()
+
+    if len(request.form) == 0:
+        return render_template("profil_update.html", **locals(), infos=sql_obj.get_user_info(user_name))
+    else:
+        if request.form.get('niveau') in niveaux and request.form.get(
+                'filiere') in filieres and "@" in request.form.get('mail'):
+
+            sql_obj.modify_user_info(user_name, request.form.get('mail'), request.form.get('niveau'),
+                                     request.form.get('filiere'))
+            return redirect(url_for("recherche", info_msg="Votre profil a bien été modifié"))
+        else:
+
+            return render_template("error.html", message="Erreur - Veuillez revérifier les champs du formulaire")
 
 
 # Page d'Administration
