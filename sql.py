@@ -76,8 +76,12 @@ class MysqlObject:
 
     # Listes des offres à valider
     def offres_liste_valider(self):
-        self.cursor.execute(
-            """SELECT * FROM offres WHERE disponible=0""")
+        self.cursor.execute("""SELECT * FROM offres WHERE disponible=0""")
+        return self.cursor.fetchall()
+
+    # Listes des offres validées
+    def offres_liste_validees(self):
+        self.cursor.execute("""SELECT * FROM offres WHERE disponible=1""")
         return self.cursor.fetchall()
 
     # Listes des utilisateurs

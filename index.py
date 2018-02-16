@@ -80,13 +80,12 @@ def admin():
     sql_obj = sql.MysqlObject()
     admin_user = True
     user_name = "Tao Blancheton"
-    none = ""
 
     if request.args.get('info_msg'):
         info_msg = request.args.get('info_msg')
 
     return render_template("administration.html", users=sql_obj.liste_user(), offres_V=sql_obj.offres_liste_valider(),
-                           tutorats_actifs=sql_obj.get_tutorats(none), days=days, **locals())
+                           tutorats_actifs=sql_obj.offres_liste_validees(), days=days, **locals())
 
 
 # Mot de passe oublié
