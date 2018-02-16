@@ -36,8 +36,8 @@
         <!-- Liste des offres crées par l'utilisateur -->
         <div class="offres">
             <h2>Vos offres en cours</h2>
-            {% if offres|length>0 %}
-                {% for offre in offres %}
+            {% if offres_creees|length>0 %}
+                {% for offre in offres_creees %}
                     <br/>
                     <div class="bloc">
                         <div class="info">

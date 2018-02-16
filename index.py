@@ -45,7 +45,7 @@ def profil():
     admin_user = True
     user_name = "Tao Blancheton"
     return render_template("profil.html", **locals(), infos=sql_obj.get_user_info(user_name),
-                           offres=sql_obj.get_user_offre(user_name), days=days)
+                           offres_creees=sql_obj.get_user_offre(user_name), days=days)
 
 
 # Page de modification du profil
