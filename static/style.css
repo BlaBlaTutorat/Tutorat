@@ -573,8 +573,15 @@ footer .copyright li
     flex-direction: column;
     justify-content: center;
     margin: auto;    
-    margin-bottom: 317px;
     margin-top: 100px;
+    margin-bottom: 317px;
+    align-items: center;
+}
+
+.info_profil
+{
+    color: #615a5f;
+    font-size: 1.5em;
 }
 
 .page_profil .offres
@@ -582,10 +589,9 @@ footer .copyright li
     margin-top: 100px;
 }
 
-.info_profil
+#tutorat_en_cours
 {
-    color: #615a5f;
-    font-size: 1.5em;
+    margin-top: 20px;
 }
 
 .bloc_page_profil
@@ -598,8 +604,8 @@ footer .copyright li
 .page_profil
 {
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+    flex-direction: column;
+    justify-content: center;
 }
 
 #none_offre, .none_offre
@@ -644,6 +650,7 @@ footer .copyright li
         justify-content: center;
         margin: auto;
         margin-top: 70px;
+        margin-bottom: 50px;
     }
 
     .page_profil .offres
