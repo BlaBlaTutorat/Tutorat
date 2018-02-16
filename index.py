@@ -39,13 +39,22 @@ def inscription():
 
 
 # Page de Profil
-@app.route('/profil')
+@app.route('/profile/view')
 def profil():
     sql_obj = sql.MysqlObject()
     admin_user = True
     user_name = "Tao Blancheton"
     return render_template("profil.html", **locals(), infos=sql_obj.get_user_info(user_name),
                            offres=sql_obj.get_user_offre(user_name), days=days)
+
+
+# Page de modification du profil
+@app.route('/profile/update')
+def profil_update():
+    sql_obj = sql.MysqlObject()
+    admin_user = True
+    user_name = "Tao Blancheton"
+    return "modif_profil"
 
 
 # Page d'Administration
