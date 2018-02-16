@@ -33,8 +33,8 @@
             </div>
         </div>
     </div>
+    <div class="page_profil">        
     <!-- Liste des offres crées par l'utilisateur -->
-    <div class="page_profil">
         <div class="offres">
             <h2>Vos offres en cours</h2>
             {% if offres_creees|length>0 %}
@@ -93,10 +93,8 @@
                 </div>
             {% endif %}
         </div>
-    </div>
-    <!-- Liste des offres auxquelles participe l'utilisateur -->
-    <div class="page_profil">
-        <div class="offres">
+        <div class="offres" id="tutorat_en_cours">
+            <!-- Liste des offres auxquelles participe l'utilisateur -->
             <h2>Vos Tutorats en cours</h2>
             {% if tutorats_actifs|length>0 %}
                 {% for tutorat in tutorats_actifs %}
@@ -152,7 +150,7 @@
                 </div>
             {% endif %}
         </div>
-    </div>
+    </div>        
 </div>
 
 {% include 'FOOTER.html' %}
