@@ -848,3 +848,107 @@ footer .copyright li
     justify-content: center;
 }
 /* Fin Création */
+
+
+/* Administration */
+#invalider_offre
+{
+    margin-top: 55px;
+}
+
+#valider_offre
+{
+    margin: 0 0 0 0;
+    width: 100%;
+}
+
+.bloc_admin
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.admin
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#user_admin
+{
+    font-family: sans-serif;
+    background: rgb(255,245,234);
+    border-radius: 10px;
+    border-color: #615a5f;
+    border-width: 2px;
+    border-style: solid;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;  
+    padding: 5px 10px 5px 10px;
+    width: 550px;
+    margin-bottom: 20px;
+    margin-top: 0;
+    line-height: 15px;
+}
+
+.ban
+{
+    margin-top: 220px;
+    margin-bottom: 0px;
+}
+
+@media screen and (max-width: 1350px)
+{
+    #invalider_offre
+    {
+        margin-top: 55px;
+    }
+
+    #valider_offre
+    {
+        margin: 0 0 0 0;
+        width: 100%;
+    }
+
+    .bloc_admin
+    {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .admin
+    {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    #user_admin
+    {
+        font-family: sans-serif;
+        background: rgb(255,245,234);
+        border-radius: 10px;
+        border-color: #615a5f;
+        border-width: 2px;
+        border-style: solid;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;  
+        padding: 5px 10px 5px 10px;
+        width: 550px;
+        margin-bottom: 20px;
+        margin-top: 0;
+        line-height: 15px;
+    }
+
+    .ban
+    {
+        margin-top: 220px;
+        margin-bottom: 0px;
+    }
+}
+/* Fin Administration */
