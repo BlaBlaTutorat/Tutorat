@@ -328,6 +328,11 @@ footer .copyright li
 {
     font-size: 2em;
 }
+
+.search_none
+{
+    margin: 80px 0px 425px 0px;
+}
 /* Fin Recherche des offres */
 
 
@@ -569,6 +574,7 @@ footer .copyright li
 
 .bloc_profil
 {
+    align-items: flex-start;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -864,6 +870,7 @@ footer .copyright li
 
 .bloc_admin
 {
+    align-items: flex-start;
     display: flex;
     flex-direction: row;
     justify-content: space-around;

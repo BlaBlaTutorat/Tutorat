@@ -41,9 +41,14 @@ def inscription():
 # Page de Profil
 @app.route('/profile/view')
 def profil():
+    info_msg = None
     sql_obj = sql.MysqlObject()
     admin_user = True
     user_name = "Tao Blancheton"
+
+    if request.args.get('info_msg'):
+        info_msg = request.args.get('info_msg')
+
     return render_template("profil.html", **locals(), infos=sql_obj.get_user_info(user_name),
                            offres_creees=sql_obj.get_user_offre(user_name),
                            tutorats_actifs=sql_obj.get_user_tutorats(user_name), days=days)
@@ -67,7 +72,7 @@ def profil_update():
 
             sql_obj.modify_user_info(user_name, request.form.get('mail'), request.form.get('niveau'),
                                      request.form.get('filiere'))
-            return redirect(url_for("recherche", info_msg="Votre profil a bien été modifié"))
+            return redirect(url_for("profil", info_msg="Votre profil a bien été modifié"))
         else:
 
             return render_template("error.html", message="Erreur - Veuillez revérifier les champs du formulaire")
@@ -214,7 +219,7 @@ def delete():
         user = "Tao Blancheton"
 
         sql_obj.delete_offer(offre_id)
-        return redirect(url_for("recherche", info_msg="Votre offre a bien été supprimée."))
+        return redirect(url_for("profil", info_msg="Votre offre a bien été supprimée."))
     else:
         abort(403)
 
@@ -259,7 +264,7 @@ def quit_tutorat():
         user = "Tao Blancheton"
 
         if sql_obj.delete_participant(offre_id, user):
-            return redirect(url_for("recherche", info_msg="Votre retrait de ce Tutorat a bien été enregistré."))
+            return redirect(url_for("profil", info_msg="Votre retrait de ce Tutorat a bien été enregistré."))
         else:
             return render_template("error.html", message="Erreur - Vous ne participez pas à ce Tutorat")
     else:

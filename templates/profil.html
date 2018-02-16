@@ -10,6 +10,13 @@
 
 {% include 'HEADER.html' %}
 
+{% if info_msg %}
+    <!-- Message d'information -->
+    <a href="/profile/view">
+        <button class="created">{{ info_msg }}</button>
+    </a>
+{% endif %}
+
 <div class="bloc_page_profil">
     <!-- Infos de l'utilisateur -->
     <div class="page_profil" id="info_profil">
@@ -105,8 +112,6 @@
                             <p class="element"><strong class="G">Auteur:</strong> {{ tutorat[1] }}</p>
                             <p class="element"><strong class="G">Mail de
                                 l'auteur:</strong> {{ sql_obj.get_user_info(tutorat[1])[2] }}</p>
-                            <p class="element"><strong class="G">Niveau:</strong> {{ tutorat[2] }}</p>
-                            <p class="element"><strong class="G">Filière:</strong> {{ tutorat[3] }}</p>
                             <p class="element"><strong class="G">Matière:</strong> {{ tutorat[4] }}</p>
                             <p class="element"><strong class="G">Participants:</strong>
                                 {% if tutorat[6] is none and tutorat[7] is none %}
