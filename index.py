@@ -75,8 +75,17 @@ def profil_update():
 
 # Page d'Administration
 @app.route('/admin')
-def admin():
-    return "Administration"
+def admin():    
+    info_msg = None
+    sql_obj = sql.MysqlObject()
+    admin_user = True
+    user_name = "Tao Blancheton"
+    none = ""
+
+    if request.args.get('info_msg'):
+        info_msg = request.args.get('info_msg')
+
+    return render_template("administration.html", users=sql_obj.liste_user(), offres_V=sql_obj.offres_liste_valider(), tutorats_actifs=sql_obj.get_tutorats(none), days=days, **locals())
 
 
 # Mot de passe oublié
@@ -195,7 +204,7 @@ def traitement_creation():
         return render_template("error.html", message="Vous n'avez pas remplis tous les champs requis (horaires)")
 
 
-# Suppression d'un offre
+# Suppression d'une offre
 @app.route('/delete')
 def delete():
     if request.args.get('id'):
@@ -206,6 +215,37 @@ def delete():
 
         sql_obj.delete_offer(offre_id)
         return redirect(url_for("recherche", info_msg="Votre offre a bien été supprimée."))
+    else:
+        abort(403)
+
+
+# Suppression d'une offre (admin)
+@app.route('/delete2')
+def delete2():
+    if request.args.get('id'):
+        offre_id = request.args.get('id')
+        sql_obj = sql.MysqlObject()
+        # TODO A OPTIMISER AVEC L'AUTHENTIFICATION
+        user = "Tao Blancheton"
+
+        sql_obj.delete_offer(offre_id)
+        return redirect(url_for("admin", info_msg="La supression a bien été effectuée."))
+    else:
+        abort(403)
+
+
+# Validation d'une offre (admin)
+@app.route('/validate')
+def validate():
+    if request.args.get('id'):
+        disponible = 1
+        offre_id = request.args.get('id')
+        sql_obj = sql.MysqlObject()
+        # TODO A OPTIMISER AVEC L'AUTHENTIFICATION
+        user = "Tao Blancheton"
+
+        sql_obj.validate_offer(offre_id, disponible)
+        return redirect(url_for("admin", info_msg="L'offre a bien été validée."))
     else:
         abort(403)
 
@@ -222,6 +262,34 @@ def quit_tutorat():
             return redirect(url_for("recherche", info_msg="Votre retrait de ce Tutorat a bien été enregistré."))
         else:
             return render_template("error.html", message="Erreur - Vous ne participez pas à ce Tutorat")
+    else:
+        abort(403)
+
+# Ban
+@app.route('/unban')
+def unban():
+    ban = 0
+    if request.args.get('user_name'):
+        user_name = request.args.get('user_name')
+        sql_obj = sql.MysqlObject()
+        user = "Tao Blancheton"
+
+        sql_obj.ban(user_name, ban)
+        return redirect(url_for("admin", info_msg="Cet utilisateur a bien été débani."))
+    else:
+        abort(403)
+
+# Ban
+@app.route('/ban')
+def ban():
+    ban = 1
+    if request.args.get('user_name'):
+        user_name = request.args.get('user_name')
+        sql_obj = sql.MysqlObject()
+        user = "Tao Blancheton"
+
+        sql_obj.ban(user_name, ban)
+        return redirect(url_for("admin", info_msg="Cet utilisateur a bien été bani."))
     else:
         abort(403)
 
