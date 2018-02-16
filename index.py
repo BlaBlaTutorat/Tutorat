@@ -139,6 +139,9 @@ def enregistrement():
     elif result_code == 2:
         # Erreur (cas très rare ou l'utilisateur accepte une offre qui est deja pleine)
         return render_template("error.html", message="Erreur - Ce Tutorat est déjà plein")
+    elif result_code == 3:
+        # Erreur l'utilisateur veut participer à une offre qu'il a créée
+        return render_template("error.html", message="Erreur - Vous êtes l'auteur de ce tutorat")
 
 
 # Affichage du formulaire de création d'une offre

@@ -114,23 +114,28 @@ class MysqlObject:
     def add_participant(self, offre_id, participant):
         self.cursor.execute("""SELECT * FROM offres WHERE id=%s""", (offre_id,))
         offre = self.cursor.fetchall()[0]
-        if check_availability(offre) == 2:
-            # Update de la première colonne
-            self.cursor.execute("""UPDATE offres SET participant = %s WHERE id = %s """, (participant, offre_id))
-            self.conn.commit()
-            return 0
-        elif check_availability(offre) == 1:
-            # Update de la deuxième colonne + check si l'utilisateur n'est pas déjà participant à cette offre
-            if offre[6] != participant:
-                self.cursor.execute("""UPDATE offres SET participant2 = %s WHERE id = %s """, (participant, offre_id))
+        # Vérificataion auteur != participant
+        if offre[1] != participant:
+            if check_availability(offre) == 2:
+                # Update de la première colonne
+                self.cursor.execute("""UPDATE offres SET participant = %s WHERE id = %s """, (participant, offre_id))
                 self.conn.commit()
                 return 0
+            elif check_availability(offre) == 1:
+                # Update de la deuxième colonne + check si l'utilisateur n'est pas déjà participant à cette offre
+                if offre[6] != participant:
+                    self.cursor.execute("""UPDATE offres SET participant2 = %s WHERE id = %s """,
+                                        (participant, offre_id))
+                    self.conn.commit()
+                    return 0
+                else:
+                    # Erreur l'utilisateur participe déjà à ce tutorat
+                    return 1
             else:
-                # Erreur l'utilisateur participe déjà à ce tutorat
-                return 1
+                # Erreur l'offre est pleine
+                return 2
         else:
-            # Erreur l'offre est pleine
-            return 2
+            return 3
 
     # Récupération des offres propres à un utilisateur
     def get_user_offre(self, user_name):
