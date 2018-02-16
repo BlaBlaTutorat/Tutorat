@@ -642,7 +642,7 @@ footer .copyright li
 
 @media screen and (max-width: 1350px)
 {
-       .profil
+    .profil
     {
         font-family: sans-serif;
         font-size: 1em;
@@ -660,22 +660,34 @@ footer .copyright li
 
     .bloc_profil
     {
+        align-items: flex-start;
         display: flex;
         flex-direction: column;
         justify-content: center;
-        margin: auto;
-        margin-top: 70px;
+        margin: auto;  
+        margin-top: 100px;
+        align-items: center;
     }
 
-    .page_profil .offres
-    {
-        margin-top: 70px;
+    #info_profil
+    {        
+        margin-bottom: 0px;
     }
 
     .info_profil
     {
         color: #615a5f;
         font-size: 1.5em;
+    }
+
+    .page_profil .offres
+    {
+        margin-top: 100px;
+    }
+
+    #tutorat_en_cours
+    {
+        margin-top: 20px;
     }
 
     .bloc_page_profil
@@ -701,52 +713,53 @@ footer .copyright li
         display: flex;
         flex-direction: column;
         justify-content: center;
-    } 
+    }
 
     #none_offre
     {
         margin-bottom: 20px;
     }
-    
+
     .supr_offre
     {
         margin-top: 135px;
         margin-bottom: 0px;
     }
-}
-/* Fin Profil */
+    }
+    /* Fin Profil */
 
 
-/* Profil MAJ */
-.tri4
-{
-    margin-top: 0;
-    margin-bottom: 0;
-    width: 100%;
-    height: 25px;
-    box-sizing: border-box;
-    border: 2px solid #615a5f;
-    border-radius: 4px;
-    background-color: #f8f8f8;
-}
+    /* Profil MAJ */
+    .tri4
+    {
+        margin-top: 0;
+        margin-bottom: 0;
+        width: 100%;
+        height: 25px;
+        box-sizing: border-box;
+        border: 2px solid #615a5f;
+        border-radius: 4px;
+        background-color: #f8f8f8;
+    }
 
-.tri5
-{
-    color: #615a5f;
-    margin-top: 0;
-    margin-bottom: 0;
-    width: 100%;
-    height: 25px;
-    box-sizing: border-box;
-    border: 2px solid #615a5f;
-    border-radius: 4px;
-    background-color: #f8f8f8;
-}
+    .tri5
+    {
+        color: #615a5f;
+        margin-top: 0;
+        margin-bottom: 0;
+        width: 100%;
+        height: 25px;
+        box-sizing: border-box;
+        border: 2px solid #615a5f;
+        border-radius: 4px;
+        background-color: #f8f8f8;
+    }
 
-#maj_profil
-{
-    margin-bottom: 278px;
-    line-height: 30px;
+    #maj_profil
+    {
+        margin-bottom: 278px;
+        line-height: 30px;
+    }
 }
 /* Fin Profil MAJ */
 
@@ -923,8 +936,9 @@ footer .copyright li
     .bloc_admin
     {
         display: flex;
-        flex-direction: column;
+        flex-direction: column-reverse;
         justify-content: center;
+        align-items: center;
     }
 
     .admin
