@@ -569,6 +569,7 @@ footer .copyright li
 
 .bloc_profil
 {
+    align-items: flex-start;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -864,6 +865,7 @@ footer .copyright li
 
 .bloc_admin
 {
+    align-items: flex-start;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
