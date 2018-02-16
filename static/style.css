@@ -703,6 +703,40 @@ footer .copyright li
 /* Fin Profil */
 
 
+/* Profil MAJ */
+.tri4
+{
+    margin-top: 0;
+    margin-bottom: 0;
+    width: 100%;
+    height: 25px;
+    box-sizing: border-box;
+    border: 2px solid #615a5f;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+}
+
+.tri5
+{
+    color: #615a5f;
+    margin-top: 0;
+    margin-bottom: 0;
+    width: 100%;
+    height: 25px;
+    box-sizing: border-box;
+    border: 2px solid #615a5f;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+}
+
+#maj_profil
+{
+    margin-bottom: 279px;
+    line-height: 30px;
+}
+/* Fin Profil MAJ */
+
+
 /* Création */
 .creation
 {
