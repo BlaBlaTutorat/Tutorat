@@ -74,6 +74,17 @@ class MysqlObject:
 
         self.conn.commit()
 
+    # Listes des offres à valider
+    def offres_liste_valider(self):
+        self.cursor.execute(
+            """SELECT * FROM offres WHERE disponible=0""")
+        return self.cursor.fetchall()
+
+    # Listes des utilisateurs
+    def liste_user(self):
+        self.cursor.execute("""SELECT * FROM users""")
+        return self.cursor.fetchall()
+
     # Listes des offres
     def offres_liste(self, page):
         self.cursor.execute(
@@ -147,11 +158,26 @@ class MysqlObject:
         self.cursor.execute("""DELETE FROM offres WHERE id = %s""", (offre_id,))
         self.conn.commit()
 
+    # Validation d'une offre
+    def validate_offer(self, offre_id, disponible):
+        self.cursor.execute("""UPDATE offres SET disponible = %s WHERE id = %s""", (disponible, offre_id,))
+        self.conn.commit()
+
+    # Ban
+    def ban(self, user_name, ban):
+        self.cursor.execute("""UPDATE users SET ban = %s WHERE nom = %s""", (ban, user_name,))
+        self.conn.commit()
+
     # Modification du profil
     def modify_user_info(self, user_name, mail, niveau, filiere):
         self.cursor.execute("""UPDATE users SET mail = %s, niveau = %s, filiere = %s WHERE nom = %s """,
                             (mail, niveau, filiere, user_name))
         self.conn.commit()
+
+    # Recherche des offres auxquelles participe l'utilisateur
+    def get_tutorats(self, none):
+        self.cursor.execute("""SELECT * FROM offres WHERE participant != %s OR participant2 != %s""", (none, none))
+        return self.cursor.fetchall()
 
     # Recherche des offres auxquelles participe l'utilisateur
     def get_user_tutorats(self, user_name):
