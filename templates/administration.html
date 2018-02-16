@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Administration</title>
+    <link rel=stylesheet type=text/css href="/static/style.css">
+    <link rel="icon" type="image/png" href="/static/favicon.png"/>
+</head>
+<body>
+
+{% include 'HEADER.html' %}
+
+{% if info_msg %}
+    <!-- Message d'information -->
+    <a href="/admin">
+        <button class="created">{{ info_msg }}</button>
+    </a>
+{% endif %}
+
+<div class="bloc_admin">
+    <div class="admin">
+        <h2>Utilisateurs</h2>
+        {% if users|length>0 %}
+            {% for user in users %}
+                <div class="bloc_profil" id="user_admin">
+                    <div class="info_profil">
+                            <p><strong class="G">Nom:</strong></p>
+                            <p><strong class="G">Mail:</strong></p>
+                            <p><strong class="G">Niveau:</strong></p>
+                            <p><strong class="G">Filière:</strong></p>
+                            <p><strong class="G">Admin:</strong></p>
+                            <p><strong class="G">Ban:</strong></p>
+                    </div>
+                    <div class="info_profil">
+                        <p>{{ user[0] }}</p>
+                        <p>{{ user[2] }}</p>
+                        <p>{{ user[3] }}</p>
+                        <p>{{ user[4] }}</p>
+                        {% if user[5]==1 %}
+                            <p>Oui</p>
+                        {% else %}
+                            <p>Non</p>
+                        {% endif %}
+                        {% if user[6]==1 %}
+                            <p>Oui</p>
+                        {% else %}
+                            <p>Non</p>
+                        {% endif %}
+                    </div>
+                    {% if user[6]==1 %}
+                        <a href="/unban?user_name={{ user[0] }}" class="ban"><button>UnBan</button></a>
+                    {% else %}
+                        <a href="/ban?user_name={{ user[0] }}" class="ban"><button>Ban</button></a>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="none_offre">Aucun utilisateur n'a été trouvé</p>
+        {% endif %}
+    </div>
+    <div class="admin">
+        <h2>Offres à valider</h2>
+        <div class="offres">
+            {% if offres_V|length>0 %}
+                {% for offre in offres_V %}
+                    <br/>
+                    <div class="bloc">
+                        <div class="info">
+                            <p class="element"><strong class="G">Auteur:</strong> {{ offre[1] }}</p>
+                            <p class="element"><strong class="G">Niveau:</strong> {{ offre[2] }}</p>
+                            <p class="element"><strong class="G">Filière:</strong> {{ offre[3] }}</p>
+                            <p class="element"><strong class="G">Matière:</strong> {{ offre[4] }}</p>
+                        </div>
+                        <div id="horaires">
+                            <div class="horaire">
+                                <div class="table">
+                                    {% for i in range(0,12,2) %}{% if offre[9+i] is not none and offre[10+i] is not none %}
+                                        <p>{{ days[i//2] }}:</p>
+                                    {% endif %}{% endfor %}
+                                </div>
+                                <div class="table" id="table_horaires">
+                                    {% for i in range(0,12,2) %}{% if offre[9+i] is not none and offre[10+i] is not none %}
+                                        <p>{{ 'h'.join((offre[9+i]|string).split(':')[:2]) }}
+                                                - {{ 'h'.join((offre[10+i]|string).split(':')[:2]) }}</p>
+                                    {% endif %}{% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="date">
+                            <p class="time"><strong class="G">Publié le:</strong> {{ offre[5].strftime('%d-%m-%Y') }}</p>
+                            <p class="supr_offre" id="invalider_offre"><a href="/delete2?id={{ offre[0] }}">
+                                <button>Suprimer l'offre</button>
+                            </a></p>
+                            <p id="valider_offre"><a href="/validate?id={{ offre[0] }}">
+                                <button>Accepter l'offre</button>
+                            </a></p>
+                        </div>
+                    </div>
+                    <br/>
+                {% endfor %}
+            {% else %}
+                <p class="none_offre">Aucune offre n'a été trouvée</p>
+            {% endif %}
+        </div>
+        <div class="offres" id="tutorat_en_cours">
+            <h2>Tutorats en cours</h2>
+            {% if tutorats_actifs|length>0 %}
+                {% for tutorat in tutorats_actifs %}
+                    <br/>
+                    <div class="bloc">
+                        <div class="info">
+                            <p class="element"><strong class="G">Auteur:</strong> {{ tutorat[1] }}</p>
+                            <p class="element"><strong class="G">Niveau:</strong> {{ tutorat[2] }}</p>
+                            <p class="element"><strong class="G">Filière:</strong> {{ tutorat[3] }}</p>
+                            <p class="element"><strong class="G">Matière:</strong> {{ tutorat[4] }}</p>
+                            <p class="element"><strong class="G">Participants:</strong>
+                                {% if tutorat[6] is none and tutorat[7] is none %}
+                                    Personne
+                                {% else %}
+                                    {% if tutorat[6] is not none %}{{ tutorat[6] }}{% endif %}
+                                    {% if tutorat[7] is not none %}, {{ tutorat[7] }}{% endif %}
+                                {% endif %}
+                            </p>
+                        </div>
+                        <div id="horaires">
+                            <div class="horaire">
+                                <div class="table">
+                                    {% for i in range(0,12,2) %}
+                                        {% if tutorat[9+i] is not none and tutorat[10+i] is not none %}
+                                            <p>{{ days[i//2] }}:</p>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                                <div class="table" id="table_horaires">
+                                    {% for i in range(0,12,2) %}
+                                        {% if tutorat[9+i] is not none and tutorat[10+i] is not none %}
+                                            <p>{{ 'h'.join((tutorat[9+i]|string).split(':')[:2]) }}
+                                                    - {{ 'h'.join((tutorat[10+i]|string).split(':')[:2]) }}</p>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="date">
+                            <p class="time"><strong class="G">Publié le:</strong> {{ tutorat[5].strftime('%d-%m-%Y') }}
+                            </p>
+                            <p class="supr_offre"><a href="/delete2?id={{ tutorat[0] }}">
+                                <button>Suprimer ce tutorat</button>
+                            </a></p>
+                        </div>
+                    </div>
+                    <br/>
+                {% endfor %}
+            {% else %}
+                <div class="bloc" id="none_offre">
+                    <p class="none_offre">Aucun tutorat n'a été trouvé</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% include 'FOOTER.html' %}
+
+</body>
