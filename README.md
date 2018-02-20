@@ -1,5 +1,10 @@
 Projet d'isn de tutorat
 
+Répartition des taches:
+ - Tao : CSS + header + footer + AIDER ANTOINE + administration
+ - Marko : Inscription + Connexion
+ - Antoine : Recherche +Postage et acceptation des offres + profil
+
 Langages:
 - Python
 - SQL
