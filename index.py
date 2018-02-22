@@ -119,20 +119,25 @@ def recherche():
     else:
         page = 0
 
+    # Variables locales utilisées dans les templates
+    matieres = sql_obj.matieres_liste()
+    niveaux = sql_obj.niveaux_liste()
+    filieres = sql_obj.filieres_liste()
+
     if request.form.get("option") and not request.form.get("option2"):
         # Formulaire de tri première étape
+
         option = request.form.get("option")
-        return render_template("recherche.html", **locals(), offres=sql_obj.offres_liste_tri(option, page),
-                               matieres=sql_obj.matieres_liste(), niveaux=sql_obj.niveaux_liste(),
-                               filieres=sql_obj.filieres_liste(), days=days)
+        return render_template("recherche.html", **locals(), offres=sql_obj.offres_liste_tri(option, page), days=days)
+
     elif request.form.get("option") and request.form.get("option2"):
         # Formulaire de tri deuxième étape
+
         option = request.form.get("option")
         option2 = request.form.get("option2")
         return render_template("recherche.html",
-                               offres=sql_obj.offres_liste_tri_2(option, option2, page), **locals(), days=days,
-                               matieres=sql_obj.matieres_liste(), niveaux=sql_obj.niveaux_liste(),
-                               filieres=sql_obj.filieres_liste())
+                               offres=sql_obj.offres_liste_tri_2(option, option2, page), **locals(), days=days)
+
     else:
         # Pas de formulaire de tri
         return render_template("recherche.html", **locals(), offres=sql_obj.offres_liste(page), days=days)

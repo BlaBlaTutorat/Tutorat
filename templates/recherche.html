@@ -22,50 +22,23 @@
         <option value="matiere" {% if option == "matiere" %}selected{% endif %}>Matière</option>
     </select>
 
-    {% if not option2 and (option == "niveau" or option == "matiere" or option == "filiere") %}
+    {% if option == "niveau" or option == "matiere" or option == "filiere" %}
         <!-- Paramètre de tri 2 pas encore défini-->
         <select class="tri" name="option2" onchange="this.form.submit()">
-
             <option value="" disabled selected>- Tri -</option>
             {% if option == "niveau" %}
                 {% for niveau in niveaux %}
-                    <option>{{ niveau }}</option>
+                    <option {% if option2 == niveau %}selected{% endif %}>{{ niveau }}</option>
                 {% endfor %}
             {% elif option == "matiere" %}
                 {% for matiere in matieres %}
-                    <option>{{ matiere }}</option>
+                    <option {% if option2 == matiere %}selected{% endif %}>{{ matiere }}</option>
                 {% endfor %}
             {% elif option == "filiere" %}
                 {% for filiere in filieres %}
-                    <option>{{ filiere }}</option>
+                    <option {% if option2 == filiere %}selected{% endif %}>{{ filiere }}</option>
                 {% endfor %}
             {% endif %}
-        </select>
-    {% elif option2 and option=="niveau" %}
-        <!-- Paramètre de tri 2 défini-->
-        <select class="tri" name="option2" onchange="this.form.submit()">
-            <option value="" disabled selected>- Tri -</option>
-            {% for niveau in niveaux %}
-                <option {% if option2 == niveau %}selected{% endif %}>{{ niveau }}</option>
-            {% endfor %}
-        </select>
-
-    {% elif option2 and option=="matiere" %}
-        <!-- Paramètre de tri 2 défini-->
-        <select class="tri" name="option2" onchange="this.form.submit()">
-            <option value="" disabled selected>- Tri -</option>
-            {% for matiere in matieres %}
-                <option {% if option2 == matiere %}selected{% endif %}>{{ matiere }}</option>
-            {% endfor %}
-        </select>
-
-    {% elif option2 and option=="filiere" %}
-        <!-- Paramètre de tri 2 défini-->
-        <select class="tri" name="option2" onchange="this.form.submit()">
-            <option value="" disabled selected>- Tri -</option>
-            {% for filiere in filieres %}
-                <option {% if option2 == filiere %}selected{% endif %}>{{ filiere }}</option>
-            {% endfor %}
         </select>
     {% endif %}
 
