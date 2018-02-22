@@ -220,7 +220,7 @@ def delete():
     if request.args.get('id'):
         offre_id = request.args.get('id')
         sql_obj = sql.MysqlObject()
-        # TODO A OPTIMISER AVEC L'AUTHENTIFICATION
+        # TODO verifier que l'utilisateur a bien crée l'offre qu'il veut supprimer
         user = "Tao Blancheton"
 
         sql_obj.delete_offer(offre_id)
@@ -235,7 +235,7 @@ def delete2():
     if request.args.get('id'):
         offre_id = request.args.get('id')
         sql_obj = sql.MysqlObject()
-        # TODO A OPTIMISER AVEC L'AUTHENTIFICATION
+        # TODO vérifier que l'utilisateur est admin
         user = "Tao Blancheton"
 
         sql_obj.delete_offer(offre_id)
@@ -251,7 +251,7 @@ def validate():
         disponible = 1
         offre_id = request.args.get('id')
         sql_obj = sql.MysqlObject()
-        # TODO A OPTIMISER AVEC L'AUTHENTIFICATION
+        # TODO vérifier que l'utilisateur est admin
         user = "Tao Blancheton"
 
         sql_obj.validate_offer(offre_id, disponible)

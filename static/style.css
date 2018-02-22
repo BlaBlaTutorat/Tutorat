@@ -1,13 +1,10 @@
 /* Fichier css principal */
-textarea 
-{
+textarea {
     resize: none;
 }
 
-
 /* Polices */
-@font-face
-{
+@font-face {
     font-family: 'Dayrom';
     src: url('/static/polices/dayrom.eot');
     src: url('/static/polices/dayrom.eot?#iefix') format('embedded-opentype'),
@@ -17,17 +14,16 @@ textarea
     font-weight: normal;
     font-style: normal;
 }
+
 /* Fin Polices */
 
-
 /* Commun */
-.password
-{
+.password {
     background-color: #f8f8f8;
     border: 2px solid #ccc;
     color: black;
     text-decoration: none;
-    cursor: text;    
+    cursor: text;
     border-radius: 4px;
     width: 40%;
     height: 25px;
@@ -35,8 +31,7 @@ textarea
     border: 2px solid #ccc;
 }
 
-.created
-{
+.created {
     position: fixed;
     bottom: 100px;
     right: 20px;
@@ -47,60 +42,53 @@ textarea
     background: url("croix.png") top right no-repeat, #3CBC8D;
 }
 
-h2
-{
+h2 {
     padding: 0px;
     font-family: sans-serif;
     color: #615a5f;
     text-align: center;
 }
 
-button, input
-{
+button, input {
     background-color: #615a5f;
     border: none;
     color: white;
     text-decoration: none;
     margin: 4px 2px;
-    cursor: pointer;    
+    cursor: pointer;
     border-radius: 5px;
 }
 
-form, fieldset
-{
+form, fieldset {
     border: none;
     margin-bottom: 0px;
 }
 
-body
-{
-    background: rgb(255,250,250);
+body {
+    background: rgb(255, 250, 250);
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-.G
-{
+.G {
     font-weight: bold;
 }
+
 /* Fin Commun */
 
-
 /* Header */
-header
-{
-    background: #615a5f;	
+header {
+    background: #615a5f;
     box-shadow: 0px 4px 4px #1c1a19;
     border-radius: 5px;
     display: flex;
     justify-content: center;
     flex-direction: column;
-    color: rgb(255,245,234);
+    color: rgb(255, 245, 234);
 }
 
-header h1
-{
+header h1 {
     font-family: 'Dayrom', serif;
     font-size: 2.8em;
     font-weight: bold;
@@ -108,75 +96,66 @@ header h1
     text-align: center;
 }
 
-header nav ul
-{
+header nav ul {
     font-size: 1.3em;
-    color: rgb(255,245,234);
+    color: rgb(255, 245, 234);
     padding-bottom: 3px;
     list-style-type: none;
-    color: rgb(255,245,234);    
+    color: rgb(255, 245, 234);
     display: flex;
     flex-direction: row;
     justify-content: center;
 }
 
-header nav li
-{
+header nav li {
     margin-right: 30px;
     margin-left: 10px;
 }
 
-header nav a:hover
-{
+header nav a:hover {
     color: #fff;
     text-shadow: #000;
     border-bottom: 3px solid #fff;
 }
 
-header nav a
-{
-    color: rgb(255,245,234);
+header nav a {
+    color: rgb(255, 245, 234);
     font-size: 1.3em;
     text-decoration: none;
 }
+
 /* Fin Header */
 
-
 /* Footer */
-footer
-{
-    background: #615a5f;  
+footer {
+    background: #615a5f;
     box-shadow: 0px 4px 4px #1c1a19;
     border-radius: 5px;
     display: flex;
     justify-content: space-between;
     flex-direction: row;
     align-items: center;
-    color: rgb(255,245,234);
+    color: rgb(255, 245, 234);
 }
 
-footer .lycee
-{
+footer .lycee {
     margin-left: 10px;
 }
 
-footer .lycee p
-{
+footer .lycee p {
     margin-top: 5px;
     margin-bottom: 0px;
 }
 
-footer .copyright
-{
+footer .copyright {
     font-family: 'Dayrom', serif;
     align-self: flex-end;
     list-style: none;
-    margin-right: 10px;    
+    margin-right: 10px;
     font-size: 1em
 }
 
-footer .copyright ul
-{
+footer .copyright ul {
     display: flex;
     flex-direction: row;
     list-style-type: none;
@@ -184,22 +163,19 @@ footer .copyright ul
     margin-bottom: 5px;
 }
 
-footer .copyright li
-{
+footer .copyright li {
     font-size: 0.8em;
     margin-left: 20px;
 }
+
 /* Fin Footer */
 
-
 /* Recherche des offres */
-.search
-{
+.search {
     margin-top: 10px;
 }
 
-.tri 
-{
+.tri {
     display: flex;
     justify-content: center;
     width: 30%;
@@ -214,30 +190,27 @@ footer .copyright li
     background-color: #f1f1f1;
 }
 
-.offres
-{
+.offres {
     display: flex;
     flex-direction: column;
     justify-content: center;
     margin: auto;
 }
 
-.offres .bloc
-{
-    background: rgb(255,245,234);
+.offres .bloc {
+    background: rgb(255, 245, 234);
     border-radius: 10px;
     border-color: #615a5f;
     border-width: 2px;
     border-style: solid;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;  
+    justify-content: space-between;
     padding: 5px 10px 5px 10px;
     width: 700px;
 }
 
-.offres .element
-{
+.offres .element {
     margin-bottom: 2px;
     margin-top: 2px;
     padding: 0px 0px 5px 0px;
@@ -246,8 +219,7 @@ footer .copyright li
     font-family: sans-serif;
 }
 
-.time
-{
+.time {
     margin-top: 2px;
     padding: 0px 0px 0px 0px;
     color: #615a5f;
@@ -255,52 +227,45 @@ footer .copyright li
     font-family: sans-serif;
 }
 
-.offres .table
-{
+.offres .table {
     margin: auto;
     margin-left: 10px;
     margin-right: 10px;
 }
 
-.table p
-{
+.table p {
     margin-bottom: 4px;
     margin-top: 4px;
 }
 
-.date
-{
+.date {
     width: 15%;
     padding-left: 0;
     margin-left: 0;
 }
 
-.info
-{
+.info {
     padding-right: 0;
     margin-right: 0;
     max-width: 35%;
     min-width: 35%
 }
 
-.offres .horaire
-{
+.offres .horaire {
     margin-right: 10px;
     display: flex;
     justify-content: space-around;
     margin-top: 3px;
     background: #615a5f;
     border-radius: 15px;
-    color: rgb(255,245,234);
+    color: rgb(255, 245, 234);
 }
 
-#table_horaires
-{
+#table_horaires {
     text-align: center;
 }
 
-.pages
-{
+.pages {
     display: flex;
     justify-content: center;
     flex-direction: row;
@@ -309,8 +274,7 @@ footer .copyright li
     color: #615a5f;
 }
 
-.pages a
-{
+.pages a {
     margin-left: 30px;
     margin-right: 30px;
     font-size: 1em;
@@ -319,56 +283,49 @@ footer .copyright li
     text-decoration: none;
 }
 
-.pages a:hover
-{
+.pages a:hover {
     font-weight: bold;
 }
 
-#nb_page
-{
+#nb_page {
     font-size: 2em;
 }
 
-.search_none
-{
+.search_none {
     margin: 80px 0px 425px 0px;
 }
+
 /* Fin Recherche des offres */
 
-
 /* Inscription */
-.register
-{
+.register {
     margin-top: 20px;
     margin-bottom: 5px;
 }
 
-.critere
-{
+.critere {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     width: 100%;
 }
 
-.inscription
-{
+.inscription {
     font-family: sans-serif;
     font-size: 1em;
-    background: rgb(255,245,234);
+    background: rgb(255, 245, 234);
     border-radius: 10px;
     border-color: #615a5f;
     border-width: 2px;
     border-style: solid;
     display: flex;
     flex-direction: column;
-    justify-content: center;  
+    justify-content: center;
     padding: 5px 10px 5px 10px;
     width: 700px;
 }
 
-.bloc_inscription
-{
+.bloc_inscription {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -376,8 +333,7 @@ footer .copyright li
     margin-bottom: 168px;
 }
 
-.bloc_inscription textarea 
-{
+.bloc_inscription textarea {
     width: 100%;
     height: 25px;
     box-sizing: border-box;
@@ -386,8 +342,7 @@ footer .copyright li
     background-color: #f8f8f8;
 }
 
-.tri2
-{
+.tri2 {
     width: 100%;
     height: 25px;
     box-sizing: border-box;
@@ -397,27 +352,23 @@ footer .copyright li
     border-radius: 4px;
 }
 
-.reg
-{
+.reg {
     margin-top: 160px;
 }
+
 /* Fin Inscription */
 
-
 /* Connexion */
-.log
-{
+.log {
     margin-top: 160px;
 }
 
-.login
-{
+.login {
     margin-top: 20px;
     margin-bottom: 5px;
 }
 
-.champs
-{
+.champs {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -426,24 +377,22 @@ footer .copyright li
     line-height: 2px;
 }
 
-.connexion
-{
+.connexion {
     font-family: sans-serif;
     font-size: 1em;
-    background: rgb(255,245,234);
+    background: rgb(255, 245, 234);
     border-radius: 10px;
     border-color: #615a5f;
     border-width: 2px;
     border-style: solid;
     display: flex;
     flex-direction: column;
-    justify-content: center;  
+    justify-content: center;
     padding: 5px 10px 5px 10px;
     width: 700px;
 }
 
-.bloc_connexion
-{
+.bloc_connexion {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -451,8 +400,7 @@ footer .copyright li
     margin-bottom: 259px;
 }
 
-.bloc_connexion textarea 
-{
+.bloc_connexion textarea {
     width: 40%;
     height: 25px;
     box-sizing: border-box;
@@ -461,17 +409,16 @@ footer .copyright li
     background-color: #f8f8f8;
 }
 
-.not_register
-{
+.not_register {
     font-size: 0.9em;
     margin-bottom: 2px;
     margin-top: 30px;
 }
+
 /* Fin Connexion */
 
 /* MDP oublié */
-.reset
-{
+.reset {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -480,24 +427,22 @@ footer .copyright li
     line-height: 2px;
 }
 
-.forgot
-{
+.forgot {
     font-family: sans-serif;
     font-size: 1em;
-    background: rgb(255,245,234);
+    background: rgb(255, 245, 234);
     border-radius: 10px;
     border-color: #615a5f;
     border-width: 2px;
     border-style: solid;
     display: flex;
     flex-direction: column;
-    justify-content: center;  
+    justify-content: center;
     padding: 5px 10px 5px 10px;
     width: 700px;
 }
 
-.bloc_forgot
-{
+.bloc_forgot {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -506,8 +451,7 @@ footer .copyright li
     margin-top: 212px;
 }
 
-.bloc_forgot textarea 
-{
+.bloc_forgot textarea {
     width: 40%;
     height: 25px;
     box-sizing: border-box;
@@ -516,16 +460,14 @@ footer .copyright li
     background-color: #f8f8f8;
 }
 
-.bloc_forgot button
-{
+.bloc_forgot button {
     margin-top: 0px;
 }
+
 /* Fin MDP ouvlié */
 
-
 /* Erreur */
-.error
-{
+.error {
     margin: auto;
     margin-top: 50px;
     margin-bottom: 53px;
@@ -534,8 +476,7 @@ footer .copyright li
     justify-content: center;
 }
 
-.error p
-{
+.error p {
     text-align: center;
     color: #615a5f;
     font-size: 3em;
@@ -546,80 +487,71 @@ footer .copyright li
     margin-top: 0px;
 }
 
-.error img
-{
+.error img {
     margin-top: 0px;
     margin-bottom: 0px;
     height: 560px;
     width: 980px;
 }
+
 /* Fin Erreur */
 
 /* Profil */
-.profil
-{
+.profil {
     font-family: sans-serif;
     font-size: 1em;
-    background: rgb(255,245,234);
+    background: rgb(255, 245, 234);
     border-radius: 10px;
     border-color: #615a5f;
     border-width: 2px;
     border-style: solid;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;  
+    justify-content: space-between;
     padding: 5px 10px 5px 10px;
     width: 550px;
 }
 
-.bloc_profil
-{
+.bloc_profil {
     align-items: flex-start;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin: auto;  
+    margin: auto;
     margin-top: 100px;
     align-items: center;
 }
 
-#info_profil
-{        
+#info_profil {
     margin-bottom: 316px;
 }
 
-.info_profil
-{
+.info_profil {
     color: #615a5f;
     font-size: 1.5em;
 }
 
-.page_profil .offres
-{
+.page_profil .offres {
     margin-top: 100px;
 }
 
-#tutorat_en_cours
-{
+#tutorat_en_cours {
     margin-top: 20px;
 }
 
-.bloc_page_profil
-{
+.bloc_page_profil {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
 }
 
-.page_profil
-{
+.page_profil {
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-#none_offre, .none_offre
-{
+#none_offre, .none_offre {
     text-align: center;
     font-family: sans-serif;
     color: #615a5f;
@@ -629,83 +561,71 @@ footer .copyright li
     justify-content: center;
 }
 
-#none_offre
-{
+#none_offre {
     margin-bottom: 20px;
 }
 
-.supr_offre
-{
+.supr_offre {
     margin-top: 135px;
     margin-bottom: 0px;
 }
 
-@media screen and (max-width: 1350px)
-{
-    .profil
-    {
+@media screen and (max-width: 1350px) {
+    .profil {
         font-family: sans-serif;
         font-size: 1em;
-        background: rgb(255,245,234);
+        background: rgb(255, 245, 234);
         border-radius: 10px;
         border-color: #615a5f;
         border-width: 2px;
         border-style: solid;
         display: flex;
         flex-direction: row;
-        justify-content: space-between;  
+        justify-content: space-between;
         padding: 5px 10px 5px 10px;
         width: 550px;
     }
 
-    .bloc_profil
-    {
+    .bloc_profil {
         align-items: flex-start;
         display: flex;
         flex-direction: column;
         justify-content: center;
-        margin: auto;  
+        margin: auto;
         margin-top: 100px;
         align-items: center;
     }
 
-    #info_profil
-    {        
+    #info_profil {
         margin-bottom: 0px;
     }
 
-    .info_profil
-    {
+    .info_profil {
         color: #615a5f;
         font-size: 1.5em;
     }
 
-    .page_profil .offres
-    {
+    .page_profil .offres {
         margin-top: 100px;
     }
 
-    #tutorat_en_cours
-    {
+    #tutorat_en_cours {
         margin-top: 20px;
     }
 
-    .bloc_page_profil
-    {
+    .bloc_page_profil {
         display: flex;
         flex-direction: column;
         justify-content: center;
     }
 
-    .page_profil
-    {
+    .page_profil {
         display: flex;
         flex-direction: column;
         justify-content: center;
     }
 
-    #none_offre, .none_offre
-    {
+    #none_offre, .none_offre {
         text-align: center;
         font-family: sans-serif;
         color: #615a5f;
@@ -715,58 +635,51 @@ footer .copyright li
         justify-content: center;
     }
 
-    #none_offre
-    {
+    #none_offre {
         margin-bottom: 20px;
     }
 
-    .supr_offre
-    {
+    .supr_offre {
         margin-top: 135px;
         margin-bottom: 0px;
     }
-    }
-    /* Fin Profil */
-
-
-    /* Profil MAJ */
-    .tri4
-    {
-        margin-top: 0;
-        margin-bottom: 0;
-        width: 100%;
-        height: 25px;
-        box-sizing: border-box;
-        border: 2px solid #615a5f;
-        border-radius: 4px;
-        background-color: #f8f8f8;
-    }
-
-    .tri5
-    {
-        color: #615a5f;
-        margin-top: 0;
-        margin-bottom: 0;
-        width: 100%;
-        height: 25px;
-        box-sizing: border-box;
-        border: 2px solid #615a5f;
-        border-radius: 4px;
-        background-color: #f8f8f8;
-    }
-
-    #maj_profil
-    {
-        margin-bottom: 278px;
-        line-height: 30px;
-    }
 }
+
+/* Fin Profil */
+
+/* Profil MAJ */
+.tri4 {
+    margin-top: 0;
+    margin-bottom: 0;
+    width: 100%;
+    height: 25px;
+    box-sizing: border-box;
+    border: 2px solid #615a5f;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+}
+
+.tri5 {
+    color: #615a5f;
+    margin-top: 0;
+    margin-bottom: 0;
+    width: 100%;
+    height: 25px;
+    box-sizing: border-box;
+    border: 2px solid #615a5f;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+}
+
+#maj_profil {
+    margin-bottom: 278px;
+    line-height: 30px;
+}
+
 /* Fin Profil MAJ */
 
-
 /* Création */
-.creation
-{
+.creation {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -774,23 +687,21 @@ footer .copyright li
     margin: auto;
 }
 
-.creation .bloc
-{
-    background: rgb(255,245,234);
+.creation .bloc {
+    background: rgb(255, 245, 234);
     border-radius: 10px;
     border-color: #615a5f;
     border-width: 2px;
     border-style: solid;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;  
+    justify-content: space-between;
     padding: 5px 10px 5px 10px;
     width: 800px;
     margin-bottom: 233px;
 }
 
-.creation .element
-{
+.creation .element {
     margin-bottom: 2px;
     margin-top: 2px;
     padding: 0px 0px 5px 0px;
@@ -799,16 +710,14 @@ footer .copyright li
     font-family: sans-serif;
 }
 
-.creation .table_crea
-{
+.creation .table_crea {
     margin: auto;
     margin-left: 10px;
     margin-right: 10px;
     line-height: 30px;
 }
 
-.info_crea
-{
+.info_crea {
     line-height: 50px;
     padding-right: 0;
     margin-right: 0;
@@ -816,24 +725,21 @@ footer .copyright li
     min-width: 40%;
 }
 
-.creation .horaire
-{
+.creation .horaire {
     margin-right: 10px;
     display: flex;
     justify-content: space-around;
     margin-top: 3px;
     background: #615a5f;
     border-radius: 15px;
-    color: rgb(255,245,234);
+    color: rgb(255, 245, 234);
 }
 
-#table_horaires_crea
-{
+#table_horaires_crea {
     text-align: center;
 }
 
-.tri3
-{
+.tri3 {
     width: 45%;
     height: 40px;
     box-sizing: border-box;
@@ -843,72 +749,63 @@ footer .copyright li
     border-radius: 4px;
 }
 
-.crea_offre
-{
+.crea_offre {
     margin-top: 65px;
     margin-bottom: 0px;
 }
 
-#horaires_crea
-{
+#horaires_crea {
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-.crea_title
-{
+.crea_title {
     margin-top: 120px;
 }
 
-.form_crea
-{
+.form_crea {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
+
 /* Fin Création */
 
-
 /* Administration */
-#invalider_offre
-{
+#invalider_offre {
     margin-top: 55px;
 }
 
-#valider_offre
-{
+#valider_offre {
     margin: 0 0 0 0;
     width: 100%;
 }
 
-.bloc_admin
-{
+.bloc_admin {
     align-items: flex-start;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
 }
 
-.admin
-{
+.admin {
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-#user_admin
-{
+#user_admin {
     font-family: sans-serif;
-    background: rgb(255,245,234);
+    background: rgb(255, 245, 234);
     border-radius: 10px;
     border-color: #615a5f;
     border-width: 2px;
     border-style: solid;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;  
+    justify-content: space-between;
     padding: 5px 10px 5px 10px;
     width: 550px;
     margin-bottom: 20px;
@@ -916,51 +813,44 @@ footer .copyright li
     line-height: 15px;
 }
 
-.ban
-{
+.ban {
     margin-top: 220px;
     margin-bottom: 0px;
 }
 
-@media screen and (max-width: 1350px)
-{
-    #invalider_offre
-    {
+@media screen and (max-width: 1350px) {
+    #invalider_offre {
         margin-top: 55px;
     }
 
-    #valider_offre
-    {
+    #valider_offre {
         margin: 0 0 0 0;
         width: 100%;
     }
 
-    .bloc_admin
-    {
+    .bloc_admin {
         display: flex;
         flex-direction: column-reverse;
         justify-content: center;
         align-items: center;
     }
 
-    .admin
-    {
+    .admin {
         display: flex;
         flex-direction: column;
         justify-content: center;
     }
 
-    #user_admin
-    {
+    #user_admin {
         font-family: sans-serif;
-        background: rgb(255,245,234);
+        background: rgb(255, 245, 234);
         border-radius: 10px;
         border-color: #615a5f;
         border-width: 2px;
         border-style: solid;
         display: flex;
         flex-direction: row;
-        justify-content: space-between;  
+        justify-content: space-between;
         padding: 5px 10px 5px 10px;
         width: 550px;
         margin-bottom: 20px;
@@ -968,10 +858,10 @@ footer .copyright li
         line-height: 15px;
     }
 
-    .ban
-    {
+    .ban {
         margin-top: 220px;
         margin-bottom: 0px;
     }
 }
+
 /* Fin Administration */
