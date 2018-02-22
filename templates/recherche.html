@@ -23,7 +23,7 @@
     </select>
 
     {% if option == "niveau" or option == "matiere" or option == "filiere" %}
-        <!-- Paramètre de tri 2 pas encore défini-->
+        <!-- Paramètre de tri 2 -->
         <select class="tri" name="option2" onchange="this.form.submit()">
             <option value="" disabled selected>- Tri -</option>
             {% if option == "niveau" %}
@@ -93,7 +93,7 @@
                     </div>
                 </div>
                 <div class="date">
-                    <p class="time"><strong class="G">Publié le:</strong> {{ offre[5].strftime('%d-%m-%Y') }}</p>
+                    <p class="time"><strong class="G">Publiée le:</strong> {{ offre[5].strftime('%d-%m-%Y') }}</p>
                 </div>
             </div>
             <br/>
