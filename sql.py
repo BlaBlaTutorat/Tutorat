@@ -111,12 +111,12 @@ class MysqlObject:
                 str(offre_par_page) + """ OFFSET """ + str(page * offre_par_page))
         return self.cursor.fetchall()
 
-    # Liste des offres selon 1 facteur de tri + 1 niveau/matiere préférée
+    # Liste des offres selon 1 facteur de tri + 1 niveau/matiere
     def offres_liste_tri_2(self, option, option2, page):
         self.cursor.execute(
-            'SELECT * FROM offres WHERE disponible=1 AND (participant IS NULL OR participant2 IS NULL) ORDER BY CASE ' +
-            option + ' WHEN "' + option2 + '" THEN 1 ELSE ' + option + ' END LIMIT ' +
-            str(offre_par_page) + ' OFFSET ' + str(page * offre_par_page))
+            """SELECT * FROM offres WHERE disponible=1 AND (participant IS NULL OR participant2 IS NULL)
+             AND """ + option + """ = '""" + option2 + """' LIMIT """ + str(offre_par_page) + """ OFFSET """ + str(
+                page * offre_par_page))
 
         return self.cursor.fetchall()
 
