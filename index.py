@@ -109,6 +109,7 @@ def recherche():
     sql_obj = sql.MysqlObject()
     admin_user = True
     info_msg = None
+    user = "Tao Blancheton"
     if request.args.get('info_msg'):
         info_msg = request.args.get('info_msg')
 
@@ -128,7 +129,7 @@ def recherche():
         # Formulaire de tri première étape
 
         option = request.form.get("option")
-        return render_template("recherche.html", **locals(), offres=sql_obj.offres_liste_tri(option, page), days=days)
+        return render_template("recherche.html", **locals(), offres=sql_obj.offres_liste_tri(option, page), days=days, users=sql_obj.get_user_info(user))
 
     elif request.form.get("option") and request.form.get("option2"):
         # Formulaire de tri deuxième étape
@@ -136,11 +137,11 @@ def recherche():
         option = request.form.get("option")
         option2 = request.form.get("option2")
         return render_template("recherche.html",
-                               offres=sql_obj.offres_liste_tri_2(option, option2, page), **locals(), days=days)
+                               offres=sql_obj.offres_liste_tri_2(option, option2, page), **locals(), days=days, users=sql_obj.get_user_info(user))
 
     else:
         # Pas de formulaire de tri
-        return render_template("recherche.html", **locals(), offres=sql_obj.offres_liste(page), days=days)
+        return render_template("recherche.html", **locals(), offres=sql_obj.offres_liste(page), days=days, users=sql_obj.get_user_info(user))
 
 
 # Page d'enregistrement (s'enregistrer en tant que participant)
@@ -274,6 +275,28 @@ def quit_tutorat():
             return render_template("error.html", message="Erreur - Vous ne participez pas à ce Tutorat")
     else:
         abort(403)
+
+
+# CSS
+@app.route('/css')
+def css():
+    sql_obj = sql.MysqlObject()
+    user = "Tao Blancheton"
+    css = 0
+
+    sql_obj.css(user, css)
+    return redirect(url_for("recherche"))
+
+
+# CSS1
+@app.route('/css1')
+def css1():
+    sql_obj = sql.MysqlObject()
+    user = "Tao Blancheton"
+    css = 1
+
+    sql_obj.css(user, css)
+    return redirect(url_for("recherche"))
 
 
 # Ban
