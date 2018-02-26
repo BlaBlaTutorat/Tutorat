@@ -167,6 +167,11 @@ class MysqlObject:
         self.cursor.execute("""UPDATE offres SET disponible = %s WHERE id = %s""", (disponible, offre_id,))
         self.conn.commit()
 
+    # CSS
+    def css(self, user, CSS):
+        self.cursor.execute("""UPDATE users SET css = %s WHERE nom = %s""", (CSS, user,))
+        self.conn.commit()
+
     # Ban
     def ban(self, user_name, ban):
         self.cursor.execute("""UPDATE users SET ban = %s WHERE nom = %s""", (ban, user_name,))
