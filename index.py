@@ -312,19 +312,34 @@ def ban():
 # Gestion de l'erreur 404
 @app.errorhandler(404)
 def not_found(error):
-    return render_template("error.html", message="Erreur 404 - Ressource non trouvée", )
+    sql_obj = sql.MysqlObject()
+    admin_user = True
+    user = "Tao Blancheton"
+    css_state = sql_obj.get_css(user)
+
+    return render_template("error.html", message="Erreur 404 - Ressource non trouvée", **locals())
 
 
 # Gestion de l'erreur 403
 @app.errorhandler(403)
 def forbidden(error):
-    return render_template("error.html", message="Erreur 403 - Accès Interdit")
+    sql_obj = sql.MysqlObject()
+    admin_user = True
+    user = "Tao Blancheton"
+    css_state = sql_obj.get_css(user)
+
+    return render_template("error.html", message="Erreur 403 - Accès Interdit", **locals())
 
 
 # Gestion de l'erreur 405
 @app.errorhandler(405)
 def method_not_allowed(error):
-    return render_template("error.html", message="Erreur 405 - Méthode de requête non autorisée", )
+    sql_obj = sql.MysqlObject()
+    admin_user = True
+    user = "Tao Blancheton"
+    css_state = sql_obj.get_css(user)
+
+    return render_template("error.html", message="Erreur 405 - Méthode de requête non autorisée", **locals())
 
 
 # Lancement du serveur lors de l'exécution du fichier
