@@ -28,8 +28,9 @@ Tables:
     - Filière
     - Ban (boolean)
     - Admin (boolean)
-    
-Style CSS (boolean)
+
+
+
 
 - Offres:
     - Id (PRIMARY)
@@ -44,7 +45,7 @@ Style CSS (boolean)
     - Créneaux horaires
 
 - Matières:
-    - Nom (PRIMARY)
+    - Nom (PRIMARY)
 
 - Classes:
     - Id (PRIMARY)
