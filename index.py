@@ -18,7 +18,6 @@ def connection():
     # Propre à cette page
     hidemenu = True
 
-    admin_user = True
     info_msg = None
     if request.args.get('info_msg'):
         info_msg = request.args.get('info_msg')
@@ -31,8 +30,6 @@ def inscription():
     sql_obj = sql.MysqlObject()
     # Propre à cette page
     hidemenu = True
-
-    admin_user = True
 
     return render_template("inscription.html", **locals(), niveaux=sql_obj.niveaux_liste(),
                            filieres=sql_obj.filieres_liste())
@@ -104,7 +101,6 @@ def mdp_oublie():
     # Propre à cette page
     hidemenu = True
 
-    admin_user = True
     return render_template("mdp_oublie.html", **locals())
 
 
