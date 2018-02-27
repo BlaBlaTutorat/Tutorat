@@ -77,7 +77,8 @@ def profil_update():
             return redirect(url_for("profil", info_msg="Votre profil a bien été modifié."))
         else:
 
-            return render_template("error.html", message="Erreur - Veuillez revérifier les champs du formulaire", )
+            return render_template("error.html", message="Erreur - Veuillez revérifier les champs du formulaire",
+                                   **locals())
 
 
 # Page d'Administration
@@ -155,6 +156,8 @@ def recherche():
 def enregistrement():
     user = "Tao Blancheton"
     sql_obj = sql.MysqlObject()
+    admin_user = True
+    css_state = sql_obj.get_css(user)
 
     result_code = sql_obj.add_participant(request.form.get("id"), user)
     if result_code == 0:
@@ -162,13 +165,14 @@ def enregistrement():
         return redirect(url_for("recherche", info_msg="Votre participation à ce tutorat a bien été prise en compte."))
     elif result_code == 1:
         # Erreur l'utilisateur participe déjà à l'offre
-        return render_template("error.html", message="Erreur - Vous vous êtes déjà enregistrés pour ce Tutorat", )
+        return render_template("error.html", message="Erreur - Vous vous êtes déjà enregistrés pour ce Tutorat",
+                               **locals())
     elif result_code == 2:
         # Erreur (cas très rare ou l'utilisateur accepte une offre qui est deja pleine)
-        return render_template("error.html", message="Erreur - Ce Tutorat est déjà plein", )
+        return render_template("error.html", message="Erreur - Ce Tutorat est déjà plein", **locals())
     elif result_code == 3:
         # Erreur l'utilisateur veut participer à une offre qu'il a créée
-        return render_template("error.html", message="Erreur - Vous êtes l'auteur de ce tutorat", )
+        return render_template("error.html", message="Erreur - Vous êtes l'auteur de ce tutorat", **locals())
 
 
 # Affichage du formulaire de création d'une offre
@@ -189,6 +193,9 @@ def traitement_creation():
     # On ne traite pas la demande dans le doute ou l'élève n'a pas renseigné de créneau horaire
     process = False
     sql_obj = sql.MysqlObject()
+    admin_user = True
+    user = "Tao Blancheton"
+    css_state = sql_obj.get_css(user)
     horaires = []
 
     for i in range(0, 12, 2):
@@ -218,10 +225,12 @@ def traitement_creation():
                 "recherche", info_msg="Votre offre a bien été créée. Elle est actuellement en attente de validation."))
 
         else:
-            return render_template("error.html", message="Erreur - Veuillez revérifier les champs du formulaire", )
+            return render_template("error.html", message="Erreur - Veuillez revérifier les champs du formulaire",
+                                   **locals())
     else:
         # Erreur
-        return render_template("error.html", message="Vous n'avez pas remplis tous les champs requis (horaires)", )
+        return render_template("error.html", message="Vous n'avez pas remplis tous les champs requis (horaires)",
+                               **locals())
 
 
 # Suppression d'une offre
@@ -276,11 +285,12 @@ def quit_tutorat():
         offre_id = request.args.get('id')
         sql_obj = sql.MysqlObject()
         user = "Tao Blancheton"
+        css_state = sql_obj.get_css(user)
 
         if sql_obj.delete_participant(offre_id, user):
             return redirect(url_for("profil", info_msg="Votre retrait de ce Tutorat a bien été enregistré."))
         else:
-            return render_template("error.html", message="Erreur - Vous ne participez pas à ce Tutorat")
+            return render_template("error.html", message="Erreur - Vous ne participez pas à ce Tutorat", **locals())
     else:
         abort(403)
 
