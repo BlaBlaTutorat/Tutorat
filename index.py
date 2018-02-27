@@ -92,8 +92,9 @@ def admin():
     if request.args.get('info_msg'):
         info_msg = request.args.get('info_msg')
 
-    return render_template("administration.html", userss=sql_obj.liste_user(), offres_V=sql_obj.offres_liste_valider(),
-                           tutorats_actifs=sql_obj.offres_liste_validees(), days=days, **locals(),)
+    return render_template("administration.html", user_list=sql_obj.liste_user(),
+                           offres_V=sql_obj.offres_liste_valider(), tutorats_actifs=sql_obj.offres_liste_validees(),
+                           days=days, **locals())
 
 
 # Mot de passe oublié
@@ -295,30 +296,13 @@ def css():
 
 
 # Ban
-@app.route('/unban')
-def unban():
-    ban = 0
-    if request.args.get('user_name'):
-        user_name = request.args.get('user_name')
-        sql_obj = sql.MysqlObject()
-
-        sql_obj.ban(user_name, ban)
-        return redirect(
-            url_for("admin", info_msg="Cet utilisateur a bien été débanni."))
-    else:
-        abort(403)
-
-
-# Ban
 @app.route('/ban')
 def ban():
-    ban = 1
     if request.args.get('user_name'):
         user_name = request.args.get('user_name')
         sql_obj = sql.MysqlObject()
-        user = "Tao Blancheton"
 
-        sql_obj.ban(user_name, ban)
+        sql_obj.ban(user_name)
         return redirect(
             url_for("admin", info_msg="Cet utilisateur a bien été banni."))
     else:

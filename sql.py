@@ -181,8 +181,8 @@ class MysqlObject:
             return False
 
     # Ban
-    def ban(self, user_name, ban):
-        self.cursor.execute("""UPDATE users SET ban = %s WHERE nom = %s""", (ban, user_name,))
+    def ban(self, user_name):
+        self.cursor.execute("""UPDATE users SET ban = NOT ban WHERE nom = %s""", (user_name,))
         self.conn.commit()
 
     # Modification du profil
@@ -190,11 +190,6 @@ class MysqlObject:
         self.cursor.execute("""UPDATE users SET mail = %s, niveau = %s, filiere = %s WHERE nom = %s """,
                             (mail, niveau, filiere, user_name))
         self.conn.commit()
-
-    # Recherche des offres auxquelles participe l'utilisateur
-    def get_tutorats(self, none):
-        self.cursor.execute("""SELECT * FROM offres WHERE participant != %s OR participant2 != %s""", (none, none))
-        return self.cursor.fetchall()
 
     # Recherche des offres auxquelles participe l'utilisateur
     def get_user_tutorats(self, user_name):

@@ -21,8 +21,8 @@
 <div class="bloc_admin">
     <div class="admin" id="admin">
         <h2>Utilisateurs</h2>
-        {% if userss|length>0 %}
-            {% for user in userss %}
+        {% if user_list|length>0 %}
+            {% for user in user_list %}
                 <div class="bloc_profil" id="user_admin">
                     <div class="info_profil">
                             <p><strong class="G">Nom:</strong></p>
@@ -49,9 +49,9 @@
                         {% endif %}
                     </div>
                     {% if user[6]==1 %}
-                        <a href="/unban?user_name={{ user[0] }}" class="ban"><button>UnBan</button></a>
+                        <a href="/ban?user_name={{ user[0] }}" class="ban"><button>Débannir</button></a>
                     {% else %}
-                        <a href="/ban?user_name={{ user[0] }}" class="ban"><button>Ban</button></a>
+                        <a href="/ban?user_name={{ user[0] }}" class="ban"><button>Bannir</button></a>
                     {% endif %}
                 </div>
             {% endfor %}
