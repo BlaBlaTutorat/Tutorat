@@ -602,7 +602,7 @@ footer .copyright li {
     margin-bottom: 0px;
 }
 
-@media screen and (max-width: 1350px) {
+@media screen and (max-width: 1430px) {
     .profil {
         font-family: sans-serif;
         font-size: 1em;
@@ -863,7 +863,7 @@ footer .copyright li {
     margin-bottom: 0px;
 }
 
-@media screen and (max-width: 1350px) {
+@media screen and (max-width: 1430px) {
     #invalider_offre {
         margin-top: 55px;
     }
