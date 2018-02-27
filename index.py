@@ -308,6 +308,7 @@ def css():
 # Ban
 @app.route('/ban')
 def ban():
+    # TODO vérifier que l'utilisateur est admin
     if request.args.get('user_name'):
         user_name = request.args.get('user_name')
         sql_obj = sql.MysqlObject()
