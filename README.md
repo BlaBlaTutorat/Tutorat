@@ -28,6 +28,7 @@ Tables:
     - Filière
     - Ban (boolean)
     - Admin (boolean)
+    - Style CSS (boolean)
 
 - Offres:
     - Id (PRIMARY)
