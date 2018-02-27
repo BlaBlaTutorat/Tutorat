@@ -291,7 +291,7 @@ def css():
     user = "Tao Blancheton"
 
     sql_obj.set_css(user)
-    return redirect(url_for("recherche"))
+    return redirect(request.referrer)
 
 
 # Ban
