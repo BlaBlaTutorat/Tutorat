@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  lun. 26 fév. 2018 à 23:08
+-- Généré le :  sam. 17 fév. 2018 à 10:14
 -- Version du serveur :  5.7.19
 -- Version de PHP :  5.6.31
 
@@ -176,40 +176,34 @@ CREATE TABLE IF NOT EXISTS `offres` (
   `debut_j5` time DEFAULT NULL,
   `fin_j5` time DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+)
+  ENGINE = InnoDB
+  AUTO_INCREMENT = 7
+  DEFAULT CHARSET = utf8;
 
 --
 -- Déchargement des données de la table `offres`
 --
 
 INSERT INTO `offres` (`id`, `auteur`, `niveau`, `filiere`, `matiere`, `date_time`, `participant`, `participant2`, `disponible`, `debut_j0`, `fin_j0`, `debut_j1`, `fin_j1`, `debut_j2`, `fin_j2`, `debut_j3`, `fin_j3`, `debut_j4`, `fin_j4`, `debut_j5`, `fin_j5`) VALUES
-(1, 'Marco Desmoulins', 'Terminale', 'S', 'Mathématiques', '2018-02-22 00:00:00', NULL, NULL, 1, '08:00:00', '09:00:00', '16:00:00', '17:00:00', '14:00:00', '16:00:00', NULL, NULL, NULL, NULL, NULL, NULL),
-(2, 'Tao Blancheton', 'Terminale', 'S', 'ISN', '2018-02-19 14:15:41', NULL, NULL, 1, '15:00:00', '16:00:00', NULL, NULL, NULL, NULL, '09:00:00', '10:00:00', NULL, NULL, '08:00:00', '09:00:00'),
-(3, 'Antoine Labarussias', 'Terminale', 'S', 'SI', '2018-02-22 00:00:00', NULL, NULL, 1, '13:00:00', '14:00:00', '17:00:00', '18:00:00', NULL, NULL, '14:00:00', '15:00:00', NULL, NULL, '08:00:00', '09:00:00'),
+  (1, 'Marco Desmoulins', 'Terminale', 'S', 'Mathématiques', '2018-02-22 00:00:00', NULL, NULL, 1, '08:00:00',
+      '09:00:00', '16:00:00', '17:00:00', '14:00:00', '16:00:00', NULL, NULL, NULL, NULL, NULL, NULL),
+  (2, 'Tao Blancheton', 'Terminale', 'S', 'ISN', '2018-02-19 14:15:41', NULL, NULL, 1, '15:00:00', '16:00:00', NULL,
+                                                                                                               NULL,
+                                                                                                               NULL,
+                                                                                                               NULL,
+                                                                                                               '09:00:00',
+                                                                                                               '10:00:00',
+                                                                                                               NULL,
+                                                                                                               NULL,
+                                                                                                               '08:00:00',
+                                                                                                               '09:00:00'),
+  (3, 'Antoine Labarussias', 'Terminale', 'S', 'SI', '2018-02-22 00:00:00', NULL, NULL, 1, '13:00:00', '14:00:00',
+    '17:00:00', '18:00:00', NULL, NULL, '14:00:00', '15:00:00', NULL, NULL, '08:00:00', '09:00:00'),
 (4, 'Jean Kévin', 'Seconde', 'Aucune filière (2nd)', 'Français', '2018-02-22 00:00:00', NULL, NULL, 1, '08:00:00', '10:00:00', '11:00:00', '13:00:00', NULL, NULL, '15:00:00', '16:00:00', NULL, NULL, '08:00:00', '09:00:00'),
 (5, 'Alexis Ducont', 'Première', 'L', 'ISN', '2018-02-19 14:15:41', NULL, NULL, 1, '10:00:00', '11:00:00', NULL, NULL, NULL, NULL, '08:00:00', '09:00:00', NULL, NULL, NULL, NULL),
-(6, 'Lola Blachard', 'Seconde', 'Aucune filière (2nd)', 'SI', '2018-02-22 00:00:00', NULL, NULL, 1, '15:00:00', '16:00:00', NULL, NULL, '17:00:00', '18:00:00', '10:00:00', '11:00:00', NULL, NULL, '09:00:00', '10:00:00');
-
--- --------------------------------------------------------
-
---
--- Structure de la table `specialites`
---
-
-DROP TABLE IF EXISTS `specialites`;
-CREATE TABLE IF NOT EXISTS `specialites` (
-  `nom` varchar(50) NOT NULL,
-  PRIMARY KEY (`nom`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Déchargement des données de la table `specialites`
---
-
-INSERT INTO `specialites` (`nom`) VALUES
-('Economique et sociale'),
-('Littéraire'),
-('Scientifique');
+  (6, 'Lola Blachard', 'Seconde', 'Aucune filière (2nd)', 'SI', '2018-02-22 00:00:00', NULL, NULL, 1, '15:00:00',
+      '16:00:00', NULL, NULL, '17:00:00', '18:00:00', '10:00:00', '11:00:00', NULL, NULL, '09:00:00', '10:00:00');
 
 -- --------------------------------------------------------
 
@@ -237,7 +231,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 INSERT INTO `users` (`nom`, `mdp`, `mail`, `niveau`, `filiere`, `admin`, `ban`, `css`) VALUES
 ('Antoine Labarussias', 'antoine', 'antoinelabarussias@orange.fr', 'Terminale', 'S', 1, 0, 0),
 ('Marco Desmoulins', 'marco', 'markopelo@gmail.com', 'Terminale', 'S', 1, 0, 0),
-('Tao Blancheton', 'tao', 'taotom63@gmail.com', 'Terminale', 'S', 1, 0, 1);
+('Tao Blancheton', 'tao', 'taotom63@gmail.com', 'Terminale', 'S', 1, 0, 0);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

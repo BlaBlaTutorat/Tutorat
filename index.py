@@ -67,7 +67,7 @@ def profil_update():
     filieres = sql_obj.filieres_liste()
 
     if len(request.form) == 0:
-        return render_template("profil_update.html", **locals(), infos=sql_obj.get_user_info(user_name)users=sql_obj.get_user_info(user))
+        return render_template("profil_update.html", **locals(), infos=sql_obj.get_user_info(user_name), users=sql_obj.get_user_info(user))
     else:
         if request.form.get('niveau') in niveaux and request.form.get(
                 'filiere') in filieres and "@" in request.form.get('mail'):
