@@ -230,7 +230,7 @@ def delete():
     if request.args.get('id'):
         offre_id = request.args.get('id')
         sql_obj = sql.MysqlObject()
-        # TODO verifier que l'utilisateur a bien crée l'offre qu'il veut supprimer
+        # TODO vérifier que l'utilisateur a bien crée l'offre qu'il veut supprimer
 
         sql_obj.delete_offer(offre_id)
         return redirect(
