@@ -17,12 +17,12 @@ def index():
 def connection():
     # Propre à cette page
     hidemenu = True
-    user = "Tao Blancheton"
+
     admin_user = True
     info_msg = None
     if request.args.get('info_msg'):
         info_msg = request.args.get('info_msg')
-    return render_template("connexion.html", **locals(), users=sql_obj.get_user_info(user))
+    return render_template("connexion.html", **locals())
 
 
 # Page d'inscription
@@ -31,11 +31,11 @@ def inscription():
     sql_obj = sql.MysqlObject()
     # Propre à cette page
     hidemenu = True
-    user = "Tao Blancheton"
+
     admin_user = True
 
     return render_template("inscription.html", **locals(), niveaux=sql_obj.niveaux_liste(),
-                           filieres=sql_obj.filieres_liste(), users=sql_obj.get_user_info(user))
+                           filieres=sql_obj.filieres_liste())
 
 
 # Page de Profil
@@ -44,15 +44,15 @@ def profil():
     info_msg = None
     sql_obj = sql.MysqlObject()
     admin_user = True
-    user_name = "Tao Blancheton"
     user = "Tao Blancheton"
+    css_state = sql_obj.get_css(user)
 
     if request.args.get('info_msg'):
         info_msg = request.args.get('info_msg')
 
-    return render_template("profil.html", **locals(), infos=sql_obj.get_user_info(user_name),
-                           offres_creees=sql_obj.get_user_offre(user_name),
-                           tutorats_actifs=sql_obj.get_user_tutorats(user_name), days=days, users=sql_obj.get_user_info(user))
+    return render_template("profil.html", **locals(), infos=sql_obj.get_user_info(user),
+                           offres_creees=sql_obj.get_user_offre(user),
+                           tutorats_actifs=sql_obj.get_user_tutorats(user), days=days)
 
 
 # Page de modification du profil
@@ -60,24 +60,24 @@ def profil():
 def profil_update():
     sql_obj = sql.MysqlObject()
     admin_user = True
-    user_name = "Tao Blancheton"
     user = "Tao Blancheton"
+    css_state = sql_obj.get_css(user)
 
     niveaux = sql_obj.niveaux_liste()
     filieres = sql_obj.filieres_liste()
 
     if len(request.form) == 0:
-        return render_template("profil_update.html", **locals(), infos=sql_obj.get_user_info(user_name), users=sql_obj.get_user_info(user))
+        return render_template("profil_update.html", **locals(), infos=sql_obj.get_user_info(user))
     else:
         if request.form.get('niveau') in niveaux and request.form.get(
                 'filiere') in filieres and "@" in request.form.get('mail'):
 
-            sql_obj.modify_user_info(user_name, request.form.get('mail'), request.form.get('niveau'),
+            sql_obj.modify_user_info(user, request.form.get('mail'), request.form.get('niveau'),
                                      request.form.get('filiere'))
-            return redirect(url_for("profil", info_msg="Votre profil a bien été modifié.", users=sql_obj.get_user_info(user)))
+            return redirect(url_for("profil", info_msg="Votre profil a bien été modifié."))
         else:
 
-            return render_template("error.html", message="Erreur - Veuillez revérifier les champs du formulaire", users=sql_obj.get_user_info(user))
+            return render_template("error.html", message="Erreur - Veuillez revérifier les champs du formulaire", )
 
 
 # Page d'Administration
@@ -86,14 +86,14 @@ def admin():
     info_msg = None
     sql_obj = sql.MysqlObject()
     admin_user = True
-    user_name = "Tao Blancheton"
     user = "Tao Blancheton"
+    css_state = sql_obj.get_css(user)
 
     if request.args.get('info_msg'):
         info_msg = request.args.get('info_msg')
 
     return render_template("administration.html", userss=sql_obj.liste_user(), offres_V=sql_obj.offres_liste_valider(),
-                           tutorats_actifs=sql_obj.offres_liste_validees(), days=days, **locals(), users=sql_obj.get_user_info(user))
+                           tutorats_actifs=sql_obj.offres_liste_validees(), days=days, **locals(),)
 
 
 # Mot de passe oublié
@@ -101,9 +101,9 @@ def admin():
 def mdp_oublie():
     # Propre à cette page
     hidemenu = True
-    user = "Tao Blancheton"
+
     admin_user = True
-    return render_template("mdp_oublie.html", **locals(), users=sql_obj.get_user_info(user))
+    return render_template("mdp_oublie.html", **locals())
 
 
 # Page de recherche d'offres
@@ -113,6 +113,8 @@ def recherche():
     admin_user = True
     info_msg = None
     user = "Tao Blancheton"
+    css_state = sql_obj.get_css(user)
+
     if request.args.get('info_msg'):
         info_msg = request.args.get('info_msg')
 
@@ -132,40 +134,40 @@ def recherche():
         # Formulaire de tri première étape
 
         option = request.form.get("option")
-        return render_template("recherche.html", **locals(), offres=sql_obj.offres_liste_tri(option, page), days=days, users=sql_obj.get_user_info(user))
+        return render_template("recherche.html", **locals(), offres=sql_obj.offres_liste_tri(option, page), days=days)
 
     elif request.form.get("option") and request.form.get("option2"):
         # Formulaire de tri deuxième étape
 
         option = request.form.get("option")
         option2 = request.form.get("option2")
-        return render_template("recherche.html",
-                               offres=sql_obj.offres_liste_tri_2(option, option2, page), **locals(), days=days, users=sql_obj.get_user_info(user))
+        return render_template("recherche.html", offres=sql_obj.offres_liste_tri_2(option, option2, page), **locals(),
+                               days=days)
 
     else:
         # Pas de formulaire de tri
-        return render_template("recherche.html", **locals(), offres=sql_obj.offres_liste(page), days=days, users=sql_obj.get_user_info(user))
+        return render_template("recherche.html", **locals(), offres=sql_obj.offres_liste(page), days=days)
 
 
 # Page d'enregistrement (s'enregistrer en tant que participant)
 @app.route('/apply', methods=['POST'])
 def enregistrement():
-    participant = "Tao Blancheton"
     user = "Tao Blancheton"
     sql_obj = sql.MysqlObject()
-    result_code = sql_obj.add_participant(request.form.get("id"), participant)
+
+    result_code = sql_obj.add_participant(request.form.get("id"), user)
     if result_code == 0:
         # Pas d'erreur
-        return redirect(url_for("recherche", info_msg="Votre participation à ce tutorat a bien été prise en compte.", users=sql_obj.get_user_info(user)))
+        return redirect(url_for("recherche", info_msg="Votre participation à ce tutorat a bien été prise en compte."))
     elif result_code == 1:
         # Erreur l'utilisateur participe déjà à l'offre
-        return render_template("error.html", message="Erreur - Vous vous êtes déjà enregistrés pour ce Tutorat", users=sql_obj.get_user_info(user))
+        return render_template("error.html", message="Erreur - Vous vous êtes déjà enregistrés pour ce Tutorat", )
     elif result_code == 2:
         # Erreur (cas très rare ou l'utilisateur accepte une offre qui est deja pleine)
-        return render_template("error.html", message="Erreur - Ce Tutorat est déjà plein", users=sql_obj.get_user_info(user))
+        return render_template("error.html", message="Erreur - Ce Tutorat est déjà plein", )
     elif result_code == 3:
         # Erreur l'utilisateur veut participer à une offre qu'il a créée
-        return render_template("error.html", message="Erreur - Vous êtes l'auteur de ce tutorat", users=sql_obj.get_user_info(user))
+        return render_template("error.html", message="Erreur - Vous êtes l'auteur de ce tutorat", )
 
 
 # Affichage du formulaire de création d'une offre
@@ -174,8 +176,10 @@ def creation():
     sql_obj = sql.MysqlObject()
     admin_user = True
     user = "Tao Blancheton"
+    css_state = sql_obj.get_css(user)
+
     return render_template("creation.html", **locals(), niveaux=sql_obj.niveaux_liste(),
-                           matieres=sql_obj.matieres_liste(), filieres=sql_obj.filieres_liste(), days=days, users=sql_obj.get_user_info(user))
+                           matieres=sql_obj.matieres_liste(), filieres=sql_obj.filieres_liste(), days=days, )
 
 
 # Traitement du formulaire + upload bdd
@@ -183,8 +187,8 @@ def creation():
 def traitement_creation():
     # On ne traite pas la demande dans le doute ou l'élève n'a pas renseigné de créneau horaire
     process = False
+    sql_obj = sql.MysqlObject()
     horaires = []
-    user = "Tao Blancheton"
 
     for i in range(0, 12, 2):
         if request.form.get(sql.horaires_reference[i], None) != '' and request.form.get(sql.horaires_reference[i + 1],
@@ -200,7 +204,6 @@ def traitement_creation():
 
     if process:
         # Création
-        sql_obj = sql.MysqlObject()
         niveaux = sql_obj.niveaux_liste()
         matieres = sql_obj.matieres_liste()
         filieres = sql_obj.filieres_liste()
@@ -211,13 +214,13 @@ def traitement_creation():
             sql_obj.create_offre(request.form.get('auteur'), request.form.get('niveau'), request.form.get('filiere'),
                                  request.form.get('matiere'), horaires)
             return redirect(url_for(
-                "recherche", info_msg="Votre offre a bien été créée. Elle est actuellement en attente de validation.", users=sql_obj.get_user_info(user)))
+                "recherche", info_msg="Votre offre a bien été créée. Elle est actuellement en attente de validation."))
 
         else:
-            return render_template("error.html", message="Erreur - Veuillez revérifier les champs du formulaire", users=sql_obj.get_user_info(user))
+            return render_template("error.html", message="Erreur - Veuillez revérifier les champs du formulaire", )
     else:
         # Erreur
-        return render_template("error.html", message="Vous n'avez pas remplis tous les champs requis (horaires)", users=sql_obj.get_user_info(user))
+        return render_template("error.html", message="Vous n'avez pas remplis tous les champs requis (horaires)", )
 
 
 # Suppression d'une offre
@@ -227,10 +230,10 @@ def delete():
         offre_id = request.args.get('id')
         sql_obj = sql.MysqlObject()
         # TODO verifier que l'utilisateur a bien crée l'offre qu'il veut supprimer
-        user = "Tao Blancheton"
 
         sql_obj.delete_offer(offre_id)
-        return redirect(url_for("profil", info_msg="Votre offre a bien été supprimée.", users=sql_obj.get_user_info(user)))
+        return redirect(
+            url_for("profil", info_msg="Votre offre a bien été supprimée."))
     else:
         abort(403)
 
@@ -242,10 +245,10 @@ def delete2():
         offre_id = request.args.get('id')
         sql_obj = sql.MysqlObject()
         # TODO vérifier que l'utilisateur est admin
-        user = "Tao Blancheton"
 
         sql_obj.delete_offer(offre_id)
-        return redirect(url_for("admin", info_msg="La supression a bien été effectuée.", users=sql_obj.get_user_info(user)))
+        return redirect(
+            url_for("admin", info_msg="La supression a bien été effectuée."))
     else:
         abort(403)
 
@@ -258,10 +261,9 @@ def validate():
         offre_id = request.args.get('id')
         sql_obj = sql.MysqlObject()
         # TODO vérifier que l'utilisateur est admin
-        user = "Tao Blancheton"
 
         sql_obj.validate_offer(offre_id, disponible)
-        return redirect(url_for("admin", info_msg="L'offre a bien été validée.", users=sql_obj.get_user_info(user)))
+        return redirect(url_for("admin", info_msg="L'offre a bien été validée."))
     else:
         abort(403)
 
@@ -275,9 +277,9 @@ def quit_tutorat():
         user = "Tao Blancheton"
 
         if sql_obj.delete_participant(offre_id, user):
-            return redirect(url_for("profil", info_msg="Votre retrait de ce Tutorat a bien été enregistré.", users=sql_obj.get_user_info(user)))
+            return redirect(url_for("profil", info_msg="Votre retrait de ce Tutorat a bien été enregistré."))
         else:
-            return render_template("error.html", message="Erreur - Vous ne participez pas à ce Tutorat", users=sql_obj.get_user_info(user))
+            return render_template("error.html", message="Erreur - Vous ne participez pas à ce Tutorat")
     else:
         abort(403)
 
@@ -287,21 +289,9 @@ def quit_tutorat():
 def css():
     sql_obj = sql.MysqlObject()
     user = "Tao Blancheton"
-    css = 0
 
-    sql_obj.css(user, css)
-    return redirect(url_for("recherche", users=sql_obj.get_user_info(user)))
-
-
-# CSS1
-@app.route('/css1')
-def css1():
-    sql_obj = sql.MysqlObject()
-    user = "Tao Blancheton"
-    css = 1
-
-    sql_obj.css(user, css)
-    return redirect(url_for("recherche", users=sql_obj.get_user_info(user)))
+    sql_obj.set_css(user)
+    return redirect(url_for("recherche"))
 
 
 # Ban
@@ -311,10 +301,10 @@ def unban():
     if request.args.get('user_name'):
         user_name = request.args.get('user_name')
         sql_obj = sql.MysqlObject()
-        user = "Tao Blancheton"
 
         sql_obj.ban(user_name, ban)
-        return redirect(url_for("admin", info_msg="Cet utilisateur a bien été débanni.", users=sql_obj.get_user_info(user)))
+        return redirect(
+            url_for("admin", info_msg="Cet utilisateur a bien été débanni."))
     else:
         abort(403)
 
@@ -329,7 +319,8 @@ def ban():
         user = "Tao Blancheton"
 
         sql_obj.ban(user_name, ban)
-        return redirect(url_for("admin", info_msg="Cet utilisateur a bien été banni.", users=sql_obj.get_user_info(user)))
+        return redirect(
+            url_for("admin", info_msg="Cet utilisateur a bien été banni."))
     else:
         abort(403)
 
@@ -337,19 +328,19 @@ def ban():
 # Gestion de l'erreur 404
 @app.errorhandler(404)
 def not_found(error):
-    return render_template("error.html", message="Erreur 404 - Ressource non trouvée", users=sql_obj.get_user_info(user))
+    return render_template("error.html", message="Erreur 404 - Ressource non trouvée", )
 
 
 # Gestion de l'erreur 403
 @app.errorhandler(403)
 def forbidden(error):
-    return render_template("error.html", message="Erreur 403 - Accès Interdit", users=sql_obj.get_user_info(user))
+    return render_template("error.html", message="Erreur 403 - Accès Interdit")
 
 
 # Gestion de l'erreur 405
 @app.errorhandler(405)
 def method_not_allowed(error):
-    return render_template("error.html", message="Erreur 405 - Méthode de requête non autorisée", users=sql_obj.get_user_info(user))
+    return render_template("error.html", message="Erreur 405 - Méthode de requête non autorisée", )
 
 
 # Lancement du serveur lors de l'exécution du fichier

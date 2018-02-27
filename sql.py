@@ -164,13 +164,21 @@ class MysqlObject:
 
     # Validation d'une offre
     def validate_offer(self, offre_id, disponible):
-        self.cursor.execute("""UPDATE offres SET disponible = %s WHERE id = %s""", (disponible, offre_id,))
+        self.cursor.execute("""UPDATE offres SET disponible = %s WHERE id = %s""", (disponible, offre_id))
         self.conn.commit()
 
-    # CSS
-    def css(self, user, CSS):
-        self.cursor.execute("""UPDATE users SET css = %s WHERE nom = %s""", (CSS, user,))
+    # SET CSS
+    def set_css(self, user):
+        self.cursor.execute("""UPDATE users SET css = NOT css WHERE nom = %s""", (user,))
         self.conn.commit()
+
+    # GET CSS
+    def get_css(self, user):
+        self.cursor.execute("""SELECT css FROM users WHERE nom = %s""", (user,))
+        if self.cursor.fetchall()[0][0] == 1:
+            return True
+        else:
+            return False
 
     # Ban
     def ban(self, user_name, ban):
