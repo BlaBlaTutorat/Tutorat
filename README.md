@@ -43,7 +43,7 @@ Tables:
     - Créneaux horaires
 
 - Matières:
-    - Nom (PRIMARY)
+    - Nom (PRIMARY)
 
 - Classes:
     - Id (PRIMARY)
