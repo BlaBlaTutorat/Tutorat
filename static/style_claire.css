@@ -168,6 +168,11 @@ footer {
     color: rgb(255, 245, 234);
 }
 
+footer a, footer a:hover, footer a:visited {
+    text-decoration: none;
+    color: rgb(255, 245, 234);
+}
+
 footer .lycee {
     margin-left: 10px;
 }
