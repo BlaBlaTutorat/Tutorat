@@ -1,5 +1,5 @@
 from flask import *
-
+import hashlib
 import sql
 
 app = Flask(__name__)
@@ -34,18 +34,17 @@ def inscription():
     return render_template("inscription.html", niveaux=sql_obj.niveaux_liste(),
                            filieres=sql_obj.filieres_liste(), **locals())
 
-# Traitement du formulaire + upload bdd
-@app.route('/register', methods=['POST'])
 
-        #Chiffrement du mdp
+# Chiffrement du mdp
+@app.route('/register', methods=['POST'])
 def traitement_insciption():
-    import hashlib
-    from getpass import getpass
-    chaine_mot_de_passe = b"input()"
+    sql_obj = sql.MysqlObject()
+    chaine_mot_de_passe = request.form.get('mdp')
     mot_de_passe_chiffre = hashlib.sha1(chaine_mot_de_passe).hexdigest()
 
     nom = request.form.get('prenom') + '  ' + request.form.get('nom')
-    sql_obj.create_compte(nom, request.form.get('mdp'), request.form.get('mail'), request.form.get('niveau'), request.form.get('filiere'))
+    sql_obj.create_compte(nom, mot_de_passe_chiffre, request.form.get('mail'), request.form.get('niveau'),
+                          request.form.get('filiere'))
     
 
 # Mot de passe oublié

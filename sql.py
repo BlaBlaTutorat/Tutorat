@@ -15,10 +15,9 @@ class MysqlObject:
 
         try:
 
-            # self.conn = mysql.connector.connect(host="172.21.1.203", user="isn", password="0C5PH2iBfMy3l6o3",
-            #                                    database="tutorat")
-            self.conn = mysql.connector.connect(host="127.0.0.1", user="root", password="",
+            self.conn = mysql.connector.connect(host="172.21.1.203", user="isn", password="0C5PH2iBfMy3l6o3",
                                                 database="tutorat")
+            # self.conn = mysql.connector.connect(host="127.0.0.1", user="root", password="", database="tutorat")
             self.cursor = self.conn.cursor()
 
         except mysql.connector.errors.InterfaceError as e:
@@ -124,12 +123,10 @@ class MysqlObject:
     def get_user_info(self, user_name):
         self.cursor.execute("""SELECT * FROM users WHERE nom=%s""", (user_name,))
         return self.cursor.fetchall()[0]
-   
-    #Récup&ration et cryptage du mot de passe des utilisateurs
+
+    # Récup&ration et cryptage du mot de passe des utilisateurs
     def get_crypt_mdp(self, user_name):
         self.cursor.execute("""SELECT mdp FROM users WHERE nom=%s""" (user_name,))
-        
-        
 
     # Ajout de participant à une offre
     def add_participant(self, offre_id, participant):
@@ -238,11 +235,17 @@ class MysqlObject:
         else:
             return False
 
+    # Création d'un compte
+    def create_compte(self, nom, mdp, mail, niveau, filiere):
+        self.cursor.execute(
+            """INSERT INTO users (nom, mdp, mail, niveau, filiere) VALUES (%s, %s, %s, %s, %s)""",
+            (nom, mdp, mail, niveau, filiere))
+        self.conn.commit()
 
-# Méthode exécutée à la suppression de l'bbjet
-def __del__(self):
-    self.cursor.close()
-    self.conn.close()
+    # Méthode exécutée à la suppression de l'bbjet
+    def __del__(self):
+        self.cursor.close()
+        self.conn.close()
 
 
 # Retourne le nombre de places dispo
@@ -255,9 +258,3 @@ def check_availability(offre):
             return 1
     else:
         return 0
-        
-# Création d'un compte
-def create_compte(self, nom, mdp, mail, niveau, filiere):
-    self.cursor.execute(
-            """INSERT INTO users (nom, mdp, mail, niveau, filiere) VALUES (%s, %s, %s, %s, %s)""",(nom, mdp, mail, niveau, filiere))
-    self.conn.commit()
