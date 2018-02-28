@@ -16,7 +16,7 @@
 
     <!-- Rechargement de la page lors du changement de la méthode de tri -->
     <select class="tri" name="option" onchange="this.form.submit()">
-        <option value="" disabled {% if not option %}selected{% endif %}>- Tri -</option>
+        <option value="" disabled {% if not option %}selected{% endif %}>- Trier par -</option>
         <option value="date_time" {% if option == "date_time" %}selected{% endif %}>Date croissante</option>
         <option value="niveau" {% if option == "niveau" %}selected{% endif %}>Niveau</option>
         <option value="filiere" {% if option == "filiere" %}selected{% endif %}>Filière</option>
@@ -26,7 +26,7 @@
     {% if option == "niveau" or option == "matiere" or option == "filiere" %}
         <!-- Paramètre de tri 2 -->
         <select class="tri" name="option2" onchange="this.form.submit()">
-            <option value="" disabled selected>- Tri -</option>
+            <option value="" disabled selected>- Trier par -</option>
             {% if option == "niveau" %}
                 {% for niveau in niveaux %}
                     <option {% if option2 == niveau %}selected{% endif %}>{{ niveau }}</option>
