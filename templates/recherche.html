@@ -28,11 +28,11 @@
             <option value="" disabled selected>- Trier par -</option>
             {% if option == "classe" %}
                 {% for classe in classes %}
-                    <option {% if option2 == classe[2] %}selected{% endif %}>{{ classe[2] }}</option>
+                    <option {% if option2 == classe %}selected{% endif %}>{{ classe }}</option>
                 {% endfor %}
             {% elif option == "matiere" %}
                 {% for matiere in matieres %}
-                    <option {% if option2 == matiere[2] %}selected{% endif %}>{{ matiere[2] }}</option>
+                    <option {% if option2 == matiere %}selected{% endif %}>{{ matiere }}</option>
                 {% endfor %}
             {% endif %}
         </select>

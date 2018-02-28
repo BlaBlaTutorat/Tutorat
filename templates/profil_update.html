@@ -29,7 +29,7 @@
                         <!-- Classe modifiable -->
                         <p><select class="tri4" required name="classe">
                             {% for classe in classes %}
-                                <option {% if classe == infos[3] %}selected{% endif %}>{{ classe[2] }}</option>
+                                <option {% if classe == infos[3] %}selected{% endif %}>{{ classe }}</option>
                             {% endfor %}
                         </select></p>
                     </div>

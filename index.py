@@ -200,7 +200,7 @@ def traitement_creation():
 
         if request.form.get("classe") in classes and request.form.get("matiere") in matieres:
 
-            sql_obj.create_offre(request.form.get('auteur'), request.form.get('classe'), request.form.get('filiere'),
+            sql_obj.create_offre(request.form.get('auteur'), request.form.get('classe'), request.form.get('matiere'),
                                  horaires)
             return redirect(url_for(
                 "recherche", info_msg="Votre offre a bien été créée. Elle est actuellement en attente de validation."))

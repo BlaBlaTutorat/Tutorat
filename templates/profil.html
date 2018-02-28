@@ -112,13 +112,13 @@
                             <p class="element"><strong class="G">Auteur:</strong> {{ tutorat[1] }}</p>
                             <p class="element"><strong class="G">Mail de
                                 l'auteur:</strong> {{ sql_obj.get_user_info(tutorat[1])[2] }}</p>
-                            <p class="element"><strong class="G">Matière:</strong> {{ tutorat[4] }}</p>
+                            <p class="element"><strong class="G">Matière:</strong> {{ tutorat[3] }}</p>
                             <p class="element"><strong class="G">Participants:</strong>
-                                {% if tutorat[6] is none and tutorat[7] is none %}
+                                {% if tutorat[5] is none and tutorat[6] is none %}
                                     Personne
                                 {% else %}
-                                    {% if tutorat[6] is not none %}{{ tutorat[6] }}{% endif %}
-                                    {% if tutorat[7] is not none %}, {{ tutorat[7] }}{% endif %}
+                                    {% if tutorat[5] is not none %}{{ tutorat[5] }}{% endif %}
+                                    {% if tutorat[6] is not none %}, {{ tutorat[6] }}{% endif %}
                                 {% endif %}
                             </p>
                         </div>
@@ -126,21 +126,21 @@
                             <div class="horaire">
                                 <div class="table">
                                     {% for i in range(0,12,2) %}
-                                        {% if tutorat[9+i] is not none and tutorat[10+i] is not none %}
+                                        {% if tutorat[8+i] is not none and tutorat[9+i] is not none %}
                                             <p>{{ days[i//2] }}:</p>
                                         {% endif %}{% endfor %}
                                 </div>
                                 <div class="table" id="table_horaires">
                                     {% for i in range(0,12,2) %}
-                                        {% if tutorat[9+i] is not none and tutorat[10+i] is not none %}
-                                            <p>{{ 'h'.join((tutorat[9+i]|string).split(':')[:2]) }}
-                                                - {{ 'h'.join((tutorat[10+i]|string).split(':')[:2]) }}</p>
+                                        {% if tutorat[8+i] is not none and tutorat[9+i] is not none %}
+                                            <p>{{ 'h'.join((tutorat[8+i]|string).split(':')[:2]) }}
+                                                - {{ 'h'.join((tutorat[9+i]|string).split(':')[:2]) }}</p>
                                         {% endif %}{% endfor %}
                                 </div>
                             </div>
                         </div>
                         <div class="date">
-                            <p class="time"><strong class="G">Publiée le:</strong> {{ tutorat[5].strftime('%d-%m-%Y') }}
+                            <p class="time"><strong class="G">Publiée le:</strong> {{ tutorat[4].strftime('%d-%m-%Y') }}
                             </p>
                             <p class="supr_offre"><a href="/quit?id={{ tutorat[0] }}">
                                 <button>Quitter ce tutorat</button>

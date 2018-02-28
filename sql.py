@@ -27,13 +27,21 @@ class MysqlObject:
 
     # Liste des classes
     def classes_liste(self):
+        classes = []
         self.cursor.execute("""SELECT * FROM classes ORDER BY NUMERO""")
-        return self.cursor.fetchall()
+        rows = self.cursor.fetchall()
+        for row in rows:
+            classes.append(row[2])
+        return classes
 
     # Liste des matières
     def matieres_liste(self):
+        matieres = []
         self.cursor.execute("""SELECT * FROM matieres""")
-        return self.cursor.fetchall()
+        rows = self.cursor.fetchall()
+        for row in rows:
+            matieres.append(row[2])
+        return matieres
 
     # Création d"une offre
     def create_offre(self, author, classe, matiere, horaires):
@@ -180,13 +188,13 @@ class MysqlObject:
             offre_a_modif = offres_a_modif[0]
             places_dispo = check_availability(offre_a_modif)
             if places_dispo == 0:
-                if offre_a_modif[6] == user:
+                if offre_a_modif[5] == user:
                     self.cursor.execute(
                         """UPDATE offres SET participant = participant2, participant2 = NULL WHERE id = %s """,
                         (offre_id,))
                     self.conn.commit()
                     return True
-                elif offre_a_modif[7] == user:
+                elif offre_a_modif[6] == user:
                     self.cursor.execute("""UPDATE offres SET participant2 = NULL WHERE id = %s """, (offre_id,))
                     self.conn.commit()
                     return True
@@ -195,7 +203,7 @@ class MysqlObject:
                     return False
 
             elif places_dispo == 1:
-                if offre_a_modif[6] == user:
+                if offre_a_modif[5] == user:
                     self.cursor.execute("""UPDATE offres SET participant = NULL WHERE id = %s """, (offre_id,))
                     self.conn.commit()
                     return True
@@ -223,9 +231,9 @@ class MysqlObject:
 
 # Retourne le nombre de places dispo
 def check_availability(offre):
-    if offre[6] is None or offre[7] is None:
+    if offre[5] is None or offre[6] is None:
         # Une place est disponible
-        if offre[6] is None and offre[7] is None:
+        if offre[5] is None and offre[6] is None:
             return 2
         else:
             return 1
