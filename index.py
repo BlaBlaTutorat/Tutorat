@@ -25,15 +25,28 @@ def connection():
 
 
 # Page d'inscription
-@app.route('/register')
+@app.route('/register', methods=['GET'])
 def inscription():
     sql_obj = sql.MysqlObject()
     # Propre à cette page
     hidemenu = True
 
-    return render_template("inscription.html", **locals(), niveaux=sql_obj.niveaux_liste(),
-                           filieres=sql_obj.filieres_liste())
+    return render_template("inscription.html", niveaux=sql_obj.niveaux_liste(),
+                           filieres=sql_obj.filieres_liste(), **locals())
 
+# Traitement du formulaire + upload bdd
+@app.route('/register', methods=['POST'])
+
+        #Chiffrement du mdp
+def traitement_insciption():
+    import hashlib
+    from getpass import getpass
+    chaine_mot_de_passe = b"input()"
+    mot_de_passe_chiffre = hashlib.sha1(chaine_mot_de_passe).hexdigest()
+
+    nom = request.form.get('prenom') + '  ' + request.form.get('nom')
+    sql_obj.create_compte(nom, request.form.get('mdp'), request.form.get('mail'), request.form.get('niveau'), request.form.get('filiere'))
+    
 
 # Mot de passe oublié
 @app.route('/forgot')
@@ -56,9 +69,9 @@ def profil():
     if request.args.get('info_msg'):
         info_msg = request.args.get('info_msg')
 
-    return render_template("profil.html", **locals(), infos=sql_obj.get_user_info(user),
+    return render_template("profil.html", infos=sql_obj.get_user_info(user),
                            offres_creees=sql_obj.get_user_offre(user),
-                           tutorats_actifs=sql_obj.get_user_tutorats(user), days=days)
+                           tutorats_actifs=sql_obj.get_user_tutorats(user), days=days, **locals())
 
 
 # Page de modification du profil
@@ -74,7 +87,7 @@ def profil_update():
     filieres = sql_obj.filieres_liste()
 
     if len(request.form) == 0:
-        return render_template("profil_update.html", **locals(), infos=sql_obj.get_user_info(user))
+        return render_template("profil_update.html", infos=sql_obj.get_user_info(user), **locals())
     else:
         if request.form.get('niveau') in niveaux and request.form.get(
                 'filiere') in filieres and "@" in request.form.get('mail'):
@@ -133,19 +146,18 @@ def recherche():
         # Formulaire de tri première étape
 
         option = request.form.get("option")
-        return render_template("recherche.html", **locals(), offres=sql_obj.offres_liste_tri(option, page), days=days)
+        return render_template("recherche.html", offres=sql_obj.offres_liste_tri(option, page), days=days, **locals())
 
     elif request.form.get("option") and request.form.get("option2"):
         # Formulaire de tri deuxième étape
 
         option = request.form.get("option")
         option2 = request.form.get("option2")
-        return render_template("recherche.html", offres=sql_obj.offres_liste_tri_2(option, option2, page), **locals(),
-                               days=days)
+        return render_template("recherche.html", offres=sql_obj.offres_liste_tri_2(option, option2, page), days=days,**locals())
 
     else:
         # Aucune option de tri sélectionnée
-        return render_template("recherche.html", **locals(), offres=sql_obj.offres_liste(page), days=days)
+        return render_template("recherche.html", offres=sql_obj.offres_liste(page), days=days, **locals())
 
 
 # Affichage du formulaire de création d'une offre
@@ -157,7 +169,7 @@ def creation():
     user = "Tao Blancheton"
     css_state = sql_obj.get_css(user)
 
-    return render_template("creation.html", **locals(), niveaux=sql_obj.niveaux_liste(),
+    return render_template("creation.html", niveaux=sql_obj.niveaux_liste(),
                            matieres=sql_obj.matieres_liste(), filieres=sql_obj.filieres_liste(), days=days)
 
 
