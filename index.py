@@ -6,9 +6,10 @@ app = Flask(__name__)
 days = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
 
 
-# Page d'accueil qui redirige vers la page de recherche si l'utilisateur est connecté
+# Page d'accueil qui redirige vers la page de recherche ou page de login
 @app.route('/')
 def index():
+    # TODO vérifier que l'utilisateur est connecté
     return redirect(url_for("recherche"))
 
 
@@ -32,6 +33,15 @@ def inscription():
 
     return render_template("inscription.html", **locals(), niveaux=sql_obj.niveaux_liste(),
                            filieres=sql_obj.filieres_liste())
+
+
+# Mot de passe oublié
+@app.route('/forgot')
+def mdp_oublie():
+    # Propre à cette page
+    hidemenu = True
+
+    return render_template("mdp_oublie.html", **locals())
 
 
 # Page de Profil
@@ -95,15 +105,6 @@ def admin():
                            days=days, **locals())
 
 
-# Mot de passe oublié
-@app.route('/forgot')
-def mdp_oublie():
-    # Propre à cette page
-    hidemenu = True
-
-    return render_template("mdp_oublie.html", **locals())
-
-
 # Page de recherche d'offres
 @app.route('/search', methods=['GET', 'POST'])
 def recherche():
@@ -145,31 +146,6 @@ def recherche():
     else:
         # Aucune option de tri sélectionnée
         return render_template("recherche.html", **locals(), offres=sql_obj.offres_liste(page), days=days)
-
-
-# Page d'enregistrement (s'enregistrer en tant que participant)
-@app.route('/apply', methods=['POST'])
-def enregistrement():
-    # TODO vérifier que l'utilisateur est connecté
-    user = "Tao Blancheton"
-    sql_obj = sql.MysqlObject()
-    admin_user = True
-    css_state = sql_obj.get_css(user)
-
-    result_code = sql_obj.add_participant(request.form.get("id"), user)
-    if result_code == 0:
-        # Pas d'erreur
-        return redirect(url_for("recherche", info_msg="Votre participation à ce tutorat a bien été prise en compte."))
-    elif result_code == 1:
-        # Erreur l'utilisateur participe déjà à l'offre
-        return render_template("error.html", message="Erreur - Vous vous êtes déjà enregistré pour ce Tutorat",
-                               **locals())
-    elif result_code == 2:
-        # Erreur (cas très rare ou l'utilisateur accepte une offre qui est deja pleine)
-        return render_template("error.html", message="Erreur - Ce Tutorat est déjà plein", **locals())
-    elif result_code == 3:
-        # Erreur l'utilisateur veut participer à une offre qu'il a créée
-        return render_template("error.html", message="Erreur - Vous êtes l'auteur de ce tutorat", **locals())
 
 
 # Affichage du formulaire de création d'une offre
@@ -231,6 +207,49 @@ def traitement_creation():
         return render_template("error.html", message="Erreur - Veuillez renseigner au moins un horaire", **locals())
 
 
+# Page d'enregistrement (s'enregistrer en tant que participant)
+@app.route('/apply', methods=['POST'])
+def enregistrement():
+    # TODO vérifier que l'utilisateur est connecté
+    user = "Tao Blancheton"
+    sql_obj = sql.MysqlObject()
+    admin_user = True
+    css_state = sql_obj.get_css(user)
+
+    result_code = sql_obj.add_participant(request.form.get("id"), user)
+    if result_code == 0:
+        # Pas d'erreur
+        return redirect(url_for("recherche", info_msg="Votre participation à ce tutorat a bien été prise en compte."))
+    elif result_code == 1:
+        # Erreur l'utilisateur participe déjà à l'offre
+        return render_template("error.html", message="Erreur - Vous vous êtes déjà enregistré pour ce Tutorat",
+                               **locals())
+    elif result_code == 2:
+        # Erreur (cas très rare ou l'utilisateur accepte une offre qui est deja pleine)
+        return render_template("error.html", message="Erreur - Ce Tutorat est déjà plein", **locals())
+    elif result_code == 3:
+        # Erreur l'utilisateur veut participer à une offre qu'il a créée
+        return render_template("error.html", message="Erreur - Vous êtes l'auteur de ce tutorat", **locals())
+
+
+# Suppression de la participation d'un utilisateur à une offre
+@app.route('/quit')
+def quit_tutorat():
+    # TODO vérifier que l'utilisateur est connecté
+    if request.args.get('id'):
+        offre_id = request.args.get('id')
+        sql_obj = sql.MysqlObject()
+        user = "Tao Blancheton"
+        css_state = sql_obj.get_css(user)
+
+        if sql_obj.delete_participant(offre_id, user):
+            return redirect(url_for("profil", info_msg="Votre retrait de ce Tutorat a bien été enregistré."))
+        else:
+            return render_template("error.html", message="Erreur - Vous ne participez pas à ce Tutorat", **locals())
+    else:
+        abort(403)
+
+
 # Suppression d'une offre
 @app.route('/delete')
 def delete():
@@ -276,20 +295,17 @@ def validate():
         abort(403)
 
 
-# Suppression de la participation d'un utilisateur à une offre
-@app.route('/quit')
-def quit_tutorat():
-    # TODO vérifier que l'utilisateur est connecté
-    if request.args.get('id'):
-        offre_id = request.args.get('id')
+# Ban (admin)
+@app.route('/ban')
+def ban():
+    # TODO vérifier que l'utilisateur est admin
+    if request.args.get('user_name'):
+        user_name = request.args.get('user_name')
         sql_obj = sql.MysqlObject()
-        user = "Tao Blancheton"
-        css_state = sql_obj.get_css(user)
 
-        if sql_obj.delete_participant(offre_id, user):
-            return redirect(url_for("profil", info_msg="Votre retrait de ce Tutorat a bien été enregistré."))
-        else:
-            return render_template("error.html", message="Erreur - Vous ne participez pas à ce Tutorat", **locals())
+        sql_obj.ban(user_name)
+        return redirect(
+            url_for("admin", info_msg="Cet utilisateur a bien été banni."))
     else:
         abort(403)
 
@@ -303,21 +319,6 @@ def css():
 
     sql_obj.set_css(user)
     return redirect(request.referrer)
-
-
-# Ban
-@app.route('/ban')
-def ban():
-    # TODO vérifier que l'utilisateur est admin
-    if request.args.get('user_name'):
-        user_name = request.args.get('user_name')
-        sql_obj = sql.MysqlObject()
-
-        sql_obj.ban(user_name)
-        return redirect(
-            url_for("admin", info_msg="Cet utilisateur a bien été banni."))
-    else:
-        abort(403)
 
 
 # Gestion de l'erreur 404
