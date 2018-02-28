@@ -24,8 +24,7 @@ Tables:
     - Nom
     - Mot de passe
     - Email (PRIMARY)
-    - Niveau
-    - Filière
+    - Classe
     - Ban (boolean)
     - Admin (boolean)
     - Css (boolean)
@@ -34,8 +33,7 @@ Tables:
     - Id (PRIMARY)
     - Matière
     - Auteur
-    - Niveau
-    - Filière
+    - Classe
     - Date de création
     - Disponible (boolean)
     - Participant
