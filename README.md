@@ -43,18 +43,7 @@ Tables:
     - Créneaux horaires
 
 - Matières:
-    - Nom (PRIMARY)
+    - PRONOTE
 
 - Classes:
-    - Id (PRIMARY)
-    - Niveau
-    - Spécialité
-    - Numéro
-
-- Filières:
-    - ID (PRIMARY)
-    - Nom
-    
- - Niveaux:
-    - ID (PRIMARY)
-    - Nom
+    - PRONOTE
