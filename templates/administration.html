@@ -27,8 +27,7 @@
                     <div class="info_profil">
                             <p><strong class="G">Nom:</strong></p>
                             <p><strong class="G">Mail:</strong></p>
-                            <p><strong class="G">Niveau:</strong></p>
-                            <p><strong class="G">Filière:</strong></p>
+                            <p><strong class="G">Classe:</strong></p>
                             <p><strong class="G">Admin:</strong></p>
                             <p><strong class="G">Ban:</strong></p>
                     </div>
@@ -36,19 +35,18 @@
                         <p>{{ user[0] }}</p>
                         <p>{{ user[2] }}</p>
                         <p>{{ user[3] }}</p>
-                        <p>{{ user[4] }}</p>
+                        {% if user[4]==1 %}
+                            <p>Oui</p>
+                        {% else %}
+                            <p>Non</p>
+                        {% endif %}
                         {% if user[5]==1 %}
                             <p>Oui</p>
                         {% else %}
                             <p>Non</p>
                         {% endif %}
-                        {% if user[6]==1 %}
-                            <p>Oui</p>
-                        {% else %}
-                            <p>Non</p>
-                        {% endif %}
                     </div>
-                    {% if user[6]==1 %}
+                    {% if user[5]==1 %}
                         <a href="/ban?user_name={{ user[0] }}" class="ban"><button>Débannir</button></a>
                     {% else %}
                         <a href="/ban?user_name={{ user[0] }}" class="ban"><button>Bannir</button></a>
