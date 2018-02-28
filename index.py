@@ -74,7 +74,7 @@ def profil_update():
             return redirect(url_for("profil", info_msg="Votre profil a bien été modifié."))
         else:
 
-            return render_template("error.html", message="Erreur - Veuillez revérifier les champs du formulaire",
+            return render_template("error.html", message="Erreur - Veuillez vérifier les champs du formulaire",
                                    **locals())
 
 
@@ -143,7 +143,7 @@ def recherche():
                                days=days)
 
     else:
-        # Pas de formulaire de tri
+        # Aucune option de tri sélectionnée
         return render_template("recherche.html", **locals(), offres=sql_obj.offres_liste(page), days=days)
 
 
@@ -162,7 +162,7 @@ def enregistrement():
         return redirect(url_for("recherche", info_msg="Votre participation à ce tutorat a bien été prise en compte."))
     elif result_code == 1:
         # Erreur l'utilisateur participe déjà à l'offre
-        return render_template("error.html", message="Erreur - Vous vous êtes déjà enregistrés pour ce Tutorat",
+        return render_template("error.html", message="Erreur - Vous vous êtes déjà enregistré pour ce Tutorat",
                                **locals())
     elif result_code == 2:
         # Erreur (cas très rare ou l'utilisateur accepte une offre qui est deja pleine)
@@ -182,7 +182,7 @@ def creation():
     css_state = sql_obj.get_css(user)
 
     return render_template("creation.html", **locals(), niveaux=sql_obj.niveaux_liste(),
-                           matieres=sql_obj.matieres_liste(), filieres=sql_obj.filieres_liste(), days=days, )
+                           matieres=sql_obj.matieres_liste(), filieres=sql_obj.filieres_liste(), days=days)
 
 
 # Traitement du formulaire + upload bdd
@@ -224,12 +224,11 @@ def traitement_creation():
                 "recherche", info_msg="Votre offre a bien été créée. Elle est actuellement en attente de validation."))
 
         else:
-            return render_template("error.html", message="Erreur - Veuillez revérifier les champs du formulaire",
+            return render_template("error.html", message="Erreur - Veuillez vérifier les champs du formulaire",
                                    **locals())
     else:
         # Erreur
-        return render_template("error.html", message="Vous n'avez pas remplis tous les champs requis (horaires)",
-                               **locals())
+        return render_template("error.html", message="Erreur - Veuillez renseigner au moins un horaire", **locals())
 
 
 # Suppression d'une offre
