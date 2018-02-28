@@ -171,8 +171,8 @@ def creation():
     user = "Tao Blancheton"
     css_state = sql_obj.get_css(user)
 
-    return render_template("creation.html", niveaux=sql_obj.niveaux_liste(),
-                           matieres=sql_obj.matieres_liste(), filieres=sql_obj.filieres_liste(), days=days)
+    return render_template("creation.html", niveaux=sql_obj.niveaux_liste(), matieres=sql_obj.matieres_liste(),
+                           filieres=sql_obj.filieres_liste(), days=days, **locals())
 
 
 # Traitement du formulaire + upload bdd
@@ -273,8 +273,7 @@ def delete():
         # TODO vérifier que l'utilisateur a bien crée l'offre qu'il veut supprimer
 
         sql_obj.delete_offer(offre_id)
-        return redirect(
-            url_for("profil", info_msg="Votre offre a bien été supprimée."))
+        return redirect(url_for("profil", info_msg="Votre offre a bien été supprimée."))
     else:
         abort(403)
 
@@ -288,8 +287,7 @@ def delete2():
         # TODO vérifier que l'utilisateur est admin
 
         sql_obj.delete_offer(offre_id)
-        return redirect(
-            url_for("admin", info_msg="La suppression a bien été effectuée."))
+        return redirect(url_for("admin", info_msg="La suppression a bien été effectuée."))
     else:
         abort(403)
 
@@ -318,8 +316,7 @@ def ban():
         sql_obj = sql.MysqlObject()
 
         sql_obj.ban(user_name)
-        return redirect(
-            url_for("admin", info_msg="Cet utilisateur a bien été banni."))
+        return redirect(url_for("admin", info_msg="Cet utilisateur a bien été banni."))
     else:
         abort(403)
 
