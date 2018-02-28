@@ -15,9 +15,9 @@ class MysqlObject:
 
         try:
 
-            self.conn = mysql.connector.connect(host="172.21.1.203", user="isn", password="0C5PH2iBfMy3l6o3",
-                                                database="tutorat")
-            # self.conn = mysql.connector.connect(host="127.0.0.1", user="root", password="", database="tutorat")
+            # self.conn = mysql.connector.connect(host="172.21.1.203", user="isn", password="0C5PH2iBfMy3l6o3",
+            #                                   database="tutorat")
+            self.conn = mysql.connector.connect(host="127.0.0.1", user="root", password="", database="tutorat")
             self.cursor = self.conn.cursor()
 
         except mysql.connector.errors.InterfaceError as e:
@@ -124,15 +124,16 @@ class MysqlObject:
         self.cursor.execute("""SELECT * FROM users WHERE nom=%s""", (user_name,))
         return self.cursor.fetchall()[0]
 
-    # Récup&ration et cryptage du mot de passe des utilisateurs
+    # Récupération et cryptage du mot de passe des utilisateurs
     def get_crypt_mdp(self, user_name):
-        self.cursor.execute("""SELECT mdp FROM users WHERE nom=%s""" (user_name,))
+        self.cursor.execute("""SELECT mdp FROM users WHERE nom=%s""", (user_name,))
+        return self.cursor.fetchall()[0]
 
     # Ajout de participant à une offre
     def add_participant(self, offre_id, participant):
         self.cursor.execute("""SELECT * FROM offres WHERE id=%s""", (offre_id,))
         offre = self.cursor.fetchall()[0]
-        # Vérificataion auteur != participant
+        # Vérification auteur != participant
         if offre[1] != participant:
             if check_availability(offre) == 2:
                 # Update de la première colonne

@@ -1,5 +1,7 @@
-from flask import *
 import hashlib
+
+from flask import *
+
 import sql
 
 app = Flask(__name__)
@@ -45,7 +47,7 @@ def traitement_insciption():
     nom = request.form.get('prenom') + '  ' + request.form.get('nom')
     sql_obj.create_compte(nom, mot_de_passe_chiffre, request.form.get('mail'), request.form.get('niveau'),
                           request.form.get('filiere'))
-    
+
 
 # Mot de passe oublié
 @app.route('/forgot')
@@ -152,7 +154,8 @@ def recherche():
 
         option = request.form.get("option")
         option2 = request.form.get("option2")
-        return render_template("recherche.html", offres=sql_obj.offres_liste_tri_2(option, option2, page), days=days,**locals())
+        return render_template("recherche.html", offres=sql_obj.offres_liste_tri_2(option, option2, page), days=days,
+                               **locals())
 
     else:
         # Aucune option de tri sélectionnée
