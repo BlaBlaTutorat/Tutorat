@@ -25,43 +25,23 @@ class MysqlObject:
             print("Error %d: %s" % (e.args[0], e.args[1]))
             sys.exit(1)
 
-    # Liste des filieres
-    def filieres_liste(self):
-        filieres = []
-        self.cursor.execute("""SELECT nom FROM filieres ORDER BY id""")
-
-        rows = self.cursor.fetchall()
-        for row in rows:
-            filieres.append(row[0])
-        return filieres
-
-    # Liste des niveaux
-    def niveaux_liste(self):
-        niveaux = []
-        self.cursor.execute("""SELECT nom FROM niveaux ORDER BY id""")
-
-        rows = self.cursor.fetchall()
-        for row in rows:
-            niveaux.append(row[0])
-        return niveaux
+    # Liste des classes
+    def classes_liste(self):
+        self.cursor.execute("""SELECT * FROM classes ORDER BY NUMERO""")
+        return self.cursor.fetchall()
 
     # Liste des matières
     def matieres_liste(self):
-        matieres = []
         self.cursor.execute("""SELECT * FROM matieres""")
-
-        rows = self.cursor.fetchall()
-        for row in rows:
-            matieres.append(row[0])
-        return matieres
+        return self.cursor.fetchall()
 
     # Création d"une offre
-    def create_offre(self, author, niveau, filiere, matiere, horaires):
+    def create_offre(self, author, classe, matiere, horaires):
         date_time = datetime.datetime.now()
         date_time = date_time.strftime("%Y-%m-%d %H:%M:%S")
         self.cursor.execute(
-            """INSERT INTO offres (auteur, niveau, filiere, matiere, date_time) VALUES (%s, %s, %s, %s, %s)""",
-            (author, niveau, filiere, matiere, date_time))
+            """INSERT INTO offres (auteur, classe, matiere, date_time) VALUES (%s, %s, %s, %s)""",
+            (author, classe, matiere, date_time))
 
         i = 0
         for time in horaires:
@@ -97,17 +77,9 @@ class MysqlObject:
 
     # Liste des offres selon 1 facteur de tri
     def offres_liste_tri(self, option, page):
-        if option == "niveau":
-            # Procédure spéciale pour les niveaux pour avoir un tri cohérent
-            self.cursor.execute(
-                """SELECT * FROM offres WHERE disponible=1 AND (participant IS NULL OR participant2 IS NULL) 
-                ORDER BY CASE niveau WHEN 'Seconde' THEN 1 WHEN 'Première' THEN 2 WHEN 'Terminale'
-                 THEN 3 WHEN 'CPGE première année' THEN 4 WHEN 'CPGE deuxième année' THEN 5 END LIMIT """ +
-                str(offre_par_page) + """ OFFSET """ + str(page * offre_par_page))
-        else:
-            self.cursor.execute(
-                """SELECT * FROM offres WHERE disponible=1 ORDER BY """ + option + """ LIMIT """ +
-                str(offre_par_page) + """ OFFSET """ + str(page * offre_par_page))
+        self.cursor.execute(
+            """SELECT * FROM offres WHERE disponible=1 ORDER BY """ + option + """ LIMIT """ +
+            str(offre_par_page) + """ OFFSET """ + str(page * offre_par_page))
         return self.cursor.fetchall()
 
     # Liste des offres selon 1 facteur de tri + 1 niveau/matiere
@@ -190,9 +162,9 @@ class MysqlObject:
         self.conn.commit()
 
     # Modification du profil
-    def modify_user_info(self, user_name, mail, niveau, filiere):
-        self.cursor.execute("""UPDATE users SET mail = %s, niveau = %s, filiere = %s WHERE nom = %s """,
-                            (mail, niveau, filiere, user_name))
+    def modify_user_info(self, user_name, mail, classe):
+        self.cursor.execute("""UPDATE users SET mail = %s, classe = %s WHERE nom = %s """,
+                            (mail, classe, user_name))
         self.conn.commit()
 
     # Recherche des offres auxquelles participe l'utilisateur
@@ -237,10 +209,10 @@ class MysqlObject:
             return False
 
     # Création d'un compte
-    def create_compte(self, nom, mdp, mail, niveau, filiere):
+    def create_compte(self, nom, mdp, mail, classe):
         self.cursor.execute(
-            """INSERT INTO users (nom, mdp, mail, niveau, filiere) VALUES (%s, %s, %s, %s, %s)""",
-            (nom, mdp, mail, niveau, filiere))
+            """INSERT INTO users (nom, mdp, mail, classe) VALUES (%s, %s, %s, %s)""",
+            (nom, mdp, mail, classe))
         self.conn.commit()
 
     # Méthode exécutée à la suppression de l'bbjet

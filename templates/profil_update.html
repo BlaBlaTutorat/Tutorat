@@ -19,24 +19,17 @@
                     <div class="info_profil">
                         <p><strong class="G">Nom:</strong></p>
                         <p><strong class="G">Mail:</strong></p>
-                        <p><strong class="G">Niveau:</strong></p>
-                        <p><strong class="G">Filière:</strong></p>
+                        <p><strong class="G">Classe:</strong></p>
                     </div>
                     <div class="info_profil">
                         <!-- Nom non modifiable -->
                         <p>{{ infos[0] }}</p>
                         <!-- Mail modifiable -->
                         <p><input class="tri5" name="mail" type="text" required value="{{ infos[2] }}"></p>
-                        <!-- Niveau modifiable -->
-                        <p><select class="tri4" required name="niveau">
-                            {% for niveau in niveaux %}
-                                <option {% if niveau == infos[3] %}selected{% endif %}>{{ niveau }}</option>
-                            {% endfor %}
-                        </select></p>
-                        <!-- Filière modifiable -->
-                        <p><select class="tri4" required name="filiere">
-                            {% for filiere in filieres %}
-                                <option {% if filiere == infos[4] %}selected{% endif %}>{{ filiere }}</option>
+                        <!-- Classe modifiable -->
+                        <p><select class="tri4" required name="classe">
+                            {% for classe in classes %}
+                                <option {% if classe == infos[3] %}selected{% endif %}>{{ classe[2] }}</option>
                             {% endfor %}
                         </select></p>
                     </div>

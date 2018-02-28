@@ -36,20 +36,11 @@
                 <p><input type="text" name="mdp"></p>
             </div>
             <div class="critere">
-                <p class="register">Entrez votre niveau scolaire :</p>
-                <p><SELECT required name="niveau" class="tri2">
-                    <option value="" selected disabled>- Niveau -</option>
-                    {% for niveau in niveaux %}
-                        <option>{{ niveau }}</option>
-                    {% endfor %}
-                </SELECT></p>
-            </div>
-            <div class="critere">
-                <p class="register">Entrez votre filière :</p>
-                <p><SELECT required name="filiere" class="tri2">
-                    <option value="" selected disabled>- Filière -</option>
-                    {% for filiere in filieres %}
-                        <option>{{ filiere }}</option>
+                <p class="register">Entrez votre classe :</p>
+                <p><SELECT required name="classe" class="tri2">
+                    <option value="" selected disabled>- Classe -</option>
+                    {% for classe in classes %}
+                        <option>{{ classe[2] }}</option>
                     {% endfor %}
                 </SELECT></p>
             </div>

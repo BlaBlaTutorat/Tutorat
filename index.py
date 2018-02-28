@@ -33,8 +33,7 @@ def inscription():
     # Propre à cette page
     hidemenu = True
 
-    return render_template("inscription.html", niveaux=sql_obj.niveaux_liste(),
-                           filieres=sql_obj.filieres_liste(), **locals())
+    return render_template("inscription.html", classes=sql_obj.classes_liste(), **locals())
 
 
 # Chiffrement du mdp
@@ -45,8 +44,7 @@ def traitement_insciption():
     mot_de_passe_chiffre = hashlib.sha1(chaine_mot_de_passe).hexdigest()
 
     nom = request.form.get('prenom') + '  ' + request.form.get('nom')
-    sql_obj.create_compte(nom, mot_de_passe_chiffre, request.form.get('mail'), request.form.get('niveau'),
-                          request.form.get('filiere'))
+    sql_obj.create_compte(nom, mot_de_passe_chiffre, request.form.get('mail'), request.form.get('classe'))
 
 
 # Mot de passe oublié
@@ -84,17 +82,14 @@ def profil_update():
     user = "Tao Blancheton"
     css_state = sql_obj.get_css(user)
 
-    niveaux = sql_obj.niveaux_liste()
-    filieres = sql_obj.filieres_liste()
+    classes = sql_obj.classes_liste()
 
     if len(request.form) == 0:
         return render_template("profil_update.html", infos=sql_obj.get_user_info(user), **locals())
     else:
-        if request.form.get('niveau') in niveaux and request.form.get(
-                'filiere') in filieres and "@" in request.form.get('mail'):
+        if request.form.get('classe') in classes and "@" in request.form.get('mail'):
 
-            sql_obj.modify_user_info(user, request.form.get('mail'), request.form.get('niveau'),
-                                     request.form.get('filiere'))
+            sql_obj.modify_user_info(user, request.form.get('mail'), request.form.get('classe'))
             return redirect(url_for("profil", info_msg="Votre profil a bien été modifié."))
         else:
 
@@ -140,8 +135,7 @@ def recherche():
 
     # Variables locales utilisées dans les templates
     matieres = sql_obj.matieres_liste()
-    niveaux = sql_obj.niveaux_liste()
-    filieres = sql_obj.filieres_liste()
+    classes = sql_obj.classes_liste()
 
     if request.form.get("option") and not request.form.get("option2"):
         # Formulaire de tri première étape
@@ -171,8 +165,8 @@ def creation():
     user = "Tao Blancheton"
     css_state = sql_obj.get_css(user)
 
-    return render_template("creation.html", niveaux=sql_obj.niveaux_liste(), matieres=sql_obj.matieres_liste(),
-                           filieres=sql_obj.filieres_liste(), days=days, **locals())
+    return render_template("creation.html", classes=sql_obj.classes_liste(), matieres=sql_obj.matieres_liste(),
+                           days=days, **locals())
 
 
 # Traitement du formulaire + upload bdd
@@ -201,15 +195,13 @@ def traitement_creation():
 
     if process:
         # Création
-        niveaux = sql_obj.niveaux_liste()
+        classes = sql_obj.classes_liste()
         matieres = sql_obj.matieres_liste()
-        filieres = sql_obj.filieres_liste()
 
-        if request.form.get("niveau") in niveaux and request.form.get("matiere") in matieres and request.form.get(
-                "filiere") in filieres:
+        if request.form.get("classe") in classes and request.form.get("matiere") in matieres:
 
-            sql_obj.create_offre(request.form.get('auteur'), request.form.get('niveau'), request.form.get('filiere'),
-                                 request.form.get('matiere'), horaires)
+            sql_obj.create_offre(request.form.get('auteur'), request.form.get('classe'), request.form.get('filiere'),
+                                 horaires)
             return redirect(url_for(
                 "recherche", info_msg="Votre offre a bien été créée. Elle est actuellement en attente de validation."))
 

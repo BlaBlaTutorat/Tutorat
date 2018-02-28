@@ -23,23 +23,17 @@
                 <!-- Elève -->
                 <p class="element"><strong class="G">Vous voulez aider un élève de : </strong>
                     <SELECT name="niveau" class="tri3" required>
-                        <option value="" disabled selected>- Niveau -</option>
-                        {% for niveau in niveaux %}
-                            <option>{{ niveau }}</option>
+                        <option value="" disabled selected>- Classe -</option>
+                        {% for classe in classes %}
+                            <option>{{ classe[2] }}</option>
                         {% endfor %}
                     </SELECT>
-                    <SELECT name="filiere" class="tri3" required>
-                        <option value="" disabled selected>- Filière -</option>
-                        {% for filiere in filieres %}
-                            <option>{{ filiere }}</option>
-                        {% endfor %}
-                    </SELECT></p>
                 <!-- Matière -->
                 <p class="element"><strong class="G">Vous souhaitez l'aider en : </strong>
                     <SELECT name="matiere" class="tri3" required>
                         <option value="" disabled selected>- Matiere -</option>
                         {% for matiere in matieres %}
-                            <option>{{ matiere }}</option>
+                            <option>{{ matiere[2] }}</option>
                         {% endfor %}
                     </SELECT></p>
                 <input type="submit" class="crea_offre" value="Créer mon offre"/>
