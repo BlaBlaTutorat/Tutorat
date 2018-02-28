@@ -239,7 +239,7 @@ def enregistrement():
         return render_template("error.html", message="Erreur - Vous vous êtes déjà enregistré pour ce Tutorat",
                                **locals())
     elif result_code == 2:
-        # Erreur (cas très rare ou l'utilisateur accepte une offre qui est deja pleine)
+        # Erreur (cas très rare ou l'utilisateur accepte une offre qui est déjà pleine)
         return render_template("error.html", message="Erreur - Ce Tutorat est déjà plein", **locals())
     elif result_code == 3:
         # Erreur l'utilisateur veut participer à une offre qu'il a créée
@@ -335,19 +335,19 @@ def css():
 # Gestion de l'erreur 404
 @app.errorhandler(404)
 def not_found(error):
-    return render_template("error.html", message="Erreur 404 - Ressource non trouvée", **locals())
+    return render_template("error.html", message="Erreur 404 - Ressource non trouvée")
 
 
 # Gestion de l'erreur 403
 @app.errorhandler(403)
 def forbidden(error):
-    return render_template("error.html", message="Erreur 403 - Accès Interdit", **locals())
+    return render_template("error.html", message="Erreur 403 - Accès Interdit")
 
 
 # Gestion de l'erreur 405
 @app.errorhandler(405)
 def method_not_allowed(error):
-    return render_template("error.html", message="Erreur 405 - Méthode de requête non autorisée", **locals())
+    return render_template("error.html", message="Erreur 405 - Méthode de requête non autorisée")
 
 
 # Lancement du serveur lors de l'exécution du fichier
