@@ -26,7 +26,7 @@
     {% if option == "niveau" or option == "matiere" or option == "filiere" %}
         <!-- Paramètre de tri 2 -->
         <select class="tri" name="option2" onchange="this.form.submit()">
-            <option value="" disabled selected>- Tri -</option>
+            <option value="" disabled selected>- Trier par -</option>
             {% if option == "niveau" %}
                 {% for niveau in niveaux %}
                     <option {% if option2 == niveau %}selected{% endif %}>{{ niveau }}</option>
