@@ -18,7 +18,6 @@ def connection():
     # Propre à cette page
     hidemenu = True
 
-    info_msg = None
     if request.args.get('info_msg'):
         info_msg = request.args.get('info_msg')
     return render_template("connexion.html", **locals())
@@ -38,7 +37,7 @@ def inscription():
 # Page de Profil
 @app.route('/profile/view')
 def profil():
-    info_msg = None
+    # TODO vérifier que l'utilisateur est connecté
     sql_obj = sql.MysqlObject()
     admin_user = True
     user = "Tao Blancheton"
@@ -55,6 +54,7 @@ def profil():
 # Page de modification du profil
 @app.route('/profile/update', methods=['GET', 'POST'])
 def profil_update():
+    # TODO vérifier que l'utilisateur est connecté
     sql_obj = sql.MysqlObject()
     admin_user = True
     user = "Tao Blancheton"
@@ -81,7 +81,7 @@ def profil_update():
 # Page d'Administration
 @app.route('/admin')
 def admin():
-    info_msg = None
+    # TODO vérifier que l'utilisateur est admin
     sql_obj = sql.MysqlObject()
     admin_user = True
     user = "Tao Blancheton"
@@ -107,9 +107,9 @@ def mdp_oublie():
 # Page de recherche d'offres
 @app.route('/search', methods=['GET', 'POST'])
 def recherche():
+    # TODO vérifier que l'utilisateur est connecté
     sql_obj = sql.MysqlObject()
     admin_user = True
-    info_msg = None
     user = "Tao Blancheton"
     css_state = sql_obj.get_css(user)
 
@@ -150,6 +150,7 @@ def recherche():
 # Page d'enregistrement (s'enregistrer en tant que participant)
 @app.route('/apply', methods=['POST'])
 def enregistrement():
+    # TODO vérifier que l'utilisateur est connecté
     user = "Tao Blancheton"
     sql_obj = sql.MysqlObject()
     admin_user = True
@@ -174,6 +175,7 @@ def enregistrement():
 # Affichage du formulaire de création d'une offre
 @app.route('/create', methods=['GET'])
 def creation():
+    # TODO vérifier que l'utilisateur est connecté
     sql_obj = sql.MysqlObject()
     admin_user = True
     user = "Tao Blancheton"
@@ -188,6 +190,7 @@ def creation():
 def traitement_creation():
     # On ne traite pas la demande dans le doute ou l'élève n'a pas renseigné de créneau horaire
     process = False
+    # TODO vérifier que l'utilisateur est connecté
     sql_obj = sql.MysqlObject()
     admin_user = True
     user = "Tao Blancheton"
@@ -254,7 +257,7 @@ def delete2():
 
         sql_obj.delete_offer(offre_id)
         return redirect(
-            url_for("admin", info_msg="La supression a bien été effectuée."))
+            url_for("admin", info_msg="La suppression a bien été effectuée."))
     else:
         abort(403)
 
@@ -277,6 +280,7 @@ def validate():
 # Suppression de la participation d'un utilisateur à une offre
 @app.route('/quit')
 def quit_tutorat():
+    # TODO vérifier que l'utilisateur est connecté
     if request.args.get('id'):
         offre_id = request.args.get('id')
         sql_obj = sql.MysqlObject()
@@ -294,6 +298,7 @@ def quit_tutorat():
 # CSS
 @app.route('/css')
 def css():
+    # TODO vérifier que l'utilisateur est connecté
     sql_obj = sql.MysqlObject()
     user = "Tao Blancheton"
 
@@ -319,33 +324,18 @@ def ban():
 # Gestion de l'erreur 404
 @app.errorhandler(404)
 def not_found(error):
-    sql_obj = sql.MysqlObject()
-    admin_user = True
-    user = "Tao Blancheton"
-    css_state = sql_obj.get_css(user)
-
     return render_template("error.html", message="Erreur 404 - Ressource non trouvée", **locals())
 
 
 # Gestion de l'erreur 403
 @app.errorhandler(403)
 def forbidden(error):
-    sql_obj = sql.MysqlObject()
-    admin_user = True
-    user = "Tao Blancheton"
-    css_state = sql_obj.get_css(user)
-
     return render_template("error.html", message="Erreur 403 - Accès Interdit", **locals())
 
 
 # Gestion de l'erreur 405
 @app.errorhandler(405)
 def method_not_allowed(error):
-    sql_obj = sql.MysqlObject()
-    admin_user = True
-    user = "Tao Blancheton"
-    css_state = sql_obj.get_css(user)
-
     return render_template("error.html", message="Erreur 405 - Méthode de requête non autorisée", **locals())
 
 

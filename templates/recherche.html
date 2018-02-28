@@ -3,8 +3,10 @@
 <head>
     <meta charset="utf-8"/>
     <title>Liste des offres</title>
-    {% if css_state %}<link rel=stylesheet type=text/css href="/static/style.css">
-    {% else %}<link rel=stylesheet type=text/css href="/static/style_claire.css">{% endif %}
+    {% if css_state %}
+        <link rel=stylesheet type=text/css href="/static/style.css">
+    {% else %}
+        <link rel=stylesheet type=text/css href="/static/style_claire.css">{% endif %}
     <link rel="icon" type="image/png" href="/static/favicon.png"/>
 </head>
 <body>
@@ -47,8 +49,8 @@
     <div class="pages">
         <p>
             <input type="hidden" name="page" value="{{ page }}">
-            {% if page>0 %}<input type="submit" name="precedent" value="Page précédente">{% endif %}
-            {% if page==0 %}<input type="submit" name="suivant" value="Page suivante">{% endif %}
+            {% if page>0 %}<input type="submit" name="precedent" value="Page précédente">
+            {% else %}<input type="submit" name="suivant" value="Page suivante">{% endif %}
             <strong class="G">{{ page }}</strong>
             <input type="submit" name="suivant" value="Page suivante">
         </p>
@@ -82,14 +84,12 @@
                     <div class="horaire">
                         <div class="table">
                             {% for i in range(0,12,2) %}{% if offre[9+i] is not none and offre[10+i] is not none %}
-                                <p>{{ days[i//2] }}:</p>
-                            {% endif %}{% endfor %}
+                                <p>{{ days[i//2] }}:</p>{% endif %}{% endfor %}
                         </div>
                         <div class="table" id="table_horaires">
                             {% for i in range(0,12,2) %}{% if offre[9+i] is not none and offre[10+i] is not none %}
                                 <p>{{ 'h'.join((offre[9+i]|string).split(':')[:2]) }}
-                                    - {{ 'h'.join((offre[10+i]|string).split(':')[:2]) }}</p>
-                            {% endif %}{% endfor %}
+                                    - {{ 'h'.join((offre[10+i]|string).split(':')[:2]) }}</p>{% endif %}{% endfor %}
                         </div>
                     </div>
                 </div>
