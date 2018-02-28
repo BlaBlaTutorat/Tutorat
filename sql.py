@@ -120,10 +120,16 @@ class MysqlObject:
 
         return self.cursor.fetchall()
 
-    # Récupérations des infos utilisateurs pour page de profil
+    # Récupération des infos utilisateurs pour page de profil
     def get_user_info(self, user_name):
         self.cursor.execute("""SELECT * FROM users WHERE nom=%s""", (user_name,))
         return self.cursor.fetchall()[0]
+   
+    #Récup&ration et cryptage du mot de passe des utilisateurs
+    def get_crypt_mdp(self, user_name):
+        self.cursor.execute("""SELECT mdp FROM users WHERE nom=%s""" (user_name,))
+        
+        
 
     # Ajout de participant à une offre
     def add_participant(self, offre_id, participant):
@@ -249,3 +255,9 @@ def check_availability(offre):
             return 1
     else:
         return 0
+        
+# Création d'un compte
+def create_compte(self, nom, mdp, mail, niveau, filiere):
+    self.cursor.execute(
+            """INSERT INTO users (nom, mdp, mail, niveau, filiere) VALUES (%s, %s, %s, %s, %s)""",(nom, mdp, mail, niveau, filiere))
+    self.conn.commit()
