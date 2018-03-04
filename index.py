@@ -135,7 +135,7 @@ def recherche():
 
     # Variables locales utilisées dans les templates
     matieres = sql_obj.matieres_liste()
-    classes = sql_obj.classes_liste()
+    filieres = sql_obj.filieres_liste()
 
     if request.form.get("option") and not request.form.get("option2"):
         # Formulaire de tri première étape
@@ -165,7 +165,7 @@ def creation():
     user = "Tao Blancheton"
     css_state = sql_obj.get_css(user)
 
-    return render_template("creation.html", classes=sql_obj.classes_liste(), matieres=sql_obj.matieres_liste(),
+    return render_template("creation.html", filieres=sql_obj.filieres_liste(), matieres=sql_obj.matieres_liste(),
                            days=days, **locals())
 
 
@@ -195,12 +195,12 @@ def traitement_creation():
 
     if process:
         # Création
-        classes = sql_obj.classes_liste()
+        filieres = sql_obj.filieres_liste()
         matieres = sql_obj.matieres_liste()
 
-        if request.form.get("classe") in classes and request.form.get("matiere") in matieres:
+        if request.form.get("filiere") in filieres and request.form.get("matiere") in matieres:
 
-            sql_obj.create_offre(request.form.get('auteur'), request.form.get('classe'), request.form.get('matiere'),
+            sql_obj.create_offre(request.form.get('auteur'), request.form.get('filiere'), request.form.get('matiere'),
                                  horaires)
             return redirect(url_for(
                 "recherche", info_msg="Votre offre a bien été créée. Elle est actuellement en attente de validation."))

@@ -43,12 +43,21 @@ class MysqlObject:
             matieres.append(row[2])
         return matieres
 
+    # Liste des filières
+    def filieres_liste(self):
+        filieres = []
+        self.cursor.execute("""SELECT * FROM filieres""")
+        rows = self.cursor.fetchall()
+        for row in rows:
+            filieres.append(row[0])
+        return filieres
+
     # Création d"une offre
     def create_offre(self, author, classe, matiere, horaires):
         date_time = datetime.datetime.now()
         date_time = date_time.strftime("%Y-%m-%d %H:%M:%S")
         self.cursor.execute(
-            """INSERT INTO offres (auteur, classe, matiere, date_time) VALUES (%s, %s, %s, %s)""",
+            """INSERT INTO offres (auteur, filiere, matiere, date_time) VALUES (%s, %s, %s, %s)""",
             (author, classe, matiere, date_time))
 
         i = 0
