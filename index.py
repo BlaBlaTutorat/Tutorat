@@ -12,7 +12,7 @@ days = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
 # Page d'accueil qui redirige vers la page de recherche ou page de login
 @app.route('/')
 def index():
-    # TODO vérifier que l'utilisateur est connecté
+    # TODO vérifier que l'utilisateur est connecté et s'il ne l'est pas le rediriger vers la page de connexion
     return redirect(url_for("recherche"))
 
 
@@ -60,7 +60,7 @@ def mdp_oublie():
 # Page de Profil
 @app.route('/profile/view')
 def profil():
-    # TODO vérifier que l'utilisateur est connecté
+    # TODO vérifier que l'utilisateur est connecté et s'il ne l'est pas le rediriger vers la page de connexion
     sql_obj = sql.MysqlObject()
     admin_user = True
     user = "Tao Blancheton"
@@ -77,7 +77,7 @@ def profil():
 # Page de modification du profil
 @app.route('/profile/update', methods=['GET', 'POST'])
 def profil_update():
-    # TODO vérifier que l'utilisateur est connecté
+    # TODO vérifier que l'utilisateur est connecté et s'il ne l'est pas le rediriger vers la page de connexion
     sql_obj = sql.MysqlObject()
     admin_user = True
     user = "Tao Blancheton"
@@ -101,7 +101,7 @@ def profil_update():
 # Page d'Administration
 @app.route('/admin')
 def admin():
-    # TODO vérifier que l'utilisateur est admin
+    # TODO vérifier que l'utilisateur est admin et s'il ne l'est pas le rediriger vers la page d'erreur
     sql_obj = sql.MysqlObject()
     admin_user = True
     user = "Tao Blancheton"
@@ -118,7 +118,7 @@ def admin():
 # Page de recherche d'offres
 @app.route('/search', methods=['GET', 'POST'])
 def recherche():
-    # TODO vérifier que l'utilisateur est connecté
+    # TODO vérifier que l'utilisateur est connecté et s'il ne l'est pas le rediriger vers la page de connexion
     sql_obj = sql.MysqlObject()
     admin_user = True
     user = "Tao Blancheton"
@@ -160,7 +160,7 @@ def recherche():
 # Affichage du formulaire de création d'une offre
 @app.route('/create', methods=['GET'])
 def creation():
-    # TODO vérifier que l'utilisateur est connecté
+    # TODO vérifier que l'utilisateur est connecté et s'il ne l'est pas le rediriger vers la page de connexion
     sql_obj = sql.MysqlObject()
     admin_user = True
     user = "Tao Blancheton"
@@ -175,7 +175,7 @@ def creation():
 def traitement_creation():
     # On ne traite pas la demande dans le doute ou l'élève n'a pas renseigné de créneau horaire
     process = False
-    # TODO vérifier que l'utilisateur est connecté
+    # TODO vérifier que l'utilisateur est connecté et s'il ne l'est pas le rediriger vers la page de connexion
     sql_obj = sql.MysqlObject()
     admin_user = True
     user = "Tao Blancheton"
@@ -217,7 +217,7 @@ def traitement_creation():
 # Page d'enregistrement (s'enregistrer en tant que participant)
 @app.route('/apply', methods=['POST'])
 def enregistrement():
-    # TODO vérifier que l'utilisateur est connecté
+    # TODO vérifier que l'utilisateur est connecté et s'il ne l'est pas le rediriger vers la page de connexion
     user = "Tao Blancheton"
     sql_obj = sql.MysqlObject()
     admin_user = True
@@ -242,7 +242,7 @@ def enregistrement():
 # Suppression de la participation d'un utilisateur à une offre
 @app.route('/quit')
 def quit_tutorat():
-    # TODO vérifier que l'utilisateur est connecté
+    # TODO vérifier que l'utilisateur est connecté et s'il ne l'est pas le rediriger vers la page de connexion
     if request.args.get('id'):
         offre_id = request.args.get('id')
         sql_obj = sql.MysqlObject()
@@ -277,7 +277,7 @@ def delete2():
     if request.args.get('id'):
         offre_id = request.args.get('id')
         sql_obj = sql.MysqlObject()
-        # TODO vérifier que l'utilisateur est admin
+        # TODO vérifier que l'utilisateur est admin et s'il ne l'est pas le rediriger vers la page d'erreur
 
         sql_obj.delete_offer(offre_id)
         return redirect(url_for("admin", info_msg="La suppression a bien été effectuée."))
@@ -292,7 +292,7 @@ def validate():
         disponible = 1
         offre_id = request.args.get('id')
         sql_obj = sql.MysqlObject()
-        # TODO vérifier que l'utilisateur est admin
+        # TODO vérifier que l'utilisateur est admin et s'il ne l'est pas le rediriger vers la page d'erreur
 
         sql_obj.validate_offer(offre_id, disponible)
         return redirect(url_for("admin", info_msg="L'offre a bien été validée."))
@@ -303,7 +303,7 @@ def validate():
 # Ban (admin)
 @app.route('/ban')
 def ban():
-    # TODO vérifier que l'utilisateur est admin
+    # TODO vérifier que l'utilisateur est admin et s'il ne l'est pas le rediriger vers la page d'erreur
     if request.args.get('user_name'):
         user_name = request.args.get('user_name')
         sql_obj = sql.MysqlObject()
@@ -317,7 +317,7 @@ def ban():
 # CSS
 @app.route('/css')
 def css():
-    # TODO vérifier que l'utilisateur est connecté
+    # TODO vérifier que l'utilisateur est connecté et s'il ne l'est pas le rediriger vers la page de connexion
     sql_obj = sql.MysqlObject()
     user = "Tao Blancheton"
 
