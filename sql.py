@@ -4,6 +4,8 @@ import sys
 
 import mysql.connector
 
+import config
+
 horaires_reference = ["debut_j0", "fin_j0", "debut_j1", "fin_j1", "debut_j2", "fin_j2", "debut_j3", "fin_j3",
                       "debut_j4", "fin_j4", "debut_j5", "fin_j5"]
 offre_par_page = 4
@@ -16,9 +18,8 @@ class MysqlObject:
 
         try:
 
-            # self.conn = mysql.connector.connect(host="172.21.1.203", user="isn", password="0C5PH2iBfMy3l6o3",
-            #                                   database="tutorat")
-            self.conn = mysql.connector.connect(host="127.0.0.1", user="root", password="", database="tutorat")
+            self.conn = mysql.connector.connect(host=config.host, user=config.user, password=config.password,
+                                                database=config.database)
             self.cursor = self.conn.cursor()
 
         except mysql.connector.errors.InterfaceError as e:
