@@ -21,9 +21,9 @@ Mise en page:
 Tables:
 
 - Utilisateurs:
-    - Nom
+    - Nom (PRIMARY)
     - Mot de passe
-    - Email (PRIMARY)
+    - Email
     - Classe
     - Ban (boolean)
     - Admin (boolean)
@@ -45,3 +45,6 @@ Tables:
 
 - Classes:
     - PRONOTE
+    
+- Filieres
+    - Nom(PRIMARY)
