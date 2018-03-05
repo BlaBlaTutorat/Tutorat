@@ -12,7 +12,7 @@ database = "tutorat"
 # password = "0C5PH2iBfMy3l6o3"
 # database = "tutorat"
 
-# Test serveur Tatane
+# Test serveur Tao
 # host = "0.0.0.0"
 # user = "root"
 # password = "password"
