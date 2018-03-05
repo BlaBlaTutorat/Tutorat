@@ -1,9 +1,9 @@
-Projet d'isn de tutorat
+[Projet d'isn de tutorat](http://info.blaisepascal.fr/blabla-tutorat)
 
-Répartition des taches:
- - Tao : CSS + header + footer + administration
+Répartition des tâches:
+ - Tao : CSS + Header + Footer + Administration
  - Marko : Inscription + Connexion
- - Antoine : Recherche + Postage et acceptation des offres + profil
+ - Antoine : Recherche + Création et participation aux Tutorats + Profil
 
 Langages:
 - Python
@@ -12,11 +12,12 @@ Langages:
 - CSS
 
 Mise en page:
-- 1 Page de connexion
-- 1 Page d'inscription
-- 1 Page Recherche
-- 1 Page Poster des offres
-- 1 Page Gestion administrateur
+- 1 Page de Connexion
+- 1 Page d'Inscription
+- 1 Page de Recherche
+- 1 Page pour Poster des offres
+- 1 Page de Gestion Administrateur
+- 1 Page de Profil
     
 Tables:
 
@@ -33,7 +34,7 @@ Tables:
     - Id (PRIMARY)
     - Matière
     - Auteur
-    - Classe
+    - Filiere
     - Date de création
     - Disponible (boolean)
     - Participant
