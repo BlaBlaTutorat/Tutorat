@@ -11,3 +11,9 @@ database = "tutorat"
 # user = "isn"
 # password = "0C5PH2iBfMy3l6o3"
 # database = "tutorat"
+
+# Test au Tatane
+# host = "0.0.0.0"
+# user = "root"
+# password = "password"
+# database = "tutorat"
