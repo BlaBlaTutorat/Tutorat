@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  mer. 28 fév. 2018 à 15:27
+-- Généré le :  Dim 04 mars 2018 à 11:15
 -- Version du serveur :  5.7.19
 -- Version de PHP :  5.6.31
 
@@ -101,6 +101,42 @@ INSERT INTO `classes` (`NUMERO`, `IDENT`, `NOM`, `EFFECTIF`, `NIVEAU`, `NOTATION
 (48, 51, 'TS4', 29, 'TERMINALE', 'Trimestrielle', 'LYCEE BLAISE PASCAL LYCEE BLAISE PASCAL', 'Mme SAINFORT AUDE', 'TERM TOURNADRE', 'Standard', '', '', '', 'Langues étrangères et régionales (Lycée),Langages mathématiques, scientifiques et informatiques (Lycée),COMPETENCES TRANSVERSALES (Lycée)'),
 (49, 52, 'TS5', 35, 'TERMINALE', 'Trimestrielle', 'LYCEE BLAISE PASCAL LYCEE BLAISE PASCAL', 'M. BUISSON PHILIPPE', 'TERM TOURNADRE', 'Standard', '', '', '', 'Langues étrangères et régionales (Lycée),Langages mathématiques, scientifiques et informatiques (Lycée),COMPETENCES TRANSVERSALES (Lycée)'),
 (50, 87, 'UPE2A', 13, 'Non désigné', 'Trimestrielle', 'LYCEE BLAISE PASCAL LYCEE BLAISE PASCAL', '', 'Sans Notes', 'Standard', '', '', '', '');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `filieres`
+--
+
+DROP TABLE IF EXISTS `filieres`;
+CREATE TABLE IF NOT EXISTS `filieres` (
+  `nom` varchar(50) NOT NULL,
+  PRIMARY KEY (`nom`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `filieres`
+--
+
+INSERT INTO `filieres` (`nom`) VALUES
+('CPGE ECE'),
+('CPGE ECS'),
+('CPGE HK'),
+('CPGE KH'),
+('CPGE MP'),
+('CPGE MP*'),
+('CPGE MPSI'),
+('CPGE PC'),
+('CPGE PC*'),
+('CPGE PCSI'),
+('CPGE PSI'),
+('Première ES'),
+('Première L'),
+('Première S'),
+('Seconde'),
+('Terminale ES'),
+('Terminale L'),
+('Terminale S');
 
 -- --------------------------------------------------------
 
@@ -443,7 +479,7 @@ DROP TABLE IF EXISTS `offres`;
 CREATE TABLE IF NOT EXISTS `offres` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `auteur` varchar(50) NOT NULL,
-  `classe` varchar(30) NOT NULL,
+  `filiere` varchar(30) NOT NULL,
   `matiere` varchar(30) NOT NULL,
   `date_time` datetime NOT NULL COMMENT 'date de la demande',
   `participant` varchar(50) DEFAULT NULL,
@@ -462,19 +498,19 @@ CREATE TABLE IF NOT EXISTS `offres` (
   `debut_j5` time DEFAULT NULL,
   `fin_j5` time DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `offres`
 --
 
-INSERT INTO `offres` (`id`, `auteur`, `classe`, `matiere`, `date_time`, `participant`, `participant2`, `disponible`, `debut_j0`, `fin_j0`, `debut_j1`, `fin_j1`, `debut_j2`, `fin_j2`, `debut_j3`, `fin_j3`, `debut_j4`, `fin_j4`, `debut_j5`, `fin_j5`) VALUES
-(1, 'Marco Desmoulins', 'TS5', 'MATHEMATIQUES', '2018-02-22 00:00:00', NULL, NULL, 1, '08:00:00', '09:00:00', '16:00:00', '17:00:00', '14:00:00', '16:00:00', NULL, NULL, NULL, NULL, NULL, NULL),
-(2, 'Tao Blancheton', 'TS5', 'ISN', '2018-02-19 14:15:41', NULL, NULL, 1, '15:00:00', '16:00:00', NULL, NULL, NULL, NULL, '09:00:00', '10:00:00', NULL, NULL, '08:00:00', '09:00:00'),
-(3, 'Antoine Labarussias', 'S', 'S.I. COURS', '2018-02-22 00:00:00', NULL, NULL, 1, '13:00:00', '14:00:00', '17:00:00', '18:00:00', NULL, NULL, '14:00:00', '15:00:00', NULL, NULL, '08:00:00', '09:00:00'),
-(4, 'Jean Kévin', '2G09', 'FRANCAIS', '2018-02-22 00:00:00', NULL, NULL, 1, '08:00:00', '10:00:00', '11:00:00', '13:00:00', NULL, NULL, '15:00:00', '16:00:00', NULL, NULL, '08:00:00', '09:00:00'),
-(5, 'Alexis Ducont', 'TS2', 'ISN', '2018-02-19 14:15:41', NULL, NULL, 1, '10:00:00', '11:00:00', NULL, NULL, NULL, NULL, '08:00:00', '09:00:00', NULL, NULL, NULL, NULL),
-(6, 'Lola Blachard', '1S5', 'S.I. COURS', '2018-02-22 00:00:00', NULL, NULL, 1, '15:00:00', '16:00:00', NULL, NULL, '17:00:00', '18:00:00', '10:00:00', '11:00:00', NULL, NULL, '09:00:00', '10:00:00');
+INSERT INTO `offres` (`id`, `auteur`, `filiere`, `matiere`, `date_time`, `participant`, `participant2`, `disponible`, `debut_j0`, `fin_j0`, `debut_j1`, `fin_j1`, `debut_j2`, `fin_j2`, `debut_j3`, `fin_j3`, `debut_j4`, `fin_j4`, `debut_j5`, `fin_j5`) VALUES
+(1, 'Marco Desmoulins', 'Terminale S', 'MATHEMATIQUES', '2018-02-22 00:00:00', NULL, NULL, 1, '08:00:00', '09:00:00', '16:00:00', '17:00:00', '14:00:00', '16:00:00', NULL, NULL, NULL, NULL, NULL, NULL),
+(2, 'Tao Blancheton', 'Terminale S', 'ISN', '2018-02-19 14:15:41', NULL, NULL, 1, '15:00:00', '16:00:00', NULL, NULL, NULL, NULL, '09:00:00', '10:00:00', NULL, NULL, '08:00:00', '09:00:00'),
+(3, 'Antoine Labarussias', 'Terminale S', 'S.I. COURS', '2018-02-22 00:00:00', NULL, NULL, 1, '13:00:00', '14:00:00', '17:00:00', '18:00:00', NULL, NULL, '14:00:00', '15:00:00', NULL, NULL, '08:00:00', '09:00:00'),
+(4, 'Jean Kévin', 'Seconde', 'FRANCAIS', '2018-02-22 00:00:00', NULL, NULL, 1, '08:00:00', '10:00:00', '11:00:00', '13:00:00', NULL, NULL, '15:00:00', '16:00:00', NULL, NULL, '08:00:00', '09:00:00'),
+(5, 'Alexis Ducont', 'Terminale S', 'ISN', '2018-02-19 14:15:41', NULL, NULL, 1, '10:00:00', '11:00:00', NULL, NULL, NULL, NULL, '08:00:00', '09:00:00', NULL, NULL, NULL, NULL),
+(6, 'Lola Blachard', 'Première S', 'S.I. COURS', '2018-02-22 00:00:00', NULL, NULL, 1, '15:00:00', '16:00:00', NULL, NULL, '17:00:00', '18:00:00', '10:00:00', '11:00:00', NULL, NULL, '09:00:00', '10:00:00');
 
 -- --------------------------------------------------------
 

@@ -18,17 +18,17 @@
     <select class="tri" name="option" onchange="this.form.submit()">
         <option value="" disabled {% if not option %}selected{% endif %}>- Trier par -</option>
         <option value="date_time" {% if option == "date_time" %}selected{% endif %}>Date croissante</option>
-        <option value="classe" {% if option == "classe" %}selected{% endif %}>Classe</option>
+        <option value="filiere" {% if option == "filiere" %}selected{% endif %}>Filière</option>
         <option value="matiere" {% if option == "matiere" %}selected{% endif %}>Matière</option>
     </select>
 
-    {% if option == "classe" or option == "matiere" %}
+    {% if option == "classe" or option == "filiere" %}
         <!-- Paramètre de tri 2 -->
         <select class="tri" name="option2" onchange="this.form.submit()">
             <option value="" disabled selected>- Trier par -</option>
-            {% if option == "classe" %}
-                {% for classe in classes %}
-                    <option {% if option2 == classe %}selected{% endif %}>{{ classe }}</option>
+            {% if option == "filiere" %}
+                {% for filiere in filieres %}
+                    <option {% if option2 == filiere %}selected{% endif %}>{{ filiere }}</option>
                 {% endfor %}
             {% elif option == "matiere" %}
                 {% for matiere in matieres %}

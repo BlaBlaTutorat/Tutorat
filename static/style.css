@@ -504,6 +504,16 @@ footer .copyright li {
 /* Fin MDP ouvlié */
 
 /* Erreur */
+.erreur {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 560px;
+    width: 980px;
+    background-image: url("/static/error.png/");
+}
+    
 .error {
     margin: auto;
     margin-top: 50px;

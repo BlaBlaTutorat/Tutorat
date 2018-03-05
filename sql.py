@@ -1,7 +1,10 @@
+# coding: utf-8
 import datetime
 import sys
 
 import mysql.connector
+
+import config
 
 horaires_reference = ["debut_j0", "fin_j0", "debut_j1", "fin_j1", "debut_j2", "fin_j2", "debut_j3", "fin_j3",
                       "debut_j4", "fin_j4", "debut_j5", "fin_j5"]
@@ -15,9 +18,8 @@ class MysqlObject:
 
         try:
 
-            # self.conn = mysql.connector.connect(host="172.21.1.203", user="isn", password="0C5PH2iBfMy3l6o3",
-            #                                   database="tutorat")
-            self.conn = mysql.connector.connect(host="127.0.0.1", user="root", password="", database="tutorat")
+            self.conn = mysql.connector.connect(host=config.host, user=config.user, password=config.password,
+                                                database=config.database)
             self.cursor = self.conn.cursor()
 
         except mysql.connector.errors.InterfaceError as e:
@@ -43,12 +45,21 @@ class MysqlObject:
             matieres.append(row[2])
         return matieres
 
+    # Liste des filières
+    def filieres_liste(self):
+        filieres = []
+        self.cursor.execute("""SELECT * FROM filieres""")
+        rows = self.cursor.fetchall()
+        for row in rows:
+            filieres.append(row[0])
+        return filieres
+
     # Création d"une offre
     def create_offre(self, author, classe, matiere, horaires):
         date_time = datetime.datetime.now()
         date_time = date_time.strftime("%Y-%m-%d %H:%M:%S")
         self.cursor.execute(
-            """INSERT INTO offres (auteur, classe, matiere, date_time) VALUES (%s, %s, %s, %s)""",
+            """INSERT INTO offres (auteur, filiere, matiere, date_time) VALUES (%s, %s, %s, %s)""",
             (author, classe, matiere, date_time))
 
         i = 0

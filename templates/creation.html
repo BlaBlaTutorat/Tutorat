@@ -22,10 +22,10 @@
                 <input type="hidden" name="auteur" value="{{ user }}">
                 <!-- Elève -->
                 <p class="element"><strong class="G">Vous voulez aider un élève de : </strong>
-                    <SELECT name="classe" class="tri3" required>
-                        <option value="" disabled selected>- Classe -</option>
-                        {% for classe in classes %}
-                            <option>{{ classe }}</option>
+                    <SELECT name="filiere" class="tri3" required>
+                        <option value="" disabled selected>- Filiere -</option>
+                        {% for filiere in filieres %}
+                            <option>{{ filiere }}</option>
                         {% endfor %}
                     </SELECT>
                 <!-- Matière -->
