@@ -21,13 +21,14 @@ textarea {
 html 
 {
     height: 98%;
+
 }
 
 body 
 {
-    background: rgb(24,24,24);
     min-height: 100%;
     margin: 10px 5px 10px 5px;
+    background: rgb(24,24,24);
 }
 
 .password 
@@ -505,7 +506,7 @@ footer .copyright li {
 .error p {
     text-align: center;
     color: #615a5f;
-    font-size: 3em;
+    font-size: 2.5em;
     font-family: sans-serif;
     font-weight: bold;
     margin-bottom: 0;
