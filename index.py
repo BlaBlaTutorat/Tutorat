@@ -142,19 +142,20 @@ def recherche():
         # Formulaire de tri première étape
 
         option = request.form.get("option")
-        return render_template("recherche.html", offres=sql_obj.offres_liste_tri(option, page), days=days, **locals())
+        return render_template("recherche.html", offres=sql_obj.offres_liste_tri(option, page, user), days=days,
+                               **locals())
 
     elif request.form.get("option") and request.form.get("option2"):
         # Formulaire de tri deuxième étape
 
         option = request.form.get("option")
         option2 = request.form.get("option2")
-        return render_template("recherche.html", offres=sql_obj.offres_liste_tri_2(option, option2, page), days=days,
-                               **locals())
+        return render_template("recherche.html", offres=sql_obj.offres_liste_tri_2(option, option2, page, user),
+                               days=days, **locals())
 
     else:
         # Aucune option de tri sélectionnée
-        return render_template("recherche.html", offres=sql_obj.offres_liste(page), days=days, **locals())
+        return render_template("recherche.html", offres=sql_obj.offres_liste(page, user), days=days, **locals())
 
 
 # Affichage du formulaire de création d'une offre

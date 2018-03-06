@@ -32,6 +32,7 @@ class MysqlObject:
         classes = []
         self.cursor.execute("""SELECT * FROM classes ORDER BY NUMERO""")
         rows = self.cursor.fetchall()
+        # On ne retourne que le nom
         for row in rows:
             classes.append(row[2])
         return classes
@@ -41,6 +42,7 @@ class MysqlObject:
         matieres = []
         self.cursor.execute("""SELECT * FROM matieres""")
         rows = self.cursor.fetchall()
+        # On ne retourne que le nom
         for row in rows:
             matieres.append(row[2])
         return matieres
@@ -50,6 +52,7 @@ class MysqlObject:
         filieres = []
         self.cursor.execute("""SELECT * FROM filieres""")
         rows = self.cursor.fetchall()
+        # On ne retourne que le nom
         for row in rows:
             filieres.append(row[0])
         return filieres
@@ -88,27 +91,59 @@ class MysqlObject:
         return self.cursor.fetchall()
 
     # Listes des offres
-    def offres_liste(self, page):
+    def offres_liste(self, page, user):
+        classe = self.get_user_info(user)[3]
+        offres = []
         self.cursor.execute(
             """SELECT * FROM offres WHERE disponible=1 AND (participant IS NULL OR participant2 IS NULL) LIMIT """ +
             str(offre_par_page) + """ OFFSET """ + str(page * offre_par_page))
-        return self.cursor.fetchall()
+
+        rows = self.cursor.fetchall()
+        # Tri des offres pour ne garder que celles où la classe du 1er participant est identique à celle de user
+        for row in rows:
+            if row[5] is None:
+                offres.append(row)
+            else:
+                if classe == self.get_user_info(row[5])[3]:
+                    offres.append(row)
+        return offres
 
     # Liste des offres selon 1 facteur de tri
-    def offres_liste_tri(self, option, page):
+    def offres_liste_tri(self, option, page, user):
+        classe = self.get_user_info(user)[3]
+        offres = []
         self.cursor.execute(
             """SELECT * FROM offres WHERE disponible=1 ORDER BY """ + option + """ LIMIT """ +
             str(offre_par_page) + """ OFFSET """ + str(page * offre_par_page))
-        return self.cursor.fetchall()
+
+        rows = self.cursor.fetchall()
+        # Tri des offres pour ne garder que celles où la classe du 1er participant est identique à celle de user
+        for row in rows:
+            if row[5] is None:
+                offres.append(row)
+            else:
+                if classe == self.get_user_info(row[5])[3]:
+                    offres.append(row)
+        return offres
 
     # Liste des offres selon 1 facteur de tri + 1 niveau/matiere
-    def offres_liste_tri_2(self, option, option2, page):
+    def offres_liste_tri_2(self, option, option2, page, user):
+        classe = self.get_user_info(user)[3]
+        offres = []
         self.cursor.execute(
             """SELECT * FROM offres WHERE disponible=1 AND (participant IS NULL OR participant2 IS NULL)
              AND """ + option + """ = '""" + option2 + """' LIMIT """ + str(offre_par_page) + """ OFFSET """ + str(
                 page * offre_par_page))
 
-        return self.cursor.fetchall()
+        rows = self.cursor.fetchall()
+        # Tri des offres pour ne garder que celles où la classe du 1er participant est identique à celle de user
+        for row in rows:
+            if row[5] is None:
+                offres.append(row)
+            else:
+                if classe == self.get_user_info(row[5])[3]:
+                    offres.append(row)
+        return offres
 
     # Récupération des infos utilisateurs pour page de profil
     def get_user_info(self, user_name):
