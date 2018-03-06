@@ -50,7 +50,7 @@
                             <p class="element"><strong class="G">Matière:</strong> {{ offre[3] }}</p>
                             <p class="element"><strong class="G">Participants:</strong>
                                 {% if offre[5] is none and offre[6] is none %}
-                                    Personne
+                                    Aucun
                                 {% else %}
                                     {% if offre[5] is not none %}{{ offre[5] }}{% endif %}{% if offre[6] is not none %},
                                         {{ offre[6] }}{% endif %}
@@ -109,7 +109,7 @@
                             <p class="element"><strong class="G">Matière:</strong> {{ tutorat[3] }}</p>
                             <p class="element"><strong class="G">Participants:</strong>
                                 {% if tutorat[5] is none and tutorat[6] is none %}
-                                    Personne
+                                    Aucun
                                 {% else %}
                                     {% if tutorat[5] is not none %}{{ tutorat[5] }}{% endif %}
                                     {% if tutorat[6] is not none %}, {{ tutorat[6] }}{% endif %}

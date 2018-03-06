@@ -64,6 +64,13 @@
                     <p class="element"><strong class="G">Auteur:</strong> {{ offre[1] }}</p>
                     <p class="element"><strong class="G">Classe:</strong> {{ offre[2] }}</p>
                     <p class="element"><strong class="G">Matière:</strong> {{ offre[3] }}</p>
+                    <p class="element"><strong class="G">Participants:</strong>
+                        {% if offre[5] is none%}
+                            Aucun
+                        {% else %}
+                            {{ offre[5] }}
+                        {% endif %}
+                    </p>
                     <form class="bouton" method="post" action="/apply">
                         <input type="hidden" name="id" value="{{ offre[0] }}"/>
                         <input type="submit" value="Accepter l'offre"/>
