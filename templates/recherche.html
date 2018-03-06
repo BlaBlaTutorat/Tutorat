@@ -1,12 +1,8 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8"/>
-    <title>Liste des offres</title>
-    {% if css_state %}<link rel=stylesheet type=text/css href="/static/style.css">
-    {% else %}<link rel=stylesheet type=text/css href="/static/style_claire.css">{% endif %}
-    <link rel="icon" type="image/png" href="/static/favicon.png"/>
-</head>
+
+{% with name="Liste des offres" %}{% include "HEAD.html" %}{% endwith %}
+
 <body>
 
 {% include 'HEADER.html' %}
@@ -15,7 +11,8 @@
 <form class="search" method="post" action="/search">
 
     <!-- Rechargement de la page lors du changement de la méthode de tri -->
-    <select class="tri" name="option" onchange="if(document.getElementById('option2')!=null){document.getElementById('option2').selectedIndex = -1}this.form.submit()">
+    <select class="tri" name="option"
+            onchange="if(document.getElementById('option2')!=null){document.getElementById('option2').selectedIndex = -1}this.form.submit()">
         <option value="" disabled {% if not option %}selected{% endif %}>- Trier par -</option>
         <option value="date_time" {% if option == "date_time" %}selected{% endif %}>Date croissante</option>
         <option value="filiere" {% if option == "filiere" %}selected{% endif %}>Filière</option>

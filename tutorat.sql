@@ -481,7 +481,7 @@ CREATE TABLE IF NOT EXISTS `offres` (
   `auteur` varchar(50) NOT NULL,
   `filiere` varchar(30) NOT NULL,
   `matiere` varchar(30) NOT NULL,
-  `date_time` datetime NOT NULL COMMENT 'date de la demande',
+  `date_time` datetime NOT NULL,
   `participant` varchar(50) DEFAULT NULL,
   `participant2` varchar(50) DEFAULT NULL,
   `disponible` tinyint(1) NOT NULL DEFAULT '0',

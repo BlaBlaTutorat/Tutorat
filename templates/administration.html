@@ -1,12 +1,8 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8"/>
-    <title>Administration</title>
-    {% if css_state %}<link rel=stylesheet type=text/css href="/static/style.css">
-    {% else %}<link rel=stylesheet type=text/css href="/static/style_claire.css">{% endif %}
-    <link rel="icon" type="image/png" href="/static/favicon.png"/>
-</head>
+
+{% with name="Administration" %}{% include "HEAD.html" %}{% endwith %}
+
 <body>
 
 {% include 'HEADER.html' %}
@@ -25,11 +21,11 @@
             {% for user in user_list %}
                 <div class="bloc_profil" id="user_admin">
                     <div class="info_profil">
-                            <p><strong class="G">Nom:</strong></p>
-                            <p><strong class="G">Mail:</strong></p>
-                            <p><strong class="G">Classe:</strong></p>
-                            <p><strong class="G">Admin:</strong></p>
-                            <p><strong class="G">Ban:</strong></p>
+                        <p><strong class="G">Nom:</strong></p>
+                        <p><strong class="G">Mail:</strong></p>
+                        <p><strong class="G">Classe:</strong></p>
+                        <p><strong class="G">Admin:</strong></p>
+                        <p><strong class="G">Ban:</strong></p>
                     </div>
                     <div class="info_profil">
                         <p>{{ user[0] }}</p>
@@ -47,9 +43,13 @@
                         {% endif %}
                     </div>
                     {% if user[5]==1 %}
-                        <a href="/ban?user_name={{ user[0] }}" class="ban"><button>Débannir</button></a>
+                        <a href="/ban?user_name={{ user[0] }}" class="ban">
+                            <button>Débannir</button>
+                        </a>
                     {% else %}
-                        <a href="/ban?user_name={{ user[0] }}" class="ban"><button>Bannir</button></a>
+                        <a href="/ban?user_name={{ user[0] }}" class="ban">
+                            <button>Bannir</button>
+                        </a>
                     {% endif %}
                 </div>
             {% endfor %}
@@ -74,20 +74,23 @@
                         <div id="horaires">
                             <div class="horaire">
                                 <div class="table">
-                                    {% for i in range(0,12,2) %}{% if offre[8+i] is not none and offre[9+i] is not none %}
-                                        <p>{{ days[i//2] }}:</p>
-                                    {% endif %}{% endfor %}
+                                    {% for i in range(0,12,2) %}
+                                        {% if offre[8+i] is not none and offre[9+i] is not none %}
+                                            <p>{{ days[i//2] }}:</p>
+                                        {% endif %}{% endfor %}
                                 </div>
                                 <div class="table" id="table_horaires">
-                                    {% for i in range(0,12,2) %}{% if offre[8+i] is not none and offre[9+i] is not none %}
-                                        <p>{{ 'h'.join((offre[8+i]|string).split(':')[:2]) }}
+                                    {% for i in range(0,12,2) %}
+                                        {% if offre[8+i] is not none and offre[9+i] is not none %}
+                                            <p>{{ 'h'.join((offre[8+i]|string).split(':')[:2]) }}
                                                 - {{ 'h'.join((offre[9+i]|string).split(':')[:2]) }}</p>
-                                    {% endif %}{% endfor %}
+                                        {% endif %}{% endfor %}
                                 </div>
                             </div>
                         </div>
                         <div class="date">
-                            <p class="time"><strong class="G">Publié le:</strong> {{ offre[4].strftime('%d-%m-%Y') }}</p>
+                            <p class="time"><strong class="G">Publié le:</strong> {{ offre[4].strftime('%d-%m-%Y') }}
+                            </p>
                             <p class="supr_offre" id="invalider_offre"><a href="/delete2?id={{ offre[0] }}">
                                 <button>Suprimer l'offre</button>
                             </a></p>
@@ -136,7 +139,7 @@
                                     {% for i in range(0,12,2) %}
                                         {% if tutorat[8+i] is not none and tutorat[9+i] is not none %}
                                             <p>{{ 'h'.join((tutorat[8+i]|string).split(':')[:2]) }}
-                                                    - {{ 'h'.join((tutorat[9+i]|string).split(':')[:2]) }}</p>
+                                                - {{ 'h'.join((tutorat[9+i]|string).split(':')[:2]) }}</p>
                                         {% endif %}
                                     {% endfor %}
                                 </div>

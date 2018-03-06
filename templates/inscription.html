@@ -1,14 +1,7 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8"/>
-    <title>Inscription</title>
-    {% if css_state %}
-        <link rel=stylesheet type=text/css href="/static/style.css">
-    {% else %}
-        <link rel=stylesheet type=text/css href="/static/style_claire.css">{% endif %}
-    <link rel="icon" type="image/png" href="/static/favicon.png"/>
-</head>
+
+{% with name="Inscription" %}{% include "HEAD.html" %}{% endwith %}
 
 <body>
 
