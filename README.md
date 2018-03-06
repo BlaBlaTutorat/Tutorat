@@ -18,7 +18,6 @@
       - Page Création (HTML, SQL, Python)
       - Page Profil (HTML, SQL, Python)
       - Page MAJ Profil (HTML, SQL, Python)
-      - Gestion tutorats : qui y participe (SQL)
 
 
 #### Langages:
