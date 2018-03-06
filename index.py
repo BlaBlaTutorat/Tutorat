@@ -237,6 +237,11 @@ def enregistrement():
     elif result_code == 3:
         # Erreur l'utilisateur veut participer à une offre qu'il a créée
         return render_template("error.html", message="Erreur - Vous êtes l'auteur de ce tutorat", **locals())
+    elif result_code == 4:
+        # Erreur l'utilisateur n'est pas dans la même classe que le premier participant
+        return render_template("error.html",
+                               message="Erreur - Vous n'appartenez pas à la même classe que le premier participant",
+                               **locals())
 
 
 # Suppression de la participation d'un utilisateur à une offre

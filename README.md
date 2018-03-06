@@ -11,7 +11,7 @@
  - Marko : 
       - Page Inscription (HTML, SQL, Python)
       - Page Connexion (HTML, SQL, Python)
-      - Gestion utilisateurs : savoir qui est connecté (?)
+      - Gestion utilisateurs : savoir qui est connecté (SQL, Python)
       
  - Antoine : 
       - Page Recherche (HTML, SQL, Python)

@@ -133,11 +133,16 @@ class MysqlObject:
                 return 0
             elif check_availability(offre) == 1:
                 # Update de la deuxième colonne + check si l'utilisateur n'est pas déjà participant à cette offre
-                if offre[6] != participant:
-                    self.cursor.execute("""UPDATE offres SET participant2 = %s WHERE id = %s """,
-                                        (participant, offre_id))
-                    self.conn.commit()
-                    return 0
+                if offre[5] != participant:
+                    # Check si l'utilisateur est dans la même classe que le premier
+                    if self.get_user_info(participant)[3] == self.get_user_info(offre[5])[3]:
+                        self.cursor.execute("""UPDATE offres SET participant2 = %s WHERE id = %s """,
+                                            (participant, offre_id))
+                        self.conn.commit()
+                        return 0
+                    else:
+                        # Erreur l'utilisateur n'est pas dans la même classe que le premier
+                        return 4
                 else:
                     # Erreur l'utilisateur participe déjà à ce tutorat
                     return 1
