@@ -16,9 +16,9 @@
  - Antoine : 
       - Page Recherche (HTML, SQL, Python)
       - Page Création (HTML, SQL, Python)
-      - Gestion tutorats : qui y participe (SQL)
       - Page Profil (HTML, SQL, Python)
       - Page MAJ Profil (HTML, SQL, Python)
+      - Gestion tutorats : qui y participe (SQL)
 
 
 #### Langages:
