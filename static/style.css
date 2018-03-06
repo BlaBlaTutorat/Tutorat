@@ -300,7 +300,7 @@ footer .copyright li {
     flex-direction: row;
     font-size: 1em;
     font-family: Dayrom, serif;
-    color: #615a5f;
+    color: rgb(135,135,135);
 }
 
 .pages a {
