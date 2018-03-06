@@ -35,6 +35,7 @@
 - 1 Page pour Poster des offres
 - 1 Page de Gestion Administrateur
 - 1 Page de Profil
+- 1 Page de MAJ Profil
     
     
 #### Tables:
