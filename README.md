@@ -1,25 +1,5 @@
 ## [Projet d'ISN de tutorat](http://info.blaisepascal.fr/blabla-tutorat)
 
-#### Répartition des tâches:
- - Tao :
-      - Thème claire (CSS)
-      - Thème foncé (CSS)
-      - Header (HTML)
-      - Footer (HTML)
-      - Page Administration (HTML, SQL, Python)
-      - Structure des pages du site (HTML)
-      
- - Marko : 
-      - Page Inscription (HTML, SQL, Python)
-      - Page Connexion (HTML, SQL, Python)
-      - Gestion utilisateurs : savoir qui est connecté (SQL, Python)
-      
- - Antoine : 
-      - Page Recherche (HTML, SQL, Python)
-      - Page Création (HTML, SQL, Python)
-      - Page Profil (HTML, SQL, Python)
-      - Page MAJ Profil (HTML, SQL, Python)
-      - Gestion tutorats (SQL, Python)
 
 
 #### Langages:
