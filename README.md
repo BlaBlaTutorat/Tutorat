@@ -7,6 +7,7 @@
       - Header (HTML)
       - Footer (HTML)
       - Page Administration (HTML, SQL, Python)
+      - Structure des pages du site (HTML)
       
  - Marko : 
       - Page Inscription (HTML, SQL, Python)
@@ -18,6 +19,7 @@
       - Page Création (HTML, SQL, Python)
       - Page Profil (HTML, SQL, Python)
       - Page MAJ Profil (HTML, SQL, Python)
+      - Gestion tutorats (SQL, Python)
 
 
 #### Langages:
