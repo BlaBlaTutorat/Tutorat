@@ -842,6 +842,7 @@ footer .copyright li {
 .ban {
     margin-top: 220px;
     margin-bottom: 0;
+    width: 10%;
 }
 
 @media screen and (max-width: 1430px) {
