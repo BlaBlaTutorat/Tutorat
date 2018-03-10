@@ -20,14 +20,14 @@
         {% if user_list|length>0 %}
             {% for user in user_list %}
                 <div class="bloc_profil" id="user_admin">
-                    <div class="info_profil">
+                    <div class="info_profil" id="informations">
                         <p><strong class="G">Nom:</strong></p>
                         <p><strong class="G">Mail:</strong></p>
                         <p><strong class="G">Classe:</strong></p>
                         <p><strong class="G">Admin:</strong></p>
                         <p><strong class="G">Ban:</strong></p>
                     </div>
-                    <div class="info_profil">
+                    <div class="info_profil" id="informations2">
                         <p>{{ user[0] }}</p>
                         <p>{{ user[2] }}</p>
                         <p>{{ user[3] }}</p>

@@ -793,6 +793,14 @@ footer .copyright li {
 /* Fin Création */
 
 /* Administration */
+#informations {
+    width: 30%;
+}
+
+#informations2 {
+    width: 60%;
+}
+
 #invalider_offre {
     margin-top: 55px;
 }
@@ -829,7 +837,7 @@ footer .copyright li {
     flex-direction: row;
     justify-content: space-between;
     padding: 5px 10px 5px 10px;
-    width: 550px;
+    width: 600px;
     margin-bottom: 20px;
     margin-top: 0;
     line-height: 15px;
@@ -839,6 +847,7 @@ footer .copyright li {
 .ban {
     margin-top: 220px;
     margin-bottom: 0;
+    width: 10%;
 }
 
 @media screen and (max-width: 1430px) {
@@ -878,7 +887,7 @@ footer .copyright li {
         flex-direction: row;
         justify-content: space-between;
         padding: 5px 10px 5px 10px;
-        width: 550px;
+        width: 600px;
         margin-bottom: 20px;
         margin-top: 0;
         line-height: 15px;
