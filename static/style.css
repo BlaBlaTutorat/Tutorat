@@ -237,8 +237,8 @@ footer .copyright li {
     justify-content: space-between;
     padding: 5px 10px 5px 10px;
     width: 700px;
-    margin: 2px 150px;
-    margin-bottom: 0;
+    margin: auto;
+    margin-bottom: 20px;
 }
 
 .offres .element {
@@ -535,13 +535,14 @@ footer .copyright li {
     justify-content: space-between;
     padding: 5px 10px 5px 10px;
     width: 550px;
+    margin-top: 20px;
 }
 
 .bloc_profil {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin: 20px 150px auto auto;
+    margin: 0 100px auto auto;
     align-items: center;
 }
 
@@ -584,6 +585,7 @@ footer .copyright li {
 
 #none_offre {
     margin-bottom: 20px;
+    margin-top: 20px;
 }
 
 .supr_offre {
@@ -591,74 +593,18 @@ footer .copyright li {
     margin-bottom: 0;
 }
 
+#info_profil {
+    margin: 20px 0 0 0;
+}
+
 @media screen and (max-width: 1430px) {
-    .profil {
-        font-family: sans-serif;
-        font-size: 1em;
-        background: rgb(34,34,34);
-        border-radius: 10px;
-        border: 2px solid #615a5f;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        padding: 5px 10px 5px 10px;
-        width: 550px;
+    .bloc_page_profil {
+        flex-direction: column;
+        justify-content: center;
     }
 
     .bloc_profil {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        margin: 100px auto auto;
-        align-items: center;
-    }
-
-    #info_profil {
-        margin-bottom: 0;
-    }
-
-    .info_profil {
-        color: #615a5f;
-        font-size: 1.5em;
-    }
-
-    .page_profil .offres {
-        margin-top: 100px;
-    }
-
-    #tutorat_en_cours {
-        margin-top: 20px;
-    }
-
-    .bloc_page_profil {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    .page_profil {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    #none_offre, .none_offre {
-        text-align: center;
-        font-family: sans-serif;
-        color: #615a5f;
-        font-size: 1em;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    #none_offre {
-        margin-bottom: 20px;
-    }
-
-    .supr_offre {
-        margin-top: 135px;
-        margin-bottom: 0;
+        margin: auto;
     }
 }
 /* Fin Profil */
@@ -817,15 +763,11 @@ footer .copyright li {
     justify-content: space-around;
 }
 
-#admin1 {
-    margin-right: 100px;
-}
-
 .admin {
-    margin: auto;
+    margin: 20px 0 0 0;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 #user_admin {
@@ -839,7 +781,7 @@ footer .copyright li {
     padding: 5px 10px 5px 10px;
     width: 600px;
     margin-bottom: 20px;
-    margin-top: 0;
+    margin-top: 20px;
     line-height: 15px;
     margin-right: 0;
 }
@@ -850,56 +792,18 @@ footer .copyright li {
     width: 10%;
 }
 
+#admin1 {
+    margin: 20px 100px 0 0;
+}
+
 @media screen and (max-width: 1430px) {
-    .info_profil {
-    color: rgb(135,135,135);
-    font-size: 1.5em;
-    }
-
-    #invalider_offre {
-        margin-top: 55px;
-    }
-
-    #valider_offre {
-        margin: 0 0 0 0;
-        width: 100%;
-    }
-
     .bloc_admin {
-        display: flex;
-        flex-direction: column-reverse;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .admin {
-        display: flex;
         flex-direction: column;
         justify-content: center;
     }
 
-    #user_admin {
-        font-family: sans-serif;
-        background: rgb(34,34,34);
-        border-radius: 10px;
-        border: 2px solid #615a5f;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        padding: 5px 10px 5px 10px;
-        width: 600px;
-        margin-bottom: 20px;
-        margin-top: 0;
-        line-height: 15px;
-    }
-
     #admin1 {
         margin: auto;
-    }
-
-    .ban {
-        margin-top: 220px;
-        margin-bottom: 0;
     }
 }
 /* Fin Administration */
