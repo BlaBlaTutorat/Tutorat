@@ -237,8 +237,7 @@ footer .copyright li {
     justify-content: space-between;
     padding: 5px 10px 5px 10px;
     width: 700px;
-    margin: auto;
-    margin-bottom: 20px;
+    margin: auto auto 20px auto;
 }
 
 .offres .element {
