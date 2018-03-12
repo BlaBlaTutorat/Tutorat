@@ -542,7 +542,7 @@ footer .copyright li {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin: 0 100px auto auto;
+    margin: 0 50px auto auto;
     align-items: center;
 }
 
@@ -793,7 +793,7 @@ footer .copyright li {
 }
 
 #admin1 {
-    margin: 20px 100px 0 0;
+    margin: 20px 50px 0 0;
 }
 
 @media screen and (max-width: 1430px) {
