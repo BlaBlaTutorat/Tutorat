@@ -152,10 +152,11 @@ class MysqlObject:
         
     # Vérification que l'utilisateur est connecté
     def get_connect(self, user_name):
-        if self.cursor.execute("""SELECT mdp, mail FROM users WHERE nom=%s""", (user_name,)) == True:
-            return self.cursor.fetchall()[0]
-        else:
-            print("La connexion a échoué, veuillez vérifier votre saisie puis réessayer")
+        self.cursor.execute("""SELECT mdp, mail FROM users WHERE nom=%s""", (user_name,))
+            user = self.cursor.fetchall()[0]
+            if len(user) != 0:
+                
+     print("La connexion a échoué, veuillez vérifier votre saisie puis réessayer")
 
     # Récupération et cryptage du mot de passe des utilisateurs
     def get_crypt_mdp(self, user_name):
