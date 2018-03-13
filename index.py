@@ -17,7 +17,7 @@ def index():
 
     else:
         # Redirection si l'utilisateur n'est pas connecté
-        return redirect(url_for('connexion'))
+        return redirect(url_for('login'))
 
 
 # Page de connexion
@@ -51,10 +51,12 @@ def inscription():
         return redirect(url_for("recherche"))
 
 
-# Chiffrement du mdp
+
 @app.route('/register', methods=['POST'])
 def traitement_inscription():
     sql_obj = sql.MysqlObject()
+    
+    # Chiffrement du mdp
     chaine_mot_de_passe = request.form.get('mdp')
     mot_de_passe_chiffre = hashlib.sha1(chaine_mot_de_passe).hexdigest()
 
