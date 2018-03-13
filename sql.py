@@ -1,7 +1,7 @@
 # coding: utf-8
 import datetime
 import sys
-
+from flask import Flask, session, redirect, url_for, escape, request
 import mysql.connector
 
 import config
@@ -149,6 +149,15 @@ class MysqlObject:
     def get_user_info(self, user_name):
         self.cursor.execute("""SELECT * FROM users WHERE nom=%s""", (user_name,))
         return self.cursor.fetchall()[0]
+        
+    # Récupération des infos utilisateurs si existantes
+    def get_info_exist(self, user_name):
+        try:
+            self.cursor.execute("""SELECT mdp, mail FROM users WHERE nom=%s""", (user_name,))
+        
+            return self.cursor.fetchall()[0]
+        except NameError:
+            print("vérifiez votre saisie et réessayez")
 
     # Récupération et cryptage du mot de passe des utilisateurs
     def get_crypt_mdp(self, user_name):
