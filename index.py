@@ -17,7 +17,7 @@ def index():
 
     else:
         # Redirection si l'utilisateur n'est pas connecté
-        return redirect(url_for('login'))
+        return redirect(url_for('connexion'))
 
 
 # Page de connexion

@@ -8,25 +8,33 @@
 {% include 'HEADER.html' %}
 
 <h2 class="log">Connectez vous :</h2>
+
 <div class="bloc_connexion">
-    <div class="connexion">
-        <div class="champs">
-            <p class="login">Identifiant ou adresse e-mail :</p>
-            <p><input value="mail" name="mail"/></p>
+    <form method="post">
+        <div class="connexion">
+            <div class="champs">
+                <p class="login">Adresse e-mail :</p>
+                <p><input name="mail"/></p>
+            </div>
+            <div class="champs">
+                <p class="login">Mot de passe :</p>
+                <p><input type="password" name="mdp" class="password"/></p>
+            </div>
+            <div class="champs">
+                <p><input type="submit" value="Connexion"/><a href="forgot">
+                    <button>Mot de passe oublié</button>
+                </a></p>
+            </div>
+            <div class="champs">
+                <p class="not_register">Pas encore inscrit ! Inscrivez vous en cliquant ici :</p>
+                <p><a href="register">
+                    <button>Inscription</button>
+                </a></p>
+            </div>
         </div>
-        <div class="champs">
-            <p class="login">Mot de passe :</p>
-            <p><input type="password" name="mdp" class="password"/></p>
-        </div>
-        <div class="champs">
-            <p><input type="submit" value="Connexion"/><a href="forgot"><button>Mot de passe oublié</button></a></p>
-        </div>
-        <div class="champs">
-            <p class="not_register">Pas encore inscrit ! Inscrivez vous en cliquant ici :</p>
-            <p><a href="register"><button>Inscription</button></a></p>
-        </div>
-    </div>
+    </form>
 </div>
+
 
 {% if info_msg %}
     <!-- Message d'information -->
