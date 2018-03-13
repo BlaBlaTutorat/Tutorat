@@ -12,16 +12,26 @@ days = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
 # Page d'accueil qui redirige vers la page de recherche ou page de login
 @app.route('/')
 def index():
-    # TODO vérifier que l'utilisateur est connecté et s'il ne l'est pas le rediriger vers la page de connexion
-    return redirect(url_for("recherche"))
+    if 'username' in session:
+        return redirect(url_for("recherche"))
+        
+    # Redirection si l'utilisateur n'est pas connecté
+    else :
+        return redirect(url_for('login'))
 
 
-# Page de connection
-@app.route('/login')
-def connection():
+# Page de connexion
+@app.route('/login',methods=['GET', 'POST'])
+def connexion():
+    sql_obj = sql.MysqlObject()
     # Propre à cette page
     hidemenu = True
 
+    if request.method == 'POST':
+        
+        session['mail'] = request.form['mail']
+        return redirect(url_for('recherche'))
+        
     if request.args.get('info_msg'):
         info_msg = request.args.get('info_msg')
     return render_template("connexion.html", **locals())
@@ -30,12 +40,15 @@ def connection():
 # Page d'inscription
 @app.route('/register', methods=['GET'])
 def inscription():
+    if 'username' not in session:
     sql_obj = sql.MysqlObject()
     # Propre à cette page
     hidemenu = True
 
     return render_template("inscription.html", classes=sql_obj.classes_liste(), **locals())
 
+    else:
+        return info_msg="Veuillez vous déconnecter avant d'accomplir cette action."
 
 # Chiffrement du mdp
 @app.route('/register', methods=['POST'])
@@ -60,42 +73,48 @@ def mdp_oublie():
 # Page de Profil
 @app.route('/profile/view')
 def profil():
-    # TODO vérifier que l'utilisateur est connecté et s'il ne l'est pas le rediriger vers la page de connexion
-    sql_obj = sql.MysqlObject()
-    admin_user = True
-    user = "Tao Blancheton"
-    css_state = sql_obj.get_css(user)
+    if 'username' in session:
+        sql_obj = sql.MysqlObject()
+        admin_user = True
+        user = "Tao Blancheton"
+        css_state = sql_obj.get_css(user)
 
-    if request.args.get('info_msg'):
-        info_msg = request.args.get('info_msg')
+        if request.args.get('info_msg'):
+            info_msg = request.args.get('info_msg')
 
-    return render_template("profil.html", infos=sql_obj.get_user_info(user),
-                           offres_creees=sql_obj.get_user_offre(user),
-                           tutorats_actifs=sql_obj.get_user_tutorats(user), days=days, **locals())
-
+        return render_template("profil.html", infos=sql_obj.get_user_info(user),
+                            offres_creees=sql_obj.get_user_offre(user),
+                            tutorats_actifs=sql_obj.get_user_tutorats(user), days=days, **locals())
+    
+    # Redirection si l'utilisateur n'est pas connecté
+    else :
+        return redirect(url_for('login', info_msg="Veuillez vous connecter pour continuer."))
 
 # Page de modification du profil
 @app.route('/profile/update', methods=['GET', 'POST'])
 def profil_update():
-    # TODO vérifier que l'utilisateur est connecté et s'il ne l'est pas le rediriger vers la page de connexion
-    sql_obj = sql.MysqlObject()
-    admin_user = True
-    user = "Tao Blancheton"
-    css_state = sql_obj.get_css(user)
+    if 'username' in session:
+        sql_obj = sql.MysqlObject()
+        admin_user = True
+        user = "Tao Blancheton"
+        css_state = sql_obj.get_css(user)
 
-    classes = sql_obj.classes_liste()
+        classes = sql_obj.classes_liste()
 
-    if len(request.form) == 0:
-        return render_template("profil_update.html", infos=sql_obj.get_user_info(user), **locals())
-    else:
-        if request.form.get('classe') in classes and "@" in request.form.get('mail'):
-
-            sql_obj.modify_user_info(user, request.form.get('mail'), request.form.get('classe'))
-            return redirect(url_for("profil", info_msg="Votre profil a bien été modifié."))
+        if len(request.form) == 0:
+            return render_template("profil_update.html", infos=sql_obj.get_user_info(user), **locals())
         else:
+            if request.form.get('classe') in classes and "@" in request.form.get('mail'):
 
-            return render_template("error.html", message="Erreur - Veuillez vérifier les champs du formulaire",
+                sql_obj.modify_user_info(user, request.form.get('mail'), request.form.get('classe'))
+                return redirect(url_for("profil", info_msg="Votre profil a bien été modifié."))
+            else:
+
+                return render_template("error.html", message="Erreur - Veuillez vérifier les champs du formulaire",
                                    **locals())
+    # Redirection si l'utilisateur n'est pas connecté
+    else :
+        return redirect(url_for('login', info_msg="Veuillez vous connecter pour continuer."))
 
 
 # Page d'Administration
@@ -118,57 +137,65 @@ def admin():
 # Page de recherche d'offres
 @app.route('/search', methods=['GET', 'POST'])
 def recherche():
-    # TODO vérifier que l'utilisateur est connecté et s'il ne l'est pas le rediriger vers la page de connexion
-    sql_obj = sql.MysqlObject()
-    admin_user = True
-    user = "Tao Blancheton"
-    css_state = sql_obj.get_css(user)
+    if 'username' in session:
+        sql_obj = sql.MysqlObject()
+        admin_user = True
+        user = "Tao Blancheton"
+        css_state = sql_obj.get_css(user)
 
-    if request.args.get('info_msg'):
-        info_msg = request.args.get('info_msg')
+        if request.args.get('info_msg'):
+            info_msg = request.args.get('info_msg')
 
-    if request.form.get('precedent'):
-        page = int(request.form.get('page')) - 1
-    elif request.form.get('suivant'):
-        page = int(request.form.get('page')) + 1
-    else:
-        page = 0
+        if request.form.get('precedent'):
+            page = int(request.form.get('page')) - 1
+        elif request.form.get('suivant'):
+            page = int(request.form.get('page')) + 1
+        else:
+            page = 0
+    
+        # Variables locales utilisées dans les templates
+        matieres = sql_obj.matieres_liste()
+        filieres = sql_obj.filieres_liste()
 
-    # Variables locales utilisées dans les templates
-    matieres = sql_obj.matieres_liste()
-    filieres = sql_obj.filieres_liste()
+        if request.form.get("option") and not request.form.get("option2"):
+            # Formulaire de tri première étape
 
-    if request.form.get("option") and not request.form.get("option2"):
-        # Formulaire de tri première étape
-
-        option = request.form.get("option")
-        return render_template("recherche.html", offres=sql_obj.offres_liste_tri(option, page, user), days=days,
+            option = request.form.get("option")
+            return render_template("recherche.html", offres=sql_obj.offres_liste_tri(option, page, user), days=days,
                                **locals())
 
-    elif request.form.get("option") and request.form.get("option2"):
-        # Formulaire de tri deuxième étape
+        elif request.form.get("option") and request.form.get("option2"):
+            # Formulaire de tri deuxième étape
 
-        option = request.form.get("option")
-        option2 = request.form.get("option2")
-        return render_template("recherche.html", offres=sql_obj.offres_liste_tri_2(option, option2, page, user),
+            option = request.form.get("option")
+            option2 = request.form.get("option2")
+            return render_template("recherche.html", offres=sql_obj.offres_liste_tri_2(option, option2, page, user),
                                days=days, **locals())
 
-    else:
-        # Aucune option de tri sélectionnée
-        return render_template("recherche.html", offres=sql_obj.offres_liste(page, user), days=days, **locals())
+        else:
+            # Aucune option de tri sélectionnée
+            return render_template("recherche.html", offres=sql_obj.offres_liste(page, user), days=days, **locals())
 
+   
+    # Redirection si l'utilisateur n'est pas connecté
+    else :
+        return redirect(url_for('login', info_msg="Veuillez vous connecter pour continuer."))
 
 # Affichage du formulaire de création d'une offre
 @app.route('/create', methods=['GET'])
 def creation():
-    # TODO vérifier que l'utilisateur est connecté et s'il ne l'est pas le rediriger vers la page de connexion
-    sql_obj = sql.MysqlObject()
-    admin_user = True
-    user = "Tao Blancheton"
-    css_state = sql_obj.get_css(user)
+    if 'username' in session:
+        sql_obj = sql.MysqlObject()
+        admin_user = True
+        user = "Tao Blancheton"
+        css_state = sql_obj.get_css(user)
 
-    return render_template("creation.html", filieres=sql_obj.filieres_liste(), matieres=sql_obj.matieres_liste(),
-                           days=days, **locals())
+        return render_template("creation.html", filieres=sql_obj.filieres_liste(), matieres=sql_obj.matieres_liste(),
+                            days=days, **locals())
+    
+    # Redirection si l'utilisateur n'est pas connecté
+    else :
+        return redirect(url_for('login', info_msg="Veuillez vous connecter pour continuer."))
 
 
 # Traitement du formulaire + upload bdd
@@ -176,91 +203,103 @@ def creation():
 def traitement_creation():
     # On ne traite pas la demande dans le doute ou l'élève n'a pas renseigné de créneau horaire
     process = False
-    # TODO vérifier que l'utilisateur est connecté et s'il ne l'est pas le rediriger vers la page de connexion
-    sql_obj = sql.MysqlObject()
-    admin_user = True
-    user = "Tao Blancheton"
-    css_state = sql_obj.get_css(user)
-    horaires = []
+    if 'username' in session:
+        sql_obj = sql.MysqlObject()
+        admin_user = True
+        user = "Tao Blancheton"
+        css_state = sql_obj.get_css(user)
+        horaires = []
 
-    for i in range(0, 12, 2):
-        if request.form.get(sql.horaires_reference[i], None) != '' and request.form.get(sql.horaires_reference[i + 1],
-                                                                                        None) != '':
-            # L'élève a renseigné au moins un créneau horaire
-            process = True
-            horaires.append(request.form.get(sql.horaires_reference[i]))
-            horaires.append(request.form.get(sql.horaires_reference[i + 1]))
-        else:
-            # Créneau horaire vide, on remplit avec des zéros
-            horaires.append(0)
-            horaires.append(0)
+        for i in range(0, 12, 2):
+            if request.form.get(sql.horaires_reference[i], None) != '' and request.form.get(sql.horaires_reference[i + 1],
+                                                                                            None) != '':
+                # L'élève a renseigné au moins un créneau horaire
+                process = True
+                horaires.append(request.form.get(sql.horaires_reference[i]))
+                horaires.append(request.form.get(sql.horaires_reference[i + 1]))
+            else:
+                # Créneau horaire vide, on remplit avec des zéros
+                horaires.append(0)
+                horaires.append(0)
 
-    if process:
-        # Création
-        filieres = sql_obj.filieres_liste()
-        matieres = sql_obj.matieres_liste()
+        if process:
+            # Création
+            filieres = sql_obj.filieres_liste()
+            matieres = sql_obj.matieres_liste()
 
-        if request.form.get("filiere") in filieres and request.form.get("matiere") in matieres:
+            if request.form.get("filiere") in filieres and request.form.get("matiere") in matieres:
 
-            sql_obj.create_offre(request.form.get('auteur'), request.form.get('filiere'), request.form.get('matiere'),
+                sql_obj.create_offre(request.form.get('auteur'), request.form.get('filiere'), request.form.get('matiere'),
                                  horaires)
-            return redirect(url_for(
+                return redirect(url_for(
                 "recherche", info_msg="Votre offre a bien été créée. Elle est actuellement en attente de validation."))
 
-        else:
-            return render_template("error.html", message="Erreur - Veuillez vérifier les champs du formulaire",
+            else:
+                return render_template("error.html", message="Erreur - Veuillez vérifier les champs du formulaire",
                                    **locals())
-    else:
-        # Erreur
-        return render_template("error.html", message="Erreur - Veuillez renseigner au moins un horaire", **locals())
+        else:
+            # Erreur
+            return render_template("error.html", message="Erreur - Veuillez renseigner au moins un horaire", **locals())
 
+    # Redirection si l'utilisateur n'est pas connecté
+    else :
+        return redirect(url_for('login', info_msg="Veuillez vous connecter pour continuer."))
+        
 
 # Page d'enregistrement (s'enregistrer en tant que participant)
 @app.route('/apply', methods=['POST'])
 def enregistrement():
-    # TODO vérifier que l'utilisateur est connecté et s'il ne l'est pas le rediriger vers la page de connexion
-    user = "Tao Blancheton"
-    sql_obj = sql.MysqlObject()
-    admin_user = True
-    css_state = sql_obj.get_css(user)
+    if 'username' in session:
+        user = "Tao Blancheton"
+        sql_obj = sql.MysqlObject()
+        admin_user = True
+        css_state = sql_obj.get_css(user)
 
-    result_code = sql_obj.add_participant(request.form.get("id"), user)
-    if result_code == 0:
-        # Pas d'erreur
-        return redirect(url_for("recherche", info_msg="Votre participation à ce tutorat a bien été prise en compte."))
-    elif result_code == 1:
-        # Erreur l'utilisateur participe déjà à l'offre
-        return render_template("error.html", message="Erreur - Vous vous êtes déjà enregistré pour ce Tutorat",
+        result_code =                                   sql_obj.add_participant(request.form.get("id"), user)
+        if result_code == 0:
+            # Pas d'erreur
+            return redirect(url_for("recherche", info_msg="Votre participation à ce tutorat a bien été prise en compte."))
+        elif result_code == 1:
+            # Erreur l'utilisateur participe déjà à l'offre
+            return render_template("error.html", message="Erreur - Vous vous êtes déjà enregistré pour ce Tutorat",
                                **locals())
-    elif result_code == 2:
-        # Erreur (cas très rare ou l'utilisateur accepte une offre qui est déjà pleine)
-        return render_template("error.html", message="Erreur - Ce Tutorat est déjà plein", **locals())
-    elif result_code == 3:
+        elif result_code == 2:
+            # Erreur (cas très rare ou l'utilisateur accepte une offre qui est déjà pleine)
+            return render_template("error.html", message="Erreur - Ce Tutorat est déjà plein", **locals())
+        elif result_code == 3:
         # Erreur l'utilisateur veut participer à une offre qu'il a créée
-        return render_template("error.html", message="Erreur - Vous êtes l'auteur de ce tutorat", **locals())
-    elif result_code == 4:
+            return render_template("error.html", message="Erreur - Vous êtes l'auteur de ce tutorat", **locals())
+        elif result_code == 4:
         # Erreur l'utilisateur n'est pas dans la même classe que le premier participant
-        return render_template("error.html",
+            return render_template("error.html",
                                message="Erreur - Vous n'appartenez pas à la même classe que le premier participant",
                                **locals())
+
+    # Redirection si l'utilisateur n'est pas connecté
+    else :
+        return redirect(url_for('login', info_msg="Veuillez vous connecter pour continuer."))
 
 
 # Suppression de la participation d'un utilisateur à une offre
 @app.route('/quit')
 def quit_tutorat():
-    # TODO vérifier que l'utilisateur est connecté et s'il ne l'est pas le rediriger vers la page de connexion
-    if request.args.get('id'):
-        offre_id = request.args.get('id')
-        sql_obj = sql.MysqlObject()
-        user = "Tao Blancheton"
-        css_state = sql_obj.get_css(user)
+    if 'username' in session:
+        if request.args.get('id'):
+            offre_id = request.args.get('id')
+            sql_obj = sql.MysqlObject()
+            user = "Tao Blancheton"
+            css_state = sql_obj.get_css(user)
 
-        if sql_obj.delete_participant(offre_id, user):
-            return redirect(url_for("profil", info_msg="Votre retrait de ce Tutorat a bien été enregistré."))
+            if sql_obj.delete_participant(offre_id, user):
+                return redirect(url_for("profil", info_msg="Votre retrait de ce Tutorat a bien été enregistré."))
+            else:
+                return render_template("error.html", message="Erreur - Vous ne participez pas à ce Tutorat", **locals())
         else:
-            return render_template("error.html", message="Erreur - Vous ne participez pas à ce Tutorat", **locals())
-    else:
-        abort(403)
+            abort(403)
+
+    # Redirection si l'utilisateur n'est pas connecté
+    else :
+        return redirect(url_for('login', info_msg="Veuillez vous connecter pour continuer."))
 
 
 # Suppression d'une offre
@@ -323,12 +362,16 @@ def ban():
 # CSS
 @app.route('/css')
 def css():
-    # TODO vérifier que l'utilisateur est connecté et s'il ne l'est pas le rediriger vers la page de connexion
-    sql_obj = sql.MysqlObject()
-    user = "Tao Blancheton"
+    if 'username' in session:
+        sql_obj = sql.MysqlObject()
+        user = "Tao Blancheton"
 
-    sql_obj.set_css(user)
-    return redirect(request.referrer)
+        sql_obj.set_css(user)
+        return redirect(request.referrer)
+
+    # Redirection si l'utilisateur n'est pas connecté
+    else :
+        return redirect(url_for('login', info_msg="Veuillez vous connecter pour continuer."))
 
 
 # Gestion de l'erreur 404
@@ -348,6 +391,7 @@ def forbidden(error):
 def method_not_allowed(error):
     return render_template("error.html", message="Erreur 405 - Méthode de requête non autorisée")
 
+app.secret_key = '\xfd{H\xe5<\x95\xf9\xe3\x96.5\xd1\x01O<!\xd5\xa2\xa0\x9fR"\xa1\xa8'
 
 # Lancement du serveur lors de l'exécution du fichier
 if __name__ == '__main__':
