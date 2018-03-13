@@ -14,24 +14,23 @@ days = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
 def index():
     if 'username' in session:
         return redirect(url_for("recherche"))
-        
-    # Redirection si l'utilisateur n'est pas connecté
-    else :
+
+    else:
+        # Redirection si l'utilisateur n'est pas connecté
         return redirect(url_for('login'))
 
 
 # Page de connexion
-@app.route('/login',methods=['GET', 'POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def connexion():
     sql_obj = sql.MysqlObject()
     # Propre à cette page
     hidemenu = True
 
     if request.method == 'POST':
-        
         session['mail'] = request.form['mail']
         return redirect(url_for('recherche'))
-        
+
     if request.args.get('info_msg'):
         info_msg = request.args.get('info_msg')
     return render_template("connexion.html", **locals())
@@ -40,15 +39,17 @@ def connexion():
 # Page d'inscription
 @app.route('/register', methods=['GET'])
 def inscription():
-    if 'username' not in session:
     sql_obj = sql.MysqlObject()
     # Propre à cette page
     hidemenu = True
 
-    return render_template("inscription.html", classes=sql_obj.classes_liste(), **locals())
+    if 'username' not in session:
+        return render_template("inscription.html", classes=sql_obj.classes_liste(), **locals())
 
     else:
-        return info_msg="Veuillez vous déconnecter avant d'accomplir cette action."
+        # Redirection vers la page d'accueil
+        return redirect(url_for("recherche"))
+
 
 # Chiffrement du mdp
 @app.route('/register', methods=['POST'])
@@ -83,12 +84,13 @@ def profil():
             info_msg = request.args.get('info_msg')
 
         return render_template("profil.html", infos=sql_obj.get_user_info(user),
-                            offres_creees=sql_obj.get_user_offre(user),
-                            tutorats_actifs=sql_obj.get_user_tutorats(user), days=days, **locals())
-    
+                               offres_creees=sql_obj.get_user_offre(user),
+                               tutorats_actifs=sql_obj.get_user_tutorats(user), days=days, **locals())
+
     # Redirection si l'utilisateur n'est pas connecté
-    else :
+    else:
         return redirect(url_for('login', info_msg="Veuillez vous connecter pour continuer."))
+
 
 # Page de modification du profil
 @app.route('/profile/update', methods=['GET', 'POST'])
@@ -111,9 +113,9 @@ def profil_update():
             else:
 
                 return render_template("error.html", message="Erreur - Veuillez vérifier les champs du formulaire",
-                                   **locals())
+                                       **locals())
     # Redirection si l'utilisateur n'est pas connecté
-    else :
+    else:
         return redirect(url_for('login', info_msg="Veuillez vous connecter pour continuer."))
 
 
@@ -152,7 +154,7 @@ def recherche():
             page = int(request.form.get('page')) + 1
         else:
             page = 0
-    
+
         # Variables locales utilisées dans les templates
         matieres = sql_obj.matieres_liste()
         filieres = sql_obj.filieres_liste()
@@ -162,7 +164,7 @@ def recherche():
 
             option = request.form.get("option")
             return render_template("recherche.html", offres=sql_obj.offres_liste_tri(option, page, user), days=days,
-                               **locals())
+                                   **locals())
 
         elif request.form.get("option") and request.form.get("option2"):
             # Formulaire de tri deuxième étape
@@ -170,16 +172,16 @@ def recherche():
             option = request.form.get("option")
             option2 = request.form.get("option2")
             return render_template("recherche.html", offres=sql_obj.offres_liste_tri_2(option, option2, page, user),
-                               days=days, **locals())
+                                   days=days, **locals())
 
         else:
             # Aucune option de tri sélectionnée
             return render_template("recherche.html", offres=sql_obj.offres_liste(page, user), days=days, **locals())
 
-   
     # Redirection si l'utilisateur n'est pas connecté
-    else :
+    else:
         return redirect(url_for('login', info_msg="Veuillez vous connecter pour continuer."))
+
 
 # Affichage du formulaire de création d'une offre
 @app.route('/create', methods=['GET'])
@@ -191,10 +193,10 @@ def creation():
         css_state = sql_obj.get_css(user)
 
         return render_template("creation.html", filieres=sql_obj.filieres_liste(), matieres=sql_obj.matieres_liste(),
-                            days=days, **locals())
-    
+                               days=days, **locals())
+
     # Redirection si l'utilisateur n'est pas connecté
-    else :
+    else:
         return redirect(url_for('login', info_msg="Veuillez vous connecter pour continuer."))
 
 
@@ -211,8 +213,9 @@ def traitement_creation():
         horaires = []
 
         for i in range(0, 12, 2):
-            if request.form.get(sql.horaires_reference[i], None) != '' and request.form.get(sql.horaires_reference[i + 1],
-                                                                                            None) != '':
+            if request.form.get(sql.horaires_reference[i], None) != '' and request.form.get(
+                    sql.horaires_reference[i + 1],
+                    None) != '':
                 # L'élève a renseigné au moins un créneau horaire
                 process = True
                 horaires.append(request.form.get(sql.horaires_reference[i]))
@@ -229,22 +232,24 @@ def traitement_creation():
 
             if request.form.get("filiere") in filieres and request.form.get("matiere") in matieres:
 
-                sql_obj.create_offre(request.form.get('auteur'), request.form.get('filiere'), request.form.get('matiere'),
-                                 horaires)
+                sql_obj.create_offre(request.form.get('auteur'), request.form.get('filiere'),
+                                     request.form.get('matiere'),
+                                     horaires)
                 return redirect(url_for(
-                "recherche", info_msg="Votre offre a bien été créée. Elle est actuellement en attente de validation."))
+                    "recherche",
+                    info_msg="Votre offre a bien été créée. Elle est actuellement en attente de validation."))
 
             else:
                 return render_template("error.html", message="Erreur - Veuillez vérifier les champs du formulaire",
-                                   **locals())
+                                       **locals())
         else:
             # Erreur
             return render_template("error.html", message="Erreur - Veuillez renseigner au moins un horaire", **locals())
 
     # Redirection si l'utilisateur n'est pas connecté
-    else :
+    else:
         return redirect(url_for('login', info_msg="Veuillez vous connecter pour continuer."))
-        
+
 
 # Page d'enregistrement (s'enregistrer en tant que participant)
 @app.route('/apply', methods=['POST'])
@@ -255,28 +260,29 @@ def enregistrement():
         admin_user = True
         css_state = sql_obj.get_css(user)
 
-        result_code =                                   sql_obj.add_participant(request.form.get("id"), user)
+        result_code = sql_obj.add_participant(request.form.get("id"), user)
         if result_code == 0:
             # Pas d'erreur
-            return redirect(url_for("recherche", info_msg="Votre participation à ce tutorat a bien été prise en compte."))
+            return redirect(
+                url_for("recherche", info_msg="Votre participation à ce tutorat a bien été prise en compte."))
         elif result_code == 1:
             # Erreur l'utilisateur participe déjà à l'offre
             return render_template("error.html", message="Erreur - Vous vous êtes déjà enregistré pour ce Tutorat",
-                               **locals())
+                                   **locals())
         elif result_code == 2:
             # Erreur (cas très rare ou l'utilisateur accepte une offre qui est déjà pleine)
             return render_template("error.html", message="Erreur - Ce Tutorat est déjà plein", **locals())
         elif result_code == 3:
-        # Erreur l'utilisateur veut participer à une offre qu'il a créée
+            # Erreur l'utilisateur veut participer à une offre qu'il a créée
             return render_template("error.html", message="Erreur - Vous êtes l'auteur de ce tutorat", **locals())
         elif result_code == 4:
-        # Erreur l'utilisateur n'est pas dans la même classe que le premier participant
+            # Erreur l'utilisateur n'est pas dans la même classe que le premier participant
             return render_template("error.html",
-                               message="Erreur - Vous n'appartenez pas à la même classe que le premier participant",
-                               **locals())
+                                   message="Erreur - Vous n'appartenez pas à la même classe que le premier participant",
+                                   **locals())
 
     # Redirection si l'utilisateur n'est pas connecté
-    else :
+    else:
         return redirect(url_for('login', info_msg="Veuillez vous connecter pour continuer."))
 
 
@@ -298,7 +304,7 @@ def quit_tutorat():
             abort(403)
 
     # Redirection si l'utilisateur n'est pas connecté
-    else :
+    else:
         return redirect(url_for('login', info_msg="Veuillez vous connecter pour continuer."))
 
 
@@ -370,7 +376,7 @@ def css():
         return redirect(request.referrer)
 
     # Redirection si l'utilisateur n'est pas connecté
-    else :
+    else:
         return redirect(url_for('login', info_msg="Veuillez vous connecter pour continuer."))
 
 
@@ -391,6 +397,8 @@ def forbidden(error):
 def method_not_allowed(error):
     return render_template("error.html", message="Erreur 405 - Méthode de requête non autorisée")
 
+
+# Nécessaire pour faire fontionner les sessions
 app.secret_key = '\xfd{H\xe5<\x95\xf9\xe3\x96.5\xd1\x01O<!\xd5\xa2\xa0\x9fR"\xa1\xa8'
 
 # Lancement du serveur lors de l'exécution du fichier

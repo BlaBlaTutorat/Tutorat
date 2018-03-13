@@ -1,13 +1,10 @@
 ## [Projet d'ISN de tutorat](http://info.blaisepascal.fr/blabla-tutorat)
 
-
-
 #### Langages:
 - Python
 - SQL
 - HTML
 - CSS
-
 
 #### Mise en page:
 - 1 Page de Connexion
@@ -17,7 +14,6 @@
 - 1 Page de Gestion Administrateur
 - 1 Page de Profil
 - 1 Page de MAJ Profil
-    
     
 #### Tables:
 - Utilisateurs:
