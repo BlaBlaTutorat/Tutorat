@@ -12,7 +12,7 @@ days = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
 # Page d'accueil qui redirige vers la page de recherche ou page de login
 @app.route('/')
 def index():
-    if 'username' in session:
+    if 'mail' in session:
         return redirect(url_for("recherche"))
 
     else:
@@ -39,7 +39,7 @@ def connexion():
 # Page d'inscription
 @app.route('/register', methods=['GET'])
 def inscription():
-    if 'username' not in session:
+    if 'mail' not in session:
         sql_obj = sql.MysqlObject()
         # Propre à cette page
         hidemenu = True
@@ -74,7 +74,7 @@ def mdp_oublie():
 # Page de Profil
 @app.route('/profile/view')
 def profil():
-    if 'username' in session:
+    if 'mail' in session:
         sql_obj = sql.MysqlObject()
         admin_user = True
         user = "Tao Blancheton"
@@ -95,7 +95,7 @@ def profil():
 # Page de modification du profil
 @app.route('/profile/update', methods=['GET', 'POST'])
 def profil_update():
-    if 'username' in session:
+    if 'mail' in session:
         sql_obj = sql.MysqlObject()
         admin_user = True
         user = "Tao Blancheton"
@@ -139,7 +139,7 @@ def admin():
 # Page de recherche d'offres
 @app.route('/search', methods=['GET', 'POST'])
 def recherche():
-    if 'username' in session:
+    if 'mail' in session:
         sql_obj = sql.MysqlObject()
         admin_user = True
         user = "Tao Blancheton"
@@ -186,7 +186,7 @@ def recherche():
 # Affichage du formulaire de création d'une offre
 @app.route('/create', methods=['GET'])
 def creation():
-    if 'username' in session:
+    if 'mail' in session:
         sql_obj = sql.MysqlObject()
         admin_user = True
         user = "Tao Blancheton"
@@ -205,7 +205,7 @@ def creation():
 def traitement_creation():
     # On ne traite pas la demande dans le doute ou l'élève n'a pas renseigné de créneau horaire
     process = False
-    if 'username' in session:
+    if 'mail' in session:
         sql_obj = sql.MysqlObject()
         admin_user = True
         user = "Tao Blancheton"
@@ -254,7 +254,7 @@ def traitement_creation():
 # Page d'enregistrement (s'enregistrer en tant que participant)
 @app.route('/apply', methods=['POST'])
 def enregistrement():
-    if 'username' in session:
+    if 'mail' in session:
         user = "Tao Blancheton"
         sql_obj = sql.MysqlObject()
         admin_user = True
@@ -289,7 +289,7 @@ def enregistrement():
 # Suppression de la participation d'un utilisateur à une offre
 @app.route('/quit')
 def quit_tutorat():
-    if 'username' in session:
+    if 'mail' in session:
         if request.args.get('id'):
             offre_id = request.args.get('id')
             sql_obj = sql.MysqlObject()
@@ -368,7 +368,7 @@ def ban():
 # CSS
 @app.route('/css')
 def css():
-    if 'username' in session:
+    if 'mail' in session:
         sql_obj = sql.MysqlObject()
         user = "Tao Blancheton"
 
