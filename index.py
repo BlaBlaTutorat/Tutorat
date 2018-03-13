@@ -39,11 +39,11 @@ def connexion():
 # Page d'inscription
 @app.route('/register', methods=['GET'])
 def inscription():
-    sql_obj = sql.MysqlObject()
-    # Propre à cette page
-    hidemenu = True
-
     if 'username' not in session:
+        sql_obj = sql.MysqlObject()
+        # Propre à cette page
+        hidemenu = True
+
         return render_template("inscription.html", classes=sql_obj.classes_liste(), **locals())
 
     else:
