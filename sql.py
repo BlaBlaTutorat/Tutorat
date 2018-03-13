@@ -150,13 +150,11 @@ class MysqlObject:
         self.cursor.execute("""SELECT * FROM users WHERE nom=%s""", (user_name,))
         return self.cursor.fetchall()[0]
         
-    # Récupération des infos utilisateurs si existantes
-    def get_info_exist(self, user_name):
-        try:
-            self.cursor.execute("""SELECT mdp, mail FROM users WHERE nom=%s""", (user_name,))
-        
+    # Vérification que l'utilisateur est connecté
+    def get_connect(self, user_name):
+        if self.cursor.execute("""SELECT mdp, mail FROM users WHERE nom=%s""", (user_name,)) == True:
             return self.cursor.fetchall()[0]
-        except NameError:
+        else:
             print("vérifiez votre saisie et réessayez")
 
     # Récupération et cryptage du mot de passe des utilisateurs
