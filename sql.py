@@ -1,7 +1,7 @@
 # coding: utf-8
 import datetime
 import sys
-from flask import Flask, session, redirect, url_for, escape, request
+
 import mysql.connector
 
 import config
@@ -155,8 +155,8 @@ class MysqlObject:
         self.cursor.execute("""SELECT mdp, mail FROM users WHERE nom=%s""", (user_name,))
         user = self.cursor.fetchall()[0]
         if len(user) != 0:
-                
-#indiquer à l'utilisateur : "La connexion a échoué, veuillez vérifier votre saisie puis réessayer"
+            # Indiquer à l'utilisateur : "La connexion a échoué, veuillez vérifier votre saisie puis réessayer"
+            return ""
 
     # Récupération et cryptage du mot de passe des utilisateurs
     def get_crypt_mdp(self, user_name):
