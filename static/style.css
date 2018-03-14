@@ -383,6 +383,12 @@ footer .copyright li {
 /* Fin Inscription */
 
 /* Connexion */
+.mdp_oublie {
+    text-decoration: none;
+    color: white;
+    cursor: pointer;
+}
+
 .log {
     margin-top: 160px;
 }
