@@ -24,10 +24,10 @@ def index():
 @app.route('/login', methods=['GET', 'POST'])
 def connexion():
     sql_obj = sql.MysqlObject()
-    #obtenir les données entrées par l'utilisateur
-    #chiffrer le mot de passe
-    #comparer la nouvelle empreinte à celle de la base dde donnée
-    #valider ou non la connexion
+    # obtenir les données entrées par l'utilisateur
+    # chiffrer le mot de passe
+    # comparer la nouvelle empreinte à celle de la base dde donnée
+    # valider ou non la connexion
     # Propre à cette page
     hidemenu = True
 
@@ -55,14 +55,13 @@ def inscription():
         return redirect(url_for("recherche"))
 
 
-
 @app.route('/register', methods=['POST'])
 def traitement_inscription():
     sql_obj = sql.MysqlObject()
-    
+
     # Chiffrement du mdp
     chaine_mot_de_passe = request.form.get('mdp')
-    mot_de_passe_chiffre = hashlib.sha256(str(chaine_mot_de_passe)).encode('utf-8')).hexdigest())
+    mot_de_passe_chiffre = hashlib.sha256(str(chaine_mot_de_passe)).encode('utf-8').hexdigest()
 
     nom = request.form.get('prenom') + '  ' + request.form.get('nom')
     sql_obj.create_compte(nom, mot_de_passe_chiffre, request.form.get('mail'), request.form.get('classe'))
