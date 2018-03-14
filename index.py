@@ -23,21 +23,25 @@ def index():
 # Page de connexion
 @app.route('/login', methods=['GET', 'POST'])
 def connexion():
-    sql_obj = sql.MysqlObject()
-    # obtenir les données entrées par l'utilisateur
-    # chiffrer le mot de passe
-    # comparer la nouvelle empreinte à celle de la base dde donnée
-    # valider ou non la connexion
-    # Propre à cette page
-    hidemenu = True
+    if 'mail' not in session:
+        sql_obj = sql.MysqlObject()
+        # Propre à cette page
+        hidemenu = True
 
-    if request.method == 'POST':
-        session['mail'] = request.form['mail']
+        if request.method == 'POST':
+            # obtenir les données entrées par l'utilisateur
+            # chiffrer le mot de passe
+            # comparer la nouvelle empreinte à celle de la base dde donnée
+            # valider ou non la connexion
+            session['mail'] = request.form['mail']
+            return redirect(url_for('recherche'))
+
+        if request.args.get('info_msg'):
+            info_msg = request.args.get('info_msg')
+        return render_template("connexion.html", **locals())
+    else:
+        # Redirection si l'utilisateur est connecté
         return redirect(url_for('recherche'))
-
-    if request.args.get('info_msg'):
-        info_msg = request.args.get('info_msg')
-    return render_template("connexion.html", **locals())
 
 
 # Page d'inscription
