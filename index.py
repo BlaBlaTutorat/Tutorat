@@ -98,7 +98,7 @@ def profil():
 
     # Redirection si l'utilisateur n'est pas connecté
     else:
-        return redirect(url_for('login', info_msg="Veuillez vous connecter pour continuer."))
+        return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
 
 
 # Page de modification du profil
@@ -125,7 +125,7 @@ def profil_update():
                                        **locals())
     # Redirection si l'utilisateur n'est pas connecté
     else:
-        return redirect(url_for('login', info_msg="Veuillez vous connecter pour continuer."))
+        return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
 
 
 # Page d'Administration
@@ -189,7 +189,7 @@ def recherche():
 
     # Redirection si l'utilisateur n'est pas connecté
     else:
-        return redirect(url_for('login', info_msg="Veuillez vous connecter pour continuer."))
+        return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
 
 
 # Affichage du formulaire de création d'une offre
@@ -206,7 +206,7 @@ def creation():
 
     # Redirection si l'utilisateur n'est pas connecté
     else:
-        return redirect(url_for('login', info_msg="Veuillez vous connecter pour continuer."))
+        return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
 
 
 # Traitement du formulaire + upload bdd
@@ -257,7 +257,7 @@ def traitement_creation():
 
     # Redirection si l'utilisateur n'est pas connecté
     else:
-        return redirect(url_for('login', info_msg="Veuillez vous connecter pour continuer."))
+        return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
 
 
 # Page d'enregistrement (s'enregistrer en tant que participant)
@@ -292,7 +292,7 @@ def enregistrement():
 
     # Redirection si l'utilisateur n'est pas connecté
     else:
-        return redirect(url_for('login', info_msg="Veuillez vous connecter pour continuer."))
+        return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
 
 
 # Suppression de la participation d'un utilisateur à une offre
@@ -314,7 +314,7 @@ def quit_tutorat():
 
     # Redirection si l'utilisateur n'est pas connecté
     else:
-        return redirect(url_for('login', info_msg="Veuillez vous connecter pour continuer."))
+        return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
 
 
 # Suppression d'une offre
@@ -386,25 +386,34 @@ def css():
 
     # Redirection si l'utilisateur n'est pas connecté
     else:
-        return redirect(url_for('login', info_msg="Veuillez vous connecter pour continuer."))
+        return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
 
 
 # Gestion de l'erreur 404
 @app.errorhandler(404)
 def not_found(error):
-    return render_template("error.html", message="Erreur 404 - Ressource non trouvée")
+    # Propre à cette page
+    hidemenu = True
+
+    return render_template("error.html", message="Erreur 404 - Ressource non trouvée", **locals())
 
 
 # Gestion de l'erreur 403
 @app.errorhandler(403)
 def forbidden(error):
-    return render_template("error.html", message="Erreur 403 - Accès Interdit")
+    # Propre à cette page
+    hidemenu = True
+
+    return render_template("error.html", message="Erreur 403 - Accès Interdit", **locals())
 
 
 # Gestion de l'erreur 405
 @app.errorhandler(405)
 def method_not_allowed(error):
-    return render_template("error.html", message="Erreur 405 - Méthode de requête non autorisée")
+    # Propre à cette page
+    hidemenu = True
+
+    return render_template("error.html", message="Erreur 405 - Méthode de requête non autorisée", **locals())
 
 
 # Nécessaire pour faire fontionner les sessions
