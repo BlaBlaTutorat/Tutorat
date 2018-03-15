@@ -150,14 +150,17 @@ class MysqlObject:
         self.cursor.execute("""SELECT * FROM users WHERE nom=%s""", (user_name,))
         return self.cursor.fetchall()[0]
         
+    #Connecter l'utilisateur
+    def connect(self,user_name):
+        self.cursor.execute("""Insert IN session""", (mail,mdp_chiffre))
+        self.cursor.fetchall()[0]
+        
+
     # Vérification que l'utilisateur est connecté
+        
     def get_connect(self, user_name):
         self.cursor.execute("""SELECT mdp, mail FROM users WHERE nom=%s""", (user_name,))
-        user = self.cursor.fetchall()
-        if len(user) != 0:
-            return 0
-        else:
-            return 1
+        self.cursor.fetchall()
             # Indiquer à l'utilisateur : "La connexion a échoué, veuillez vérifier votre saisie puis réessayer"
 
     # Récupération et cryptage du mot de passe des utilisateurs
