@@ -408,7 +408,7 @@ def method_not_allowed(error):
 
 
 # Nécessaire pour faire fontionner les sessions
-app.secret_key = '\xfd{H\xe5<\x95\xf9\xe3\x96.5\xd1\x01O<!\xd5\xa2\xa0\x9fR"\xa1\xa8'
+app.secret_key = '\x1c\xd7\x9c@\xe6\xdf\xb2\xab\xb1\x86\xa62\x85k_\x17\x93Q\xb7f\x9b\x10g\x0e'
 
 # Lancement du serveur lors de l'exécution du fichier
 if __name__ == '__main__':
