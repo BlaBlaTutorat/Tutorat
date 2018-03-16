@@ -46,8 +46,6 @@ def connexion_2():
             info_msg = request.args.get('info_msg')
             return render_template("connexion.html", **locals())
 
-        if request.method == 'POST':
-
             # obtenir les données entrées par l'utilisateur
             mail = request.form.get('mail')
             mdp = request.form.get('password')
@@ -74,10 +72,11 @@ def connexion_2():
 @app.route('/register', methods=['GET'])
 def inscription():
     if 'mail' not in session:
+
+        sql_obj = sql.MysqlObject()
         admin_user = True
         user = "Tao Blancheton"
         css_state = sql_obj.get_css(user)
-        sql_obj = sql.MysqlObject()
         # Propre à cette page
         hidemenu = True
 
