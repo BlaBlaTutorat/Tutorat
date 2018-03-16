@@ -62,8 +62,7 @@ def connexion_2():
                 sql_obj.connect(mail, mdp_chiffre)
                 return redirect(url_for('recherche'))
             else:
-                return redirect(url_for('connexion',
-                                        info_msg="Erreur lors de la connexion, veuillez vérifier les informations saises puis réessayez."))
+                return redirect(url_for('connexion',info_msg="Erreur lors de la connexion, veuillez vérifier les informations saises puis réessayez."))
 
     else:
         # Redirection si l'utilisateur est connecté
@@ -75,6 +74,9 @@ def connexion_2():
 @app.route('/register', methods=['GET'])
 def inscription():
     if 'mail' not in session:
+        admin_user = True
+        user = "Tao Blancheton"
+        css_state = sql_obj.get_css(user)
         sql_obj = sql.MysqlObject()
         # Propre à cette page
         hidemenu = True
