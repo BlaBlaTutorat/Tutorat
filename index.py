@@ -62,7 +62,7 @@ def connexion_2():
             else:
                 return redirect(url_for('connexion',info_msg="Erreur lors de la connexion, veuillez vérifier les informations saises puis réessayez."))
         else:
-            return redirect(url_for('connexion',info_msg="Erreur lors de la connexion, veuillez vérifier les informations saises puis réessayez."'))
+            return redirect(url_for('connexion',info_msg="Erreur lors de la connexion, veuillez vérifier les informations saises puis réessayez."))
 
     else:
         # Redirection si l'utilisateur est connecté
