@@ -80,7 +80,6 @@ def inscription():
         hidemenu = True
 
         return render_template("inscription.html", classes=sql_obj.classes_liste(), **locals())
-        traitement_inscription()
 
     else:
         # Redirection vers la page d'accueil
@@ -96,10 +95,9 @@ def traitement_inscription():
     mot_de_passe_chiffre = hashlib.sha256(str(chaine_mot_de_passe)).encode('utf-8').hexdigest()
 
     nom = request.form.get('prenom') + '  ' + request.form.get('nom')
+    # Envoi des infos à la base de donnée
     sql_obj.create_compte(nom, mot_de_passe_chiffre, request.form.get('mail'), request.form.get('classe'))
 
-    # Envoi des infos à la base de donnée
-    sql_obj.create_compte
 
 
 # Mot de passe oublié
