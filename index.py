@@ -23,7 +23,7 @@ def index():
 # Page de connexion
 @app.route('/login', methods=['GET'])
 def connexion():
-    # TODO Verif que l'utilisteur est connecté si connecté --> page de recherche sinon chargement template
+    # Verif que l'utilisteur est connecté si connecté --> page de recherche sinon chargement template
     if 'mail' in session :
         return redirect(url_for('recherche', info_msg = "Vous êtes connecté, vous pouvez dès à présent accéder au service de tutorat."))
     else:
@@ -57,7 +57,7 @@ def connexion_2():
             mdp_chiffre = hashlib.sha256(str(mdp)).encode('utf-8').hexdigest()
 
             # comparer les infos à celle de la base dde donnée
-            if sql_obj.get_compte(mot_de_passe_chiffre) == mdp_chiffre and sql_obj.get_compte(mail):
+            if sql_obj.get_crypt_mdp(mail) == mdp_chiffre and sql_obj.get_mail(mail) == mail:
                 # valider ou non  la connexion
                 sql_obj.connect(mail, mdp_chiffre)
                 return redirect(url_for('recherche'))
@@ -68,7 +68,7 @@ def connexion_2():
     else:
         # Redirection si l'utilisateur est connecté
 
-        return redirect(url_for('recherche'))
+        return redirect(url_for('recherche', info_msg = "vous êtes connecté"))
 
 
 # Page d'inscription

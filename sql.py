@@ -151,17 +151,17 @@ class MysqlObject:
         return self.cursor.fetchall()[0]
         
     #Connecter l'utilisateur
-    def connect(self,user_name):
+    def connect(self,mail, mdp_chiffre):
         self.cursor.execute("""Insert IN session""", (mail,mdp_chiffre))
         self.cursor.fetchall()[0]
         
 
     # Vérification que l'utilisateur est connecté
         
-    def get_connect(self, user_name):
-        self.cursor.execute("""SELECT mdp, mail FROM users WHERE nom=%s""", (user_name,))
+    def get_mail(self, user_name):
+        self.cursor.execute("""SELECT mail FROM users WHERE nom=%s""", (user_name,))
         self.cursor.fetchall()
-            # Indiquer à l'utilisateur : "La connexion a échoué, veuillez vérifier votre saisie puis réessayer"
+
 
     # Récupération et cryptage du mot de passe des utilisateurs
     def get_crypt_mdp(self, user_name):
