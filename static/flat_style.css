@@ -141,7 +141,7 @@ footer {
     color: #afb1b3;
     position: relative;
     width: 100%;
-    height: 300px;
+    min-height: 300px;
     background: #3b3e43;
     display: flex;
     justify-content: space-between;
@@ -193,14 +193,18 @@ footer a:hover {
 
 /* Register */
 .register {
-    margin-top: 20px;
-    margin-bottom: 5px;
+    line-height: 20px;
 }
 
 .critere {
     display: flex;
     flex-direction: column;
     justify-content: center;
+}
+
+.reg {
+    display: flex;
+    justify-content: space-around;
 }
 
 .inscription {
@@ -210,7 +214,8 @@ footer a:hover {
     border-radius: 100px;
     border: 1px solid #18a3fa;
     display: flex;
-    justify-content: space-around;
+    flex-direction: column;
+    justify-content: center;
     padding: 5px 10px 5px 10px;
     width: 750px;
     height: 350px;
