@@ -166,7 +166,7 @@ class MysqlObject:
     # Récupération et cryptage du mot de passe des utilisateurs
     def get_crypt_mdp(self, user_name):
         self.cursor.execute("""SELECT mdp FROM users WHERE nom=%s""", (user_name,))
-        return self.cursor.fetchall()[0]
+        return self.cursor.fetchall()
 
     # Ajout de participant à une offre
     def add_participant(self, offre_id, participant):

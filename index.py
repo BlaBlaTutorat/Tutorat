@@ -49,12 +49,12 @@ def connexion_2():
         if request.method == 'POST':
 
             # obtenir les données entrées par l'utilisateur
-            mail = request.form.get['mail']
-            mdp = request.form.get['password']
+            mail = request.form.get('mail')
+            mdp = request.form.get('password')
 
             # chiffrer le mot de passe
 
-            mdp_chiffre = hashlib.sha256(str(mdp)).encode('utf-8').hexdigest()
+            mdp_chiffre = hashlib.sha256(str(mdp).encode('utf-8')).hexdigest()
 
             # comparer les infos à celle de la base dde donnée
             if sql_obj.get_crypt_mdp(mail) == mdp_chiffre and sql_obj.get_mail(mail) == mail:
@@ -92,7 +92,7 @@ def traitement_inscription():
 
     # Chiffrement du mdp
     chaine_mot_de_passe = request.form.get('mdp')
-    mot_de_passe_chiffre = hashlib.sha256(str(chaine_mot_de_passe)).encode('utf-8').hexdigest()
+    mot_de_passe_chiffre = hashlib.sha256(str(chaine_mot_de_passe).encode('utf-8')).hexdigest()
 
     nom = request.form.get('prenom') + '  ' + request.form.get('nom')
     # Envoi des infos à la base de donnée
