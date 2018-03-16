@@ -25,7 +25,7 @@ def index():
 def connexion():
     # Verif que l'utilisteur est connecté si connecté --> page de recherche sinon --> chargement template
     if 'mail' in session:
-        return redirect(url_for('recherche', info_msg = "Vous êtes connecté, vous pouvez dès à présent accéder au reste du site."))
+        return redirect(url_for('recherche', info_msg = "Vous êtes connecté, vous pouvez dès à présent accéder au service de tutorat."))
     else:
         return render_template("connexion.html", **locals())
 
