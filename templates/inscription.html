@@ -12,29 +12,31 @@
 <form method="post" action="/register">
     <div class="bloc_inscription">
         <div class="inscription">
-            <div class="critere">
-                <p class="register">Entrez votre nom :</p>
-                <p class="register">Entrez votre prénom :</p>
-                <p class="register">Entrez une adresse email valide :</p>
-                <p class="register">Choisissez un mot de passe :</p>
-                <p class="register">Entrez votre classe :</p>
-                <p>
-                    <a href="/search?info_msg=Votre inscription est terminée. Vous pouvez dès à présent commencer à utiliser le service de Tutorat.">
-                        <input type="submit" value="Inscription"/>
-                    </a>
-                </p>
+            <div class="reg">
+                <div class="critere">
+                    <p class="register">Entrez votre nom :</p>
+                    <p class="register">Entrez votre prénom :</p>
+                    <p class="register">Entrez une adresse email valide :</p>
+                    <p class="register">Choisissez un mot de passe :</p>
+                    <p class="register">Entrez votre classe :</p>
+                </div>
+                <div class="critere">
+                    <p><input type="text" name="nom"></p>
+                    <p><input type="text" name="prenom"></p>
+                    <p><input type="text" name="mail"></p>
+                    <p><input type="text" name="mdp"></p>
+                    <p><SELECT required name="classe" class="tri2">
+                        <option value="" selected disabled>- Classe -</option>
+                        {% for classe in classes %}
+                            <option>{{ classe }}</option>
+                        {% endfor %}
+                    </SELECT></p>
+                </div>
             </div>
-            <div class="critere">
-                <p><input type="text" name="nom"></p>
-                <p><input type="text" name="prenom"></p>
-                <p><input type="text" name="mail"></p>
-                <p><input type="text" name="mdp"></p>
-                <p><SELECT required name="classe" class="tri2">
-                    <option value="" selected disabled>- Classe -</option>
-                    {% for classe in classes %}
-                        <option>{{ classe }}</option>
-                    {% endfor %}
-                </SELECT></p>
+            <div class="reg">
+                <a href="/search?info_msg=Votre inscription est terminée. Vous pouvez dès à présent commencer à utiliser le service de Tutorat.">
+                    <input type="submit" value="Inscription"/>
+                </a>
             </div>
         </div>
     </div>
