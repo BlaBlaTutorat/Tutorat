@@ -21,14 +21,22 @@ def index():
 
 
 # Page de connexion
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/login', methods=['GET'])
 def connexion():
+    # TODO Verif que l'utilisteur est connecté si connecté --> page de recherche sinon chargement template
+    return "null"
+
+
+# Page de connexion
+@app.route('/login', methods=['POST'])
+def connexion_2():
+    # Traitement du formulaire envoyé par l'utilistauer depuis la page login
     if 'mail' not in session:
         sql_obj = sql.MysqlObject()
         admin_user = True
         user = "Tao Blancheton"
         css_state = sql_obj.get_css(user)
-       
+
         # Propre à cette page
         hidemenu = True
         if request.args.get('info_msg'):
@@ -36,27 +44,28 @@ def connexion():
             return render_template("connexion.html", **locals())
 
         if request.method == 'POST':
-            
+
             # obtenir les données entrées par l'utilisateur
             mail = request.form['mail']
             mdp = request.form['password']
-            
+
             # chiffrer le mot de passe
-            
+
             mdp_chiffre = hashlib.sha256(str(mdp)).encode('utf-8').hexdigest()
-            
+
             # comparer les infos à celle de la base dde donnée
             if sql_obj.get_compte(mot_de_passe_chiffre) == mdp_chiffre and sql_obj.get_compte(mail):
-            # valider ou non  la connexion
-                sql_obj.connect(mail,mdp_chiffre)
+                # valider ou non  la connexion
+                sql_obj.connect(mail, mdp_chiffre)
                 return redirect(url_for('recherche'))
             else:
-                 return redirect(url_for('connexion', info_msg="Erreur lors de la connexion, veuillez vérifier les informations saises puis réessayez."))
-        
+                return redirect(url_for('connexion',
+                                        info_msg="Erreur lors de la connexion, veuillez vérifier les informations saises puis réessayez."))
+
     else:
-           # Redirection si l'utilisateur est connecté
-      
-          return redirect(url_for('recherche'))
+        # Redirection si l'utilisateur est connecté
+
+        return redirect(url_for('recherche'))
 
 
 # Page d'inscription
