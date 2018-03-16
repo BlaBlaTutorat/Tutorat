@@ -49,8 +49,8 @@ def connexion_2():
         if request.method == 'POST':
 
             # obtenir les données entrées par l'utilisateur
-            mail = request.form['mail']
-            mdp = request.form['password']
+            mail = request.form.get['mail']
+            mdp = request.form.get['password']
 
             # chiffrer le mot de passe
 
@@ -80,6 +80,7 @@ def inscription():
         hidemenu = True
 
         return render_template("inscription.html", classes=sql_obj.classes_liste(), **locals())
+        traitement_inscription()
 
     else:
         # Redirection vers la page d'accueil
@@ -96,6 +97,9 @@ def traitement_inscription():
 
     nom = request.form.get('prenom') + '  ' + request.form.get('nom')
     sql_obj.create_compte(nom, mot_de_passe_chiffre, request.form.get('mail'), request.form.get('classe'))
+
+    # Envoi des infos à la base de donnée
+    sql_obj.create_compte
 
 
 # Mot de passe oublié
