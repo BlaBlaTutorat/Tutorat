@@ -9,8 +9,8 @@
 
 {% if info_msg %}
     <!-- Message d'information -->
-    <a href="/profile/view">
-        <button class="created">{{ info_msg }}</button>
+    <a href="/profile/view" class="info_msg">
+        <div>{{ info_msg }}</div>
     </a>
 {% endif %}
 
@@ -75,13 +75,9 @@
                                         {% endif %}{% endfor %}
                                 </div>
                             </div>
-                        </div>
-                        <div class="date">
-                            <p class="time"><strong class="G">Publiée le:</strong> {{ offre[4].strftime('%d-%m-%Y') }}
-                            </p>
-                            <p class="supr_offre"><a href="/delete?id={{ offre[0] }}">
+                            <a href="/delete?id={{ offre[0] }}">
                                 <button>Supprimer l'offre</button>
-                            </a></p>
+                            </a>
                         </div>
                     </div>
                     <br/>
@@ -132,13 +128,9 @@
                                         {% endif %}{% endfor %}
                                 </div>
                             </div>
-                        </div>
-                        <div class="date">
-                            <p class="time"><strong class="G">Publiée le:</strong> {{ tutorat[4].strftime('%d-%m-%Y') }}
-                            </p>
-                            <p class="supr_offre"><a href="/quit?id={{ tutorat[0] }}">
+                            <a href="/quit?id={{ tutorat[0] }}">
                                 <button>Quitter ce tutorat</button>
-                            </a></p>
+                            </a>
                         </div>
                     </div>
                     <br/>

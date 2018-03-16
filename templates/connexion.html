@@ -7,6 +7,13 @@
 
 {% include 'HEADER.html' %}
 
+{% if info_msg %}
+    <!-- Message d'information -->
+    <a href="/login" class="info_msg">
+        <div>{{ info_msg }}</div>
+    </a>
+{% endif %}
+
 <h2 class="log">Connectez vous :</h2>
 
 <div class="bloc_connexion">
@@ -34,14 +41,6 @@
         </div>
     </form>
 </div>
-
-
-{% if info_msg %}
-    <!-- Message d'information -->
-    <a href="login">
-        <button class="created">{{ info_msg }}</button>
-    </a>
-{% endif %}
 
 
 {% include 'FOOTER.html' %}
