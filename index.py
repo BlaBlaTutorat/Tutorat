@@ -23,6 +23,11 @@ def index():
 # Page de connexion
 @app.route('/login', methods=['GET'])
 def connexion():
+    hidemenu = True
+
+    if request.args.get('info_msg'):
+        info_msg = request.args.get('info_msg')
+
     # Verif que l'utilisteur est connecté si connecté --> page de recherche sinon --> chargement template
     if 'mail' in session:
         return redirect(url_for('recherche', info_msg = "Vous êtes connecté, vous pouvez dès à présent accéder au service de tutorat."))
@@ -33,6 +38,11 @@ def connexion():
 # Page de connexion
 @app.route('/login', methods=['POST'])
 def connexion_2():
+    hidemenu = True
+
+    if request.args.get('info_msg'):
+        info_msg = request.args.get('info_msg')
+
     # Traitement du formulaire envoyé par l'utilistauer depuis la page login
     if 'mail' not in session:
         sql_obj = sql.MysqlObject()
