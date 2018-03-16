@@ -24,7 +24,10 @@ def index():
 @app.route('/login', methods=['GET'])
 def connexion():
     # TODO Verif que l'utilisteur est connecté si connecté --> page de recherche sinon chargement template
-    return "null"
+    if 'mail' in session :
+        return redirect(url_for('recherche', info_msg = "Vous êtes connecté, vous pouvez dès à présent accéder au service de tutorat."))
+    else:
+        return render_template("connexion.html", **locals())
 
 
 # Page de connexion
