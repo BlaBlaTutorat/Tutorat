@@ -63,7 +63,7 @@ def connexion_2():
                                     info_msg="Vous êtes connecté, vous pouvez dès à présent accéder au service de tutorat."))
         else:
             return redirect(url_for('connexion',
-                                    info_msg="Erreur lors de la connexion, veuillez vérifier les informations saises puis réessayez."))
+                                    info_msg="Erreur lors de la connexion, veuillez vérifier les informations saisies puis réessayez."))
 
     else:
         return redirect(url_for('recherche',

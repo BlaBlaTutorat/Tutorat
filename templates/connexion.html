@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 
 {% with name="Connexion" %}{% include "HEAD.html" %}{% endwith %}
 
@@ -16,9 +16,10 @@
 
 <h2 class="log">Connectez vous :</h2>
 
-<div class="bloc_connexion">
-    <div class="connexion">
-        <form method="post">
+<form method="post">
+    <div class="bloc_connexion">
+        <div class="connexion">
+
             <div class="champs">
                 <p class="login">Adresse e-mail :</p>
                 <p><input name="mail" class="password"/></p>
@@ -29,19 +30,18 @@
             </div>
             <div class="champs">
                 <p><input type="submit" value="Connexion"/>
-                    <button><a class="mdp_oublie" href="/forgot">Mot de passe oublié</a></button>
+                    <a class="mdp_oublie" href="/forgot"><input type="button" value="Mot de passe oublié"/></a>
                 </p>
             </div>
-        </form>
-        <div class="champs">
-            <p class="not_register">Pas encore inscrit ! Inscrivez vous en cliquant ici :</p>
-            <p><a href="/register">
-                <button>Inscription</button>
-            </a></p>
+            <div class="champs">
+                <p class="not_register">Pas encore inscrit ! Inscrivez vous en cliquant ici :</p>
+                <p><a href="/register">
+                    <input type="button" value="Inscription"/>
+                </a></p>
+            </div>
         </div>
     </div>
-
-</div>
+</form>
 
 
 {% include 'FOOTER.html' %}
