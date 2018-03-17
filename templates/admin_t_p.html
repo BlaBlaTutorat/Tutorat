@@ -22,7 +22,6 @@
 </div>
 
 
-
 {% if info_msg %}
     <!-- Message d'information -->
     <a href="/admin/tutorials/progress" class="info_msg" id="page_admin_msg">
@@ -31,9 +30,14 @@
 {% endif %}
 
 
+<form method="post" class="user_search">
+    <h2>Rechercher un utilisateur</h2>
+    <input name="user_search" class="user_search_admin"/>
+</form>
+
 <!-- Liste des offres -->
 <div class="offres" id="tutorat_en_cours">
-    <h2 class="page_admin_title">Tutorats en cours</h2>
+    <h2>Tutorats en cours</h2>
     {% if tutorats_actifs|length>0 %}
         {% for tutorat in tutorats_actifs %}
             <br/>

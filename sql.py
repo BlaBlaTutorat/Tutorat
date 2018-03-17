@@ -90,6 +90,11 @@ class MysqlObject:
         self.cursor.execute("""SELECT * FROM users""")
         return self.cursor.fetchall()
 
+    # Listes des utilisateurs
+    def liste_user_admin(self, user_search):
+        self.cursor.execute("""SELECT * FROM users WHERE nom = %s""", (user_search,))
+        return self.cursor.fetchall()
+
     # Listes des offres
     def offres_liste(self, page, user):
         classe = self.get_user_info(user)[3]
@@ -107,6 +112,11 @@ class MysqlObject:
                 if classe == self.get_user_info(row[5])[3]:
                     offres.append(row)
         return offres
+
+    # Listes des offres tri admin
+    def offres_liste_tri_admin(self, user_search):
+        self.cursor.execute("""SELECT * FROM offres WHERE auteur = %s OR participant = %s OR participant2 = %s""", (user_search, user_search, user_search))
+        return self.cursor.fetchall()
 
     # Liste des offres selon 1 facteur de tri
     def offres_liste_tri(self, option, page, user):

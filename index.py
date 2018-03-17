@@ -169,7 +169,7 @@ def profil_update():
 
 
 # Page d'Administration offres en courts
-@app.route('/admin/tutorials/progress')
+@app.route('/admin/tutorials/progress', methods=['GET', 'POST'])
 def admin_OC():
     # TODO vérifier que l'utilisateur est admin et s'il ne l'est pas le rediriger vers la page d'erreur
     sql_obj = sql.MysqlObject()
@@ -180,7 +180,12 @@ def admin_OC():
     if request.args.get('info_msg'):
         info_msg = request.args.get('info_msg')
 
-    return render_template("admin_t_p.html", tutorats_actifs=sql_obj.offres_liste_validees(), days=days, **locals())
+    if request.form.get("user_search"):
+        user_search = request.form.get("user_search")
+        return render_template("admin_t_p.html", tutorats_actifs=sql_obj.offres_liste_tri_admin(user_search), days=days,
+                               **locals())
+    else:
+        return render_template("admin_t_p.html", tutorats_actifs=sql_obj.offres_liste_validees(), days=days, **locals())
 
 
 # Page d'Administration offres à valider
@@ -199,7 +204,7 @@ def admin_OV():
 
 
 # Page d'Administration profile utilisateur
-@app.route('/admin/users')
+@app.route('/admin/users', methods=['GET', 'POST'])
 def admin_U():
     # TODO vérifier que l'utilisateur est admin et s'il ne l'est pas le rediriger vers la page d'erreur
     sql_obj = sql.MysqlObject()
@@ -210,8 +215,11 @@ def admin_U():
     if request.args.get('info_msg'):
         info_msg = request.args.get('info_msg')
 
-    return render_template("admin_u.html", user_list=sql_obj.liste_user(),
-                           tutorats_actifs=sql_obj.offres_liste_validees(), days=days, **locals())
+    if request.form.get("user_search"):
+        user_search = request.form.get("user_search")
+        return render_template("admin_u.html", user_list=sql_obj.liste_user_admin(user_search), tutorats_actifs=sql_obj.offres_liste_validees(), days=days, **locals())
+    else:
+        return render_template("admin_u.html", user_list=sql_obj.liste_user(), tutorats_actifs=sql_obj.offres_liste_validees(), days=days, **locals())
 
 
 # Page de recherche d'offres

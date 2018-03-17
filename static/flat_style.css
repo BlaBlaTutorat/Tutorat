@@ -703,6 +703,21 @@ footer a:hover {
 /* END MAJ-Profil */
 
 /* Admin */
+.user_search {
+    margin-top: 160px;
+}
+
+.user_search_admin {
+    width: 20%;
+    height: 40px;
+    border: 1px solid #161616;
+    border-radius: 40px;
+    background-color: #18a3fa;
+    color: white;
+    font-family: "Gotham SSm A", sans-serif;
+    font-size: 0.85em;
+}
+
 #tuteur, #tutore {
     margin-left: 5px;
 }
@@ -725,6 +740,9 @@ footer a:hover {
     height: 75px;
     background-color: #161616;
     min-width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .header li {
@@ -784,7 +802,7 @@ footer a:hover {
 }
 
 #admin1 {
-    margin: 20px 50px 0 0;
+    margin: 20px 0 0 0;
 }
 
 #horaires button {

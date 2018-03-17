@@ -30,9 +30,15 @@
 {% endif %}
 
 
+<form method="post" class="user_search">
+    <h2>Rechercher un utilisateur</h2>
+    <input name="user_search" class="user_search_admin"/>
+</form>
+
+
 <!-- Liste des users -->
 <div class="admin" id="admin1">
-    <h2 class="page_admin_title">Utilisateurs</h2>
+    <h2>Utilisateurs</h2>
     {% if user_list|length>0 %}
         {% for user in user_list %}
             <div class="bloc_profil" id="user_admin">
