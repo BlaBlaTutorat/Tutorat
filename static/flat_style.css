@@ -424,12 +424,11 @@ footer a:hover {
 .info {
     padding-right: 0;
     margin-right: 0;
-    max-width: 40%;
-    min-width: 40%
+    max-width: 50%;
+    min-width: 50%
 }
 
 .offres .horaire {
-    margin-right: 10px;
     display: flex;
     justify-content: space-around;
     margin-top: 3px;
