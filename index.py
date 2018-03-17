@@ -30,7 +30,8 @@ def connexion():
 
     # Verif que l'utilisteur est connecté si connecté --> page de recherche sinon --> chargement template
     if 'mail' in session:
-        return redirect(url_for('recherche', info_msg = "Vous êtes connecté, vous pouvez dès à présent accéder au service de tutorat."))
+        return redirect(url_for('recherche',
+                                info_msg="Vous êtes connecté, vous pouvez dès à présent accéder au service de tutorat."))
     else:
         return render_template("connexion.html", **locals())
 
@@ -70,9 +71,11 @@ def connexion_2():
                 sql_obj.connect(mail, mdp_chiffre)
                 return redirect(url_for('recherche'))
             else:
-                return redirect(url_for('connexion',info_msg="Erreur lors de la connexion, veuillez vérifier les informations saises puis réessayez."))
+                return redirect(url_for('connexion',
+                                        info_msg="Erreur lors de la connexion, veuillez vérifier les informations saises puis réessayez."))
         else:
-            return redirect(url_for('connexion',info_msg="Erreur lors de la connexion, veuillez vérifier les informations saises puis réessayez."))
+            return redirect(url_for('connexion',
+                                    info_msg="Erreur lors de la connexion, veuillez vérifier les informations saises puis réessayez."))
 
     else:
         # Redirection si l'utilisateur est connecté
@@ -110,7 +113,6 @@ def traitement_inscription():
     nom = request.form.get('prenom') + '  ' + request.form.get('nom')
     # Envoi des infos à la base de donnée
     sql_obj.create_compte(nom, mot_de_passe_chiffre, request.form.get('mail'), request.form.get('classe'))
-
 
 
 # Mot de passe oublié
