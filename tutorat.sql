@@ -520,14 +520,14 @@ INSERT INTO `offres` (`id`, `auteur`, `filiere`, `matiere`, `date_time`, `partic
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
-  `nom` varchar(50) NOT NULL DEFAULT '',
+  `nom` varchar(50) NOT NULL,
   `mdp` varchar(1000) NOT NULL,
   `mail` varchar(50) NOT NULL,
   `classe` varchar(50) NOT NULL,
   `admin` tinyint(1) NOT NULL DEFAULT '0',
   `ban` tinyint(1) NOT NULL DEFAULT '0',
   `css` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`nom`)
+  PRIMARY KEY (`mail`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
