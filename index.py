@@ -56,11 +56,10 @@ def connexion_2():
         mdp_chiffre = hashlib.sha256(str(mdp).encode('utf-8')).hexdigest()
 
         # comparer les infos à celle de la base de données
-        if mail in get_user_info(self, user_name):
+        if mail in sql_obj.get_user_info(self, mail):
             if sql_obj.get_crypt_mdp(mail)[0][0] == mdp_chiffre:
                 # valider ou non  la connexion
-                session['mail'] = request.form['mail']
-                sql_obj.connect(mail, mdp_chiffre)
+                session = resp.set_cookie['connection','mail']
                 return redirect(url_for('recherche',
                                         info_msg="Vous êtes connecté, vous pouvez dès à présent accéder au service de tutorat."))
             else:
@@ -78,15 +77,18 @@ def connexion_2():
 @app.route('/register', methods=['GET'])
 def inscription():
     if 'mail' not in session:
+        if 'mail' not in users:
 
-        sql_obj = sql.MysqlObject()
-        admin_user = True
-        user = "Tao Blancheton"
-        css_state = sql_obj.get_css(user)
-        # Propre à cette page
-        hidemenu = True
+            sql_obj = sql.MysqlObject()
+            admin_user = True
+            user = "Tao Blancheton"
+            css_state = sql_obj.get_css(user)
+            # Propre à cette page
+            hidemenu = True
 
-        return render_template("inscription.html", classes=sql_obj.classes_liste(), **locals())
+            return render_template("inscription.html", classes=sql_obj.classes_liste(), **locals())
+        else:
+            return redirect(url_for('register', info_msg= "Un compte est déjà associé à cette adresse email."))
 
     else:
         # Redirection vers la page d'accueil
