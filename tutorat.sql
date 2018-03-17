@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  sam. 17 mars 2018 à 14:16
+-- Généré le :  sam. 17 mars 2018 à 20:04
 -- Version du serveur :  5.7.19
 -- Version de PHP :  5.6.31
 
@@ -506,7 +506,7 @@ CREATE TABLE IF NOT EXISTS `offres` (
 
 INSERT INTO `offres` (`id`, `auteur`, `filiere`, `matiere`, `date_time`, `participant`, `participant2`, `disponible`, `debut_j0`, `fin_j0`, `debut_j1`, `fin_j1`, `debut_j2`, `fin_j2`, `debut_j3`, `fin_j3`, `debut_j4`, `fin_j4`, `debut_j5`, `fin_j5`) VALUES
 (1, 'Marco Desmoulins', 'Terminale S', 'MATHEMATIQUES', '2018-02-22 00:00:00', NULL, NULL, 1, '08:00:00', '09:00:00', '16:00:00', '17:00:00', '14:00:00', '16:00:00', NULL, NULL, NULL, NULL, NULL, NULL),
-(2, 'Tao Blancheton', 'Terminale S', 'ISN', '2018-02-19 14:15:41', NULL, NULL, 1, '15:00:00', '16:00:00', NULL, NULL, NULL, NULL, '09:00:00', '10:00:00', NULL, NULL, '08:00:00', '09:00:00'),
+(2, 'Tao Blancheton', 'Terminale S', 'ISN', '2018-02-19 14:15:41', 'Marco Desmoulins', 'Antoine Labarussias', 1, '15:00:00', '16:00:00', NULL, NULL, NULL, NULL, '09:00:00', '10:00:00', NULL, NULL, '08:00:00', '09:00:00'),
 (3, 'Antoine Labarussias', 'Terminale S', 'S.I. COURS', '2018-02-22 00:00:00', NULL, NULL, 1, '13:00:00', '14:00:00', '17:00:00', '18:00:00', NULL, NULL, '14:00:00', '15:00:00', NULL, NULL, '08:00:00', '09:00:00'),
 (4, 'Jean Kévin', 'Seconde', 'FRANCAIS', '2018-02-22 00:00:00', NULL, NULL, 1, '08:00:00', '10:00:00', '11:00:00', '13:00:00', NULL, NULL, '15:00:00', '16:00:00', NULL, NULL, '08:00:00', '09:00:00'),
 (5, 'Alexis Ducont', 'Terminale S', 'ISN', '2018-02-19 14:15:41', NULL, NULL, 1, '10:00:00', '11:00:00', NULL, NULL, NULL, NULL, '08:00:00', '09:00:00', NULL, NULL, NULL, NULL),
