@@ -158,14 +158,14 @@ class MysqlObject:
 
     # Vérification que l'utilisateur est connecté
         
-    def get_mail(self, user_name):
-        self.cursor.execute("""SELECT mail FROM users WHERE nom=%s""", (user_name,))
+    def get_mail(self, mail):
+        self.cursor.execute("""SELECT mail FROM users WHERE mail=%s""", (mail,))
         self.cursor.fetchall()
 
 
     # Récupération et cryptage du mot de passe des utilisateurs
-    def get_crypt_mdp(self, user_name):
-        self.cursor.execute("""SELECT mdp FROM users WHERE nom=%s""", (user_name,))
+    def get_crypt_mdp(self, mail):
+        self.cursor.execute("""SELECT mdp FROM users WHERE mail=%s""", (mail,))
         return self.cursor.fetchall()
 
     # Ajout de participant à une offre

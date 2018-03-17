@@ -49,14 +49,14 @@ def connexion_2():
 
         # obtenir les données entrées par l'utilisateur
         mail = request.form.get('mail')
-        mdp = request.form.get('password')
+        mdp = request.form.get('mdp')
 
         # chiffrer le mot de passe
 
         mdp_chiffre = hashlib.sha256(str(mdp).encode('utf-8')).hexdigest()
 
         # comparer les infos à celle de la base de données
-        if sql_obj.get_crypt_mdp(mail) == mdp_chiffre and sql_obj.get_mail(mail) == mail:
+        if sql_obj.get_crypt_mdp(mail)[0][0] == mdp_chiffre:
             # valider ou non  la connexion
             sql_obj.connect(mail, mdp_chiffre)
             return redirect(url_for('recherche',
