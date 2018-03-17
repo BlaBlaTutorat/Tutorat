@@ -58,8 +58,10 @@ def connexion_2():
         # comparer les infos à celle de la base de données
         if mail in sql_obj.get_user_info(self, mail):
             if sql_obj.get_crypt_mdp(mail)[0][0] == mdp_chiffre:
+
                 # valider ou non  la connexion
-                session = resp.set_cookie['connection','mail']
+
+                global session = resp.set_cookie['connection','mail']
                 return redirect(url_for('recherche',
                                         info_msg="Vous êtes connecté, vous pouvez dès à présent accéder au service de tutorat."))
             else:
