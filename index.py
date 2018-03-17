@@ -56,8 +56,10 @@ def connexion_2():
         mdp_chiffre = hashlib.sha256(str(mdp).encode('utf-8')).hexdigest()
 
         # comparer les infos à celle de la base de données
+        if mail
         if sql_obj.get_crypt_mdp(mail)[0][0] == mdp_chiffre:
             # valider ou non  la connexion
+            session['mail'] = request.form['mail']
             sql_obj.connect(mail, mdp_chiffre)
             return redirect(url_for('recherche',
                                     info_msg="Vous êtes connecté, vous pouvez dès à présent accéder au service de tutorat."))

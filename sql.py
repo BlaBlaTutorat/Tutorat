@@ -150,16 +150,7 @@ class MysqlObject:
         self.cursor.execute("""SELECT * FROM users WHERE nom=%s""", (user_name,))
         return self.cursor.fetchall()[0]
 
-    # Connecter l'utilisateur
-    def connect(self, mail, mdp_chiffre):
-        self.cursor.execute("""Insert IN session""", (mail, mdp_chiffre))
-        self.cursor.fetchall()[0]
-
     # Vérification que l'utilisateur est connecté
-
-    def get_mail(self, mail):
-        self.cursor.execute("""SELECT mail FROM users WHERE mail=%s""", (mail,))
-        self.cursor.fetchall()
 
     # Récupération et cryptage du mot de passe des utilisateurs
     def get_crypt_mdp(self, mail):
