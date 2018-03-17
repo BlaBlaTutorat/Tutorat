@@ -56,11 +56,11 @@ def connexion_2():
         mdp_chiffre = hashlib.sha256(str(mdp).encode('utf-8')).hexdigest()
 
         # comparer les infos à celle de la base de données
-        if mail in sql_obj.get_user_info(self, mail):
+        if mail in sql_obj.get_user_info('mail'):
             if sql_obj.get_crypt_mdp(mail)[0][0] == mdp_chiffre:
 
                 # valider ou non  la connexion
-                global session = request.cookies.get('mail')
+                global session=request.cookies.get('mail')
                 resp.set_cookie('session','mail')
                 return redirect(url_for('recherche',
                                         info_msg="Vous êtes connecté, vous pouvez dès à présent accéder au service de tutorat."))
@@ -79,7 +79,8 @@ def connexion_2():
 @app.route('/register', methods=['GET'])
 def inscription():
     if 'mail' not in session:
-        if 'mail' not in users:
+        sql_obj = sql.MysqlObject()
+        if 'mail' not in sql_obj.get_user_info('mail'):
 
             sql_obj = sql.MysqlObject()
             admin_user = True
