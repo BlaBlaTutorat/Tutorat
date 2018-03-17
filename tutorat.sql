@@ -472,30 +472,6 @@ INSERT INTO `matieres` (`NUMERO`, `CODE`, `LIBELLE`, `LIBLONG`, `EQUIVALENCE`) V
 -- --------------------------------------------------------
 
 --
--- Structure de la table `niveaux`
---
-
-DROP TABLE IF EXISTS `niveaux`;
-CREATE TABLE IF NOT EXISTS `niveaux` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nom` varchar(50) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
-
---
--- Déchargement des données de la table `niveaux`
---
-
-INSERT INTO `niveaux` (`id`, `nom`) VALUES
-(1, 'Seconde'),
-(2, 'Première'),
-(3, 'Terminale'),
-(4, 'CPGE 1ère année'),
-(5, 'CPGE 2ème année');
-
--- --------------------------------------------------------
-
---
 -- Structure de la table `offres`
 --
 
@@ -535,27 +511,6 @@ INSERT INTO `offres` (`id`, `auteur`, `filiere`, `matiere`, `date_time`, `partic
 (4, 'Jean Kévin', 'Seconde', 'FRANCAIS', '2018-02-22 00:00:00', NULL, NULL, 1, '08:00:00', '10:00:00', '11:00:00', '13:00:00', NULL, NULL, '15:00:00', '16:00:00', NULL, NULL, '08:00:00', '09:00:00'),
 (5, 'Alexis Ducont', 'Terminale S', 'ISN', '2018-02-19 14:15:41', NULL, NULL, 1, '10:00:00', '11:00:00', NULL, NULL, NULL, NULL, '08:00:00', '09:00:00', NULL, NULL, NULL, NULL),
 (6, 'Lola Blachard', 'Première S', 'S.I. COURS', '2018-02-22 00:00:00', NULL, NULL, 1, '15:00:00', '16:00:00', NULL, NULL, '17:00:00', '18:00:00', '10:00:00', '11:00:00', NULL, NULL, '09:00:00', '10:00:00');
-
--- --------------------------------------------------------
-
---
--- Structure de la table `specialites`
---
-
-DROP TABLE IF EXISTS `specialites`;
-CREATE TABLE IF NOT EXISTS `specialites` (
-  `nom` varchar(50) NOT NULL,
-  PRIMARY KEY (`nom`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Déchargement des données de la table `specialites`
---
-
-INSERT INTO `specialites` (`nom`) VALUES
-('Economique et sociale'),
-('Littéraire'),
-('Scientifique');
 
 -- --------------------------------------------------------
 
