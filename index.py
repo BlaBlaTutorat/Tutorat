@@ -62,11 +62,11 @@ def connexion_2():
                 session['mail'] = request.form['mail']
                 sql_obj.connect(mail, mdp_chiffre)
                 return redirect(url_for('recherche',
-                                    info_msg="Vous êtes connecté, vous pouvez dès à présent accéder au service de tutorat."))
+                                        info_msg="Vous êtes connecté, vous pouvez dès à présent accéder au service de tutorat."))
             else:
                 return redirect(url_for('connexion',
-                                    info_msg="Erreur lors de la connexion, veuillez vérifier les informations saisies puis réessayez."))
-        else :
+                                        info_msg="Erreur lors de la connexion, veuillez vérifier les informations saisies puis réessayez."))
+        else:
             return redirect(url_for('connexion',
                                     info_msg="Aucun compte ne correspond à l'adresse email renseignée, veuillez vérifier les informations saisies puis réessayez."))
     else:
@@ -177,6 +177,7 @@ def admin_OC():
 
     return render_template("admin_t_p.html", tutorats_actifs=sql_obj.offres_liste_validees(), days=days, **locals())
 
+
 # Page d'Administration offres à valider
 @app.route('/admin/tutorials/validate')
 def admin_OV():
@@ -191,6 +192,7 @@ def admin_OV():
 
     return render_template("admin_t_v.html", offres_V=sql_obj.offres_liste_valider(), days=days, **locals())
 
+
 # Page d'Administration profile utilisateur
 @app.route('/admin/users')
 def admin_U():
@@ -203,7 +205,9 @@ def admin_U():
     if request.args.get('info_msg'):
         info_msg = request.args.get('info_msg')
 
-    return render_template("admin_u.html", user_list=sql_obj.liste_user(), tutorats_actifs=sql_obj.offres_liste_validees(), days=days, **locals())
+    return render_template("admin_u.html", user_list=sql_obj.liste_user(),
+                           tutorats_actifs=sql_obj.offres_liste_validees(), days=days, **locals())
+
 
 # Page de recherche d'offres
 @app.route('/search', methods=['GET', 'POST'])
