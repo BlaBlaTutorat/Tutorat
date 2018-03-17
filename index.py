@@ -172,13 +172,6 @@ def admin_OC():
     user = "Tao Blancheton"
     css_state = sql_obj.get_css(user)
 
-    if request.form.get('precedent'):
-        page = int(request.form.get('page')) - 1
-    elif request.form.get('suivant'):
-        page = int(request.form.get('page')) + 1
-    else:
-        page = 0
-
     if request.args.get('info_msg'):
         info_msg = request.args.get('info_msg')
 
@@ -192,13 +185,6 @@ def admin_OV():
     admin_user = True
     user = "Tao Blancheton"
     css_state = sql_obj.get_css(user)
-
-    if request.form.get('precedent'):
-        page = int(request.form.get('page')) - 1
-    elif request.form.get('suivant'):
-        page = int(request.form.get('page')) + 1
-    else:
-        page = 0
 
     if request.args.get('info_msg'):
         info_msg = request.args.get('info_msg')
@@ -214,17 +200,10 @@ def admin_U():
     user = "Tao Blancheton"
     css_state = sql_obj.get_css(user)
 
-    if request.form.get('precedent'):
-        page = int(request.form.get('page')) - 1
-    elif request.form.get('suivant'):
-        page = int(request.form.get('page')) + 1
-    else:
-        page = 0
-
     if request.args.get('info_msg'):
         info_msg = request.args.get('info_msg')
 
-    return render_template("admin_u.html", user_list=sql_obj.liste_user(), days=days, **locals())
+    return render_template("admin_u.html", user_list=sql_obj.liste_user(), tutorats_actifs=sql_obj.offres_liste_validees(), days=days, **locals())
 
 # Page de recherche d'offres
 @app.route('/search', methods=['GET', 'POST'])

@@ -42,12 +42,18 @@
                     <p class="element"><strong class="G">Auteur:</strong> {{ tutorat[1] }}</p>
                     <p class="element"><strong class="G">Classe:</strong> {{ tutorat[2] }}</p>
                     <p class="element"><strong class="G">Matière:</strong> {{ tutorat[3] }}</p>
-                    <p class="element"><strong class="G">Participants:</strong>
-                        {% if tutorat[5] is none and tutorat[6] is none %}
+                    <p class="element"><strong class="G">Participant 1:</strong>
+                        {% if tutorat[5] is none %}
                             Personne
                         {% else %}
                             {% if tutorat[5] is not none %}{{ tutorat[5] }}{% endif %}
-                            {% if tutorat[6] is not none %}, {{ tutorat[6] }}{% endif %}
+                        {% endif %}
+                    </p>
+                    <p class="element"><strong class="G">Participant 2:</strong>
+                        {% if tutorat[6] is none %}
+                            Personne
+                        {% else %}
+                            {% if tutorat[6] is not none %}{{ tutorat[6] }}{% endif %}
                         {% endif %}
                     </p>
                 </div>

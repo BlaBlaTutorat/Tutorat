@@ -424,8 +424,8 @@ footer a:hover {
 .info {
     padding-right: 0;
     margin-right: 0;
-    max-width: 35%;
-    min-width: 35%
+    max-width: 40%;
+    min-width: 40%
 }
 
 .offres .horaire {
@@ -703,6 +703,10 @@ footer a:hover {
 /* END MAJ-Profil */
 
 /* Admin */
+#tuteur, #tutore {
+    margin-left: 5px;
+}
+
 #page_admin_msg {
     top: 150px;
 }

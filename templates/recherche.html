@@ -65,11 +65,18 @@
                     <p class="element"><strong class="G">Auteur:</strong> {{ offre[1] }}</p>
                     <p class="element"><strong class="G">Classe:</strong> {{ offre[2] }}</p>
                     <p class="element"><strong class="G">Matière:</strong> {{ offre[3] }}</p>
-                    <p class="element"><strong class="G">Participants:</strong>
-                        {% if offre[5] is none%}
-                            Aucun
+                    <p class="element"><strong class="G">Participant 1:</strong>
+                        {% if tutorat[5] is none %}
+                            Personne
                         {% else %}
-                            {{ offre[5] }}
+                            {% if tutorat[5] is not none %}{{ tutorat[5] }}{% endif %}
+                        {% endif %}
+                    </p>
+                    <p class="element"><strong class="G">Participant 2:</strong>
+                        {% if tutorat[6] is none %}
+                            Personne
+                        {% else %}
+                            {% if tutorat[6] is not none %}{{ tutorat[6] }}{% endif %}
                         {% endif %}
                     </p>
                     <form class="bouton" method="post" action="/apply">
