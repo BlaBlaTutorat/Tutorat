@@ -485,7 +485,7 @@ def method_not_allowed(error):
     return render_template("error.html", message="Erreur 405 - Méthode de requête non autorisée", **locals())
 
 
-# Nécessaire pour faire fontionner les sessions
+# Nécessaire pour faire fontionner les sessions (à garder secret pour que l'utilisateur ne puisse pas modifier les cookies)
 app.secret_key = '\x1c\xd7\x9c@\xe6\xdf\xb2\xab\xb1\x86\xa62\x85k_\x17\x93Q\xb7f\x9b\x10g\x0e'
 
 # Lancement du serveur lors de l'exécution du fichier
