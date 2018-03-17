@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  Dim 04 mars 2018 à 11:15
+-- Généré le :  sam. 17 mars 2018 à 14:16
 -- Version du serveur :  5.7.19
 -- Version de PHP :  5.6.31
 
@@ -472,6 +472,30 @@ INSERT INTO `matieres` (`NUMERO`, `CODE`, `LIBELLE`, `LIBLONG`, `EQUIVALENCE`) V
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `niveaux`
+--
+
+DROP TABLE IF EXISTS `niveaux`;
+CREATE TABLE IF NOT EXISTS `niveaux` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nom` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `niveaux`
+--
+
+INSERT INTO `niveaux` (`id`, `nom`) VALUES
+(1, 'Seconde'),
+(2, 'Première'),
+(3, 'Terminale'),
+(4, 'CPGE 1ère année'),
+(5, 'CPGE 2ème année');
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `offres`
 --
 
@@ -515,13 +539,34 @@ INSERT INTO `offres` (`id`, `auteur`, `filiere`, `matiere`, `date_time`, `partic
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `specialites`
+--
+
+DROP TABLE IF EXISTS `specialites`;
+CREATE TABLE IF NOT EXISTS `specialites` (
+  `nom` varchar(50) NOT NULL,
+  PRIMARY KEY (`nom`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `specialites`
+--
+
+INSERT INTO `specialites` (`nom`) VALUES
+('Economique et sociale'),
+('Littéraire'),
+('Scientifique');
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `users`
 --
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `nom` varchar(50) NOT NULL DEFAULT '',
-  `mdp` varchar(15) NOT NULL,
+  `mdp` varchar(1000) NOT NULL,
   `mail` varchar(50) NOT NULL,
   `classe` varchar(50) NOT NULL,
   `admin` tinyint(1) NOT NULL DEFAULT '0',
@@ -535,9 +580,9 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`nom`, `mdp`, `mail`, `classe`, `admin`, `ban`, `css`) VALUES
-('Antoine Labarussias', 'antoine', 'antoinelabarussias@orange.fr', 'TS5', 1, 0, 0),
-('Marco Desmoulins', 'marco', 'markopelo@gmail.com', 'TS5', 1, 0, 0),
-('Tao Blancheton', 'tao', 'taotom63@gmail.com', 'TS5', 1, 0, 0);
+('Antoine Labarussias', '1f0dea80a1af4eefa352c04bdaaa79f79433a7b458aaeaa927cb73ac9f63326a', 'antoinelabarussias@orange.fr', 'TS5', 1, 0, 0),
+('Marco Desmoulins', '7c8ccc86c11654af029457d90fdd9d013ce6fb011ee8fdb1374832268cc8d967', 'markopelo@gmail.com', 'TS5', 1, 0, 0),
+('Tao Blancheton', 'e07f52f45ffcfe004432b8f96fbe401378c255fbae4ad87ee64cff0cb8a77227', 'taotom63@gmail.com', 'TS5', 1, 0, 0);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
