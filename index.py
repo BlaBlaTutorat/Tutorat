@@ -106,6 +106,7 @@ def traitement_inscription():
     nom = request.form.get('prenom') + '  ' + request.form.get('nom')
     # Envoi des infos à la base de donnée
     sql_obj.create_compte(nom, mot_de_passe_chiffre, request.form.get('mail'), request.form.get('classe'))
+    return redirect(url_for("profil", info_msg="Votre compte a bien été créé, vous pouvez dès à présent accéder à votre profil et au service d'offre/demande de BlaBlaTutorat."))
 
 
 # Mot de passe oublié
