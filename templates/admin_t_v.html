@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+{% with name="Administration" %}{% include "HEAD.html" %}{% endwith %}
+
+<body>
+
+{% include 'HEADER.html' %}
+
+<div class="header">
+    <div>
+        <div></div>
+        <nav>
+            <ul>
+                <li><a href="/admin/tutorials/validate">To validate</a></li>
+                <li><a href="/admin/tutorials/progress">In progress</a></li>
+                <li><a href="/admin/users">Users list</a></li>
+            </ul>
+        </nav>
+        <div></div>
+    </div>
+</div>
+
+
+{% if info_msg %}
+    <!-- Message d'information -->
+    <a href="/admin/tutorials/validate" class="info_msg" id="page_admin_msg">
+        <div>{{ info_msg }}</div>
+    </a>
+{% endif %}
+
+
+<!-- Liste des offres -->
+<div class="admin">
+    <h2 class="page_admin_title">Offres à valider</h2>
+    {% if offres_V|length>0 %}
+        {% for offre in offres_V %}
+            <br/>
+            <div class="bloc">
+                <div class="info">
+                    <p class="element"><strong class="G">Auteur:</strong> {{ offre[1] }}</p>
+                    <p class="element"><strong class="G">Classe:</strong> {{ offre[2] }}</p>
+                    <p class="element"><strong class="G">Matière:</strong> {{ offre[3] }}</p>
+                </div>
+                <div id="horaires">
+                    <div class="horaire">
+                        <div class="table">
+                            {% for i in range(0,12,2) %}
+                                {% if offre[8+i] is not none and offre[9+i] is not none %}
+                                    <p>{{ days[i//2] }}:</p>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <div class="table" id="table_horaires">
+                            {% for i in range(0,12,2) %}
+                                {% if offre[8+i] is not none and offre[9+i] is not none %}
+                                    <p>{{ 'h'.join((offre[8+i]|string).split(':')[:2]) }} - {{ 'h'.join((offre[9+i]|string).split(':')[:2]) }}</p>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <a href="/delete2?id={{ offre[0] }}">
+                        <button>Supprimer l'offre</button>
+                    </a>
+                    <a href="/validate?id={{ offre[0] }}">
+                        <button>Accepter l'offre</button>
+                    </a>
+                </div>
+            </div>
+            <br/>
+        {% endfor %}
+    {% else %}
+        <div class="bloc" id="none_offre">
+            <p class="none_offre">Aucune offre n'a été trouvée</p>
+        </div>
+    {% endif %}
+</div>
+
+{% include 'FOOTER.html' %}
+
+</body>
+</html>

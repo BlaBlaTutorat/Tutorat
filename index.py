@@ -159,22 +159,68 @@ def profil_update():
         return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
 
 
-# Page d'Administration
-@app.route('/admin')
-def admin():
+# Page d'Administration offres en courts
+@app.route('/admin/tutorials/progress')
+def admin_OC():
     # TODO vérifier que l'utilisateur est admin et s'il ne l'est pas le rediriger vers la page d'erreur
     sql_obj = sql.MysqlObject()
     admin_user = True
     user = "Tao Blancheton"
     css_state = sql_obj.get_css(user)
 
+    if request.form.get('precedent'):
+        page = int(request.form.get('page')) - 1
+    elif request.form.get('suivant'):
+        page = int(request.form.get('page')) + 1
+    else:
+        page = 0
+
     if request.args.get('info_msg'):
         info_msg = request.args.get('info_msg')
 
-    return render_template("administration.html", user_list=sql_obj.liste_user(),
-                           offres_V=sql_obj.offres_liste_valider(), tutorats_actifs=sql_obj.offres_liste_validees(),
-                           days=days, **locals())
+    return render_template("admin_t_p.html", tutorats_actifs=sql_obj.offres_liste_validees(), days=days, **locals())
 
+# Page d'Administration offres à valider
+@app.route('/admin/tutorials/validate')
+def admin_OV():
+    # TODO vérifier que l'utilisateur est admin et s'il ne l'est pas le rediriger vers la page d'erreur
+    sql_obj = sql.MysqlObject()
+    admin_user = True
+    user = "Tao Blancheton"
+    css_state = sql_obj.get_css(user)
+
+    if request.form.get('precedent'):
+        page = int(request.form.get('page')) - 1
+    elif request.form.get('suivant'):
+        page = int(request.form.get('page')) + 1
+    else:
+        page = 0
+
+    if request.args.get('info_msg'):
+        info_msg = request.args.get('info_msg')
+
+    return render_template("admin_t_v.html", offres_V=sql_obj.offres_liste_valider(), days=days, **locals())
+
+# Page d'Administration profile utilisateur
+@app.route('/admin/users')
+def admin_U():
+    # TODO vérifier que l'utilisateur est admin et s'il ne l'est pas le rediriger vers la page d'erreur
+    sql_obj = sql.MysqlObject()
+    admin_user = True
+    user = "Tao Blancheton"
+    css_state = sql_obj.get_css(user)
+
+    if request.form.get('precedent'):
+        page = int(request.form.get('page')) - 1
+    elif request.form.get('suivant'):
+        page = int(request.form.get('page')) + 1
+    else:
+        page = 0
+
+    if request.args.get('info_msg'):
+        info_msg = request.args.get('info_msg')
+
+    return render_template("admin_u.html", user_list=sql_obj.liste_user(), days=days, **locals())
 
 # Page de recherche d'offres
 @app.route('/search', methods=['GET', 'POST'])
@@ -371,7 +417,7 @@ def delete2():
         # TODO vérifier que l'utilisateur est admin et s'il ne l'est pas le rediriger vers la page d'erreur
 
         sql_obj.delete_offer(offre_id)
-        return redirect(url_for("admin", info_msg="La suppression a bien été effectuée."))
+        return redirect(url_for("admin_OC", info_msg="La suppression a bien été effectuée."))
     else:
         abort(403)
 
@@ -386,7 +432,7 @@ def validate():
         # TODO vérifier que l'utilisateur est admin et s'il ne l'est pas le rediriger vers la page d'erreur
 
         sql_obj.validate_offer(offre_id, disponible)
-        return redirect(url_for("admin", info_msg="L'offre a bien été validée."))
+        return redirect(url_for("admin_OV", info_msg="L'offre a bien été validée."))
     else:
         abort(403)
 
@@ -400,7 +446,7 @@ def ban():
         sql_obj = sql.MysqlObject()
 
         sql_obj.ban(user_name)
-        return redirect(url_for("admin", info_msg="Cet utilisateur a bien été banni."))
+        return redirect(url_for("admin_U", info_msg="Cet utilisateur a bien été banni."))
     else:
         abort(403)
 

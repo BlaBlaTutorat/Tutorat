@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+{% with name="Administration" %}{% include "HEAD.html" %}{% endwith %}
+
+<body>
+
+{% include 'HEADER.html' %}
+
+<div class="header">
+    <div>
+        <div></div>
+        <nav>
+            <ul>
+                <li><a href="/admin/tutorials/validate">To validate</a></li>
+                <li><a href="/admin/tutorials/progress">In progress</a></li>
+                <li><a href="/admin/users">Users list</a></li>
+            </ul>
+        </nav>
+        <div></div>
+    </div>
+</div>
+
+
+
+{% if info_msg %}
+    <!-- Message d'information -->
+    <a href="/admin/tutorials/progress" class="info_msg" id="page_admin_msg">
+        <div>{{ info_msg }}</div>
+    </a>
+{% endif %}
+
+
+<!-- Liste des offres -->
+<div class="offres" id="tutorat_en_cours">
+    <h2 class="page_admin_title">Tutorats en cours</h2>
+    {% if tutorats_actifs|length>0 %}
+        {% for tutorat in tutorats_actifs %}
+            <br/>
+            <div class="bloc">
+                <div class="info">
+                    <p class="element"><strong class="G">Auteur:</strong> {{ tutorat[1] }}</p>
+                    <p class="element"><strong class="G">Classe:</strong> {{ tutorat[2] }}</p>
+                    <p class="element"><strong class="G">Matière:</strong> {{ tutorat[3] }}</p>
+                    <p class="element"><strong class="G">Participants:</strong>
+                        {% if tutorat[5] is none and tutorat[6] is none %}
+                            Personne
+                        {% else %}
+                            {% if tutorat[5] is not none %}{{ tutorat[5] }}{% endif %}
+                            {% if tutorat[6] is not none %}, {{ tutorat[6] }}{% endif %}
+                        {% endif %}
+                    </p>
+                </div>
+                <div id="horaires">
+                    <div class="horaire">
+                        <div class="table">
+                            {% for i in range(0,12,2) %}
+                                {% if tutorat[8+i] is not none and tutorat[9+i] is not none %}
+                                    <p>{{ days[i//2] }}:</p>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <div class="table" id="table_horaires">
+                            {% for i in range(0,12,2) %}
+                                {% if tutorat[8+i] is not none and tutorat[9+i] is not none %}
+                                    <p>{{ 'h'.join((tutorat[8+i]|string).split(':')[:2]) }} - {{ 'h'.join((tutorat[9+i]|string).split(':')[:2]) }}</p>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <a href="/delete2?id={{ tutorat[0] }}">
+                        <button>Supprimer ce tutorat</button>
+                    </a>
+                </div>
+            </div>
+            <br/>
+        {% endfor %}
+    {% else %}
+        <div class="bloc" id="none_offre">
+            <p class="none_offre">Aucun tutorat n'a été trouvé</p>
+        </div>
+    {% endif %}
+</div>
+
+{% include 'FOOTER.html' %}
+
+</body>
+</html>
