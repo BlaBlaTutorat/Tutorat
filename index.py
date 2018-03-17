@@ -7,6 +7,7 @@ import sql
 
 app = Flask(__name__)
 days = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
+session = request.cookies.get('mail')
 
 
 # Page d'accueil qui redirige vers la page de recherche ou page de login
@@ -60,7 +61,6 @@ def connexion_2():
             if sql_obj.get_crypt_mdp(mail)[0][0] == mdp_chiffre:
 
                 # valider ou non  la connexion
-                global session=request.cookies.get('mail')
                 resp.set_cookie('session','mail')
                 return redirect(url_for('recherche',
                                         info_msg="Vous êtes connecté, vous pouvez dès à présent accéder au service de tutorat."))
