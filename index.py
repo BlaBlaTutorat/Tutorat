@@ -23,16 +23,20 @@ def index():
 # Page de connexion
 @app.route('/login', methods=['GET'])
 def connexion():
-    hidemenu = True
-
-    if request.args.get('info_msg'):
-        info_msg = request.args.get('info_msg')
-
     # Verif que l'utilisateur est connecté si connecté --> page de recherche sinon --> chargement template
+
     if 'mail' in session:
+
         return redirect(url_for('recherche',
                                 info_msg="Vous êtes connecté, vous pouvez dès à présent accéder au service de tutorat."))
+
     else:
+
+        hidemenu = True
+
+        if request.args.get('info_msg'):
+            info_msg = request.args.get('info_msg')
+
         return render_template("connexion.html", **locals())
 
 
