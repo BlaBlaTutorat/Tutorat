@@ -21,10 +21,10 @@
                     <p class="register">Entrez votre classe :</p>
                 </div>
                 <div class="critere">
-                    <p><input type="text" name="nom"></p>
-                    <p><input type="text" name="prenom"></p>
-                    <p><input type="text" name="mail"></p>
-                    <p><input type="text" name="mdp"></p>
+                    <p><input required type="text" name="nom"></p>
+                    <p><input required type="text" name="prenom"></p>
+                    <p><input required type="text" name="mail"></p>
+                    <p><input required type="text" name="mdp"></p>
                     <p><SELECT required name="classe" class="tri2">
                         <option value="" selected disabled>- Classe -</option>
                         {% for classe in classes %}
