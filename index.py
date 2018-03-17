@@ -55,7 +55,8 @@ def connexion_2():
         if sql_obj.get_crypt_mdp(mail) == mdp_chiffre and sql_obj.get_mail(mail) == mail:
             # valider ou non  la connexion
             sql_obj.connect(mail, mdp_chiffre)
-            return redirect(url_for('recherche'))
+            return redirect(url_for('recherche',
+                                    info_msg="Vous êtes connecté, vous pouvez dès à présent accéder au service de tutorat."))
         else:
             return redirect(url_for('connexion',
                                     info_msg="Erreur lors de la connexion, veuillez vérifier les informations saises puis réessayez."))
