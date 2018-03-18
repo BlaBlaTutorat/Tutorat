@@ -92,7 +92,7 @@
                         <div class="info">
                             <p class="element"><strong class="G">Auteur:</strong> {{ sql_obj.get_user_pseudo(tutorat[1]) }}</p>
                             <p class="element"><strong class="G">Mail de
-                                l'auteur:</strong> {{ sql_obj.get_user_info(tutorat[1])[2] }}</p>
+                                l'auteur:</strong> {{ tutorat[1] }}</p>
                             <p class="element"><strong class="G">Matière:</strong> {{ tutorat[3] }}</p>
                             <p class="element"><strong class="G">Participants:</strong>
                                 {% if tutorat[5] is none and tutorat[6] is none %}
