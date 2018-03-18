@@ -113,12 +113,18 @@ def traitement_inscription():
 
 
 # Mot de passe oublié
-@app.route('/forgot')
+@app.route('/forgot', methods=['GET'])
 def mdp_oublie():
     # Propre à cette page
     hidemenu = True
 
     return render_template("mdp_oublie.html", **locals())
+
+
+# Traitement Mot de passe oublié
+@app.route('/forgot', methods=['POST'])
+def traitement_mdp_oublie():
+    return redirect(url_for('connexion', info_msg="Un nouveau mot de passe a été envoyé à " + request.form['mail']))
 
 
 # Page de Profil
