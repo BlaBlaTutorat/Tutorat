@@ -412,9 +412,6 @@ def enregistrement():
 
         # TODO A FAIRE AVEC SESSION
         mail = "taotom63@gmail.com"
-        admin_user = sql_obj.get_user_info(mail)[0][4]
-        user = sql_obj.get_user_info(mail)[0][0]
-        css_state = sql_obj.get_css(mail)
 
         result_code = sql_obj.add_participant(request.form.get("id"), mail)
         if result_code == 0:
@@ -423,19 +420,17 @@ def enregistrement():
                 url_for("recherche", info_msg="Votre participation à ce tutorat a bien été prise en compte."))
         elif result_code == 1:
             # Erreur l'utilisateur participe déjà à l'offre
-            return render_template("error.html", message="Erreur - Vous vous êtes déjà enregistré pour ce Tutorat",
-                                   **locals())
+            return redirect(url_for("recherche", info_msg="Vous vous êtes déjà enregistré pour ce Tutorat"))
         elif result_code == 2:
             # Erreur (cas très rare ou l'utilisateur accepte une offre qui est déjà pleine)
-            return render_template("error.html", message="Erreur - Ce Tutorat est déjà plein", **locals())
+            return redirect(url_for("recherche", info_msg="Ce Tutorat est déjà plein"))
         elif result_code == 3:
             # Erreur l'utilisateur veut participer à une offre qu'il a créée
-            return render_template("error.html", message="Erreur - Vous êtes l'auteur de ce tutorat", **locals())
+            return redirect(url_for("recherche", info_msg="Vous êtes l'auteur de ce tutorat"))
         elif result_code == 4:
             # Erreur l'utilisateur n'est pas dans la même classe que le premier participant
-            return render_template("error.html",
-                                   message="Erreur - Vous n'appartenez pas à la même classe que le premier participant",
-                                   **locals())
+            return redirect(
+                url_for("recherche", info_msg="Vous n'appartenez pas à la même classe que le premier participant"))
 
     # Redirection si l'utilisateur n'est pas connecté
     else:
