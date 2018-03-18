@@ -63,6 +63,10 @@ input, button {
     font-size: 0.9em;
 }
 
+input {
+    border-radius: 0;
+}
+
 input:hover, button:hover {
     background-color: #1863a9;
     border: 1px solid #1863a9;
