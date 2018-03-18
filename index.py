@@ -131,75 +131,74 @@ def traitement_mdp_oublie():
 # Page de Profil info utilisateur
 @app.route('/profile/view')
 def profil():
-    #if 'mail' in session:
-    sql_obj = sql.MysqlObject()
+    if 'mail' in session:
+        sql_obj = sql.MysqlObject()
 
-    # TODO A FAIRE AVEC SESSION
-    mail = "taotom63@gmail.com"
-    admin_user = sql_obj.get_user_info(mail)[0][4]
-    user = sql_obj.get_user_info(mail)[0][0]
-    css_state = sql_obj.get_css(mail)
+        # TODO A FAIRE AVEC SESSION
+        mail = "taotom63@gmail.com"
+        admin_user = sql_obj.get_user_info(mail)[0][4]
+        user = sql_obj.get_user_info(mail)[0][0]
+        css_state = sql_obj.get_css(mail)
 
-    if request.args.get('info_msg'):
-        info_msg = request.args.get('info_msg')
+        if request.args.get('info_msg'):
+            info_msg = request.args.get('info_msg')
 
-    return render_template("profil_u.html", infos=sql_obj.get_user_info(mail)[0], days=days, **locals())
+        return render_template("profil_u.html", infos=sql_obj.get_user_info(mail)[0], days=days, **locals())
 
     # Redirection si l'utilisateur n'est pas connecté
-    #else:
-#return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
+    else:
+        return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
 
 
 # Page de Profil
 @app.route('/profile/tutorials')
 def profil_2():
-    #if 'mail' in session:
-    sql_obj = sql.MysqlObject()
+    if 'mail' in session:
+        sql_obj = sql.MysqlObject()
 
-    # TODO A FAIRE AVEC SESSION
-    mail = "taotom63@gmail.com"
-    admin_user = sql_obj.get_user_info(mail)[0][4]
-    user = sql_obj.get_user_info(mail)[0][0]
-    css_state = sql_obj.get_css(mail)
+        # TODO A FAIRE AVEC SESSION
+        mail = "taotom63@gmail.com"
+        admin_user = sql_obj.get_user_info(mail)[0][4]
+        user = sql_obj.get_user_info(mail)[0][0]
+        css_state = sql_obj.get_css(mail)
 
-    if request.args.get('info_msg'):
-        info_msg = request.args.get('info_msg')
+        if request.args.get('info_msg'):
+            info_msg = request.args.get('info_msg')
 
-    return render_template("profil_t_p.html", offres_creees=sql_obj.get_user_offres(mail), tutorats_actifs=sql_obj.get_user_tutorats(mail), days=days, **locals())
+        return render_template("profil_t_p.html", offres_creees=sql_obj.get_user_offres(mail), tutorats_actifs=sql_obj.get_user_tutorats(mail), days=days, **locals())
 
     # Redirection si l'utilisateur n'est pas connecté
-    #else:
-        #return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
+    else:
+        return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
 
 
 # Page de modification du profil
 @app.route('/profile/update', methods=['GET', 'POST'])
 def profil_update():
-    #if 'mail' in session:
-    sql_obj = sql.MysqlObject()
+    if 'mail' in session:
+        sql_obj = sql.MysqlObject()
 
-    # TODO A FAIRE AVEC SESSION
-    mail = "taotom63@gmail.com"
-    admin_user = sql_obj.get_user_info(mail)[0][4]
-    user = sql_obj.get_user_info(mail)[0][0]
-    css_state = sql_obj.get_css(mail)
+        # TODO A FAIRE AVEC SESSION
+        mail = "taotom63@gmail.com"
+        admin_user = sql_obj.get_user_info(mail)[0][4]
+        user = sql_obj.get_user_info(mail)[0][0]
+        css_state = sql_obj.get_css(mail)
 
-    classes = sql_obj.classes_liste()
+        classes = sql_obj.classes_liste()
 
-    if len(request.form) == 0:
-        return render_template("profil_update.html", infos=sql_obj.get_user_info(mail)[0], **locals())
-    else:
-        if request.form.get('classe') in classes:
-
-            sql_obj.modify_user_info(mail, request.form.get('classe'))
-            return redirect(url_for("profil", info_msg="Votre profil a bien été modifié."))
+        if len(request.form) == 0:
+            return render_template("profil_update.html", infos=sql_obj.get_user_info(mail)[0], **locals())
         else:
+            if request.form.get('classe') in classes:
 
-            return render_template("error.html", message="Erreur - Veuillez vérifier les champs du formulaire",
-                                       **locals())
+                sql_obj.modify_user_info(mail, request.form.get('classe'))
+                return redirect(url_for("profil", info_msg="Votre profil a bien été modifié."))
+            else:
+
+                return render_template("error.html", message="Erreur - Veuillez vérifier les champs du formulaire", **locals())
     # Redirection si l'utilisateur n'est pas connecté
-    #else:
-#return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
+    else:
+        return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
 
 
 # Page d'Administration offres en courts

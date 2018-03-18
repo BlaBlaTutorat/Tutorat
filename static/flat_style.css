@@ -761,6 +761,24 @@ footer a:hover {
     width: 60%;
 }
 
+#informations2 a {
+    color: black;
+    font-family: sans-serif;
+    font-size: 1em;
+    text-decoration: none;
+}
+
+#informations2 a:visited {
+    color: black;
+    font-family: sans-serif;
+    font-size: 1em;
+    text-decoration: none;
+}
+
+#informations2 a:hover {
+    color: #7d7f81;
+}
+
 #invalider_offre {
     margin-top: 55px;
 }
