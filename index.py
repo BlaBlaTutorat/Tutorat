@@ -7,7 +7,6 @@ import sql
 
 app = Flask(__name__)
 days = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
-session = request.cookies.get('mail')
 
 
 # Page d'accueil qui redirige vers la page de recherche ou page de login
@@ -61,7 +60,7 @@ def connexion_2():
             if sql_obj.get_crypt_mdp(mail)[0][0] == mdp_chiffre:
 
                 # valider ou non  la connexion
-                resp.set_cookie('session','mail')
+                resp.set_cookie('session', 'mail')
                 return redirect(url_for('recherche',
                                         info_msg="Vous êtes connecté, vous pouvez dès à présent accéder au service de tutorat."))
             else:
@@ -91,7 +90,7 @@ def inscription():
 
             return render_template("inscription.html", classes=sql_obj.classes_liste(), **locals())
         else:
-            return redirect(url_for('register', info_msg= "Un compte est déjà associé à cette adresse email."))
+            return redirect(url_for('register', info_msg="Un compte est déjà associé à cette adresse email."))
 
     else:
         # Redirection vers la page d'accueil
@@ -109,7 +108,8 @@ def traitement_inscription():
     nom = request.form.get('prenom') + '  ' + request.form.get('nom')
     # Envoi des infos à la base de donnée
     sql_obj.create_compte(nom, mot_de_passe_chiffre, request.form.get('mail'), request.form.get('classe'))
-    return redirect(url_for("profil", info_msg="Votre compte a bien été créé, vous pouvez dès à présent accéder à votre profil et au service d'offre/demande de BlaBlaTutorat."))
+    return redirect(url_for("profil",
+                            info_msg="Votre compte a bien été créé, vous pouvez dès à présent accéder à votre profil et au service d'offre/demande de BlaBlaTutorat."))
 
 
 # Mot de passe oublié
@@ -218,9 +218,11 @@ def admin_U():
 
     if request.form.get("user_search"):
         user_search = request.form.get("user_search")
-        return render_template("admin_u.html", user_list=sql_obj.liste_user_admin(user_search), tutorats_actifs=sql_obj.offres_liste_validees(), days=days, **locals())
+        return render_template("admin_u.html", user_list=sql_obj.liste_user_admin(user_search),
+                               tutorats_actifs=sql_obj.offres_liste_validees(), days=days, **locals())
     else:
-        return render_template("admin_u.html", user_list=sql_obj.liste_user(), tutorats_actifs=sql_obj.offres_liste_validees(), days=days, **locals())
+        return render_template("admin_u.html", user_list=sql_obj.liste_user(),
+                               tutorats_actifs=sql_obj.offres_liste_validees(), days=days, **locals())
 
 
 # Page de recherche d'offres
