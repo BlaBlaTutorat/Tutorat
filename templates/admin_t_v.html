@@ -38,7 +38,7 @@
             <br/>
             <div class="bloc">
                 <div class="info">
-                    <p class="element"><strong class="G">Auteur:</strong> {{ offre[1] }}</p>
+                    <p class="element"><strong class="G">Auteur:</strong> {{ sql_obj.get_user_pseudo(offre[1]) }}</p>
                     <p class="element"><strong class="G">Classe:</strong> {{ offre[2] }}</p>
                     <p class="element"><strong class="G">Matière:</strong> {{ offre[3] }}</p>
                 </div>

@@ -43,21 +43,21 @@
             <br/>
             <div class="bloc">
                 <div class="info">
-                    <p class="element"><strong class="G">Auteur:</strong> {{ tutorat[1] }}</p>
+                    <p class="element"><strong class="G">Auteur:</strong> {{ sql_obj.get_user_pseudo(tutorat[1]) }}</p>
                     <p class="element"><strong class="G">Classe:</strong> {{ tutorat[2] }}</p>
                     <p class="element"><strong class="G">Matière:</strong> {{ tutorat[3] }}</p>
                     <p class="element"><strong class="G">Participant 1:</strong>
                         {% if tutorat[5] is none %}
                             Personne
                         {% else %}
-                            {% if tutorat[5] is not none %}{{ tutorat[5] }}{% endif %}
+                            {{ sql_obj.get_user_pseudo(tutorat[5]) }}
                         {% endif %}
                     </p>
                     <p class="element"><strong class="G">Participant 2:</strong>
                         {% if tutorat[6] is none %}
                             Personne
                         {% else %}
-                            {% if tutorat[6] is not none %}{{ tutorat[6] }}{% endif %}
+                            {{ sql_obj.get_user_pseudo(tutorat[6]) }}
                         {% endif %}
                     </p>
                 </div>

@@ -161,6 +161,11 @@ class MysqlObject:
         self.cursor.execute("""SELECT * FROM users WHERE nom = %s""", (user_search,))
         return self.cursor.fetchall()
 
+    # Mail vers pseudo
+    def get_user_pseudo(self, mail):
+        self.cursor.execute("""SELECT nom FROM users WHERE mail=%s""", (mail,))
+        return self.cursor.fetchall()[0][0]
+
     # Récupération et cryptage du mot de passe des utilisateurs
     def get_crypt_mdp(self, mail):
         self.cursor.execute("""SELECT mdp FROM users WHERE mail=%s""", (mail,))

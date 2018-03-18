@@ -45,15 +45,15 @@
                     <br/>
                     <div class="bloc">
                         <div class="info">
-                            <p class="element"><strong class="G">Auteur:</strong> {{ offre[1] }}</p>
+                            <p class="element"><strong class="G">Auteur:</strong> {{ sql_obj.get_user_pseudo(offre[1]) }}</p>
                             <p class="element"><strong class="G">Classe:</strong> {{ offre[2] }}</p>
                             <p class="element"><strong class="G">Matière:</strong> {{ offre[3] }}</p>
                             <p class="element"><strong class="G">Participants:</strong>
                                 {% if offre[5] is none and offre[6] is none %}
                                     Aucun
                                 {% else %}
-                                    {% if offre[5] is not none %}{{ offre[5] }}{% endif %}{% if offre[6] is not none %},
-                                        {{ offre[6] }}{% endif %}
+                                    {% if offre[5] is not none %}{{ sql_obj.get_user_pseudo(offre[5]) }}{% endif %}{% if offre[6] is not none %},
+                                        {{ sql_obj.get_user_pseudo(offre[6]) }}{% endif %}
                                 {% endif %}
                             </p>
                             <p class="element"><strong class="G">Etat de l'offre:</strong> {% if offre[7]==0 %}En
@@ -99,7 +99,7 @@
                     <br/>
                     <div class="bloc">
                         <div class="info">
-                            <p class="element"><strong class="G">Auteur:</strong> {{ tutorat[1] }}</p>
+                            <p class="element"><strong class="G">Auteur:</strong> {{ sql_obj.get_user_pseudo(tutorat[1]) }}</p>
                             <p class="element"><strong class="G">Mail de
                                 l'auteur:</strong> {{ sql_obj.get_user_info(tutorat[1])[2] }}</p>
                             <p class="element"><strong class="G">Matière:</strong> {{ tutorat[3] }}</p>
@@ -107,8 +107,8 @@
                                 {% if tutorat[5] is none and tutorat[6] is none %}
                                     Aucun
                                 {% else %}
-                                    {% if tutorat[5] is not none %}{{ tutorat[5] }}{% endif %}
-                                    {% if tutorat[6] is not none %}, {{ tutorat[6] }}{% endif %}
+                                    {% if tutorat[5] is not none %}{{ sql_obj.get_user_pseudo(tutorat[5]) }}{% endif %}
+                                    {% if tutorat[6] is not none %}, {{ sql_obj.get_user_pseudo(tutorat[6]) }}{% endif %}
                                 {% endif %}
                             </p>
                         </div>
