@@ -133,7 +133,7 @@ def profil():
         if request.args.get('info_msg'):
             info_msg = request.args.get('info_msg')
 
-        return render_template("profil.html", infos=sql_obj.get_user_info(user),
+        return render_template("profil.html", infos=sql_obj.get_user_info(user)[0],
                                offres_creees=sql_obj.get_user_offre(user),
                                tutorats_actifs=sql_obj.get_user_tutorats(user), days=days, **locals())
 
@@ -154,7 +154,7 @@ def profil_update():
         classes = sql_obj.classes_liste()
 
         if len(request.form) == 0:
-            return render_template("profil_update.html", infos=sql_obj.get_user_info(user), **locals())
+            return render_template("profil_update.html", infos=sql_obj.get_user_info(user)[0], **locals())
         else:
             if request.form.get('classe') in classes and "@" in request.form.get('mail'):
 

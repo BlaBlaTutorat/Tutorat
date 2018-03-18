@@ -97,7 +97,7 @@ class MysqlObject:
 
     # Listes des offres
     def offres_liste(self, page, user):
-        classe = self.get_user_info(user)[3]
+        classe = self.get_user_info(user)[0][3]
         offres = []
         self.cursor.execute(
             """SELECT * FROM offres WHERE disponible=1 AND (participant IS NULL OR participant2 IS NULL) LIMIT """ +
@@ -109,7 +109,7 @@ class MysqlObject:
             if row[5] is None:
                 offres.append(row)
             else:
-                if classe == self.get_user_info(row[5])[3]:
+                if classe == self.get_user_info(row[5])[0][3]:
                     offres.append(row)
         return offres
 
@@ -120,7 +120,7 @@ class MysqlObject:
 
     # Liste des offres selon 1 facteur de tri
     def offres_liste_tri(self, option, page, user):
-        classe = self.get_user_info(user)[3]
+        classe = self.get_user_info(user)[0][3]
         offres = []
         self.cursor.execute(
             """SELECT * FROM offres WHERE disponible=1 ORDER BY """ + option + """ LIMIT """ +
@@ -132,13 +132,13 @@ class MysqlObject:
             if row[5] is None:
                 offres.append(row)
             else:
-                if classe == self.get_user_info(row[5])[3]:
+                if classe == self.get_user_info(row[5])[0][3]:
                     offres.append(row)
         return offres
 
     # Liste des offres selon 1 facteur de tri + 1 niveau/matiere
     def offres_liste_tri_2(self, option, option2, page, user):
-        classe = self.get_user_info(user)[3]
+        classe = self.get_user_info(user)[0][3]
         offres = []
         self.cursor.execute(
             """SELECT * FROM offres WHERE disponible=1 AND (participant IS NULL OR participant2 IS NULL)
@@ -151,14 +151,14 @@ class MysqlObject:
             if row[5] is None:
                 offres.append(row)
             else:
-                if classe == self.get_user_info(row[5])[3]:
+                if classe == self.get_user_info(row[5])[0][3]:
                     offres.append(row)
         return offres
 
     # Récupération des infos utilisateurs pour page de profil
     def get_user_info(self, user_name):
         self.cursor.execute("""SELECT * FROM users WHERE nom=%s""", (user_name,))
-        return self.cursor.fetchall()[0]
+        return self.cursor.fetchall()
 
     # Récupération et cryptage du mot de passe des utilisateurs
     def get_crypt_mdp(self, mail):
@@ -180,7 +180,7 @@ class MysqlObject:
                 # Update de la deuxième colonne + check si l'utilisateur n'est pas déjà participant à cette offre
                 if offre[5] != participant:
                     # Check si l'utilisateur est dans la même classe que le premier
-                    if self.get_user_info(participant)[3] == self.get_user_info(offre[5])[3]:
+                    if self.get_user_info(participant)[0][3] == self.get_user_info(offre[5])[0][3]:
                         self.cursor.execute("""UPDATE offres SET participant2 = %s WHERE id = %s """,
                                             (participant, offre_id))
                         self.conn.commit()
