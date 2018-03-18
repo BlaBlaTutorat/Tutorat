@@ -128,7 +128,7 @@ def traitement_mdp_oublie():
     return redirect(url_for('connexion', info_msg="Un nouveau mot de passe a été envoyé à " + request.form['mail']))
 
 
-# Page de Profil
+# Page de Profil info utilisateur
 @app.route('/profile/view')
 def profil():
     if 'mail' in session:
@@ -143,9 +143,28 @@ def profil():
         if request.args.get('info_msg'):
             info_msg = request.args.get('info_msg')
 
-        return render_template("profil.html", infos=sql_obj.get_user_info(mail)[0],
-                               offres_creees=sql_obj.get_user_offres(mail),
-                               tutorats_actifs=sql_obj.get_user_tutorats(mail), days=days, **locals())
+        return render_template("profil_u.html", infos=sql_obj.get_user_info(mail)[0], days=days, **locals())
+
+    # Redirection si l'utilisateur n'est pas connecté
+    else:
+        return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
+
+# Page de Profil
+@app.route('/profile/tutorials')
+def profil2():
+    if 'mail' in session:
+        sql_obj = sql.MysqlObject()
+
+        # TODO A FAIRE AVEC SESSION
+        mail = "taotom63@gmail.com"
+        admin_user = sql_obj.get_user_info(mail)[0][4]
+        user = sql_obj.get_user_info(mail)[0][0]
+        css_state = sql_obj.get_css(mail)
+
+        if request.args.get('info_msg'):
+            info_msg = request.args.get('info_msg')
+
+        return render_template("profil_p.html", offres_creees=sql_obj.get_user_offre(mail), tutorats_actifs=sql_obj.get_user_tutorats(mail), days=days, **locals())
 
     # Redirection si l'utilisateur n'est pas connecté
     else:
@@ -453,25 +472,12 @@ def quit_tutorat():
 @app.route('/delete')
 def delete():
     if request.args.get('id'):
-        # TODO A FAIRE AVEC SESSION
-        mail = "taotom63@gmail.com"
-
-        sql_obj = sql.MysqlObject()
-
         offre_id = request.args.get('id')
-        offre = sql_obj.get_offre(offre_id)
+        sql_obj = sql.MysqlObject()
+        # TODO vérifier que l'utilisateur a bien crée l'offre qu'il veut supprimer
 
-        # Vérification qu'une seule offre avec cet id existe
-        if len(offre) == 1:
-
-            # Vérification que l'auteur est celui qui demande la suppression
-            if mail == offre[0][1]:
-                sql_obj.delete_offer(offre_id)
-                return redirect(url_for("profil", info_msg="Votre offre a bien été supprimée."))
-            else:
-                abort(403)
-        else:
-            abort(403)
+        sql_obj.delete_offer(offre_id)
+        return redirect(url_for("profil", info_msg="Votre offre a bien été supprimée."))
     else:
         abort(403)
 

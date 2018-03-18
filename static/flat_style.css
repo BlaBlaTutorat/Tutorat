@@ -811,17 +811,6 @@ footer a:hover {
 #horaires button {
     margin-top: 20px;
 }
-
-@media screen and (max-width: 1430px) {
-    .bloc_admin {
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    #admin1 {
-        margin: auto;
-    }
-}
 /* END Admin */
 
 /* Error */

@@ -7,6 +7,19 @@
 
 {% include 'HEADER.html' %}
 
+<div class="header">
+    <div>
+        <div></div>
+        <nav>
+            <ul>
+                <li><a href="/profile/tutorials">Tutorats</a></li>
+                <li><a href="/profile/view">Informations</a></li>
+            </ul>
+        </nav>
+        <div></div>
+    </div>
+</div>
+
 {% if info_msg %}
     <!-- Message d'information -->
     <a href="/profile/view" class="info_msg">
@@ -15,29 +28,7 @@
 {% endif %}
 
 <div class="bloc_page_profil">
-    <!-- Infos de l'utilisateur -->
-    <div class="page_profil" id="info_profil">
-        <div class="bloc_profil">
-            <h2>Vos informations</h2>
-            <div class="profil">
-                <div class="info_profil">
-                    <p><strong class="G">Nom:</strong></p>
-                    <p><strong class="G">Mail:</strong></p>
-                    <p><strong class="G">Classe:</strong></p>
-                </div>
-                <div class="info_profil">
-                    <p>{{ infos[0] }}</p>
-                    <p>{{ infos[2] }}</p>
-                    <p>{{ infos[3] }}</p>
-                </div>
-                <a href="/profile/update">
-                    <button>Modifier</button>
-                </a>
-            </div>
-        </div>
-    </div>
-    <div class="page_profil">
-        <!-- Liste des offres crées par l'utilisateur -->
+    <!-- Liste des offres crées par l'utilisateur -->
         <div class="offres">
             <h2>Vos offres créées</h2>
             {% if offres_creees|length>0 %}
