@@ -200,6 +200,7 @@ def admin_OC():
 
     if request.form.get("user_search"):
         user_search = request.form.get("user_search")
+        user_search = sql_obj.get_user_mail(user_search)
         return render_template("admin_t_p.html", tutorats_actifs=sql_obj.offres_liste_tri_admin(user_search), days=days,
                                **locals())
     else:
