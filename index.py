@@ -164,7 +164,7 @@ def profil_2():
         if request.args.get('info_msg'):
             info_msg = request.args.get('info_msg')
 
-        return render_template("profil_p.html", offres_creees=sql_obj.get_user_offre(mail), tutorats_actifs=sql_obj.get_user_tutorats(mail), days=days, **locals())
+        return render_template("profil_t.html", offres_creees=sql_obj.get_user_offres(mail), tutorats_actifs=sql_obj.get_user_tutorats(mail), days=days, **locals())
 
     # Redirection si l'utilisateur n'est pas connecté
     else:
