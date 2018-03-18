@@ -151,7 +151,7 @@ def profil():
 
 # Page de Profil
 @app.route('/profile/tutorials')
-def profil2():
+def profil_2():
     if 'mail' in session:
         sql_obj = sql.MysqlObject()
 
