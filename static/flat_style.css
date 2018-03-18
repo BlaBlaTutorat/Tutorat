@@ -583,7 +583,7 @@ footer a:hover {
 .bloc_profil {
     display: flex;
     flex-direction: column;
-    justify-content: center
+    justify-content: center;
     margin: 0 50px auto auto;
     align-items: center;
 }
