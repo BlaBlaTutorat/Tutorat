@@ -144,7 +144,7 @@ def profil():
             info_msg = request.args.get('info_msg')
 
         return render_template("profil.html", infos=sql_obj.get_user_info(mail)[0],
-                               offres_creees=sql_obj.get_user_offre(mail),
+                               offres_creees=sql_obj.get_user_offres(mail),
                                tutorats_actifs=sql_obj.get_user_tutorats(mail), days=days, **locals())
 
     # Redirection si l'utilisateur n'est pas connecté
@@ -453,12 +453,25 @@ def quit_tutorat():
 @app.route('/delete')
 def delete():
     if request.args.get('id'):
-        offre_id = request.args.get('id')
-        sql_obj = sql.MysqlObject()
-        # TODO vérifier que l'utilisateur a bien crée l'offre qu'il veut supprimer
+        # TODO A FAIRE AVEC SESSION
+        mail = "taotom63@gmail.com"
 
-        sql_obj.delete_offer(offre_id)
-        return redirect(url_for("profil", info_msg="Votre offre a bien été supprimée."))
+        sql_obj = sql.MysqlObject()
+
+        offre_id = request.args.get('id')
+        offre = sql_obj.get_offre(offre_id)
+
+        # Vérification qu'une seule offre avec cet id existe
+        if len(offre) == 1:
+
+            # Vérification que l'auteur est celui qui demande la suppression
+            if mail == offre[0][1]:
+                sql_obj.delete_offer(offre_id)
+                return redirect(url_for("profil", info_msg="Votre offre a bien été supprimée."))
+            else:
+                abort(403)
+        else:
+            abort(403)
     else:
         abort(403)
 

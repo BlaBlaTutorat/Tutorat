@@ -90,6 +90,11 @@ class MysqlObject:
         self.cursor.execute("""SELECT * FROM users""")
         return self.cursor.fetchall()
 
+    # Récupération d'une offre
+    def get_offre(self, offer_id):
+        self.cursor.execute("""SELECT * FROM offres WHERE id = %s""", (offer_id,))
+        return self.cursor.fetchall()
+
     # Listes des offres
     def offres_liste(self, page, mail):
         classe = self.get_user_info(mail)[0][3]
@@ -209,7 +214,7 @@ class MysqlObject:
             return 3
 
     # Récupération des offres propres à un utilisateur
-    def get_user_offre(self, mail):
+    def get_user_offres(self, mail):
         self.cursor.execute("""SELECT * FROM offres WHERE auteur=%s""", (mail,))
         return self.cursor.fetchall()
 
