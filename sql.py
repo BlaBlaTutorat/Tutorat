@@ -156,7 +156,7 @@ class MysqlObject:
         self.cursor.execute("""SELECT * FROM users WHERE mail=%s""", (mail,))
         return self.cursor.fetchall()
 
-        # Récupération des infos utilisateurs par pseudo ( ADMIN UNIQUEMENT )
+    # Récupération des infos utilisateurs par pseudo ( ADMIN UNIQUEMENT )
     def get_user_info_pseudo(self, user_search):
         self.cursor.execute("""SELECT * FROM users WHERE nom = %s""", (user_search,))
         return self.cursor.fetchall()
@@ -167,7 +167,7 @@ class MysqlObject:
         return self.cursor.fetchall()[0][0]
 
     # Pseudo vers mail
-    def get_user_mail(self,user):
+    def get_user_mail(self, user):
         self.cursor.execute("""SELECT mail FROM users WHERE nom=%s""", (user,))
         return self.cursor.fetchall()[0][0]
 

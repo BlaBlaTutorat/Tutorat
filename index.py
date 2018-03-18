@@ -53,7 +53,6 @@ def traitement_connexion():
         mdp = request.form.get('mdp')
 
         # chiffrer le mot de passe
-
         mdp_chiffre = hashlib.sha256(str(mdp).encode('utf-8')).hexdigest()
 
         # comparer les infos à celle de la base de données
@@ -107,7 +106,7 @@ def traitement_inscription():
     mot_de_passe_chiffre = hashlib.sha256(str(chaine_mot_de_passe).encode('utf-8')).hexdigest()
 
     nom = request.form.get('prenom') + '  ' + request.form.get('nom')
-    # Envoi des infos à la base de donnée
+    # Envoi des infos à la base de données
     sql_obj.create_compte(nom, mot_de_passe_chiffre, request.form.get('mail'), request.form.get('classe'))
     return redirect(url_for("profil",
                             info_msg="Votre compte a bien été créé, vous pouvez dès à présent accéder à votre profil"
@@ -185,8 +184,7 @@ def profil_update():
 
 # Page d'Administration offres en courts
 @app.route('/admin/tutorials/progress', methods=['GET', 'POST'])
-def admin_OC():
-    # TODO vérifier que l'utilisateur est admin et s'il ne l'est pas le rediriger vers la page d'erreur
+def admin_oc():
     sql_obj = sql.MysqlObject()
 
     # TODO A FAIRE AVEC SESSION
@@ -195,22 +193,27 @@ def admin_OC():
     user = sql_obj.get_user_info(mail)[0][0]
     css_state = sql_obj.get_css(mail)
 
-    if request.args.get('info_msg'):
-        info_msg = request.args.get('info_msg')
+    if admin_user:
 
-    if request.form.get("user_search"):
-        user_search = request.form.get("user_search")
-        user_search = sql_obj.get_user_mail(user_search)
-        return render_template("admin_t_p.html", tutorats_actifs=sql_obj.offres_liste_tri_admin(user_search), days=days,
-                               **locals())
+        if request.args.get('info_msg'):
+            info_msg = request.args.get('info_msg')
+
+        if request.form.get("user_search"):
+            user_search = request.form.get("user_search")
+            user_search = sql_obj.get_user_mail(user_search)
+            return render_template("admin_t_p.html", tutorats_actifs=sql_obj.offres_liste_tri_admin(user_search),
+                                   days=days, **locals())
+        else:
+            return render_template("admin_t_p.html", tutorats_actifs=sql_obj.offres_liste_validees(), days=days,
+                                   **locals())
+
     else:
-        return render_template("admin_t_p.html", tutorats_actifs=sql_obj.offres_liste_validees(), days=days, **locals())
+        abort(403)
 
 
 # Page d'Administration offres à valider
 @app.route('/admin/tutorials/validate')
-def admin_OV():
-    # TODO vérifier que l'utilisateur est admin et s'il ne l'est pas le rediriger vers la page d'erreur
+def admin_ov():
     sql_obj = sql.MysqlObject()
 
     # TODO A FAIRE AVEC SESSION
@@ -219,16 +222,20 @@ def admin_OV():
     user = sql_obj.get_user_info(mail)[0][0]
     css_state = sql_obj.get_css(mail)
 
-    if request.args.get('info_msg'):
-        info_msg = request.args.get('info_msg')
+    if admin_user:
 
-    return render_template("admin_t_v.html", offres_V=sql_obj.offres_liste_valider(), days=days, **locals())
+        if request.args.get('info_msg'):
+            info_msg = request.args.get('info_msg')
+
+        return render_template("admin_t_v.html", offres_V=sql_obj.offres_liste_valider(), days=days, **locals())
+
+    else:
+        abort(403)
 
 
 # Page d'Administration profile utilisateur
 @app.route('/admin/users', methods=['GET', 'POST'])
-def admin_U():
-    # TODO vérifier que l'utilisateur est admin et s'il ne l'est pas le rediriger vers la page d'erreur
+def admin_u():
     sql_obj = sql.MysqlObject()
 
     # TODO A FAIRE AVEC SESSION
@@ -237,16 +244,21 @@ def admin_U():
     user = sql_obj.get_user_info(mail)[0][0]
     css_state = sql_obj.get_css(mail)
 
-    if request.args.get('info_msg'):
-        info_msg = request.args.get('info_msg')
+    if admin_user:
 
-    if request.form.get("user_search"):
-        user_search = request.form.get("user_search")
-        return render_template("admin_u.html", user_list=sql_obj.get_user_info_pseudo(user_search),
-                               tutorats_actifs=sql_obj.offres_liste_validees(), days=days, **locals())
+        if request.args.get('info_msg'):
+            info_msg = request.args.get('info_msg')
+
+        if request.form.get("user_search"):
+            user_search = request.form.get("user_search")
+            return render_template("admin_u.html", user_list=sql_obj.get_user_info_pseudo(user_search),
+                                   tutorats_actifs=sql_obj.offres_liste_validees(), days=days, **locals())
+        else:
+            return render_template("admin_u.html", user_list=sql_obj.liste_user(),
+                                   tutorats_actifs=sql_obj.offres_liste_validees(), days=days, **locals())
+
     else:
-        return render_template("admin_u.html", user_list=sql_obj.liste_user(),
-                               tutorats_actifs=sql_obj.offres_liste_validees(), days=days, **locals())
+        abort(403)
 
 
 # Page de recherche d'offres
