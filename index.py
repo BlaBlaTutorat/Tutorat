@@ -224,7 +224,8 @@ def admin_oc():
             user_search = sql_obj.get_user_info_pseudo(user_search)
             if len(user_search) == 1:
                 # Un utilisateur a été trouvée
-                return render_template("admin_t_p.html", tutorats_actifs=sql_obj.offres_liste_tri_admin(user_search[0][2]),
+                return render_template("admin_t_p.html",
+                                       tutorats_actifs=sql_obj.offres_liste_tri_admin(user_search[0][2]),
                                        days=days, **locals())
             else:
                 # Pas d'utilisateur trouvé donc liste vide
@@ -455,9 +456,6 @@ def quit_tutorat():
 
             # TODO A FAIRE AVEC SESSION
             mail = "taotom63@gmail.com"
-            admin_user = sql_obj.get_user_info(mail)[0][4]
-            user = sql_obj.get_user_info(mail)[0][0]
-            css_state = sql_obj.get_css(mail)
 
             if sql_obj.delete_participant(offre_id, mail):
                 return redirect(url_for("profil", info_msg="Votre retrait de ce Tutorat a bien été enregistré."))
