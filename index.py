@@ -165,7 +165,8 @@ def profil_2():
         if request.args.get('info_msg'):
             info_msg = request.args.get('info_msg')
 
-        return render_template("profil_t_p.html", offres_creees=sql_obj.get_user_offres(mail), tutorats_actifs=sql_obj.get_user_tutorats(mail), days=days, **locals())
+        return render_template("profil_t_p.html", offres_creees=sql_obj.get_user_offres(mail),
+                               tutorats_actifs=sql_obj.get_user_tutorats(mail), days=days, **locals())
 
     # Redirection si l'utilisateur n'est pas connecté
     else:
@@ -195,7 +196,8 @@ def profil_update():
                 return redirect(url_for("profil", info_msg="Votre profil a bien été modifié."))
             else:
 
-                return render_template("error.html", message="Erreur - Veuillez vérifier les champs du formulaire", **locals())
+                return render_template("error.html", message="Erreur - Veuillez vérifier les champs du formulaire",
+                                       **locals())
     # Redirection si l'utilisateur n'est pas connecté
     else:
         return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
@@ -219,9 +221,15 @@ def admin_oc():
 
         if request.form.get("user_search"):
             user_search = request.form.get("user_search")
-            user_search = sql_obj.get_user_mail(user_search)
-            return render_template("admin_t_p.html", tutorats_actifs=sql_obj.offres_liste_tri_admin(user_search),
-                                   days=days, **locals())
+            user_search = sql_obj.get_user_info_pseudo(user_search)
+            if len(user_search) == 1:
+                # Un utilisateur a été trouvée
+                return render_template("admin_t_p.html", tutorats_actifs=sql_obj.offres_liste_tri_admin(user_search[0][2]),
+                                       days=days, **locals())
+            else:
+                # Pas d'utilisateur trouvé donc liste vide
+                return render_template("admin_t_p.html", tutorats_actifs=[], days=days,
+                                       **locals())
         else:
             return render_template("admin_t_p.html", tutorats_actifs=sql_obj.offres_liste_validees(), days=days,
                                    **locals())

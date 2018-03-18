@@ -83,12 +83,12 @@ class MysqlObject:
         self.cursor.execute("""SELECT * FROM users WHERE nom = %s""", (user_search,))
         return self.cursor.fetchall()
 
-    # Mail vers pseudo
+    # Mail vers pseudo ( le mail existe )
     def get_user_pseudo(self, mail):
         self.cursor.execute("""SELECT nom FROM users WHERE mail=%s""", (mail,))
         return self.cursor.fetchall()[0][0]
 
-    # Pseudo vers mail
+    # Pseudo vers mail ( l'utilisateur existe )
     def get_user_mail(self, user):
         self.cursor.execute("""SELECT mail FROM users WHERE nom=%s""", (user,))
         return self.cursor.fetchall()[0][0]
