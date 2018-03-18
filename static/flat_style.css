@@ -599,13 +599,14 @@ footer a:hover {
 
 #tutorat_en_cours {
     margin-top: 20px;
+    margin-left: 40px;
 }
 
 .bloc_page_profil {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin: 70px auto auto auto;
+    margin: 180px auto auto auto;
 }
 
 .page_profil {
