@@ -28,7 +28,8 @@ def connexion():
     if 'mail' in session:
 
         return redirect(url_for('recherche',
-                                info_msg="Vous êtes connecté, vous pouvez dès à présent accéder au service de tutorat."))
+                                info_msg="Vous êtes connecté, vous pouvez dès à présent accéder au"
+                                         " service de tutorat."))
 
     else:
 
@@ -42,7 +43,7 @@ def connexion():
 
 # Page de connexion
 @app.route('/login', methods=['POST'])
-def connexion_2():
+def traitement_connexion():
     # Traitement du formulaire envoyé par l'utilisteur depuis la page login
     if 'mail' not in session:
         sql_obj = sql.MysqlObject()
@@ -62,16 +63,19 @@ def connexion_2():
                 # valider ou non  la connexion
                 resp.set_cookie('session', 'mail')
                 return redirect(url_for('recherche',
-                                        info_msg="Vous êtes connecté, vous pouvez dès à présent accéder au service de tutorat."))
+                                        info_msg="Vous êtes connecté, vous pouvez dès à présent accéder au service"
+                                                 " de tutorat."))
             else:
                 return redirect(url_for('connexion',
-                                        info_msg="Erreur lors de la connexion, veuillez vérifier les informations saisies puis réessayez."))
+                                        info_msg="Erreur lors de la connexion, veuillez vérifier les informations"
+                                                 " saisies puis réessayez."))
         else:
             return redirect(url_for('connexion',
-                                    info_msg="Aucun compte ne correspond à l'adresse email renseignée, veuillez vérifier les informations saisies puis réessayez."))
+                                    info_msg="Aucun compte ne correspond à l'adresse email renseignée."))
     else:
         return redirect(url_for('recherche',
-                                info_msg="Vous êtes connecté, vous pouvez dès à présent accéder au service de tutorat."))
+                                info_msg="Vous êtes connecté, vous pouvez dès à présent accéder au"
+                                         " service de tutorat."))
 
 
 # Page d'inscription
@@ -109,7 +113,8 @@ def traitement_inscription():
     # Envoi des infos à la base de donnée
     sql_obj.create_compte(nom, mot_de_passe_chiffre, request.form.get('mail'), request.form.get('classe'))
     return redirect(url_for("profil",
-                            info_msg="Votre compte a bien été créé, vous pouvez dès à présent accéder à votre profil et au service d'offre/demande de BlaBlaTutorat."))
+                            info_msg="Votre compte a bien été créé, vous pouvez dès à présent accéder à votre profil"
+                                     " et au service d'offre/demande de Tutorat."))
 
 
 # Mot de passe oublié
