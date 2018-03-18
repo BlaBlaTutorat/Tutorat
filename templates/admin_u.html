@@ -50,7 +50,7 @@
                     <p><strong class="G">Ban:</strong></p>
                 </div>
                 <div class="info_profil" id="informations2">
-                    <p>{{ user[0] }}{% for tutorat in tutorats_actifs %}{%  if tutorat[1] == user[2] %}<img src="/static/tuteur.png" id="tuteur" title="Nombre de tutorats créé par cet utilisateur">{% endif %}{% endfor %}{% for tutorat in tutorats_actifs %}{%  if tutorat[5] == user[2] or tutorat[6] == user[2] %}<img src="/static/tutoré.png" id="tutore" title="Nombre de tutorats suivi par cet utilisateur">{% endif %}{% endfor %}</p>
+                    <p>{{ user[0] }}{% for tutorat in tutorats_actifs %}{%  if tutorat[1] == user[2] %}<img src="/static/tuteur.png" id="tuteur" title="Nombre de tutorats créé par cet utilisateur">{% endif %}{% endfor %}{% for tutorat in tutorats_actifs %}{%  if tutorat[5] == user[2] or tutorat[6] == user[] %}<img src="/static/tutoré.png" id="tutore" title="Nombre de tutorats suivi par cet utilisateur">{% endif %}{% endfor %}</p>
                     <p>{{ user[2] }}</p>
                     <p>{{ user[3] }}</p>
                     {% if user[4]==1 %}
