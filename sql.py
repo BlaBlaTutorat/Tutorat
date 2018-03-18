@@ -90,14 +90,9 @@ class MysqlObject:
         self.cursor.execute("""SELECT * FROM users""")
         return self.cursor.fetchall()
 
-    # Listes des utilisateurs
-    def liste_user_admin(self, user_search):
-        self.cursor.execute("""SELECT * FROM users WHERE nom = %s""", (user_search,))
-        return self.cursor.fetchall()
-
     # Listes des offres
-    def offres_liste(self, page, user):
-        classe = self.get_user_info(user)[0][3]
+    def offres_liste(self, page, mail):
+        classe = self.get_user_info(mail)[0][3]
         offres = []
         self.cursor.execute(
             """SELECT * FROM offres WHERE disponible=1 AND (participant IS NULL OR participant2 IS NULL) LIMIT """ +
@@ -120,8 +115,8 @@ class MysqlObject:
         return self.cursor.fetchall()
 
     # Liste des offres selon 1 facteur de tri
-    def offres_liste_tri(self, option, page, user):
-        classe = self.get_user_info(user)[0][3]
+    def offres_liste_tri(self, option, page, mail):
+        classe = self.get_user_info(mail)[0][3]
         offres = []
         self.cursor.execute(
             """SELECT * FROM offres WHERE disponible=1 ORDER BY """ + option + """ LIMIT """ +
@@ -138,8 +133,8 @@ class MysqlObject:
         return offres
 
     # Liste des offres selon 1 facteur de tri + 1 niveau/matiere
-    def offres_liste_tri_2(self, option, option2, page, user):
-        classe = self.get_user_info(user)[0][3]
+    def offres_liste_tri_2(self, option, option2, page, mail):
+        classe = self.get_user_info(mail)[0][3]
         offres = []
         self.cursor.execute(
             """SELECT * FROM offres WHERE disponible=1 AND (participant IS NULL OR participant2 IS NULL)
@@ -156,9 +151,14 @@ class MysqlObject:
                     offres.append(row)
         return offres
 
-    # Récupération des infos utilisateurs pour page de profil
-    def get_user_info(self, user_name):
-        self.cursor.execute("""SELECT * FROM users WHERE nom=%s""", (user_name,))
+    # Récupération des infos utilisateurs par mail
+    def get_user_info(self, mail):
+        self.cursor.execute("""SELECT * FROM users WHERE mail=%s""", (mail,))
+        return self.cursor.fetchall()
+
+        # Récupération des infos utilisateurs par pseudo ( ADMIN UNIQUEMENT )
+    def get_user_info_pseudo(self, user_search):
+        self.cursor.execute("""SELECT * FROM users WHERE nom = %s""", (user_search,))
         return self.cursor.fetchall()
 
     # Récupération et cryptage du mot de passe des utilisateurs
@@ -199,8 +199,8 @@ class MysqlObject:
             return 3
 
     # Récupération des offres propres à un utilisateur
-    def get_user_offre(self, user_name):
-        self.cursor.execute("""SELECT * FROM offres WHERE auteur=%s""", (user_name,))
+    def get_user_offre(self, mail):
+        self.cursor.execute("""SELECT * FROM offres WHERE auteur=%s""", (mail,))
         return self.cursor.fetchall()
 
     # Suppression d'une offre
@@ -214,13 +214,13 @@ class MysqlObject:
         self.conn.commit()
 
     # SET CSS
-    def set_css(self, user):
-        self.cursor.execute("""UPDATE users SET css = NOT css WHERE nom = %s""", (user,))
+    def set_css(self, mail):
+        self.cursor.execute("""UPDATE users SET css = NOT css WHERE mail = %s""", (mail,))
         self.conn.commit()
 
     # GET CSS
-    def get_css(self, user):
-        self.cursor.execute("""SELECT css FROM users WHERE nom = %s""", (user,))
+    def get_css(self, mail):
+        self.cursor.execute("""SELECT css FROM users WHERE mail = %s""", (mail,))
         if self.cursor.fetchall()[0][0] == 1:
             return True
         else:
@@ -232,31 +232,31 @@ class MysqlObject:
         self.conn.commit()
 
     # Modification du profil
-    def modify_user_info(self, user_name, mail, classe):
-        self.cursor.execute("""UPDATE users SET mail = %s, classe = %s WHERE nom = %s """,
-                            (mail, classe, user_name))
+    def modify_user_info(self, mail, classe):
+        self.cursor.execute("""UPDATE users SET classe = %s WHERE mail = %s """,
+                            (classe, mail))
         self.conn.commit()
 
     # Recherche des offres auxquelles participe l'utilisateur
-    def get_user_tutorats(self, user_name):
-        self.cursor.execute("""SELECT * FROM offres WHERE participant=%s OR participant2=%s""", (user_name, user_name))
+    def get_user_tutorats(self, mail):
+        self.cursor.execute("""SELECT * FROM offres WHERE participant=%s OR participant2=%s""", (mail, mail))
         return self.cursor.fetchall()
 
     # Suppression d'un participant à une offre
-    def delete_participant(self, offre_id, user):
+    def delete_participant(self, offre_id, mail):
         self.cursor.execute("""SELECT * FROM offres WHERE id=%s""", (offre_id,))
         offres_a_modif = self.cursor.fetchall()
         if len(offres_a_modif) == 1:
             offre_a_modif = offres_a_modif[0]
             places_dispo = check_availability(offre_a_modif)
             if places_dispo == 0:
-                if offre_a_modif[5] == user:
+                if offre_a_modif[5] == mail:
                     self.cursor.execute(
                         """UPDATE offres SET participant = participant2, participant2 = NULL WHERE id = %s """,
                         (offre_id,))
                     self.conn.commit()
                     return True
-                elif offre_a_modif[6] == user:
+                elif offre_a_modif[6] == mail:
                     self.cursor.execute("""UPDATE offres SET participant2 = NULL WHERE id = %s """, (offre_id,))
                     self.conn.commit()
                     return True
@@ -265,7 +265,7 @@ class MysqlObject:
                     return False
 
             elif places_dispo == 1:
-                if offre_a_modif[5] == user:
+                if offre_a_modif[5] == mail:
                     self.cursor.execute("""UPDATE offres SET participant = NULL WHERE id = %s """, (offre_id,))
                     self.conn.commit()
                     return True

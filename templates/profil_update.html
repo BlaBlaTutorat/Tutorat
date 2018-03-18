@@ -20,8 +20,8 @@
                     <div class="info_profil">
                         <!-- Nom non modifiable -->
                         <p>{{ infos[0] }}</p>
-                        <!-- Mail modifiable -->
-                        <p><input class="tri5" name="mail" type="text" required value="{{ infos[2] }}"></p>
+                        <!-- Mail non modifiable -->
+                        <p>{{ infos[2] }}</p>
                         <!-- Classe modifiable -->
                         <p><select class="tri4" required name="classe">
                             {% for classe in classes %}

@@ -86,9 +86,6 @@ def inscription():
         if 'mail' not in sql_obj.get_user_info('mail'):
 
             sql_obj = sql.MysqlObject()
-            admin_user = True
-            user = "Tao Blancheton"
-            css_state = sql_obj.get_css(user)
             # Propre à cette page
             hidemenu = True
 
@@ -137,16 +134,19 @@ def traitement_mdp_oublie():
 def profil():
     if 'mail' in session:
         sql_obj = sql.MysqlObject()
-        admin_user = True
-        user = "Tao Blancheton"
-        css_state = sql_obj.get_css(user)
+
+        # TODO A FAIRE AVEC SESSION
+        mail = "taotom63@gmail.com"
+        admin_user = sql_obj.get_user_info(mail)[0][4]
+        user = sql_obj.get_user_info(mail)[0][0]
+        css_state = sql_obj.get_css(mail)
 
         if request.args.get('info_msg'):
             info_msg = request.args.get('info_msg')
 
-        return render_template("profil.html", infos=sql_obj.get_user_info(user)[0],
-                               offres_creees=sql_obj.get_user_offre(user),
-                               tutorats_actifs=sql_obj.get_user_tutorats(user), days=days, **locals())
+        return render_template("profil.html", infos=sql_obj.get_user_info(mail)[0],
+                               offres_creees=sql_obj.get_user_offre(mail),
+                               tutorats_actifs=sql_obj.get_user_tutorats(mail), days=days, **locals())
 
     # Redirection si l'utilisateur n'est pas connecté
     else:
@@ -158,18 +158,21 @@ def profil():
 def profil_update():
     if 'mail' in session:
         sql_obj = sql.MysqlObject()
-        admin_user = True
-        user = "Tao Blancheton"
-        css_state = sql_obj.get_css(user)
+
+        # TODO A FAIRE AVEC SESSION
+        mail = "taotom63@gmail.com"
+        admin_user = sql_obj.get_user_info(mail)[0][4]
+        user = sql_obj.get_user_info(mail)[0][0]
+        css_state = sql_obj.get_css(mail)
 
         classes = sql_obj.classes_liste()
 
         if len(request.form) == 0:
-            return render_template("profil_update.html", infos=sql_obj.get_user_info(user)[0], **locals())
+            return render_template("profil_update.html", infos=sql_obj.get_user_info(mail)[0], **locals())
         else:
-            if request.form.get('classe') in classes and "@" in request.form.get('mail'):
+            if request.form.get('classe') in classes:
 
-                sql_obj.modify_user_info(user, request.form.get('mail'), request.form.get('classe'))
+                sql_obj.modify_user_info(mail, request.form.get('classe'))
                 return redirect(url_for("profil", info_msg="Votre profil a bien été modifié."))
             else:
 
@@ -185,9 +188,12 @@ def profil_update():
 def admin_OC():
     # TODO vérifier que l'utilisateur est admin et s'il ne l'est pas le rediriger vers la page d'erreur
     sql_obj = sql.MysqlObject()
-    admin_user = True
-    user = "Tao Blancheton"
-    css_state = sql_obj.get_css(user)
+
+    # TODO A FAIRE AVEC SESSION
+    mail = "taotom63@gmail.com"
+    admin_user = sql_obj.get_user_info(mail)[0][4]
+    user = sql_obj.get_user_info(mail)[0][0]
+    css_state = sql_obj.get_css(mail)
 
     if request.args.get('info_msg'):
         info_msg = request.args.get('info_msg')
@@ -205,9 +211,12 @@ def admin_OC():
 def admin_OV():
     # TODO vérifier que l'utilisateur est admin et s'il ne l'est pas le rediriger vers la page d'erreur
     sql_obj = sql.MysqlObject()
-    admin_user = True
-    user = "Tao Blancheton"
-    css_state = sql_obj.get_css(user)
+
+    # TODO A FAIRE AVEC SESSION
+    mail = "taotom63@gmail.com"
+    admin_user = sql_obj.get_user_info(mail)[0][4]
+    user = sql_obj.get_user_info(mail)[0][0]
+    css_state = sql_obj.get_css(mail)
 
     if request.args.get('info_msg'):
         info_msg = request.args.get('info_msg')
@@ -220,16 +229,19 @@ def admin_OV():
 def admin_U():
     # TODO vérifier que l'utilisateur est admin et s'il ne l'est pas le rediriger vers la page d'erreur
     sql_obj = sql.MysqlObject()
-    admin_user = True
-    user = "Tao Blancheton"
-    css_state = sql_obj.get_css(user)
+
+    # TODO A FAIRE AVEC SESSION
+    mail = "taotom63@gmail.com"
+    admin_user = sql_obj.get_user_info(mail)[0][4]
+    user = sql_obj.get_user_info(mail)[0][0]
+    css_state = sql_obj.get_css(mail)
 
     if request.args.get('info_msg'):
         info_msg = request.args.get('info_msg')
 
     if request.form.get("user_search"):
         user_search = request.form.get("user_search")
-        return render_template("admin_u.html", user_list=sql_obj.liste_user_admin(user_search),
+        return render_template("admin_u.html", user_list=sql_obj.get_user_info_pseudo(user_search),
                                tutorats_actifs=sql_obj.offres_liste_validees(), days=days, **locals())
     else:
         return render_template("admin_u.html", user_list=sql_obj.liste_user(),
@@ -241,9 +253,12 @@ def admin_U():
 def recherche():
     if 'mail' in session:
         sql_obj = sql.MysqlObject()
-        admin_user = True
-        user = "Tao Blancheton"
-        css_state = sql_obj.get_css(user)
+
+        # TODO A FAIRE AVEC SESSION
+        mail = "taotom63@gmail.com"
+        admin_user = sql_obj.get_user_info(mail)[0][4]
+        user = sql_obj.get_user_info(mail)[0][0]
+        css_state = sql_obj.get_css(mail)
 
         if request.args.get('info_msg'):
             info_msg = request.args.get('info_msg')
@@ -263,7 +278,7 @@ def recherche():
             # Formulaire de tri première étape
 
             option = request.form.get("option")
-            return render_template("recherche.html", offres=sql_obj.offres_liste_tri(option, page, user), days=days,
+            return render_template("recherche.html", offres=sql_obj.offres_liste_tri(option, page, mail), days=days,
                                    **locals())
 
         elif request.form.get("option") and request.form.get("option2"):
@@ -271,12 +286,12 @@ def recherche():
 
             option = request.form.get("option")
             option2 = request.form.get("option2")
-            return render_template("recherche.html", offres=sql_obj.offres_liste_tri_2(option, option2, page, user),
+            return render_template("recherche.html", offres=sql_obj.offres_liste_tri_2(option, option2, page, mail),
                                    days=days, **locals())
 
         else:
             # Aucune option de tri sélectionnée
-            return render_template("recherche.html", offres=sql_obj.offres_liste(page, user), days=days, **locals())
+            return render_template("recherche.html", offres=sql_obj.offres_liste(page, mail), days=days, **locals())
 
     # Redirection si l'utilisateur n'est pas connecté
     else:
@@ -288,9 +303,12 @@ def recherche():
 def creation():
     if 'mail' in session:
         sql_obj = sql.MysqlObject()
-        admin_user = True
-        user = "Tao Blancheton"
-        css_state = sql_obj.get_css(user)
+
+        # TODO A FAIRE AVEC SESSION
+        mail = "taotom63@gmail.com"
+        admin_user = sql_obj.get_user_info(mail)[0][4]
+        user = sql_obj.get_user_info(mail)[0][0]
+        css_state = sql_obj.get_css(mail)
 
         return render_template("creation.html", filieres=sql_obj.filieres_liste(), matieres=sql_obj.matieres_liste(),
                                days=days, **locals())
@@ -307,9 +325,12 @@ def traitement_creation():
     process = False
     if 'mail' in session:
         sql_obj = sql.MysqlObject()
-        admin_user = True
-        user = "Tao Blancheton"
-        css_state = sql_obj.get_css(user)
+
+        # TODO A FAIRE AVEC SESSION
+        mail = "taotom63@gmail.com"
+        admin_user = sql_obj.get_user_info(mail)[0][4]
+        user = sql_obj.get_user_info(mail)[0][0]
+        css_state = sql_obj.get_css(mail)
         horaires = []
 
         for i in range(0, 12, 2):
@@ -332,7 +353,7 @@ def traitement_creation():
 
             if request.form.get("filiere") in filieres and request.form.get("matiere") in matieres:
 
-                sql_obj.create_offre(request.form.get('auteur'), request.form.get('filiere'),
+                sql_obj.create_offre(mail, request.form.get('filiere'),
                                      request.form.get('matiere'),
                                      horaires)
                 return redirect(url_for(
@@ -355,12 +376,15 @@ def traitement_creation():
 @app.route('/apply', methods=['POST'])
 def enregistrement():
     if 'mail' in session:
-        user = "Tao Blancheton"
         sql_obj = sql.MysqlObject()
-        admin_user = True
-        css_state = sql_obj.get_css(user)
 
-        result_code = sql_obj.add_participant(request.form.get("id"), user)
+        # TODO A FAIRE AVEC SESSION
+        mail = "taotom63@gmail.com"
+        admin_user = sql_obj.get_user_info(mail)[0][4]
+        user = sql_obj.get_user_info(mail)[0][0]
+        css_state = sql_obj.get_css(mail)
+
+        result_code = sql_obj.add_participant(request.form.get("id"), mail)
         if result_code == 0:
             # Pas d'erreur
             return redirect(
@@ -393,10 +417,14 @@ def quit_tutorat():
         if request.args.get('id'):
             offre_id = request.args.get('id')
             sql_obj = sql.MysqlObject()
-            user = "Tao Blancheton"
-            css_state = sql_obj.get_css(user)
 
-            if sql_obj.delete_participant(offre_id, user):
+            # TODO A FAIRE AVEC SESSION
+            mail = "taotom63@gmail.com"
+            admin_user = sql_obj.get_user_info(mail)[0][4]
+            user = sql_obj.get_user_info(mail)[0][0]
+            css_state = sql_obj.get_css(mail)
+
+            if sql_obj.delete_participant(offre_id, mail):
                 return redirect(url_for("profil", info_msg="Votre retrait de ce Tutorat a bien été enregistré."))
             else:
                 return render_template("error.html", message="Erreur - Vous ne participez pas à ce Tutorat", **locals())
@@ -470,13 +498,16 @@ def ban():
 def css():
     if 'mail' in session:
         sql_obj = sql.MysqlObject()
-        user = "Tao Blancheton"
+        # TODO A FAIRE AVEC SESSION
+        mail = "taotom63@gmail.com"
 
-        sql_obj.set_css(user)
+        sql_obj.set_css(mail)
+
+        # Redirection page d'avant
         return redirect(request.referrer)
 
-    # Redirection si l'utilisateur n'est pas connecté
     else:
+        # Redirection si l'utilisateur n'est pas connecté
         return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
 
 
@@ -507,7 +538,9 @@ def method_not_allowed(error):
     return render_template("error.html", message="Erreur 405 - Méthode de requête non autorisée", **locals())
 
 
-# Nécessaire pour faire fontionner les sessions (à garder secret pour que l'utilisateur ne puisse pas modifier les cookies)
+# Nécessaire pour faire fontionner les sessions
+# (à garder secret pour que l'utilisateur ne puisse pas modifier les cookies)
+# A modifier en Production
 app.secret_key = '\x1c\xd7\x9c@\xe6\xdf\xb2\xab\xb1\x86\xa62\x85k_\x17\x93Q\xb7f\x9b\x10g\x0e'
 
 # Lancement du serveur lors de l'exécution du fichier
