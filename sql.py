@@ -115,7 +115,8 @@ class MysqlObject:
 
     # Listes des offres tri admin
     def offres_liste_tri_admin(self, user_search):
-        self.cursor.execute("""SELECT * FROM offres WHERE auteur = %s OR participant = %s OR participant2 = %s""", (user_search, user_search, user_search))
+        self.cursor.execute("""SELECT * FROM offres WHERE auteur = %s OR participant = %s OR participant2 = %s""",
+                            (user_search, user_search, user_search))
         return self.cursor.fetchall()
 
     # Liste des offres selon 1 facteur de tri
