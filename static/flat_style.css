@@ -448,8 +448,8 @@ footer a:hover {
 .info {
     padding-right: 0;
     margin-right: 0;
-    max-width: 50%;
-    min-width: 50%
+    max-width: 60%;
+    min-width: 60%
 }
 
 .offres .horaire {
@@ -585,6 +585,24 @@ footer a:hover {
 /* END Create */
 
 /* Profil */
+.info a {
+    color: black;
+    font-family: sans-serif;
+    font-size: 1em;
+    text-decoration: none;
+}
+
+.info a:visited {
+    color: black;
+    font-family: sans-serif;
+    font-size: 1em;
+    text-decoration: none;
+}
+
+.info a:hover {
+    color: #7d7f81;
+}
+
 .profil {
     font-family: sans-serif;
     font-size: 1em;
@@ -618,6 +636,10 @@ footer a:hover {
 
 #tutorat_en_cours {
     margin-top: 20px;
+}
+
+#bloc_tuto {
+    min-height: 250px;
 }
 
 .bloc_page_profil {

@@ -34,17 +34,23 @@
             {% if offres_creees|length>0 %}
                 {% for offre in offres_creees %}
                     <br/>
-                    <div class="bloc">
+                    <div class="bloc" id="bloc_tuto">
                         <div class="info">
                             <p class="element"><strong class="G">Auteur:</strong> {{ sql_obj.get_user_pseudo(offre[1]) }}</p>
                             <p class="element"><strong class="G">Classe:</strong> {{ offre[2] }}</p>
                             <p class="element"><strong class="G">Matière:</strong> {{ offre[3] }}</p>
-                            <p class="element"><strong class="G">Participants:</strong>
-                                {% if offre[5] is none and offre[6] is none %}
-                                    Aucun
+                            <p class="element"><strong class="G">Participant 1:</strong>
+                                {% if offre[5] is none %}
+                                    Personne
                                 {% else %}
-                                    {% if offre[5] is not none %}{{ sql_obj.get_user_pseudo(offre[5]) }}{% endif %}{% if offre[6] is not none %},
-                                        {{ sql_obj.get_user_pseudo(offre[6]) }}{% endif %}
+                                    {{ sql_obj.get_user_pseudo(offre[5]) }}
+                                {% endif %}
+                            </p>
+                            <p class="element"><strong class="G">Participant 2:</strong>
+                                {% if offre[6] is none %}
+                                    Personne
+                                {% else %}
+                                    {{ sql_obj.get_user_pseudo(offre[6]) }}
                                 {% endif %}
                             </p>
                             <p class="element"><strong class="G">Etat de l'offre:</strong> {% if offre[7]==0 %}En
@@ -94,12 +100,18 @@
                             <p class="element"><strong class="G">Mail de
                                 l'auteur:</strong> <a href="mailto:{{ tutorat[1] }}">{{ tutorat[1] }}</a></p>
                             <p class="element"><strong class="G">Matière:</strong> {{ tutorat[3] }}</p>
-                            <p class="element"><strong class="G">Participants:</strong>
-                                {% if tutorat[5] is none and tutorat[6] is none %}
-                                    Aucun
+                            <p class="element"><strong class="G">Participants 1:</strong>
+                                {% if tutorat[5] is none %}
+                                    Personne
                                 {% else %}
-                                    {% if tutorat[5] is not none %}{{ sql_obj.get_user_pseudo(tutorat[5]) }}{% endif %}
-                                    {% if tutorat[6] is not none %}, {{ sql_obj.get_user_pseudo(tutorat[6]) }}{% endif %}
+                                    {{ sql_obj.get_user_pseudo(tutorat[5]) }}
+                                {% endif %}
+                            </p>
+                            <p class="element"><strong class="G">Participants 2:</strong>
+                                {% if tutorat[6] is none %}
+                                    Personne
+                                {% else %}
+                                    {{ sql_obj.get_user_pseudo(tutorat[6]) }}
                                 {% endif %}
                             </p>
                         </div>
