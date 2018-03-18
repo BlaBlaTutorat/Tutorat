@@ -462,7 +462,7 @@ def quit_tutorat():
             if sql_obj.delete_participant(offre_id, mail):
                 return redirect(url_for("profil", info_msg="Votre retrait de ce Tutorat a bien été enregistré."))
             else:
-                return render_template("error.html", message="Erreur - Vous ne participez pas à ce Tutorat", **locals())
+                return redirect(url_for("profil", info_msg="Vous ne participez pas à ce Tutorat"))
         else:
             abort(403)
 
