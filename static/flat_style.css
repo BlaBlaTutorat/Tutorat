@@ -709,9 +709,9 @@ footer a:hover {
 
 .user_search_admin {
     width: 20%;
-    height: 40px;
+    height: 30px;
     border: 1px solid #161616;
-    border-radius: 40px;
+    border-radius: 0;
     background-color: #18a3fa;
     color: white;
     font-family: "Gotham SSm A", sans-serif;
