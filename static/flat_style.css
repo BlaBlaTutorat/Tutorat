@@ -603,8 +603,8 @@ footer a:hover {
 
 .bloc_page_profil {
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+    flex-direction: column;
+    justify-content: center;
     margin: 70px auto auto auto;
 }
 
