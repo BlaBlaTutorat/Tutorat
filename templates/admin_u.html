@@ -65,11 +65,11 @@
                     {% endif %}
                 </div>
                 {% if user[5]==1 %}
-                    <a href="/ban?user_name={{ user[0] }}" class="ban">
+                    <a href="/ban?mail={{ user[2] }}" class="ban">
                         <button>Débannir</button>
                     </a>
                 {% else %}
-                    <a href="/ban?user_name={{ user[0] }}" class="ban">
+                    <a href="/ban?mail={{ user[2] }}" class="ban">
                         <button>Bannir</button>
                     </a>
                 {% endif %}

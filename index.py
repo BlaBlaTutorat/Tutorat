@@ -494,7 +494,7 @@ def delete2():
         # TODO vérifier que l'utilisateur est admin et s'il ne l'est pas le rediriger vers la page d'erreur
 
         sql_obj.delete_offer(offre_id)
-        return redirect(url_for("admin_OC", info_msg="La suppression a bien été effectuée."))
+        return redirect(url_for("admin_oc", info_msg="La suppression a bien été effectuée."))
     else:
         abort(403)
 
@@ -509,7 +509,7 @@ def validate():
         # TODO vérifier que l'utilisateur est admin et s'il ne l'est pas le rediriger vers la page d'erreur
 
         sql_obj.validate_offer(offre_id, disponible)
-        return redirect(url_for("admin_OV", info_msg="L'offre a bien été validée."))
+        return redirect(url_for("admin_ov", info_msg="L'offre a bien été validée."))
     else:
         abort(403)
 
@@ -518,12 +518,12 @@ def validate():
 @app.route('/ban')
 def ban():
     # TODO vérifier que l'utilisateur est admin et s'il ne l'est pas le rediriger vers la page d'erreur
-    if request.args.get('user_name'):
-        user_name = request.args.get('user_name')
+    if request.args.get('mail'):
+        mail = request.args.get('mail')
         sql_obj = sql.MysqlObject()
 
-        sql_obj.ban(user_name)
-        return redirect(url_for("admin_U", info_msg="Cet utilisateur a bien été banni."))
+        sql_obj.ban(mail)
+        return redirect(url_for("admin_u", info_msg="Le statut de cet utilisateur a bien été mis à jour."))
     else:
         abort(403)
 

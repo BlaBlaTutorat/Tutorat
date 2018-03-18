@@ -300,8 +300,8 @@ class MysqlObject:
             return False
 
     # Ban
-    def ban(self, user_name):
-        self.cursor.execute("""UPDATE users SET ban = NOT ban WHERE nom = %s""", (user_name,))
+    def ban(self, mail):
+        self.cursor.execute("""UPDATE users SET ban = NOT ban WHERE mail = %s""", (mail,))
         self.conn.commit()
 
     # Modification du profil
