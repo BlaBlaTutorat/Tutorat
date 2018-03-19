@@ -45,7 +45,7 @@ def connexion():
 @app.route('/login', methods=['POST'])
 def traitement_connexion():
     # Traitement du formulaire envoyé par l'utilisteur depuis la page login
-    if 'mail' not in session:
+    if 'mail' not in session['mail']:
         sql_obj = sql.MysqlObject()
 
         # obtenir les données entrées par l'utilisateur
@@ -60,7 +60,7 @@ def traitement_connexion():
             if sql_obj.get_crypt_mdp(mail)[0][0] == mdp_chiffre:
 
                 # valider ou non  la connexion
-                resp.set_cookie('session', 'mail')
+                global session['mail'] = mail
                 return redirect(url_for('recherche',
                                         info_msg="Vous êtes connecté, vous pouvez dès à présent accéder au service"
                                                  " de tutorat."))
@@ -131,7 +131,7 @@ def traitement_mdp_oublie():
 # Page de Profil info utilisateur
 @app.route('/profile/view')
 def profil():
-    if 'mail' in session:
+    if 'mail' in session['mail']:
         sql_obj = sql.MysqlObject()
 
         # TODO A FAIRE AVEC SESSION
@@ -153,7 +153,7 @@ def profil():
 # Page de Profil
 @app.route('/profile/tutorials')
 def profil_2():
-    if 'mail' in session:
+    if 'mail' in session['mail']:
         sql_obj = sql.MysqlObject()
 
         # TODO A FAIRE AVEC SESSION
@@ -176,7 +176,7 @@ def profil_2():
 # Page de modification du profil
 @app.route('/profile/update', methods=['GET', 'POST'])
 def profil_update():
-    if 'mail' in session:
+    if 'mail' in session['mail']:
         sql_obj = sql.MysqlObject()
 
         # TODO A FAIRE AVEC SESSION
@@ -292,7 +292,7 @@ def admin_u():
 # Page de recherche d'offres
 @app.route('/search', methods=['GET', 'POST'])
 def recherche():
-    if 'mail' in session:
+    if 'mail' in session['mail']:
         sql_obj = sql.MysqlObject()
 
         # TODO A FAIRE AVEC SESSION
@@ -342,7 +342,7 @@ def recherche():
 # Affichage du formulaire de création d'une offre
 @app.route('/create', methods=['GET'])
 def creation():
-    if 'mail' in session:
+    if 'mail' in session['mail']:
         sql_obj = sql.MysqlObject()
 
         # TODO A FAIRE AVEC SESSION
@@ -364,7 +364,7 @@ def creation():
 def traitement_creation():
     # On ne traite pas la demande dans le doute ou l'élève n'a pas renseigné de créneau horaire
     process = False
-    if 'mail' in session:
+    if 'mail' in session['mail']:
         sql_obj = sql.MysqlObject()
 
         # TODO A FAIRE AVEC SESSION
@@ -416,7 +416,7 @@ def traitement_creation():
 # Page d'enregistrement (s'enregistrer en tant que participant)
 @app.route('/apply', methods=['POST'])
 def enregistrement():
-    if 'mail' in session:
+    if 'mail' in session['mail']:
         sql_obj = sql.MysqlObject()
 
         # TODO A FAIRE AVEC SESSION
@@ -449,7 +449,7 @@ def enregistrement():
 # Suppression de la participation d'un utilisateur à une offre
 @app.route('/quit')
 def quit_tutorat():
-    if 'mail' in session:
+    if 'mail' in session['mail']:
         if request.args.get('id'):
             offre_id = request.args.get('id')
             sql_obj = sql.MysqlObject()
@@ -549,7 +549,7 @@ def ban():
 # CSS
 @app.route('/css')
 def css():
-    if 'mail' in session:
+    if 'mail' in session['mail']:
         sql_obj = sql.MysqlObject()
         # TODO A FAIRE AVEC SESSION
         mail = "taotom63@gmail.com"
