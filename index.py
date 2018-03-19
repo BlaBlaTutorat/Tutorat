@@ -499,13 +499,15 @@ def delete():
 # Suppression d'une offre (admin)
 @app.route('/delete2')
 def delete2():
-    if request.args.get('id'):
-        offre_id = request.args.get('id')
-        sql_obj = sql.MysqlObject()
-        # TODO vérifier que l'utilisateur est admin et s'il ne l'est pas le rediriger vers la page d'erreur
-
-        sql_obj.delete_offer(offre_id)
-        return redirect(url_for("admin_oc", info_msg="La suppression a bien été effectuée."))
+    admin_user = sql_obj.get_user_info(mail)[0][4]
+    if admin_user:
+        if request.args.get('id'):
+            offre_id = request.args.get('id')
+            sql_obj = sql.MysqlObject()
+            sql_obj.delete_offer(offre_id)
+            return redirect(url_for("admin_oc", info_msg="La suppression a bien été effectuée."))
+        else:
+            abort(403)
     else:
         abort(403)
 
@@ -513,14 +515,16 @@ def delete2():
 # Validation d'une offre (admin)
 @app.route('/validate')
 def validate():
-    if request.args.get('id'):
-        disponible = 1
-        offre_id = request.args.get('id')
-        sql_obj = sql.MysqlObject()
-        # TODO vérifier que l'utilisateur est admin et s'il ne l'est pas le rediriger vers la page d'erreur
-
-        sql_obj.validate_offer(offre_id, disponible)
-        return redirect(url_for("admin_ov", info_msg="L'offre a bien été validée."))
+    admin_user = sql_obj.get_user_info(mail)[0][4]
+    if admin_user:
+        if request.args.get('id'):
+            disponible = 1
+            offre_id = request.args.get('id')
+            sql_obj = sql.MysqlObject()
+            sql_obj.validate_offer(offre_id, disponible)
+            return redirect(url_for("admin_ov", info_msg="L'offre a bien été validée."))
+        else:
+            abort(403)
     else:
         abort(403)
 
@@ -528,13 +532,16 @@ def validate():
 # Ban (admin)
 @app.route('/ban')
 def ban():
-    # TODO vérifier que l'utilisateur est admin et s'il ne l'est pas le rediriger vers la page d'erreur
-    if request.args.get('mail'):
-        mail = request.args.get('mail')
-        sql_obj = sql.MysqlObject()
+    admin_user = sql_obj.get_user_info(mail)[0][4]
+    if admin_user:
+        if request.args.get('mail'):
+            mail = request.args.get('mail')
+            sql_obj = sql.MysqlObject()
 
-        sql_obj.ban(mail)
-        return redirect(url_for("admin_u", info_msg="Le statut de cet utilisateur a bien été mis à jour."))
+            sql_obj.ban(mail)
+            return redirect(url_for("admin_u", info_msg="Le statut de cet utilisateur a bien été mis à jour."))
+        else:
+            abort(403)
     else:
         abort(403)
 
