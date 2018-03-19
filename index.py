@@ -60,7 +60,7 @@ def traitement_connexion():
             if sql_obj.get_crypt_mdp(mail)[0][0] == mdp_chiffre:
 
                 # valider ou non  la connexion
-                global session['mail'] = mail
+                session['mail'] = mail
                 return redirect(url_for('recherche',
                                         info_msg="Vous êtes connecté, vous pouvez dès à présent accéder au service"
                                                  " de tutorat."))
@@ -499,7 +499,8 @@ def delete():
 # Suppression d'une offre (admin)
 @app.route('/delete2')
 def delete2():
-    admin_user = sql_obj.get_user_info(mail)[0][4]
+    sql_obj = sql.MysqlObject()
+    admin_user = sql_obj.get_user_info('mail')[0][4]
     if admin_user:
         if request.args.get('id'):
             offre_id = request.args.get('id')
@@ -515,7 +516,8 @@ def delete2():
 # Validation d'une offre (admin)
 @app.route('/validate')
 def validate():
-    admin_user = sql_obj.get_user_info(mail)[0][4]
+    sql_obj = sql.MysqlObject()
+    admin_user = sql_obj.get_user_info('mail')[0][4]
     if admin_user:
         if request.args.get('id'):
             disponible = 1
@@ -532,7 +534,8 @@ def validate():
 # Ban (admin)
 @app.route('/ban')
 def ban():
-    admin_user = sql_obj.get_user_info(mail)[0][4]
+    sql_obj = sql.MysqlObject()
+    admin_user = sql_obj.get_user_info('mail')[0][4]
     if admin_user:
         if request.args.get('mail'):
             mail = request.args.get('mail')
