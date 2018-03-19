@@ -14,7 +14,8 @@ days = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
 def index():
     mail = 'taotom63@gmail.com'
     sql_obj = sql.MysqlObject()
-    if session['mail'] != None and sql_obj.mail_in_bdd() == True:
+    if session['mail'] != None and sql_obj.mail_in_bdd(session['mail']) == True:
+        mail = session['mail']
         return redirect(url_for("recherche"))
 
     else:
@@ -28,7 +29,8 @@ def connexion():
     # Verif que l'utilisateur est connecté si connecté --> page de recherche sinon --> chargement template
     mail = 'taotom63@gmail.com'
     sql_obj = sql.MysqlObject()
-    if session['mail'] == None and sql_obj.mail_in_bdd() == False:
+    if session['mail'] == None or sql_obj.mail_in_bdd(session['mail']) == False:
+        mail = session['mail']
 
         return redirect(url_for('recherche',
                                 info_msg="Vous êtes connecté, vous pouvez dès à présent accéder au"
@@ -49,7 +51,7 @@ def connexion():
 def traitement_connexion():
     # Traitement du formulaire envoyé par l'utilisteur depuis la page login
     sql_obj = sql.MysqlObject()
-    if session['mail'] == None and sql_obj.mail_in_bdd() == False:
+    if session['mail'] == None or sql_obj.mail_in_bdd(session['mail']) == False:
 
         # obtenir les données entrées par l'utilisateur
         mail = request.form.get(mail)
@@ -59,7 +61,7 @@ def traitement_connexion():
         mdp_chiffre = hashlib.sha256(str(mdp).encode('utf-8')).hexdigest()
 
         # comparer les infos à celle de la base de données
-        if sql_obj.mail_in_bdd() == True:
+        if sql_obj.mail_in_bdd(session['mail']) == True:
             if sql_obj.get_crypt_mdp(mail)[0][0] == mdp_chiffre:
 
                 # valider ou non  la connexion
@@ -83,12 +85,10 @@ def traitement_connexion():
 # Page d'inscription
 @app.route('/register', methods=['GET'])
 def inscription():
-    mail = 'taotom63@gmail.com'
     sql_obj = sql.MysqlObject()
-    if session['mail'] == None and sql_obj.mail_in_bdd() == False:
+    if session['mail'] == None or sql_obj.mail_in_bdd(session['mail']) == False:
         if mail not in sql_obj.get_user_info(mail):
-
-            sql_obj = sql.MysqlObject()
+            mail = session['mail']
             # Propre à cette page
             hidemenu = True
 
@@ -135,12 +135,11 @@ def traitement_mdp_oublie():
 # Page de Profil info utilisateur
 @app.route('/profile/view')
 def profil():
-    mail = 'taotom63@gmail.com'
     sql_obj = sql.MysqlObject()
-    if session['mail'] != None and sql_obj.mail_in_bdd() == True:
+    if session['mail'] != None and sql_obj.mail_in_bdd(session['mail']) == True:
 
         # TODO A FAIRE AVEC SESSION
-        mail = "taotom63@gmail.com"
+        mail = session['mail']
         admin_user = sql_obj.get_user_info(mail)[0][4]
         user = sql_obj.get_user_info(mail)[0][0]
         css_state = sql_obj.get_css(mail)
@@ -158,12 +157,11 @@ def profil():
 # Page de Profil
 @app.route('/profile/tutorials')
 def profil_2():
-    mail = 'taotom63@gmail.com'
     sql_obj = sql.MysqlObject()
-    if session['mail'] != None and sql_obj.mail_in_bdd() == True:
+    if session['mail'] != None and sql_obj.mail_in_bdd(session['mail']) == True:
 
         # TODO A FAIRE AVEC SESSION
-        mail = "taotom63@gmail.com"
+        mail = session['mail']
         admin_user = sql_obj.get_user_info(mail)[0][4]
         user = sql_obj.get_user_info(mail)[0][0]
         css_state = sql_obj.get_css(mail)
@@ -182,12 +180,11 @@ def profil_2():
 # Page de modification du profil
 @app.route('/profile/update', methods=['GET', 'POST'])
 def profil_update():
-    mail = 'taotom63@gmail.com'
     sql_obj = sql.MysqlObject()
-    if session['mail'] != None and sql_obj.mail_in_bdd() == True:
+    if session['mail'] != None and sql_obj.mail_in_bdd(session['mail']) == True:
 
         # TODO A FAIRE AVEC SESSION
-        mail = "taotom63@gmail.com"
+        mail = session['mail']
         admin_user = sql_obj.get_user_info(mail)[0][4]
         user = sql_obj.get_user_info(mail)[0][0]
         css_state = sql_obj.get_css(mail)
@@ -301,10 +298,10 @@ def admin_u():
 def recherche():
     mail = 'taotom63@gmail.com'
     sql_obj = sql.MysqlObject()
-    if session['mail'] != None and sql_obj.mail_in_bdd() == True:
+    if session['mail'] != None and sql_obj.mail_in_bdd(session['mail']) == True:
 
         # TODO A FAIRE AVEC SESSION
-        mail = "taotom63@gmail.com"
+        mail = session['mail']
         admin_user = sql_obj.get_user_info(mail)[0][4]
         user = sql_obj.get_user_info(mail)[0][0]
         css_state = sql_obj.get_css(mail)
@@ -350,12 +347,12 @@ def recherche():
 # Affichage du formulaire de création d'une offre
 @app.route('/create', methods=['GET'])
 def creation():
-    mail = 'taotom63@gmail.com'
+    mail = session['mail']
     sql_obj = sql.MysqlObject()
-    if session['mail'] != None and sql_obj.mail_in_bdd() == True:
+    if session['mail'] != None and sql_obj.mail_in_bdd(session['mail']) == True:
 
         # TODO A FAIRE AVEC SESSION
-        mail = "taotom63@gmail.com"
+        mail = session['mail']
         admin_user = sql_obj.get_user_info(mail)[0][4]
         user = sql_obj.get_user_info(mail)[0][0]
         css_state = sql_obj.get_css(mail)
@@ -373,12 +370,11 @@ def creation():
 def traitement_creation():
     # On ne traite pas la demande dans le doute ou l'élève n'a pas renseigné de créneau horaire
     process = False
-    mail = 'taotom63@gmail.com'
     sql_obj = sql.MysqlObject()
-    if session['mail'] != None and sql_obj.mail_in_bdd() == True:
+    if session['mail'] != None and sql_obj.mail_in_bdd(session['mail']) == True:
 
         # TODO A FAIRE AVEC SESSION
-        mail = "taotom63@gmail.com"
+        mail = session['mail']
         admin_user = sql_obj.get_user_info(mail)[0][4]
         user = sql_obj.get_user_info(mail)[0][0]
         css_state = sql_obj.get_css(mail)
@@ -426,12 +422,11 @@ def traitement_creation():
 # Page d'enregistrement (s'enregistrer en tant que participant)
 @app.route('/apply', methods=['POST'])
 def enregistrement():
-    mail = 'taotom63@gmail.com'
     sql_obj = sql.MysqlObject()
-    if session['mail'] != None and sql_obj.mail_in_bdd() == True:
+    if session['mail'] != None and sql_obj.mail_in_bdd(session['mail']) == True:
 
         # TODO A FAIRE AVEC SESSION
-        mail = "taotom63@gmail.com"
+        mail = session['mail']
 
         result_code = sql_obj.add_participant(request.form.get("id"), mail)
         if result_code == 0:
@@ -460,14 +455,13 @@ def enregistrement():
 # Suppression de la participation d'un utilisateur à une offre
 @app.route('/quit')
 def quit_tutorat():
-    mail = 'taotom63@gmail.com'
     sql_obj = sql.MysqlObject()
-    if session['mail'] != None and sql_obj.mail_in_bdd() == True:
+    if session['mail'] != None and sql_obj.mail_in_bdd(session['mail']) == True:
         if request.args.get('id'):
             offre_id = request.args.get('id')
 
             # TODO A FAIRE AVEC SESSION
-            mail = "taotom63@gmail.com"
+            mail = session['mail']
 
             if sql_obj.delete_participant(offre_id, mail):
                 return redirect(url_for("profil", info_msg="Votre retrait de ce Tutorat a bien été enregistré."))
@@ -564,10 +558,10 @@ def ban():
 # CSS
 @app.route('/css')
 def css():
-    mail = 'taotom63@gmail.com'
     sql_obj = sql.MysqlObject()
-    if session['mail'] != None and sql_obj.mail_in_bdd() == True:
+    if session['mail'] != None and sql_obj.mail_in_bdd(session['mail']) == True:
         # TODO A FAIRE AVEC SESSION
+        mail = session['mail']
         sql_obj.set_css(mail)
 
         # Redirection page d'avant
