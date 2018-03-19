@@ -13,7 +13,7 @@ days = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
 @app.route('/')
 def index():
     mail = 'taotom63@gmail.com'
-    if 'mail' in session['mail']:
+    if session['mail'] != None:
         return redirect(url_for("recherche"))
 
     else:
@@ -26,7 +26,7 @@ def index():
 def connexion():
     # Verif que l'utilisateur est connecté si connecté --> page de recherche sinon --> chargement template
     mail = 'taotom63@gmail.com'
-    if 'mail' in session['mail']:
+    if session['mail'] != None:
 
         return redirect(url_for('recherche',
                                 info_msg="Vous êtes connecté, vous pouvez dès à présent accéder au"
@@ -135,7 +135,7 @@ def traitement_mdp_oublie():
 def profil():
     mail = 'taotom63@gmail.com'
     if session['mail'] != None:
-        
+
         sql_obj = sql.MysqlObject()
 
         # TODO A FAIRE AVEC SESSION

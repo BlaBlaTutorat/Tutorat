@@ -74,8 +74,12 @@ class MysqlObject:
         return self.cursor.fetchall()
 
     #Vérifier si le mail existe
-    def mail_in_bdd(selfself,mail):
-        self.cursor.execute("""SELECT mail FROM users""")
+    def mail_in_bdd(self, mail):
+        self.cursor.execute("""SELECT mail FROM users WHERE mail =%s""",(mail,))
+        if len(self.cursor.fetchall()) != 0:
+            return True
+        else:
+            return False
 
     # Récupération des infos utilisateurs par mail
     def get_user_info(self, mail):
