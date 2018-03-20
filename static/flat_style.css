@@ -272,6 +272,10 @@ footer a:hover {
 /* END Register */
 
 /* Login */
+.login_bloc {
+    margin-bottom: 50px;
+}
+
 .mdp_oublie {
     text-decoration: none;
     color: white;
@@ -420,8 +424,8 @@ footer a:hover {
     justify-content: space-around;
     align-items: center;
     padding: 5px 10px 5px 10px;
-    width: 900px;
-    min-height: 200px;
+    width: 940px;
+    min-height: 215px;
     margin: auto auto 20px auto;
 }
 
