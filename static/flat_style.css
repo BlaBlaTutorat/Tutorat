@@ -717,7 +717,7 @@ footer a:hover {
 }
 
 .majprofil {
-    margin: auto;
+    margin: auto auto 50px auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
