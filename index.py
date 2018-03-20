@@ -589,7 +589,6 @@ def method_not_allowed(error):
 
 # Vérification connexion
 def check_connexion():
-    session['mail'] = 'taotom63@gmail.com'
     # Verification mail non nul
     if 'mail' in session:
         sql_obj = sql.MysqlObject()
