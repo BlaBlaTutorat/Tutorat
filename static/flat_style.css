@@ -61,10 +61,11 @@ input, button {
     color: white;
     font-family: "Gotham SSm A", sans-serif;
     font-size: 0.9em;
+    outline: none;
 }
 
-input {
-    border-radius: 0;
+select {
+    outline: none;
 }
 
 input:hover, button:hover {
@@ -376,8 +377,13 @@ footer a:hover {
 /* END Forgot */
 
 /* Search */
+.bouton {
+    margin-top: 10px;
+}
+
 .search {
     margin-top: 75px;
+    background-color: #161616;
 }
 
 .search .critere {
@@ -386,7 +392,6 @@ footer a:hover {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    background-color: white;
 }
 
 .tri {
@@ -397,7 +402,6 @@ footer a:hover {
     margin: 10px auto;
     border: 1px solid #18a3fa;
     border-radius: 50px;
-    background-color: white;
 }
 
 .offres {

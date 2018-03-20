@@ -79,10 +79,6 @@
                             {{ sql_obj.get_user_pseudo(offre[6]) }}
                         {% endif %}
                     </p>
-                    <form class="bouton" method="post" action="/apply">
-                        <input type="hidden" name="id" value="{{ offre[0] }}"/>
-                        <input type="submit" value="Accepter l'offre"/>
-                    </form>
                 </div>
                 <div id="horaires">
                     <div class="horaire">
@@ -96,6 +92,10 @@
                                     - {{ 'h'.join((offre[9+i]|string).split(':')[:2]) }}</p>{% endif %}{% endfor %}
                         </div>
                     </div>
+                    <form class="bouton" method="post" action="/apply">
+                        <input type="hidden" name="id" value="{{ offre[0] }}"/>
+                        <input type="submit" value="Accepter l'offre"/>
+                    </form>
                 </div>
             </div>
             <br/>
