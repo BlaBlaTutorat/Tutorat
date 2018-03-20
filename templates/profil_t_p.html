@@ -30,7 +30,7 @@
 <div class="bloc_page_profil">
     <!-- Liste des offres crées par l'utilisateur -->
         <div class="offres" id="tutorat_en_cours">
-            <h2>Vos offres créées</h2>
+            <h2>Vos tutorats créés</h2>
             {% if offres_creees|length>0 %}
                 {% for offre in offres_creees %}
                     <br/>
@@ -90,7 +90,7 @@
         </div>
         <div class="offres" id="tutorat_en_cours">
             <!-- Liste des offres auxquelles participe l'utilisateur -->
-            <h2>Les offres auxquelles vous participez</h2>
+            <h2>Les tutorats auxquels vous participez</h2>
             {% if tutorats_actifs|length>0 %}
                 {% for tutorat in tutorats_actifs %}
                     <br/>
