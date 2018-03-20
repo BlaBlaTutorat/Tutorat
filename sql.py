@@ -35,6 +35,7 @@ class MysqlObject:
     """
         REQUETES GENERALES SUR LA BDD
     """
+
     # Liste des classes
     def classes_liste(self):
         classes = []
@@ -68,14 +69,15 @@ class MysqlObject:
     """
         REQUETES CONCERNANT LES UTILISATEURS SUR LA BDD
     """
+
     # Listes des utilisateurs
     def liste_user(self):
         self.cursor.execute("""SELECT * FROM users""")
         return self.cursor.fetchall()
 
-    #Vérifier si le mail existe
+    # Vérifier si le mail existe
     def mail_in_bdd(self, mail):
-        self.cursor.execute("""SELECT mail FROM users WHERE mail =%s""",(mail,))
+        self.cursor.execute("""SELECT mail FROM users WHERE mail =%s""", (mail,))
         if len(self.cursor.fetchall()) != 0:
             return True
         else:
@@ -109,6 +111,7 @@ class MysqlObject:
     """
         REQUETES CONCERNANT LES OFFRES SUR LA BDD
     """
+
     # Recherche des offres auxquelles participe l'utilisateur
     def get_user_tutorats(self, mail):
         self.cursor.execute("""SELECT * FROM offres WHERE participant=%s OR participant2=%s""", (mail, mail))
@@ -294,6 +297,7 @@ class MysqlObject:
     """
         REQUETES DIVERSES SUR LA BDD
     """
+
     # SET CSS
     def set_css(self, mail):
         self.cursor.execute("""UPDATE users SET css = NOT css WHERE mail = %s""", (mail,))
