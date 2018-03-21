@@ -57,8 +57,7 @@ def traitement_connexion():
         # comparer les infos à celle de la base de données
         if sql_obj.mail_in_bdd(mail):
             if sql_obj.get_crypt_mdp(mail)[0][0] == mdp_chiffre:
-
-                # TODO DEFINIR LA VARIABLE session['mail']
+                session['mail'] = mail
                 return redirect(url_for('recherche',
                                         info_msg="Vous êtes connecté, vous pouvez dès à présent accéder au service"
                                                  " de tutorat."))
@@ -93,18 +92,19 @@ def inscription():
 @app.route('/register', methods=['POST'])
 def traitement_inscription():
     sql_obj = sql.MysqlObject()
-    # TODO Check utilisteur non connecté + check que l'email n'existe pas deja sur la bdd
+    if not check_connexion():
+        if not sql_obj.mail_in_bdd(request.form('mail')):
 
-    # Chiffrement du mdp
-    chaine_mot_de_passe = request.form.get('mdp')
-    mot_de_passe_chiffre = hashlib.sha256(str(chaine_mot_de_passe).encode('utf-8')).hexdigest()
+            # Chiffrement du mdp
+            chaine_mot_de_passe = request.form.get('mdp')
+            mot_de_passe_chiffre = hashlib.sha256(str(chaine_mot_de_passe).encode('utf-8')).hexdigest()
 
-    nom = request.form.get('prenom') + '  ' + request.form.get('nom')
-    # Envoi des infos à la base de données
-    sql_obj.create_compte(nom, mot_de_passe_chiffre, request.form.get('mail'), request.form.get('classe'))
-    return redirect(url_for("profil",
-                            info_msg="Votre compte a bien été créé, vous pouvez dès à présent accéder à votre profil"
-                                     " et au service d'offre/demande de Tutorat."))
+            nom = request.form.get('prenom') + '  ' + request.form.get('nom')
+            # Envoi des infos à la base de données
+            sql_obj.create_compte(nom, mot_de_passe_chiffre, request.form.get('mail'), request.form.get('classe'))
+            return redirect(url_for("profil",
+                                        info_msg="Votre compte a bien été créé, vous pouvez dès à présent accéder à votre profil"
+                                            " et au service d'offre/demande de Tutorat."))
 
 
 # Mot de passe oublié
@@ -198,58 +198,62 @@ def profil_update():
 @app.route('/admin/tutorials/progress', methods=['GET', 'POST'])
 def admin_oc():
     sql_obj = sql.MysqlObject()
+    if check_connexion():
 
-    # TODO A FAIRE AVEC SESSION
-    mail = "taotom63@gmail.com"
-    admin_user = sql_obj.get_user_info(mail)[0][4]
-    user = sql_obj.get_user_info(mail)[0][0]
-    css_state = sql_obj.get_css(mail)
+        mail = session['mail']
+        admin_user = sql_obj.get_user_info(mail)[0][4]
+        user = sql_obj.get_user_info(mail)[0][0]
+        css_state = sql_obj.get_css(mail)
 
-    if admin_user:
+        if admin_user:
 
-        if request.args.get('info_msg'):
-            info_msg = request.args.get('info_msg')
+            if request.args.get('info_msg'):
+                info_msg = request.args.get('info_msg')
 
-        if request.form.get("user_search"):
-            user_search = request.form.get("user_search")
-            user_search = sql_obj.get_user_info_pseudo(user_search)
-            if len(user_search) == 1:
-                # Un utilisateur a été trouvée
-                return render_template("admin_t_p.html",
+            if request.form.get("user_search"):
+                user_search = request.form.get("user_search")
+                user_search = sql_obj.get_user_info_pseudo(user_search)
+                if len(user_search) == 1:
+                    # Un utilisateur a été trouvée
+                    return render_template("admin_t_p.html",
                                        tutorats_actifs=sql_obj.offres_liste_tri_admin(user_search[0][2]),
                                        days=days, **locals())
-            else:
+                else:
                 # Pas d'utilisateur trouvé donc liste vide
-                return render_template("admin_t_p.html", tutorats_actifs=[], days=days,
+                    return render_template("admin_t_p.html", tutorats_actifs=[], days=days,
                                        **locals())
-        else:
-            return render_template("admin_t_p.html", tutorats_actifs=sql_obj.offres_liste_validees(), days=days,
+            else:
+                return render_template("admin_t_p.html", tutorats_actifs=sql_obj.offres_liste_validees(), days=days,
                                    **locals())
 
+        else:
+            abort(403)
     else:
-        abort(403)
-
+        return redirect(url_for("connexion", info_msg='connectez vous avant de continuer.'))
 
 # Page d'Administration offres à valider
 @app.route('/admin/tutorials/validate')
 def admin_ov():
     sql_obj = sql.MysqlObject()
 
-    # TODO A FAIRE AVEC SESSION
-    mail = "taotom63@gmail.com"
-    admin_user = sql_obj.get_user_info(mail)[0][4]
-    user = sql_obj.get_user_info(mail)[0][0]
-    css_state = sql_obj.get_css(mail)
+    if check_connexion():
 
-    if admin_user:
+        mail = session['mail']
+        admin_user = sql_obj.get_user_info(mail)[0][4]
+        user = sql_obj.get_user_info(mail)[0][0]
+        css_state = sql_obj.get_css(mail)
 
-        if request.args.get('info_msg'):
-            info_msg = request.args.get('info_msg')
+        if admin_user:
 
-        return render_template("admin_t_v.html", offres_V=sql_obj.offres_liste_valider(), days=days, **locals())
+            if request.args.get('info_msg'):
+                info_msg = request.args.get('info_msg')
 
+            return render_template("admin_t_v.html", offres_V=sql_obj.offres_liste_valider(), days=days, **locals())
+
+        else:
+            abort(403)
     else:
-        abort(403)
+        return redirect(url_for("connexion", info_msg = 'connectez vous avant de continuer.'))
 
 
 # Page d'Administration profile utilisateur
@@ -257,27 +261,30 @@ def admin_ov():
 def admin_u():
     sql_obj = sql.MysqlObject()
 
-    # TODO A FAIRE AVEC SESSION
-    mail = "taotom63@gmail.com"
-    admin_user = sql_obj.get_user_info(mail)[0][4]
-    user = sql_obj.get_user_info(mail)[0][0]
-    css_state = sql_obj.get_css(mail)
+    if check_connexion():
 
-    if admin_user:
+        mail = session['mail']
+        admin_user = sql_obj.get_user_info(mail)[0][4]
+        user = sql_obj.get_user_info(mail)[0][0]
+        css_state = sql_obj.get_css(mail)
 
-        if request.args.get('info_msg'):
-            info_msg = request.args.get('info_msg')
+        if admin_user:
 
-        if request.form.get("user_search"):
-            user_search = request.form.get("user_search")
-            return render_template("admin_u.html", user_list=sql_obj.get_user_info_pseudo(user_search),
+            if request.args.get('info_msg'):
+                info_msg = request.args.get('info_msg')
+
+            if request.form.get("user_search"):
+                user_search = request.form.get("user_search")
+                return render_template("admin_u.html", user_list=sql_obj.get_user_info_pseudo(user_search),
                                    tutorats_actifs=sql_obj.offres_liste_validees(), days=days, **locals())
+            else:
+                return render_template("admin_u.html", user_list=sql_obj.liste_user(),
+                                   tutorats_actifs=sql_obj.offres_liste_validees(), days=days, **locals())
+
         else:
-            return render_template("admin_u.html", user_list=sql_obj.liste_user(),
-                                   tutorats_actifs=sql_obj.offres_liste_validees(), days=days, **locals())
-
+            abort(403)
     else:
-        abort(403)
+        return redirect(url_for("connexion", info_msg='connectez vous avant de continuer.'))
 
 
 # Page de recherche d'offres
@@ -459,88 +466,96 @@ def quit_tutorat():
 # Suppression d'une offre
 @app.route('/delete')
 def delete():
-    # TODO A FAIRE AVEC SESSION
-    mail = "taotom63@gmail.com"
+    if check_connexion():
 
-    if request.args.get('id'):
+        mail = session['mail']
+        if request.args.get('id'):
 
-        sql_obj = sql.MysqlObject()
+            sql_obj = sql.MysqlObject()
 
-        offre_id = request.args.get('id')
-        offre = sql_obj.get_offre(offre_id)
+            offre_id = request.args.get('id')
+            offre = sql_obj.get_offre(offre_id)
 
-        # Vérification qu'une seule offre avec cet id existe
-        if len(offre) == 1:
+            # Vérification qu'une seule offre avec cet id existe
+            if len(offre) == 1:
 
-            # Vérification que l'auteur est celui qui demande la suppression
-            if mail == offre[0][1]:
-                sql_obj.delete_offer(offre_id)
-                return redirect(url_for("profil", info_msg="Votre offre a bien été supprimée."))
+                # Vérification que l'auteur est celui qui demande la suppression
+                if mail == offre[0][1]:
+                    sql_obj.delete_offer(offre_id)
+                    return redirect(url_for("profil", info_msg="Votre offre a bien été supprimée."))
+                else:
+                    abort(403)
             else:
                 abort(403)
         else:
             abort(403)
     else:
-        abort(403)
+        return redirect(url_for("connexion", info_msg='Connectez-vous avant de continuer.'))
 
 
 # Suppression d'une offre (admin)
 @app.route('/delete2')
 def delete2():
     sql_obj = sql.MysqlObject()
-    # TODO A FAIRE AVEC SESSION
-    mail = "taotom63@gmail.com"
-    admin_user = sql_obj.get_user_info(mail)[0][4]
-    if admin_user:
-        if request.args.get('id'):
-            offre_id = request.args.get('id')
-            sql_obj = sql.MysqlObject()
-            sql_obj.delete_offer(offre_id)
-            return redirect(url_for("admin_oc", info_msg="La suppression a bien été effectuée."))
+    if check_connexion() :
+        mail=session['mail']
+        admin_user = sql_obj.get_user_info(mail)[0][4]
+        if admin_user:
+            if request.args.get('id'):
+                offre_id = request.args.get('id')
+                sql_obj = sql.MysqlObject()
+                sql_obj.delete_offer(offre_id)
+                return redirect(url_for("admin_oc", info_msg="La suppression a bien été effectuée."))
+            else:
+                abort(403)
         else:
             abort(403)
     else:
-        abort(403)
+        return redirect(url_for("connexion", info_msg='connectez-vous avant de continuer.'))
 
 
 # Validation d'une offre (admin)
 @app.route('/validate')
 def validate():
     sql_obj = sql.MysqlObject()
-    # TODO A FAIRE AVEC SESSION
-    mail = "taotom63@gmail.com"
-    admin_user = sql_obj.get_user_info(mail)[0][4]
-    if admin_user:
-        if request.args.get('id'):
-            disponible = 1
-            offre_id = request.args.get('id')
-            sql_obj = sql.MysqlObject()
-            sql_obj.validate_offer(offre_id, disponible)
-            return redirect(url_for("admin_ov", info_msg="L'offre a bien été validée."))
+    if check_connexion():
+        mail = session['mail']
+        admin_user = sql_obj.get_user_info(mail)[0][4]
+        if admin_user:
+            if request.args.get('id'):
+                disponible = 1
+                offre_id = request.args.get('id')
+                sql_obj = sql.MysqlObject()
+                sql_obj.validate_offer(offre_id, disponible)
+                return redirect(url_for("admin_ov", info_msg="L'offre a bien été validée."))
+            else:
+                abort(403)
         else:
             abort(403)
     else:
-        abort(403)
+        return redirect(url_for("connexion", info_msg='connectez-vous avant de continuer.'))
 
 
 # Ban (admin)
 @app.route('/ban')
 def ban():
     sql_obj = sql.MysqlObject()
-    # TODO A FAIRE AVEC SESSION
-    mail = "taotom63@gmail.com"
-    admin_user = sql_obj.get_user_info(mail)[0][4]
-    if admin_user:
-        if request.args.get('mail'):
-            mail = request.args.get('mail')
-            sql_obj = sql.MysqlObject()
+    if check_connexion():
+        mail=session['mail']
+        admin_user = sql_obj.get_user_info(mail)[0][4]
+        if admin_user:
+            if request.args.get('mail'):
+                mail = request.args.get('mail')
+                sql_obj = sql.MysqlObject()
 
-            sql_obj.ban(mail)
-            return redirect(url_for("admin_u", info_msg="Le statut de cet utilisateur a bien été mis à jour."))
+                sql_obj.ban(mail)
+                return redirect(url_for("admin_u", info_msg="Le statut de cet utilisateur a bien été mis à jour."))
+            else:
+                abort(403)
         else:
             abort(403)
     else:
-        abort(403)
+        return redirect(url_for("connexion", info_msg='connectez-vous avant de continuer.'))
 
 
 # CSS
