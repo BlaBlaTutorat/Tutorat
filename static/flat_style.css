@@ -79,17 +79,16 @@ form {
     justify-content: center;
     align-items: center;
 }
+
+nav, ul, li {
+    padding: 0;
+    margin: 0;
+}
 /* END Commun */
 
 /* HEADER */
-.icon {
-    margin-right: 20px;
-    width: 10%;
-}
-
-.main_logo {
-    margin-left: 20px;
-    width: 10%;
+header nav {
+    margin-top: 25px;
 }
 
 header {
@@ -101,13 +100,13 @@ header {
     padding: 0;
     height: 75px;
     background-color: #161616;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
+    min-width: 100%;
 }
 
-header div {
+header div, .header div {
+    width: 100%;
     display: flex;
+    justify-content: space-around;
 }
 
 header .icon .profile:hover {
@@ -128,7 +127,7 @@ header .icon .admin {
 
 header ul, .header ul {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     list-style-type: none;
     color: #afb1b3;
     font-family: 'Gotham SSm A', sans-serif;
@@ -137,14 +136,9 @@ header ul, .header ul {
     font-weight: 400
 }
 
-header li {
+header li, .header li{
     cursor: pointer;
-    margin: 0 20px 0 20px;
-}
-
-.header li {
-    cursor: pointer;
-    margin: 0 40px 0 40px;
+    margin: 0 22px 0 22px;
 }
 
 header li a:visited, .header li a:visited {
@@ -167,11 +161,16 @@ header li a:hover, .header li a:hover {
     background-color: #161616;
     min-width: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
 }
 
 .header li {
     font-size: 0.85em;
+}
+
+#header_icon {
+    width: 10%;
 }
 /* END HEADER */
 
@@ -648,6 +647,8 @@ footer a:hover {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    margin: auto;
+    align-items: center;
 }
 
 .info_profil {
@@ -675,6 +676,7 @@ footer a:hover {
 }
 
 .page_profil {
+    margin: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -701,7 +703,7 @@ footer a:hover {
 }
 
 #info_profil {
-    margin: 20px auto auto auto;
+    margin: 20px 0 0 0;
 }
 
 #horaires {
@@ -713,6 +715,17 @@ footer a:hover {
 
 .bloc_page_profil button {
     margin-top: 20px;
+}
+
+@media screen and (max-width: 1430px) {
+    .bloc_page_profil {
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .bloc_profil {
+        margin: auto;
+    }
 }
 /* END Profil */
 
@@ -819,7 +832,7 @@ footer a:hover {
 }
 
 #valider_offre {
-    margin: 0 0 0 0;
+    margin: 0;
     width: 100%;
 }
 
