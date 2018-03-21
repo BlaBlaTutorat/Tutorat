@@ -94,7 +94,6 @@ def traitement_inscription():
     sql_obj = sql.MysqlObject()
     if not check_connexion():
         if not sql_obj.mail_in_bdd(request.form('mail')):
-
             # Chiffrement du mdp
             chaine_mot_de_passe = request.form.get('mdp')
             mot_de_passe_chiffre = hashlib.sha256(str(chaine_mot_de_passe).encode('utf-8')).hexdigest()
@@ -103,8 +102,8 @@ def traitement_inscription():
             # Envoi des infos à la base de données
             sql_obj.create_compte(nom, mot_de_passe_chiffre, request.form.get('mail'), request.form.get('classe'))
             return redirect(url_for("profil",
-                                        info_msg="Votre compte a bien été créé, vous pouvez dès à présent accéder à votre profil"
-                                            " et au service d'offre/demande de Tutorat."))
+                                    info_msg="Votre compte a bien été créé, vous pouvez dès à présent accéder à votre profil"
+                                             " et au service d'offre/demande de Tutorat."))
 
 
 # Mot de passe oublié
@@ -216,20 +215,21 @@ def admin_oc():
                 if len(user_search) == 1:
                     # Un utilisateur a été trouvée
                     return render_template("admin_t_p.html",
-                                       tutorats_actifs=sql_obj.offres_liste_tri_admin(user_search[0][2]),
-                                       days=days, **locals())
+                                           tutorats_actifs=sql_obj.offres_liste_tri_admin(user_search[0][2]),
+                                           days=days, **locals())
                 else:
-                # Pas d'utilisateur trouvé donc liste vide
+                    # Pas d'utilisateur trouvé donc liste vide
                     return render_template("admin_t_p.html", tutorats_actifs=[], days=days,
-                                       **locals())
+                                           **locals())
             else:
                 return render_template("admin_t_p.html", tutorats_actifs=sql_obj.offres_liste_validees(), days=days,
-                                   **locals())
+                                       **locals())
 
         else:
             abort(403)
     else:
         return redirect(url_for("connexion", info_msg='connectez vous avant de continuer.'))
+
 
 # Page d'Administration offres à valider
 @app.route('/admin/tutorials/validate')
@@ -253,7 +253,7 @@ def admin_ov():
         else:
             abort(403)
     else:
-        return redirect(url_for("connexion", info_msg = 'connectez vous avant de continuer.'))
+        return redirect(url_for("connexion", info_msg='connectez vous avant de continuer.'))
 
 
 # Page d'Administration profile utilisateur
@@ -276,10 +276,10 @@ def admin_u():
             if request.form.get("user_search"):
                 user_search = request.form.get("user_search")
                 return render_template("admin_u.html", user_list=sql_obj.get_user_info_pseudo(user_search),
-                                   tutorats_actifs=sql_obj.offres_liste_validees(), days=days, **locals())
+                                       tutorats_actifs=sql_obj.offres_liste_validees(), days=days, **locals())
             else:
                 return render_template("admin_u.html", user_list=sql_obj.liste_user(),
-                                   tutorats_actifs=sql_obj.offres_liste_validees(), days=days, **locals())
+                                       tutorats_actifs=sql_obj.offres_liste_validees(), days=days, **locals())
 
         else:
             abort(403)
@@ -497,8 +497,8 @@ def delete():
 @app.route('/delete2')
 def delete2():
     sql_obj = sql.MysqlObject()
-    if check_connexion() :
-        mail=session['mail']
+    if check_connexion():
+        mail = session['mail']
         admin_user = sql_obj.get_user_info(mail)[0][4]
         if admin_user:
             if request.args.get('id'):
@@ -541,7 +541,7 @@ def validate():
 def ban():
     sql_obj = sql.MysqlObject()
     if check_connexion():
-        mail=session['mail']
+        mail = session['mail']
         admin_user = sql_obj.get_user_info(mail)[0][4]
         if admin_user:
             if request.args.get('mail'):
@@ -573,6 +573,16 @@ def css():
     else:
         # Redirection si l'utilisateur n'est pas connecté
         return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
+
+
+# deconnexion
+@app.route('/disconnect')
+def deconnexion():
+    if check_connexion():
+        session.pop('mail', None)
+        return redirect(url_for("connexion", info_msg='Vous avez bien été déconnecté.'))
+    else:
+        return redirect(url_for("connexion"))
 
 
 # Gestion de l'erreur 404
