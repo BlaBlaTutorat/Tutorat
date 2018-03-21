@@ -82,6 +82,16 @@ form {
 /* END Commun */
 
 /* HEADER */
+.icon {
+    margin-right: 20px;
+    width: 10%;
+}
+
+.main_logo {
+    margin-left: 20px;
+    width: 10%;
+}
+
 header {
     position: fixed;
     top: 0;
@@ -91,12 +101,13 @@ header {
     padding: 0;
     height: 75px;
     background-color: #161616;
-    min-width: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
 }
 
-header div, .header div {
+header div {
     display: flex;
-    justify-content: space-around;
 }
 
 header .icon .profile:hover {
@@ -126,9 +137,14 @@ header ul, .header ul {
     font-weight: 400
 }
 
-header li, .header li{
+header li {
     cursor: pointer;
-    padding: 0 45px 0 0;
+    margin: 0 20px 0 20px;
+}
+
+.header li {
+    cursor: pointer;
+    margin: 0 40px 0 40px;
 }
 
 header li a:visited, .header li a:visited {
@@ -151,7 +167,6 @@ header li a:hover, .header li a:hover {
     background-color: #161616;
     min-width: 100%;
     display: flex;
-    flex-direction: column;
     justify-content: center;
 }
 
@@ -633,8 +648,6 @@ footer a:hover {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin: 0 50px auto auto;
-    align-items: center;
 }
 
 .info_profil {
@@ -662,7 +675,6 @@ footer a:hover {
 }
 
 .page_profil {
-    margin: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -689,7 +701,7 @@ footer a:hover {
 }
 
 #info_profil {
-    margin: 20px 0 0 0;
+    margin: 20px auto auto auto;
 }
 
 #horaires {
@@ -701,17 +713,6 @@ footer a:hover {
 
 .bloc_page_profil button {
     margin-top: 20px;
-}
-
-@media screen and (max-width: 1430px) {
-    .bloc_page_profil {
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    .bloc_profil {
-        margin: auto;
-    }
 }
 /* END Profil */
 

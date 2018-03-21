@@ -1,18 +1,16 @@
 <header>
-    <div>
-        <a href="/"><img src="/static/main_logo.png"></a>
-        {% if not hidemenu %}
-            <nav>
-                <ul>
-                    <li><a href="/search">Rechercher</a></li>
-                    <li><a href="/create">Créer</a></li>
-                </ul>
-            </nav>
-            <div class="icon">
-                <a href="/profile/view" class="profile"><img src="/static/profil.png"></a>
-                {% if admin_user %}<a href="/admin/tutorials/validate" class="admin"><img src="/static/admin.png"></a>{% endif %}
-                <a href="/disconnect" class="admin"><img src="/static/disconnect.png"></a>
-            </div>
-        {% endif %}
-    </div>
+    <a href="/" class="main_logo"><img src="/static/main_logo.png"></a>
+    {% if not hidemenu %}
+        <nav>
+            <ul>
+                <li><a href="/search">Rechercher</a></li>
+                <li><a href="/create">Créer</a></li>
+            </ul>
+        </nav>
+        <div class="icon">
+            <a href="/profile/view" class="profile"><img src="/static/profil.png"></a>
+            {% if admin_user %}<a href="/admin/tutorials/validate" class="admin"><img src="/static/admin.png"></a>{% endif %}
+            <a href="/disconnect" class="admin"><img src="/static/disconnect.png"></a>
+        </div>
+    {% endif %}
 </header>
