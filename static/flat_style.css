@@ -100,19 +100,19 @@ header div, .header div {
 }
 
 header .icon .profile:hover {
-    margin: 18px 10px 0 0;
+    margin: 18px 0 0 0;
 }
 
 header .icon .admin:hover {
-    margin: 18px 0 10px 0;
+    margin: 18px 0 0 10px;
 }
 
 header .icon .profile {
-    margin: 20px 10px 0 0;
+    margin: 20px 0 0 0;
 }
 
 header .icon .admin {
-    margin: 20px 0 10px 0;
+    margin: 20px 0 0 10px;
 }
 
 header ul, .header ul {
@@ -217,6 +217,10 @@ footer a:hover {
 /* END FOOTER */
 
 /* Register */
+.register_bloc {
+    margin-bottom: 50px;
+}
+
 .register {
     line-height: 20px;
 }
