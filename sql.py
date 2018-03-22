@@ -108,6 +108,13 @@ class MysqlObject:
         self.cursor.execute("""SELECT mdp FROM users WHERE mail=%s""", (mail,))
         return self.cursor.fetchall()
 
+    # Check ban
+    def check_ban(self,mail):
+        self.cursor.execute("""SELECT ban From users Where mail=%s""",(mail,))
+        if len(self.cursor.fetchall()) != 0:
+            return True
+        else:
+            return False
     """
         REQUETES CONCERNANT LES OFFRES SUR LA BDD
     """

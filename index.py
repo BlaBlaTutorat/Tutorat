@@ -102,7 +102,8 @@ def traitement_inscription():
             # Envoi des infos à la base de données
             sql_obj.create_compte(nom, mot_de_passe_chiffre, request.form.get('mail'), request.form.get('classe'))
             return redirect(url_for("profil",
-                                    info_msg="Votre compte a bien été créé, vous pouvez dès à présent accéder à votre profil"
+                                    info_msg="Votre compte a bien été créé,"
+                                             "vous pouvez dès à présent accéder à votre profil"
                                              " et au service d'offre/demande de Tutorat."))
 
 
@@ -617,9 +618,13 @@ def check_connexion():
     # Verification mail non nul
     if 'mail' in session:
         sql_obj = sql.MysqlObject()
+        mail = session['mail']
         # Vérification mail existe
         if sql_obj.mail_in_bdd(session['mail']):
-            return True
+            if not sql_obj.check_ban(mail):
+                return True
+            else:
+                return False
         else:
             return False
     else:
