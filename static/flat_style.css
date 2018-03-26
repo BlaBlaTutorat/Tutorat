@@ -92,6 +92,7 @@ header nav {
 }
 
 header {
+    z-index: 10;
     position: fixed;
     top: 0;
     right: 0;
@@ -151,6 +152,7 @@ header li a:hover, .header li a:hover {
 }
 
 .header {
+    z-index: 9;
     position: absolute;
     top: 75px;
     right: 0;
@@ -260,7 +262,7 @@ footer a:hover {
     flex-direction: column;
     justify-content: center;
     padding: 5px 10px 5px 10px;
-    width: 750px;
+    min-width: 750px;
     height: 350px;
 }
 
@@ -328,7 +330,7 @@ footer a:hover {
     flex-direction: column;
     justify-content: center;
     padding: 5px 10px 5px 10px;
-    width: 700px;
+    min-width: 700px;
 }
 
 .bloc_connexion {
@@ -374,7 +376,7 @@ footer a:hover {
     flex-direction: column;
     justify-content: center;
     padding: 5px 10px 5px 10px;
-    width: 700px;
+    min-width: 700px;
 }
 
 .bloc_forgot {
@@ -442,9 +444,9 @@ footer a:hover {
     justify-content: space-around;
     align-items: center;
     padding: 5px 10px 5px 10px;
-    width: 940px;
+    min-width: 940px;
     min-height: 215px;
-    margin: auto auto 20px auto;
+    margin: 10px auto 10px auto;
 }
 
 .offres .element {
@@ -537,7 +539,7 @@ footer a:hover {
     justify-content: space-around;
     align-items: center;
     padding: 5px 10px 5px 10px;
-    width: 900px;
+    min-width: 900px;
     height: 350px;
 }
 
@@ -639,7 +641,7 @@ footer a:hover {
     flex-direction: row;
     justify-content: space-around;
     padding: 5px 10px 5px 10px;
-    width: 650px;
+    min-width: 650px;
     margin-top: 20px;
 }
 
@@ -860,9 +862,9 @@ footer a:hover {
     flex-direction: row;
     justify-content: space-around;
     padding: 5px 10px 5px 10px;
-    width: 650px;
+    min-width: 650px;
     height: 350px;
-    margin: 20px auto auto auto;
+    margin: 10px auto 10px auto;
 }
 
 .ban {
