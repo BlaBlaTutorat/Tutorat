@@ -1,9 +1,14 @@
 # coding: utf-8
 import hashlib
+
 from flask import *
+
 import sql
+
 app = Flask(__name__)
 days = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
+
+
 # Page d'accueil qui redirige vers la page de recherche ou page de login
 @app.route('/')
 def index():
@@ -12,6 +17,8 @@ def index():
     else:
         # Redirection si l'utilisateur n'est pas connecté
         return redirect(url_for('connexion'))
+
+
 # Page de connexion
 @app.route('/login', methods=['GET'])
 def connexion():
@@ -27,6 +34,8 @@ def connexion():
         if request.args.get('info_msg'):
             info_msg = request.args.get('info_msg')
         return render_template("connexion.html", **locals())
+
+
 # Page de connexion
 @app.route('/login', methods=['POST'])
 def traitement_connexion():
@@ -56,6 +65,8 @@ def traitement_connexion():
         return redirect(url_for('recherche',
                                 info_msg="Vous êtes connecté, vous pouvez dès à présent accéder au"
                                          " service de tutorat."))
+
+
 # Page d'inscription
 @app.route('/register', methods=['GET'])
 def inscription():
@@ -67,6 +78,8 @@ def inscription():
     else:
         # Redirection vers la page d'accueil
         return redirect(url_for("recherche"))
+
+
 @app.route('/register', methods=['POST'])
 def traitement_inscription():
     sql_obj = sql.MysqlObject()
@@ -82,16 +95,22 @@ def traitement_inscription():
                                     info_msg="Votre compte a bien été créé,"
                                              "vous pouvez dès à présent accéder à votre profil"
                                              " et au service d'offre/demande de Tutorat."))
+
+
 # Mot de passe oublié
 @app.route('/forgot', methods=['GET'])
 def mdp_oublie():
     # Propre à cette page
     hidemenu = True
     return render_template("mdp_oublie.html", **locals())
+
+
 # Traitement Mot de passe oublié
 @app.route('/forgot', methods=['POST'])
 def traitement_mdp_oublie():
     return redirect(url_for('connexion', info_msg="Un nouveau mot de passe a été envoyé à " + request.form['mail']))
+
+
 # Page de Profil info utilisateur
 @app.route('/profile/view')
 def profil():
@@ -107,6 +126,8 @@ def profil():
     # Redirection si l'utilisateur n'est pas connecté
     else:
         return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
+
+
 # Page de Profil
 @app.route('/profile/tutorials')
 def profil_2():
@@ -123,6 +144,8 @@ def profil_2():
     # Redirection si l'utilisateur n'est pas connecté
     else:
         return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
+
+
 # Page de modification du profil
 @app.route('/profile/update', methods=['GET', 'POST'])
 def profil_update():
@@ -145,6 +168,8 @@ def profil_update():
     # Redirection si l'utilisateur n'est pas connecté
     else:
         return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
+
+
 # Page d'Administration offres en courts
 @app.route('/admin/tutorials/progress', methods=['GET', 'POST'])
 def admin_oc():
@@ -176,6 +201,8 @@ def admin_oc():
             abort(403)
     else:
         return redirect(url_for("connexion", info_msg='connectez vous avant de continuer.'))
+
+
 # Page d'Administration offres à valider
 @app.route('/admin/tutorials/validate')
 def admin_ov():
@@ -193,6 +220,8 @@ def admin_ov():
             abort(403)
     else:
         return redirect(url_for("connexion", info_msg='connectez vous avant de continuer.'))
+
+
 # Page d'Administration profile utilisateur
 @app.route('/admin/users', methods=['GET', 'POST'])
 def admin_u():
@@ -216,6 +245,8 @@ def admin_u():
             abort(403)
     else:
         return redirect(url_for("connexion", info_msg='connectez vous avant de continuer.'))
+
+
 # Page de recherche d'offres
 @app.route('/search', methods=['GET', 'POST'])
 def recherche():
@@ -253,6 +284,8 @@ def recherche():
     # Redirection si l'utilisateur n'est pas connecté
     else:
         return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
+
+
 # Affichage du formulaire de création d'une offre
 @app.route('/create', methods=['GET'])
 def creation():
@@ -267,6 +300,8 @@ def creation():
     # Redirection si l'utilisateur n'est pas connecté
     else:
         return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
+
+
 # Traitement du formulaire + upload bdd
 @app.route('/create', methods=['POST'])
 def traitement_creation():
@@ -311,6 +346,8 @@ def traitement_creation():
     # Redirection si l'utilisateur n'est pas connecté
     else:
         return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
+
+
 # Page d'enregistrement (s'enregistrer en tant que participant)
 @app.route('/apply', methods=['POST'])
 def enregistrement():
@@ -338,6 +375,8 @@ def enregistrement():
     # Redirection si l'utilisateur n'est pas connecté
     else:
         return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
+
+
 # Suppression de la participation d'un utilisateur à une offre
 @app.route('/quit')
 def quit_tutorat():
@@ -355,6 +394,8 @@ def quit_tutorat():
     # Redirection si l'utilisateur n'est pas connecté
     else:
         return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
+
+
 # Suppression d'une offre
 @app.route('/delete')
 def delete():
@@ -378,6 +419,8 @@ def delete():
             abort(403)
     else:
         return redirect(url_for("connexion", info_msg='Connectez-vous avant de continuer.'))
+
+
 # Suppression d'une offre (admin)
 @app.route('/delete2')
 def delete2():
@@ -397,6 +440,8 @@ def delete2():
             abort(403)
     else:
         return redirect(url_for("connexion", info_msg='connectez-vous avant de continuer.'))
+
+
 # Validation d'une offre (admin)
 @app.route('/validate')
 def validate():
@@ -417,6 +462,8 @@ def validate():
             abort(403)
     else:
         return redirect(url_for("connexion", info_msg='connectez-vous avant de continuer.'))
+
+
 # Ban (admin)
 @app.route('/ban')
 def ban():
@@ -436,6 +483,8 @@ def ban():
             abort(403)
     else:
         return redirect(url_for("connexion", info_msg='connectez-vous avant de continuer.'))
+
+
 # CSS
 @app.route('/css')
 def css():
@@ -448,6 +497,8 @@ def css():
     else:
         # Redirection si l'utilisateur n'est pas connecté
         return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
+
+
 # deconnexion
 @app.route('/disconnect')
 def deconnexion():
@@ -456,24 +507,32 @@ def deconnexion():
         return redirect(url_for("connexion", info_msg='Vous avez bien été déconnecté.'))
     else:
         return redirect(url_for("connexion"))
+
+
 # Gestion de l'erreur 404
 @app.errorhandler(404)
 def not_found(error):
     # Propre à cette page
     hidemenu = True
     return render_template("error.html", message="Erreur 404 - Ressource non trouvée", **locals())
+
+
 # Gestion de l'erreur 403
 @app.errorhandler(403)
 def forbidden(error):
     # Propre à cette page
     hidemenu = True
     return render_template("error.html", message="Erreur 403 - Accès Interdit", **locals())
+
+
 # Gestion de l'erreur 405
 @app.errorhandler(405)
 def method_not_allowed(error):
     # Propre à cette page
     hidemenu = True
     return render_template("error.html", message="Erreur 405 - Méthode de requête non autorisée", **locals())
+
+
 # Vérification connexion
 def check_connexion():
     # Verification mail non nul
@@ -490,6 +549,8 @@ def check_connexion():
             return False
     else:
         return False
+
+
 # Nécessaire pour faire fontionner les sessions
 # (à garder secret pour que l'utilisateur ne puisse pas modifier les cookies)
 # A modifier en Production
