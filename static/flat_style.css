@@ -98,7 +98,7 @@ header {
     left: 0;
     margin: 0;
     padding: 0;
-    height: 75px;
+    min-height: 75px;
     background-color: #161616;
     min-width: 100%;
 }
@@ -881,10 +881,9 @@ footer a:hover {
 .reset_msg {
     font-family: "Gotham SSm A", sans-serif;
     position: fixed;
-    top: 25%;
-    right: 25%;
-    width: 50%;
-    height: 15%;
+    top: 150px;
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -896,7 +895,7 @@ footer a:hover {
 .header_reset {
     background-color: #18a3fa;
     width: 100%;
-    height: 20%;
+    height: 5%;
     display: flex;
     justify-content: flex-end;
 }
