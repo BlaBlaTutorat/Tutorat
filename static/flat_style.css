@@ -423,7 +423,7 @@ footer a:hover {
     justify-content: center;
     width: 30%;
     padding: 16px 20px;
-    margin: 10px auto;
+    margin: 10px auto auto auto;
     border: 1px solid #18a3fa;
     border-radius: 50px;
 }
