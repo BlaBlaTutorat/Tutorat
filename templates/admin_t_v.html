@@ -29,6 +29,19 @@
     </a>
 {% endif %}
 
+{% if reset_msg %}
+    <!-- Message reset -->
+    <div class="reset_msg">
+        <div class="header_reset">
+            <a href="/admin/tutorials/validate" class="quit_reset"></a>
+        </div>
+        <div class="reset_button">
+            <p>Êtes-vous sûr de vouloir remettre le site BlaBla Tutorat à zéro ?</p>
+            <div class="button"><a href="/reset" class="reset_bb">- Oui -</a></div>
+        </div>
+    </div>
+{% endif %}
+
 
 <!-- Liste des offres -->
 <div class="offres" id="tutorat_en_cours">

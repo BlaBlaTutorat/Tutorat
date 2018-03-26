@@ -328,6 +328,12 @@ class MysqlObject:
             (nom, mdp, mail, classe))
         self.conn.commit()
 
+    # Reset
+    def reset(self):
+        self.cursor.execute("""DELETE FROM `users` WHERE `admin`  != 1""")
+        self.cursor.execute("""DELETE FROM `offres`""")
+        self.conn.commit()
+
 
 # Retourne le nombre de places dispo
 def check_availability(offre):

@@ -54,7 +54,7 @@ h2 {
     font-family: "Gotham SSm A", sans-serif;
 }
 
-input, button {
+input, button, .button {
     border: 1px solid #18a3fa;
     border-radius: 40px;
     background-color: #18a3fa;
@@ -68,7 +68,7 @@ select {
     outline: none;
 }
 
-input:hover, button:hover {
+input:hover, button:hover, .button:hover {
     background-color: #1863a9;
     border: 1px solid #1863a9;
 }
@@ -876,6 +876,46 @@ footer a:hover {
 
 #horaires button {
     margin-top: 20px;
+}
+
+.reset_msg {
+    font-family: "Gotham SSm A", sans-serif;
+    position: fixed;
+    top: 25%;
+    right: 25%;
+    width: 50%;
+    height: 15%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #eaeaec;
+    border: 1px solid #161616;
+}
+
+.header_reset {
+    background-color: #18a3fa;
+    width: 100%;
+    height: 20%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.quit_reset {
+    background-image: url("/static/croix.png");
+    width: 20px;
+    height: 20px;
+}
+
+.reset_button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.reset_bb, .reset_bb:hover, .reset_bb:visited, .reset_bb:link {
+    color: white;
 }
 /* END Admin */
 

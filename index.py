@@ -215,6 +215,8 @@ def admin_ov():
         if admin_user:
             if request.args.get('info_msg'):
                 info_msg = request.args.get('info_msg')
+            if request.args.get('reset_msg'):
+                reset_msg = request.args.get('reset_msg')
             return render_template("admin_t_v.html", offres_V=sql_obj.offres_liste_valider(), days=days, **locals())
         else:
             abort(403)
@@ -482,7 +484,7 @@ def ban():
         else:
             abort(403)
     else:
-        return redirect(url_for("connexion", info_msg='connectez-vous avant de continuer.'))
+        return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
 
 
 # CSS
@@ -507,6 +509,23 @@ def deconnexion():
         return redirect(url_for("connexion", info_msg='Vous avez bien été déconnecté.'))
     else:
         return redirect(url_for("connexion"))
+
+
+# Remise à 0
+@app.route('/reset')
+def reset():
+    sql_obj = sql.MysqlObject()
+    if check_connexion():
+        mail = session['mail']
+        admin_user = sql_obj.get_user_info(mail)[0][4]
+        if admin_user == 1:
+            sql_obj.reset()
+            info_msg = 'Le site BlaBla Tutorat a bien été remis à zéro.'
+            return render_template("admin_t_v.html", offres_V=sql_obj.offres_liste_valider(), days=days, **locals())
+        else:
+            abort(403)
+    else:
+        return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
 
 
 # Gestion de l'erreur 404
