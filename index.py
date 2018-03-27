@@ -145,6 +145,17 @@ def profil_2():
     else:
         return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
 
+# Page de supression Profil
+@app.route('/profile/delete')
+def profil_3():
+    sql_obj = sql.MysqlObject()
+    if check_connexion():
+        mail = session['mail']
+        sql_obj.delete_acount(mail)
+        return redirect(url_for('connexion', info_msg="Votre compte a bien été suprimé. Au revoir."))
+    # Redirection si l'utilisateur n'est pas connecté
+    else:
+        return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
 
 # Page de modification du profil
 @app.route('/profile/update', methods=['GET', 'POST'])

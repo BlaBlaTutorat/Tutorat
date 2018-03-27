@@ -66,6 +66,11 @@ class MysqlObject:
     """
 
     # Listes des utilisateurs
+    def delete_acount(self, mail):
+        self.cursor.execute("""DELETE FROM users WHERE mail = %s""", (mail,))
+        self.conn.commit()
+
+    # Listes des utilisateurs
     def liste_user(self):
         self.cursor.execute("""SELECT * FROM users""")
         return self.cursor.fetchall()
