@@ -50,10 +50,15 @@ def traitement_connexion():
         # comparer les infos à celle de la base de données
         if sql_obj.mail_in_bdd(mail):
             if sql_obj.get_crypt_mdp(mail)[0][0] == mdp_chiffre:
-                session['mail'] = mail
-                return redirect(url_for('recherche',
-                                        info_msg="Vous êtes connecté, vous pouvez dès à présent accéder au service"
-                                                 " de tutorat."))
+                if not sql_obj.check_ban(mail):
+                    session['mail'] = mail
+                    return redirect(url_for('recherche',
+                                            info_msg="Vous êtes connecté, vous pouvez dès à présent accéder au service"
+                                                     " de tutorat."))
+                else:
+                    return redirect(url_for('connexion',
+                                            info_msg="Vous êtes banni de cette platforme. Veuillez contacter un"
+                                                     " documentaliste."))
             else:
                 return redirect(url_for('connexion',
                                         info_msg="Erreur lors de la connexion, veuillez vérifier les informations"
