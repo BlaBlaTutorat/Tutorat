@@ -152,7 +152,7 @@ def profil_2():
 
 # Page de supression Profil
 @app.route('/profile/delete')
-def profil_3():
+def profil_4():
     sql_obj = sql.MysqlObject()
     if check_connexion():
         mail = session['mail']
