@@ -69,8 +69,6 @@ class MysqlObject:
     def delete_acount(self, mail):
         self.cursor.execute("""DELETE FROM users WHERE mail = %s""", (mail,))
         self.cursor.execute("""DELETE FROM offres WHERE auteur = %s""", (mail,))
-        self.cursor.execute("""UPDATE offres SET participant = NULL WHERE participant = %s """, (mail,))
-        self.cursor.execute("""UPDATE offres SET participant2 = NULL WHERE participant2 = %s """, (mail,))
         self.conn.commit()
 
     # Listes des utilisateurs
