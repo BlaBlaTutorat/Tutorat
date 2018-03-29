@@ -326,20 +326,18 @@ class MysqlObject:
 
     # Modification du profil
     def modify_user_info(self, mail, classe):
-        self.cursor.execute("""UPDATE users SET classe = %s WHERE mail = %s """,
-                            (classe, mail))
+        self.cursor.execute("""UPDATE users SET classe = %s WHERE mail = %s """, (classe, mail))
         self.conn.commit()
 
     # Création d'un compte
     def create_compte(self, nom, mdp, mail, classe):
         self.cursor.execute(
-            """INSERT INTO users (nom, mdp, mail, classe) VALUES (%s, %s, %s, %s)""",
-            (nom, mdp, mail, classe))
+            """INSERT INTO users (nom, mdp, mail, classe) VALUES (%s, %s, %s, %s)""", (nom, mdp, mail, classe))
         self.conn.commit()
 
     # Reset
     def reset(self):
-        self.cursor.execute("""DELETE FROM `users` WHERE `admin`  != 1""")
+        self.cursor.execute("""DELETE FROM `users` WHERE `admin` != 1""")
         self.cursor.execute("""DELETE FROM `offres`""")
         self.conn.commit()
 
