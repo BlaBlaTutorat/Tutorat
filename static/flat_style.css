@@ -38,6 +38,8 @@ h2 {
 }
 
 .info_msg, #page_admin_msg{
+    z-index: 11;
+    cursor: pointer;
     position: fixed;
     top: 75px;
     right: 0;

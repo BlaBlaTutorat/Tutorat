@@ -79,6 +79,9 @@ def inscription():
     if not check_connexion():
         # Propre à cette page
         hidemenu = True
+
+        if request.args.get('info_msg'):
+            info_msg = request.args.get('info_msg')
         return render_template("inscription.html", classes=sql_obj.classes_liste(), **locals())
     else:
         # Redirection vers la page d'accueil
@@ -89,7 +92,7 @@ def inscription():
 def traitement_inscription():
     sql_obj = sql.MysqlObject()
     if not check_connexion():
-        if not sql_obj.mail_in_bdd(request.form('mail')):
+        if not sql_obj.mail_in_bdd(request.form['mail']):
             # Chiffrement du mdp
             chaine_mot_de_passe = request.form.get('mdp')
             mot_de_passe_chiffre = hashlib.sha256(str(chaine_mot_de_passe).encode('utf-8')).hexdigest()
@@ -100,6 +103,12 @@ def traitement_inscription():
                                     info_msg="Votre compte a bien été créé,"
                                              "vous pouvez dès à présent accéder à votre profil"
                                              " et au service d'offre/demande de Tutorat."))
+        else:
+            return redirect(url_for('inscription',
+                                    info_msg="Cette adresse email existe déjà"))
+    else:
+        # Redirection vers la page d'accueil
+        return redirect(url_for("recherche"))
 
 
 # Mot de passe oublié
@@ -150,6 +159,7 @@ def profil_2():
     else:
         return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
 
+
 # Page de supression Profil
 @app.route('/profile/delete')
 def profil_4():
@@ -161,6 +171,7 @@ def profil_4():
     # Redirection si l'utilisateur n'est pas connecté
     else:
         return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
+
 
 # Page de modification du profil
 @app.route('/profile/update', methods=['GET', 'POST'])

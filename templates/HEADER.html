@@ -19,3 +19,10 @@
         {% endif %}
     </div>
 </header>
+
+{% if info_msg %}
+    <!-- Message d'information -->
+    <a onclick="window.location.href=window.location.pathname" class="info_msg">
+        <div>{{ info_msg }}</div>
+    </a>
+{% endif %}
