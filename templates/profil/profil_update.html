@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 
-{% with name="Mon Profil" %}{% include "HEAD.html" %}{% endwith %}
+{% with name="Mon Profil" %}{% include "mise_en_page/HEAD.html" %}{% endwith %}
 
 <body>
 
-{% include 'HEADER.html' %}
+{% include 'mise_en_page/HEADER.html' %}
 
 <form method="post" action="/profile/update" class="majprofil">
     <div class="bloc_page_profil">
@@ -37,7 +37,7 @@
     </div>
 </form>
 
-{% include 'FOOTER.html' %}
+{% include 'mise_en_page/FOOTER.html' %}
 
 </body>
 </html>

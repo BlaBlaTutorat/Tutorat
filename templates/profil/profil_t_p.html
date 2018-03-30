@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 
-{% with name="Mon Profil" %}{% include "HEAD.html" %}{% endwith %}
+{% with name="Mon Profil" %}{% include "mise_en_page/HEAD.html" %}{% endwith %}
 
 <body>
 
-{% include 'HEADER.html' %}
+{% include 'mise_en_page/HEADER.html' %}
 
 <div class="header">
     <div>
@@ -29,21 +29,21 @@
                     <br/>
                     <div class="bloc" id="bloc_tuto">
                         <div class="info">
-                            <p class="element"><strong class="G">Auteur:</strong> {{ sql_obj.get_user_pseudo(offre[1]) }}</p>
+                            <p class="element"><strong class="G">Auteur:</strong> <a onclick="window.open('/profile/view/{{ offre[1] }}','profil','height=625,width=700')">{{ sql_obj.get_user_pseudo(offre[1]) }}</a></p>
                             <p class="element"><strong class="G">Classe:</strong> {{ offre[2] }}</p>
                             <p class="element"><strong class="G">Matière:</strong> {{ offre[3] }}</p>
                             <p class="element"><strong class="G">Participant 1:</strong>
                                 {% if offre[5] is none %}
                                     Personne
                                 {% else %}
-                                    {{ sql_obj.get_user_pseudo(offre[5]) }}
+                                    <a onclick="window.open('/profile/view/{{ offre[5] }}','profil','height=625,width=700')">{{ sql_obj.get_user_pseudo(offre[5]) }}</a>
                                 {% endif %}
                             </p>
                             <p class="element"><strong class="G">Participant 2:</strong>
                                 {% if offre[6] is none %}
                                     Personne
                                 {% else %}
-                                    {{ sql_obj.get_user_pseudo(offre[6]) }}
+                                    <a onclick="window.open('/profile/view/{{ offre[6] }}','profil','height=625,width=700')">{{ sql_obj.get_user_pseudo(offre[6]) }}</a>
                                 {% endif %}
                             </p>
                             <p class="element"><strong class="G">Etat de l'offre:</strong> {% if offre[7]==0 %}En
@@ -89,7 +89,7 @@
                     <br/>
                     <div class="bloc">
                         <div class="info">
-                            <p class="element"><strong class="G">Auteur:</strong> {{ sql_obj.get_user_pseudo(tutorat[1]) }}</p>
+                            <p class="element"><strong class="G">Auteur:</strong> <a onclick="window.open('/profile/view/{{ tutorat[1] }}','profil','height=625,width=700')">{{ sql_obj.get_user_pseudo(tutorat[1]) }}</a></p>
                             <p class="element"><strong class="G">Mail de
                                 l'auteur:</strong> <a href="mailto:{{ tutorat[1] }}">{{ tutorat[1] }}</a></p>
                             <p class="element"><strong class="G">Matière:</strong> {{ tutorat[3] }}</p>
@@ -97,14 +97,14 @@
                                 {% if tutorat[5] is none %}
                                     Personne
                                 {% else %}
-                                    {{ sql_obj.get_user_pseudo(tutorat[5]) }}
+                                    <a onclick="window.open('/profile/view/{{ tutorat[5] }}','profil','height=625,width=700')">{{ sql_obj.get_user_pseudo(tutorat[5]) }}</a>
                                 {% endif %}
                             </p>
                             <p class="element"><strong class="G">Participants 2:</strong>
                                 {% if tutorat[6] is none %}
                                     Personne
                                 {% else %}
-                                    {{ sql_obj.get_user_pseudo(tutorat[6]) }}
+                                    <a onclick="window.open('/profile/view/{{ tutorat[6] }}','profil','height=625,width=700')">{{ sql_obj.get_user_pseudo(tutorat[6]) }}</a>
                                 {% endif %}
                             </p>
                         </div>
@@ -143,7 +143,7 @@
     </div>
 </div>
 
-{% include 'FOOTER.html' %}
+{% include 'mise_en_page/FOOTER.html' %}
 
 </body>
 </html>

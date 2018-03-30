@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+{% with name=infos[0] %}{% include "mise_en_page/HEAD.html" %}{% endwith %}
+
+<body>
+
+{% include 'mise_en_page/HEADER.html' %}
+
+<div class="bloc_page_profil">
+    <!-- Infos de l'utilisateur -->
+    <div class="page_profil" id="info_profil">
+        <div class="bloc_profil">
+            <div class="profil">
+                <div class="info_profil">
+                    <p><strong class="G">Nom:</strong></p>
+                    <p><strong class="G">Mail:</strong></p>
+                    <p><strong class="G">Classe:</strong></p>
+                </div>
+                <div class="info_profil">
+                    <p>{{ infos[0] }}</p>
+                    <p>{{ infos[2] }}</p>
+                    <p>{{ infos[3] }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

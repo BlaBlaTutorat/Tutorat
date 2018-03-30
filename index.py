@@ -33,7 +33,7 @@ def connexion():
         hidemenu = True
         if request.args.get('info_msg'):
             info_msg = request.args.get('info_msg')
-        return render_template("connexion.html", **locals())
+        return render_template("authentification/connexion.html", **locals())
 
 
 # Page de connexion
@@ -82,7 +82,7 @@ def inscription():
 
         if request.args.get('info_msg'):
             info_msg = request.args.get('info_msg')
-        return render_template("inscription.html", classes=sql_obj.classes_liste(), **locals())
+        return render_template("authentification/inscription.html", classes=sql_obj.classes_liste(), **locals())
     else:
         # Redirection vers la page d'accueil
         return redirect(url_for("recherche"))
@@ -116,7 +116,7 @@ def traitement_inscription():
 def mdp_oublie():
     # Propre à cette page
     hidemenu = True
-    return render_template("mdp_oublie.html", **locals())
+    return render_template("authentification/mdp_oublie.html", **locals())
 
 
 # Traitement Mot de passe oublié
@@ -136,7 +136,7 @@ def profil():
         css_state = sql_obj.get_css(mail)
         if request.args.get('info_msg'):
             info_msg = request.args.get('info_msg')
-        return render_template("profil_u.html", infos=sql_obj.get_user_info(mail)[0], days=days, **locals())
+        return render_template("profil/profil_u.html", infos=sql_obj.get_user_info(mail)[0], days=days, **locals())
     # Redirection si l'utilisateur n'est pas connecté
     else:
         return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
@@ -153,7 +153,7 @@ def profil_2():
         css_state = sql_obj.get_css(mail)
         if request.args.get('info_msg'):
             info_msg = request.args.get('info_msg')
-        return render_template("profil_t_p.html", offres_creees=sql_obj.get_user_offres(mail),
+        return render_template("profil/profil_t_p.html", offres_creees=sql_obj.get_user_offres(mail),
                                tutorats_actifs=sql_obj.get_user_tutorats(mail), days=days, **locals())
     # Redirection si l'utilisateur n'est pas connecté
     else:
@@ -162,7 +162,7 @@ def profil_2():
 
 # Page de supression Profil
 @app.route('/profile/delete')
-def profil_4():
+def profil_3():
     sql_obj = sql.MysqlObject()
     if check_connexion():
         mail = session['mail']
@@ -174,8 +174,27 @@ def profil_4():
         for x in liste2:
             sql_obj.delete_participant(x, mail)
         return redirect(url_for('connexion', info_msg="Votre compte a bien été suprimé. Au revoir."))
-    # Redirection si l'utilisateur n'est pas connecté
     else:
+        # Redirection si l'utilisateur n'est pas connecté
+        return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
+
+
+# Page de profil d'un utilisateur
+@app.route('/profile/view/<mail>')
+def profil_4(mail):
+    sql_obj = sql.MysqlObject()
+    if check_connexion():
+
+        # Propre à cette page
+        hidemenu = True
+
+        if sql_obj.mail_in_bdd(mail):
+            return render_template("profil/profil_visit.html", infos=sql_obj.get_user_info(mail)[0], **locals())
+        else:
+            return render_template("error.html", message="Erreur - Cet utilisateur n'existe pas",
+                                   **locals())
+    else:
+        # Redirection si l'utilisateur n'est pas connecté
         return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
 
 
@@ -190,7 +209,7 @@ def profil_update():
         css_state = sql_obj.get_css(mail)
         classes = sql_obj.classes_liste()
         if len(request.form) == 0:
-            return render_template("profil_update.html", infos=sql_obj.get_user_info(mail)[0], **locals())
+            return render_template("profil/profil_update.html", infos=sql_obj.get_user_info(mail)[0], **locals())
         else:
             if request.form.get('classe') in classes:
                 sql_obj.modify_user_info(mail, request.form.get('classe'))
@@ -198,8 +217,8 @@ def profil_update():
             else:
                 return render_template("error.html", message="Erreur - Veuillez vérifier les champs du formulaire",
                                        **locals())
-    # Redirection si l'utilisateur n'est pas connecté
     else:
+        # Redirection si l'utilisateur n'est pas connecté
         return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
 
 
@@ -220,15 +239,15 @@ def admin_oc():
                 user_search = sql_obj.get_user_info_pseudo(user_search)
                 if len(user_search) == 1:
                     # Un utilisateur a été trouvée
-                    return render_template("admin_t_p.html",
+                    return render_template("admin/admin_t_p.html",
                                            tutorats_actifs=sql_obj.offres_liste_tri_admin(user_search[0][2]),
                                            days=days, **locals())
                 else:
                     # Pas d'utilisateur trouvé donc liste vide
-                    return render_template("admin_t_p.html", tutorats_actifs=[], days=days,
+                    return render_template("admin/admin_t_p.html", tutorats_actifs=[], days=days,
                                            **locals())
             else:
-                return render_template("admin_t_p.html", tutorats_actifs=sql_obj.offres_liste_validees(), days=days,
+                return render_template("admin/admin_t_p.html", tutorats_actifs=sql_obj.offres_liste_validees(), days=days,
                                        **locals())
         else:
             abort(403)
@@ -250,7 +269,7 @@ def admin_ov():
                 info_msg = request.args.get('info_msg')
             if request.args.get('reset_msg'):
                 reset_msg = request.args.get('reset_msg')
-            return render_template("admin_t_v.html", offres_V=sql_obj.offres_liste_valider(), days=days, **locals())
+            return render_template("admin/admin_t_v.html", offres_V=sql_obj.offres_liste_valider(), days=days, **locals())
         else:
             abort(403)
     else:
@@ -271,10 +290,10 @@ def admin_u():
                 info_msg = request.args.get('info_msg')
             if request.form.get("user_search"):
                 user_search = request.form.get("user_search")
-                return render_template("admin_u.html", user_list=sql_obj.get_user_info_pseudo(user_search),
+                return render_template("admin/admin_u.html", user_list=sql_obj.get_user_info_pseudo(user_search),
                                        tutorats_actifs=sql_obj.offres_liste_validees(), days=days, **locals())
             else:
-                return render_template("admin_u.html", user_list=sql_obj.liste_user(),
+                return render_template("admin/admin_u.html", user_list=sql_obj.liste_user(),
                                        tutorats_actifs=sql_obj.offres_liste_validees(), days=days, **locals())
         else:
             abort(403)
@@ -555,7 +574,7 @@ def reset():
         if admin_user == 1:
             sql_obj.reset()
             info_msg = 'Le site BlaBla Tutorat a bien été remis à zéro.'
-            return render_template("admin_t_v.html", offres_V=sql_obj.offres_liste_valider(), days=days, **locals())
+            return render_template("admin/admin_t_v.html", offres_V=sql_obj.offres_liste_valider(), days=days, **locals())
         else:
             abort(403)
     else:
