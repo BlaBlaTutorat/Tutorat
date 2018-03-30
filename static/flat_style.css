@@ -18,6 +18,10 @@ body {
     min-width: 100%;
 }
 
+a, button, input {
+    cursor: pointer;
+}
+
 a:link
 {
     text-decoration:none;
@@ -175,6 +179,13 @@ header li a:hover, .header li a:hover {
 
 #header_icon {
     width: 10%;
+}
+
+.header_icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2px;
 }
 /* END HEADER */
 
