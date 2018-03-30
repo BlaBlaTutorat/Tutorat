@@ -883,7 +883,8 @@ footer a:hover {
     padding: 5px 10px 5px 10px;
     min-width: 650px;
     height: 350px;
-    margin: 10px auto 10px auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .ban {
