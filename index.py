@@ -316,8 +316,9 @@ def recherche():
         else:
             # Aucune option de tri sélectionnée
             return render_template("recherche.html", offres=sql_obj.offres_liste(page, mail), days=days, **locals())
-    # Redirection si l'utilisateur n'est pas connecté
+
     else:
+        # Redirection si l'utilisateur n'est pas connecté
         return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
 
 

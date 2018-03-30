@@ -170,8 +170,8 @@ class MysqlObject:
         classe = self.get_user_info(mail)[0][3]
         offres = []
         self.cursor.execute(
-            """SELECT * FROM offres WHERE disponible=1 ORDER BY """ + option + """ LIMIT """ +
-            str(offre_par_page) + """ OFFSET """ + str(page * offre_par_page))
+            """SELECT * FROM offres WHERE disponible=1 AND (participant IS NULL OR participant2 IS NULL) ORDER BY """
+            + option + """ LIMIT """ + str(offre_par_page) + """ OFFSET """ + str(page * offre_par_page))
         rows = self.cursor.fetchall()
         # Tri des offres pour ne garder que celles où la classe du 1er participant est identique à celle de user
         for row in rows:
