@@ -166,7 +166,7 @@ def profil_4():
     sql_obj = sql.MysqlObject()
     if check_connexion():
         mail = session['mail']
-        sql_obj.delete_acount(mail)
+        sql_obj.delete_account(mail)
         liste = sql_obj.get_user_tutorats(mail)
         liste2 = []
         for x in liste:

@@ -38,7 +38,7 @@ class MysqlObject:
         rows = self.cursor.fetchall()
         # On ne retourne que le nom
         for row in rows:
-            classes.append(row[2])
+            classes.append(row[0])
         return classes
 
     # Liste des matières
@@ -48,7 +48,7 @@ class MysqlObject:
         rows = self.cursor.fetchall()
         # On ne retourne que le nom
         for row in rows:
-            matieres.append(row[2])
+            matieres.append(row[0])
         return matieres
 
     # Liste des filières
@@ -66,7 +66,7 @@ class MysqlObject:
     """
 
     # Listes des utilisateurs
-    def delete_acount(self, mail):
+    def delete_account(self, mail):
         self.cursor.execute("""DELETE FROM users WHERE mail = %s""", (mail,))
         self.cursor.execute("""DELETE FROM offres WHERE auteur = %s""", (mail,))
         self.conn.commit()
