@@ -574,7 +574,7 @@ def reset():
         if admin_user == 1:
             sql_obj.reset()
             info_msg = 'Le site BlaBla Tutorat a bien été remis à zéro.'
-            return render_template("admin/admin_t_v.html", offres_V=sql_obj.offres_liste_valider(), days=days, **locals())
+            return redirect(url_for('admin_ov', offres_V=sql_obj.offres_liste_valider(), days=days, **locals()))
         else:
             abort(403)
     else:
