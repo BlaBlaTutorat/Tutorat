@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  ven. 30 mars 2018 à 18:18
+-- Généré le :  ven. 30 mars 2018 à 21:50
 -- Version du serveur :  5.7.19
 -- Version de PHP :  5.6.31
 
@@ -146,66 +146,34 @@ INSERT INTO `matieres` (`LIBELLE`) VALUES
 ('ALLEMAND EURO'),
 ('ALLEMAND LV1'),
 ('ALLEMAND LV2'),
-('ANG PREPA LSH'),
 ('ANGLAIS EURO 1'),
 ('ANGLAIS LV1'),
 ('ANGLAIS LV2'),
-('ARABE LV1'),
-('ARABE LV2'),
-('ARABE LV3'),
-('ARTS PLASTIQUES'),
-('ARTS VISUELS'),
-('ATELIER THEATRE'),
-('ATHLETISME'),
 ('BIA'),
-('BIOLOGIE'),
-('CHIMIE'),
 ('CHINOIS LV1'),
 ('CHINOIS LV2'),
-('CHORALE'),
-('CINEMA-AUDIOVISUEL FAC'),
-('ECONOMIE'),
-('ED.PHYSIQUE & SPORT.'),
-('EDUCATION CIVIQUE'),
-('EDUCATION MUSICALE'),
-('ENS. MORAL & CIVIQUE'),
 ('ESPAGNOL LV1'),
 ('ESPAGNOL LV2'),
 ('FRANCAIS'),
-('GEOGRAPHIE'),
 ('GREC ANCIEN'),
-('HIST.MEDIEV.& MODERN'),
-('HISTOIRE'),
 ('HISTOIRE-GEOGRAPHIE'),
-('ISLANDAIS LV2'),
 ('ISN'),
+('ITALIEN EURO'),
 ('ITALIEN LV1'),
 ('ITALIEN LV2'),
-('JAPONAIS LV2'),
-('JAPONAIS LV3'),
 ('LATIN'),
 ('LITTER.ETRANG.EN LVE'),
 ('LITTERATURE'),
 ('MATH. SPE'),
 ('MATHEMATIQUES'),
-('MUSIQUE'),
 ('PHILOSOPHIE'),
 ('PHYSIQUE-CHIMIE'),
-('PORTUGAIS LV2'),
-('RUSSE LV2'),
 ('RUSSE LV3'),
 ('SC. ECONO.& SOCIALES'),
 ('SC. SOCIALES ET POLITIQUE'),
-('SCI.BIOLOGI.ET TERRE'),
 ('SCIENCES'),
-('SCIENCES INDUSTRIELLES'),
 ('SCIENCES INGENIEUR'),
-('SCIENCES VIE & TERRE'),
-('SECTION ALLEMAND'),
-('SECTION ANGLAIS'),
-('SECTION ITALIEN'),
-('TECHNOLOGIE'),
-('TURC');
+('SCIENCES VIE & TERRE');
 
 -- --------------------------------------------------------
 
@@ -236,7 +204,7 @@ CREATE TABLE IF NOT EXISTS `offres` (
   `debut_j5` time DEFAULT NULL,
   `fin_j5` time DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `offres`
