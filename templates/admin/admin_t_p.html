@@ -34,7 +34,9 @@
             <br/>
             <div class="bloc">
                 <div class="info">
-                    <p class="element"><strong class="G">Auteur:</strong> <a onclick="window.open('/profile/view/{{ tutorat[1] }}','profil','height=625,width=700')">{{ sql_obj.get_user_pseudo(tutorat[1]) }}</a></p>
+                    <p class="element"><strong class="G">Auteur:</strong> <a
+                            onclick="window.open('/profile/view/{{ tutorat[1] }}','profil','height=625,width=700')">{{ sql_obj.get_user_pseudo(tutorat[1]) }}</a>
+                    </p>
                     <p class="element"><strong class="G">Pour des:</strong> {{ tutorat[2] }}</p>
                     <p class="element"><strong class="G">Matière:</strong> {{ tutorat[3] }}</p>
                     <p class="element"><strong class="G">Participant 1:</strong>
@@ -64,7 +66,8 @@
                         <div class="table" id="table_horaires">
                             {% for i in range(0,12,2) %}
                                 {% if tutorat[8+i] is not none and tutorat[9+i] is not none %}
-                                    <p>{{ 'h'.join((tutorat[8+i]|string).split(':')[:2]) }} - {{ 'h'.join((tutorat[9+i]|string).split(':')[:2]) }}</p>
+                                    <p>{{ 'h'.join((tutorat[8+i]|string).split(':')[:2]) }}
+                                        - {{ 'h'.join((tutorat[9+i]|string).split(':')[:2]) }}</p>
                                 {% endif %}
                             {% endfor %}
                         </div>

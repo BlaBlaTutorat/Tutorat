@@ -22,124 +22,127 @@
 
 <div class="bloc_page_profil">
     <!-- Liste des offres crées par l'utilisateur -->
-        <div class="offres" id="tutorat_en_cours">
-            <h2>Vos tutorats créés</h2>
-            {% if offres_creees|length>0 %}
-                {% for offre in offres_creees %}
-                    <br/>
-                    <div class="bloc" id="bloc_tuto">
-                        <div class="info">
-                            <p class="element"><strong class="G">Auteur:</strong> <a onclick="window.open('/profile/view/{{ offre[1] }}','profil','height=625,width=700')">{{ sql_obj.get_user_pseudo(offre[1]) }}</a></p>
-                            <p class="element"><strong class="G">Pour des:</strong> {{ offre[2] }}</p>
-                            <p class="element"><strong class="G">Matière:</strong> {{ offre[3] }}</p>
-                            <p class="element"><strong class="G">Participant 1:</strong>
-                                {% if offre[5] is none %}
-                                    Personne
-                                {% else %}
-                                    <a onclick="window.open('/profile/view/{{ offre[5] }}','profil','height=625,width=700')">{{ sql_obj.get_user_pseudo(offre[5]) }}</a>
-                                {% endif %}
-                            </p>
-                            <p class="element"><strong class="G">Participant 2:</strong>
-                                {% if offre[6] is none %}
-                                    Personne
-                                {% else %}
-                                    <a onclick="window.open('/profile/view/{{ offre[6] }}','profil','height=625,width=700')">{{ sql_obj.get_user_pseudo(offre[6]) }}</a>
-                                {% endif %}
-                            </p>
-                            <p class="element"><strong class="G">Etat de l'offre:</strong> {% if offre[7]==0 %}En
-                                attente de validation{% else %}Publiée{% endif %}</p>
-                        </div>
-                        <div id="horaires">
-                            <div class="horaire">
-                                <div class="table">
-                                    {% for i in range(0,12,2) %}
-                                        {% if offre[8+i] is not none and offre[9+i] is not none %}
-                                            <p>{{ days[i//2] }}:</p>
-                                        {% endif %}{% endfor %}
-                                </div>
-                                <div class="table" id="table_horaires">
-                                    {% for i in range(0,12,2) %}
-                                        {% if offre[8+i] is not none and offre[9+i] is not none %}
-                                            <p>{{ 'h'.join((offre[8+i]|string).split(':')[:2]) }}
-                                                - {{ 'h'.join((offre[9+i]|string).split(':')[:2]) }}</p>
-                                        {% endif %}{% endfor %}
-                                </div>
-                            </div>
-                            <a href="/delete?id={{ offre[0] }}">
-                                <button>Supprimer l'offre</button>
-                            </a>
-                        </div>
+    <div class="offres" id="tutorat_en_cours">
+        <h2>Vos tutorats créés</h2>
+        {% if offres_creees|length>0 %}
+            {% for offre in offres_creees %}
+                <br/>
+                <div class="bloc" id="bloc_tuto">
+                    <div class="info">
+                        <p class="element"><strong class="G">Auteur:</strong> <a
+                                onclick="window.open('/profile/view/{{ offre[1] }}','profil','height=625,width=700')">{{ sql_obj.get_user_pseudo(offre[1]) }}</a>
+                        </p>
+                        <p class="element"><strong class="G">Pour des:</strong> {{ offre[2] }}</p>
+                        <p class="element"><strong class="G">Matière:</strong> {{ offre[3] }}</p>
+                        <p class="element"><strong class="G">Participant 1:</strong>
+                            {% if offre[5] is none %}
+                                Personne
+                            {% else %}
+                                <a onclick="window.open('/profile/view/{{ offre[5] }}','profil','height=625,width=700')">{{ sql_obj.get_user_pseudo(offre[5]) }}</a>
+                            {% endif %}
+                        </p>
+                        <p class="element"><strong class="G">Participant 2:</strong>
+                            {% if offre[6] is none %}
+                                Personne
+                            {% else %}
+                                <a onclick="window.open('/profile/view/{{ offre[6] }}','profil','height=625,width=700')">{{ sql_obj.get_user_pseudo(offre[6]) }}</a>
+                            {% endif %}
+                        </p>
+                        <p class="element"><strong class="G">Etat de l'offre:</strong> {% if offre[7]==0 %}En
+                            attente de validation{% else %}Publiée{% endif %}</p>
                     </div>
-                    <br/>
-                {% endfor %}
-            {% else %}
-                <div class="bloc" id="none_offre">
-                    <p class="none_offre">Vous n'avez pas encore crée d'offre</p>
-                    <p class="none_offre"><a href="/create">
-                        <button>Créer une offre</button>
-                    </a></p>
-                </div>
-            {% endif %}
-        </div>
-        <div class="offres" id="tutorat_en_cours">
-            <!-- Liste des offres auxquelles participe l'utilisateur -->
-            <h2>Les tutorats auxquels vous participez</h2>
-            {% if tutorats_actifs|length>0 %}
-                {% for tutorat in tutorats_actifs %}
-                    <br/>
-                    <div class="bloc">
-                        <div class="info">
-                            <p class="element"><strong class="G">Auteur:</strong> <a onclick="window.open('/profile/view/{{ tutorat[1] }}','profil','height=625,width=700')">{{ sql_obj.get_user_pseudo(tutorat[1]) }}</a></p>
-                            <p class="element"><strong class="G">Mail de
-                                l'auteur:</strong> <a href="mailto:{{ tutorat[1] }}">{{ tutorat[1] }}</a></p>
-                            <p class="element"><strong class="G">Matière:</strong> {{ tutorat[3] }}</p>
-                            <p class="element"><strong class="G">Participants 1:</strong>
-                                {% if tutorat[5] is none %}
-                                    Personne
-                                {% else %}
-                                    <a onclick="window.open('/profile/view/{{ tutorat[5] }}','profil','height=625,width=700')">{{ sql_obj.get_user_pseudo(tutorat[5]) }}</a>
-                                {% endif %}
-                            </p>
-                            <p class="element"><strong class="G">Participants 2:</strong>
-                                {% if tutorat[6] is none %}
-                                    Personne
-                                {% else %}
-                                    <a onclick="window.open('/profile/view/{{ tutorat[6] }}','profil','height=625,width=700')">{{ sql_obj.get_user_pseudo(tutorat[6]) }}</a>
-                                {% endif %}
-                            </p>
-                        </div>
-                        <div id="horaires">
-                            <div class="horaire">
-                                <div class="table">
-                                    {% for i in range(0,12,2) %}
-                                        {% if tutorat[8+i] is not none and tutorat[9+i] is not none %}
-                                            <p>{{ days[i//2] }}:</p>
-                                        {% endif %}{% endfor %}
-                                </div>
-                                <div class="table" id="table_horaires">
-                                    {% for i in range(0,12,2) %}
-                                        {% if tutorat[8+i] is not none and tutorat[9+i] is not none %}
-                                            <p>{{ 'h'.join((tutorat[8+i]|string).split(':')[:2]) }}
-                                                - {{ 'h'.join((tutorat[9+i]|string).split(':')[:2]) }}</p>
-                                        {% endif %}{% endfor %}
-                                </div>
+                    <div id="horaires">
+                        <div class="horaire">
+                            <div class="table">
+                                {% for i in range(0,12,2) %}
+                                    {% if offre[8+i] is not none and offre[9+i] is not none %}
+                                        <p>{{ days[i//2] }}:</p>
+                                    {% endif %}{% endfor %}
                             </div>
-                            <a href="/quit?id={{ tutorat[0] }}">
-                                <button>Quitter ce tutorat</button>
-                            </a>
+                            <div class="table" id="table_horaires">
+                                {% for i in range(0,12,2) %}
+                                    {% if offre[8+i] is not none and offre[9+i] is not none %}
+                                        <p>{{ 'h'.join((offre[8+i]|string).split(':')[:2]) }}
+                                            - {{ 'h'.join((offre[9+i]|string).split(':')[:2]) }}</p>
+                                    {% endif %}{% endfor %}
+                            </div>
                         </div>
+                        <a href="/delete?id={{ offre[0] }}">
+                            <button>Supprimer l'offre</button>
+                        </a>
                     </div>
-                    <br/>
-                {% endfor %}
-            {% else %}
-                <div class="bloc" id="none_offre">
-                    <p class="none_offre">Vous ne participez à aucun Tutorat</p>
-                    <p class="none_offre"><a href="/search">
-                        <button>Rechercher une offre</button>
-                    </a></p>
                 </div>
-            {% endif %}
-        </div>
+                <br/>
+            {% endfor %}
+        {% else %}
+            <div class="bloc" id="none_offre">
+                <p class="none_offre">Vous n'avez pas encore crée d'offre</p>
+                <p class="none_offre"><a href="/create">
+                    <button>Créer une offre</button>
+                </a></p>
+            </div>
+        {% endif %}
+    </div>
+    <div class="offres" id="tutorat_en_cours">
+        <!-- Liste des offres auxquelles participe l'utilisateur -->
+        <h2>Les tutorats auxquels vous participez</h2>
+        {% if tutorats_actifs|length>0 %}
+            {% for tutorat in tutorats_actifs %}
+                <br/>
+                <div class="bloc">
+                    <div class="info">
+                        <p class="element"><strong class="G">Auteur:</strong> <a
+                                onclick="window.open('/profile/view/{{ tutorat[1] }}','profil','height=625,width=700')">{{ sql_obj.get_user_pseudo(tutorat[1]) }}</a>
+                        </p>
+                        <p class="element"><strong class="G">Mail de
+                            l'auteur:</strong> <a href="mailto:{{ tutorat[1] }}">{{ tutorat[1] }}</a></p>
+                        <p class="element"><strong class="G">Matière:</strong> {{ tutorat[3] }}</p>
+                        <p class="element"><strong class="G">Participants 1:</strong>
+                            {% if tutorat[5] is none %}
+                                Personne
+                            {% else %}
+                                <a onclick="window.open('/profile/view/{{ tutorat[5] }}','profil','height=625,width=700')">{{ sql_obj.get_user_pseudo(tutorat[5]) }}</a>
+                            {% endif %}
+                        </p>
+                        <p class="element"><strong class="G">Participants 2:</strong>
+                            {% if tutorat[6] is none %}
+                                Personne
+                            {% else %}
+                                <a onclick="window.open('/profile/view/{{ tutorat[6] }}','profil','height=625,width=700')">{{ sql_obj.get_user_pseudo(tutorat[6]) }}</a>
+                            {% endif %}
+                        </p>
+                    </div>
+                    <div id="horaires">
+                        <div class="horaire">
+                            <div class="table">
+                                {% for i in range(0,12,2) %}
+                                    {% if tutorat[8+i] is not none and tutorat[9+i] is not none %}
+                                        <p>{{ days[i//2] }}:</p>
+                                    {% endif %}{% endfor %}
+                            </div>
+                            <div class="table" id="table_horaires">
+                                {% for i in range(0,12,2) %}
+                                    {% if tutorat[8+i] is not none and tutorat[9+i] is not none %}
+                                        <p>{{ 'h'.join((tutorat[8+i]|string).split(':')[:2]) }}
+                                            - {{ 'h'.join((tutorat[9+i]|string).split(':')[:2]) }}</p>
+                                    {% endif %}{% endfor %}
+                            </div>
+                        </div>
+                        <a href="/quit?id={{ tutorat[0] }}">
+                            <button>Quitter ce tutorat</button>
+                        </a>
+                    </div>
+                </div>
+                <br/>
+            {% endfor %}
+        {% else %}
+            <div class="bloc" id="none_offre">
+                <p class="none_offre">Vous ne participez à aucun Tutorat</p>
+                <p class="none_offre"><a href="/search">
+                    <button>Rechercher une offre</button>
+                </a></p>
+            </div>
+        {% endif %}
     </div>
 </div>
 

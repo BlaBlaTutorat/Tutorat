@@ -247,8 +247,8 @@ def admin_oc():
                     return render_template("admin/admin_t_p.html", tutorats_actifs=[], days=days,
                                            **locals())
             else:
-                return render_template("admin/admin_t_p.html", tutorats_actifs=sql_obj.offres_liste_validees(), days=days,
-                                       **locals())
+                return render_template("admin/admin_t_p.html", tutorats_actifs=sql_obj.offres_liste_validees(),
+                                       days=days, **locals())
         else:
             abort(403)
     else:
@@ -269,7 +269,8 @@ def admin_ov():
                 info_msg = request.args.get('info_msg')
             if request.args.get('reset_msg'):
                 reset_msg = request.args.get('reset_msg')
-            return render_template("admin/admin_t_v.html", offres_V=sql_obj.offres_liste_valider(), days=days, **locals())
+            return render_template("admin/admin_t_v.html", offres_V=sql_obj.offres_liste_valider(), days=days,
+                                   **locals())
         else:
             abort(403)
     else:

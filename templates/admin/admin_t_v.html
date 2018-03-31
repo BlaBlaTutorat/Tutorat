@@ -43,7 +43,9 @@
             <br/>
             <div class="bloc">
                 <div class="info">
-                    <p class="element"><strong class="G">Auteur:</strong> <a onclick="window.open('/profile/view/{{ offre[1] }}','profil','height=625,width=700')">{{ sql_obj.get_user_pseudo(offre[1]) }}</a></p>
+                    <p class="element"><strong class="G">Auteur:</strong> <a
+                            onclick="window.open('/profile/view/{{ offre[1] }}','profil','height=625,width=700')">{{ sql_obj.get_user_pseudo(offre[1]) }}</a>
+                    </p>
                     <p class="element"><strong class="G">Pour des:</strong> {{ offre[2] }}</p>
                     <p class="element"><strong class="G">Matière:</strong> {{ offre[3] }}</p>
                 </div>
@@ -59,7 +61,8 @@
                         <div class="table" id="table_horaires">
                             {% for i in range(0,12,2) %}
                                 {% if offre[8+i] is not none and offre[9+i] is not none %}
-                                    <p>{{ 'h'.join((offre[8+i]|string).split(':')[:2]) }} - {{ 'h'.join((offre[9+i]|string).split(':')[:2]) }}</p>
+                                    <p>{{ 'h'.join((offre[8+i]|string).split(':')[:2]) }}
+                                        - {{ 'h'.join((offre[9+i]|string).split(':')[:2]) }}</p>
                                 {% endif %}
                             {% endfor %}
                         </div>
