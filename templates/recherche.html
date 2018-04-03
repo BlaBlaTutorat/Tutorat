@@ -11,7 +11,7 @@
 <form class="search" method="post" action="/search">
     <div class="critere">
 
-        <a onclick="window.location.href=window.location.pathname" >Réinitialiser les filtres</a>
+        <a class="button" id="reset_filter" onclick="window.location.href=window.location.pathname" >Réinitialiser les filtres</a>
         <!-- Rechargement de la page lors du changement de la méthode de tri -->
         <select class="tri" name="option"
                 onchange="if(document.getElementById('option2')!=null){document.getElementById('option2').selectedIndex = -1}this.form.submit()">

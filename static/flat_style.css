@@ -414,6 +414,16 @@ footer a:hover {
 /* END Forgot */
 
 /* Search */
+#reset_filter {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    z-index: 15;
+    width: 10%;
+    height: 2%;
+    text-align: center;
+}
+
 .bouton {
     margin-top: 10px;
 }
