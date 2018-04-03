@@ -34,7 +34,7 @@ class MysqlObject:
     # Liste des classes
     def classes_liste(self):
         classes = []
-        self.cursor.execute("""SELECT * FROM classes ORDER BY NUMERO""")
+        self.cursor.execute("""SELECT * FROM classes""")
         rows = self.cursor.fetchall()
         # On ne retourne que le nom
         for row in rows:

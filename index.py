@@ -249,7 +249,7 @@ def admin_oc():
         else:
             abort(403)
     else:
-        return redirect(url_for("connexion", info_msg='connectez vous avant de continuer.'))
+        return redirect(url_for("connexion", info_msg='Connectez vous avant de continuer.'))
 
 
 # Page d'Administration offres à valider
@@ -271,7 +271,7 @@ def admin_ov():
         else:
             abort(403)
     else:
-        return redirect(url_for("connexion", info_msg='connectez vous avant de continuer.'))
+        return redirect(url_for("connexion", info_msg='Connectez vous avant de continuer.'))
 
 
 # Page d'Administration profile utilisateur
@@ -296,7 +296,7 @@ def admin_u():
         else:
             abort(403)
     else:
-        return redirect(url_for("connexion", info_msg='connectez vous avant de continuer.'))
+        return redirect(url_for("connexion", info_msg='Connectez vous avant de continuer.'))
 
 
 # Page de recherche d'offres
@@ -492,7 +492,7 @@ def delete2():
         else:
             abort(403)
     else:
-        return redirect(url_for("connexion", info_msg='connectez-vous avant de continuer.'))
+        return redirect(url_for("connexion", info_msg='Connectez-vous avant de continuer.'))
 
 
 # Validation d'une offre (admin)
@@ -514,7 +514,7 @@ def validate():
         else:
             abort(403)
     else:
-        return redirect(url_for("connexion", info_msg='connectez-vous avant de continuer.'))
+        return redirect(url_for("connexion", info_msg='Connectez-vous avant de continuer.'))
 
 
 # Ban (admin)
