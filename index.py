@@ -168,12 +168,9 @@ def profil_3():
         mail = session['mail']
         sql_obj.delete_account(mail)
         liste = sql_obj.get_user_tutorats(mail)
-        liste2 = []
         for x in liste:
-            liste2.append(x[0])
-        for x in liste2:
-            sql_obj.delete_participant(x, mail)
-        return redirect(url_for('connexion', info_msg="Votre compte a bien été suprimé. Au revoir."))
+            sql_obj.delete_participant(x[0], mail)
+        return redirect(url_for('connexion', info_msg="Votre compte a bien été supprimé. Au revoir."))
     else:
         # Redirection si l'utilisateur n'est pas connecté
         return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
