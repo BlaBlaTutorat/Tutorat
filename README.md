@@ -28,10 +28,10 @@
     - Créneaux horaires
 
 - Matières:
-    - PRONOTE
+    - LIBELLE (PRONOTE)
 
 - Classes:
-    - PRONOTE
+    - NOM (PRONOTE)
     
 - Filieres
     - Nom(PRIMARY)
