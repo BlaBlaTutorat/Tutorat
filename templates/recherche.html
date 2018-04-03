@@ -56,21 +56,21 @@
             <br/>
             <div class="bloc">
                 <div class="info">
-                    <p class="element"><strong class="G">Auteur:</strong> <a onclick="window.open('/profile/view/{{ offre[1] }}','profil','height=625,width=700')">{{ sql_obj.get_user_pseudo(offre[1]) }}</a></p>
+                    <p class="element"><strong class="G">Auteur:</strong> <a onclick="window.open('/profile/view/{{ offre[1] }}','profil','height=625,width=700')" title="Voir le profil">{{ sql_obj.get_user_pseudo(offre[1]) }}</a></p>
                     <p class="element"><strong class="G">Pour des:</strong> {{ offre[2] }}</p>
                     <p class="element"><strong class="G">Matière:</strong> {{ offre[3] }}</p>
                     <p class="element"><strong class="G">Participant 1:</strong>
                         {% if offre[5] is none %}
                             Personne
                         {% else %}
-                            <a onclick="window.open('/profile/view/{{ offre[5] }}','profil','height=625,width=700')">{{ sql_obj.get_user_pseudo(offre[5]) }}</a>
+                            <a onclick="window.open('/profile/view/{{ offre[5] }}','profil','height=625,width=700')" title="Voir le profil">{{ sql_obj.get_user_pseudo(offre[5]) }}</a>
                         {% endif %}
                     </p>
                     <p class="element"><strong class="G">Participant 2:</strong>
                         {% if offre[6] is none %}
                             Personne
                         {% else %}
-                            <a onclick="window.open('/profile/view/{{ offre[6] }}','profil','height=625,width=700')">{{ sql_obj.get_user_pseudo(offre[6]) }}</a>
+                            <a onclick="window.open('/profile/view/{{ offre[6] }}','profil','height=625,width=700')" title="Voir le profil">{{ sql_obj.get_user_pseudo(offre[6]) }}</a>
                         {% endif %}
                     </p>
                 </div>

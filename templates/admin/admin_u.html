@@ -47,7 +47,7 @@
                         {% if tutorat[5] == user[2] or tutorat[6] == user[2] %}<img src="/static/tutore.png" id="tutore"
                                                                                     title="Nombre de tutorats suivi par cet utilisateur">
                         {% endif %}{% endfor %}</p>
-                    <p><a href="mailto:{{ user[2] }}">{{ user[2] }}</a></p>
+                    <p><a href="mailto:{{ user[2] }}" title="Envoyer un mail">{{ user[2] }}</a></p>
                     <p>{{ user[3] }}</p>
                     {% if user[4]==1 %}
                         <p>Oui</p>

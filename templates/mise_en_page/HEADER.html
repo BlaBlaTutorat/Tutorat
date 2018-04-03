@@ -9,12 +9,12 @@
                 </ul>
             </nav>
             <div class="icon" id="header_icon">
-                <a href="/profile/view" class="profile"><img src="/static/profil.png"></a>
+                <a href="/profile/view" class="profile" title="Voir son profil"><img src="/static/profil.png"></a>
                 {% if admin_user %}
-                    <a href="/admin/tutorials/validate" class="admin"><img src="/static/admin.png"></a>
-                    <a href="/admin/tutorials/validate?reset_msg=True" class="admin"><img src="/static/reset.png"></a>
+                    <a href="/admin/tutorials/validate" class="admin" title="Accéder à l'interface d'administration"><img src="/static/admin.png"></a>
+                    <a href="/admin/tutorials/validate?reset_msg=True" class="admin" title="Réinitialiser le site"><img src="/static/reset.png"></a>
                 {% endif %}
-                <a href="/disconnect" class="admin"><img src="/static/disconnect.png"></a>
+                <a href="/disconnect" class="admin" title="Se déconnecter"><img src="/static/disconnect.png"></a>
             </div>
         {% endif %}
     </div>
