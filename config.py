@@ -1,6 +1,6 @@
 # coding: utf-8
 
-host = "127.0.0.1"
-user = "root"
-password = "password"
+host = "172.21.0.88"
+user = "pi"
+password = "Tut0raT_BP6"
 database = "tutorat"

@@ -95,14 +95,18 @@ def traitement_inscription():
         if not sql_obj.mail_in_bdd(request.form['mail']):
             # Chiffrement du mdp
             chaine_mot_de_passe = request.form.get('mdp')
-            mot_de_passe_chiffre = hashlib.sha256(str(chaine_mot_de_passe).encode('utf-8')).hexdigest()
-            nom = request.form.get('prenom') + '  ' + request.form.get('nom')
-            # Envoi des infos à la base de données
-            sql_obj.create_compte(nom, mot_de_passe_chiffre, request.form.get('mail'), request.form.get('classe'))
-            return redirect(url_for("profil",
-                                    info_msg="Votre compte a bien été créé,"
-                                             "vous pouvez dès à présent accéder à votre profil"
-                                             " et au service d'offre/demande de Tutorat."))
+            mdp_confirm = request.form.get('mdp2')
+            if chaine_mot_de_passe == mdp_confirm:
+                mot_de_passe_chiffre = hashlib.sha256(str(chaine_mot_de_passe).encode('utf-8')).hexdigest()
+                nom = request.form.get('prenom') + '  ' + request.form.get('nom')
+                # Envoi des infos à la base de données
+                sql_obj.create_compte(nom, mot_de_passe_chiffre, request.form.get('mail'), request.form.get('classe'))
+                return redirect(url_for("profil",
+                                        info_msg="Votre compte a bien été créé,"
+                                                "vous pouvez dès à présent accéder à votre profil"
+                                                " et au service d'offre/demande de Tutorat."))
+            else:
+                return render_template("authentification/inscription.html", classes=sql_obj.classes_liste(), info_msg='Les mots de passe ne correspondent pas.', **locals())
         else:
             return redirect(url_for('inscription',
                                     info_msg="Cette adresse email existe déjà"))
