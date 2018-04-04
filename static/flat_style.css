@@ -187,6 +187,12 @@ header li a:hover, .header li a:hover {
     align-items: center;
     margin-bottom: 2px;
 }
+.header .icon a {
+    position: absolute;
+    right: 138px;
+    top: 2px;
+}
+
 /* END HEADER */
 
 /* FOOTER */
