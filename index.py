@@ -16,7 +16,7 @@ def index():
         return redirect(url_for("recherche"))
     else:
         # Redirection si l'utilisateur n'est pas connecté
-        return redirect(url_for('connexion'))
+        return render_template("Accueil.html")
 
 
 # Page de connexion

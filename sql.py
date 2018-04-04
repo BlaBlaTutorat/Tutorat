@@ -350,3 +350,4 @@ def check_availability(offre):
             return 1
     else:
         return 0
+
