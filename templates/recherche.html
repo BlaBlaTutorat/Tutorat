@@ -44,7 +44,7 @@
             <input type="hidden" name="page" value="{{ page }}">
             {% if page>0 %}<input type="submit" name="precedent" value="Page précédente">
             {% else %}<input type="submit" name="suivant" value="Page suivante">{% endif %}
-            <strong class="G">{{ page }}</strong>
+            <strong class="G">{{ page + 1 }}</strong>
             <input type="submit" name="suivant" value="Page suivante">
         </p>
     </div>
