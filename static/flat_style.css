@@ -223,6 +223,7 @@ footer .part {
 
 footer .s_part {
     margin-right: 100px;
+    align-self: center;
 }
 
 footer ul {
