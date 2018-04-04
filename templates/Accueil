@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8"/>
+{% with name="Accueil" %}{% include "HEAD.html" %}{% endwith %}
+
+<body>
+
+{% include 'HEADER.html' %}
+
+<div class="header">
+    <div>
+        <div id="header_icon"></div>
+        <div id="header_icon"></div>
+    </div>
+</div>
+
+<h1>Le Tutorat au Lycée Blaise-Pascal</h1>
+<h2><explications de ce qu'est le tutorat, en quoi ça conciste, la philosophie du tutorat</h2>
+#mettre image type celle du cdi
+<img src="">
+
+<h2>Comment ça marche ?</h2>
+<h2>Mode d'emploi :</h2>
+<img src=""> #faire un mode d'emploi travaillé graphiquement qui donne envie d'être lu, d'où une image.
+{% include 'FOOTER.html' %}
+
+</body>
+</html>
