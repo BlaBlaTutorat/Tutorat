@@ -93,8 +93,17 @@ nav, ul, li {
 /* END Commun */
 
 /* HEADER */
-header nav {
+header nav, .header nav {
     margin-top: 25px;
+    width: 40%;
+}
+
+.header nav {
+    margin-top: 5px;
+}
+
+.header .icon a {
+    margin: 0 0 0 0;
 }
 
 header {
@@ -134,7 +143,7 @@ header .icon .admin {
 
 header ul, .header ul {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     list-style-type: none;
     color: #afb1b3;
     font-family: 'Gotham SSm A', sans-serif;
@@ -178,19 +187,7 @@ header li a:hover, .header li a:hover {
 }
 
 #header_icon {
-    width: 10%;
-}
-
-.header_icon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 2px;
-}
-.header .icon a {
-    position: absolute;
-    right: 15%;
-    top: 0;
+    width: 7%;
 }
 /* END HEADER */
 
