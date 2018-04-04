@@ -189,7 +189,7 @@ header li a:hover, .header li a:hover {
 }
 .header .icon a {
     position: absolute;
-    right: 138px;
+    right: 15%;
     top: 2px;
 }
 /* END HEADER */
