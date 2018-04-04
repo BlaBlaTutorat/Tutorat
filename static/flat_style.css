@@ -197,6 +197,7 @@ header li a:hover, .header li a:hover {
 /* FOOTER */
 footer {
     font-family: "Gotham SSm A", sans-serif;
+    z-index: 20;
     color: #afb1b3;
     position: relative;
     width: 100%;
@@ -918,8 +919,9 @@ footer a:hover {
 
 .reset_msg {
     font-family: "Gotham SSm A", sans-serif;
+    z-index: 15;
     position: fixed;
-    top: 150px;
+    top: 75px;
     width: 100%;
     height: 100%;
     display: flex;
