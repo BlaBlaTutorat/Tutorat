@@ -441,20 +441,20 @@ footer a:hover {
 
 .search .critere {
     width: 100%;
-    height: 15%;
+    min-height: 15%;
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
 .tri {
-    display: flex;
-    justify-content: center;
     width: 30%;
-    padding: 16px 20px;
-    margin: 10px auto auto auto;
+    border-radius: 40px;
+    background-color: white;
+    align-self: center;
+    height: 40px;
+    margin-top: 5px;
     border: 1px solid #18a3fa;
-    border-radius: 50px;
 }
 
 .offres {
