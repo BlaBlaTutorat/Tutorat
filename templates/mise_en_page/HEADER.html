@@ -1,7 +1,7 @@
 <header>
     <div>
         <a href="/" id="header_icon" class="header_icon"><img src="/static/main_logo.png"></a>
-        {% if not hidemenu %}
+        {% if check_connexion() %}
             <nav>
                 <ul>
                     <li><a href="/search">Rechercher</a></li>
@@ -15,16 +15,14 @@
                 {% endif %}
                 <a href="/disconnect" class="admin" title="Se déconnecter"><img src="/static/disconnect.png"></a>
             </div>
-        {% endif %}
-        {% if hidemenu %}
+        {% else %}
             <nav>
                 <ul>
                     <li><a href="/">BlaBla - Tutorat</a></li>
                 </ul>
             </nav>
             <div class="icon" id="header_icon">
-                <a href="/login" class="profile" title="Voir votre profil"><img src="/static/profil.png"></a>
-                <a href="/register" class="admin" title="Se déconnecter"><img src="/static/disconnect.png"></a>
+                <!-- TODO Boutons pour se connecter / s'inscrire -->
             </div>
         {% endif %}
     </div>

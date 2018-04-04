@@ -12,12 +12,7 @@ days = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
 # Page d'accueil qui redirige vers la page de recherche ou page de login
 @app.route('/')
 def index():
-    if check_connexion():
-        return redirect(url_for("recherche"))
-    else:
-        # Redirection si l'utilisateur n'est pas connecté
-        hidemenu = True
-        return render_template("Accueil.html", **locals())
+    return render_template("accueil.html")
 
 
 # Page de connexion
@@ -30,8 +25,6 @@ def connexion():
                                 info_msg="Vous êtes connecté, vous pouvez dès à présent accéder au"
                                          " service de tutorat."))
     else:
-        # Propre à cette page
-        hidemenu = True
         if request.args.get('info_msg'):
             info_msg = request.args.get('info_msg')
         return render_template("authentification/connexion.html", **locals())
@@ -78,9 +71,6 @@ def traitement_connexion():
 def inscription():
     sql_obj = sql.MysqlObject()
     if not check_connexion():
-        # Propre à cette page
-        hidemenu = True
-
         if request.args.get('info_msg'):
             info_msg = request.args.get('info_msg')
         return render_template("authentification/inscription.html", classes=sql_obj.classes_liste(), **locals())
@@ -120,8 +110,6 @@ def traitement_inscription():
 # Mot de passe oublié
 @app.route('/forgot', methods=['GET'])
 def mdp_oublie():
-    # Propre à cette page
-    hidemenu = True
     return render_template("authentification/mdp_oublie.html", **locals())
 
 
@@ -187,10 +175,6 @@ def profil_3():
 def profil_4(mail):
     sql_obj = sql.MysqlObject()
     if check_connexion():
-
-        # Propre à cette page
-        hidemenu = True
-
         if sql_obj.mail_in_bdd(mail):
             return render_template("profil/profil_visit.html", infos=sql_obj.get_user_info(mail)[0], **locals())
         else:
@@ -588,24 +572,18 @@ def reset():
 # Gestion de l'erreur 404
 @app.errorhandler(404)
 def not_found(error):
-    # Propre à cette page
-    hidemenu = True
     return render_template("error.html", message="Erreur 404 - Ressource non trouvée", **locals())
 
 
 # Gestion de l'erreur 403
 @app.errorhandler(403)
 def forbidden(error):
-    # Propre à cette page
-    hidemenu = True
     return render_template("error.html", message="Erreur 403 - Accès Interdit", **locals())
 
 
 # Gestion de l'erreur 405
 @app.errorhandler(405)
 def method_not_allowed(error):
-    # Propre à cette page
-    hidemenu = True
     return render_template("error.html", message="Erreur 405 - Méthode de requête non autorisée", **locals())
 
 
@@ -626,6 +604,9 @@ def check_connexion():
     else:
         return False
 
+
+# Possibilité d'appeler la fonction check_connexion() depuis un template html
+app.jinja_env.globals.update(check_connexion=check_connexion)
 
 # Nécessaire pour faire fontionner les sessions
 # (à garder secret pour que l'utilisateur ne puisse pas modifier les cookies)
