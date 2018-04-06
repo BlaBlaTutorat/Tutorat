@@ -15,7 +15,7 @@ def index():
     sql_obj = sql.MysqlObject()
     if check_connexion():
         mail = session['mail']
-        admin_user = sql_obj.get_user_info(mail)[0][4]
+        admin_user = check_admin()
 
     return render_template("accueil.html", **locals())
 
@@ -87,23 +87,30 @@ def inscription():
 @app.route('/register', methods=['POST'])
 def traitement_inscription():
     sql_obj = sql.MysqlObject()
+    classes = sql_obj.classes_liste()
     if not check_connexion():
         if not sql_obj.mail_in_bdd(request.form['mail']):
-            # Chiffrement du mdp
-            chaine_mot_de_passe = request.form.get('mdp')
-            mdp_confirm = request.form.get('mdp2')
-            if chaine_mot_de_passe == mdp_confirm:
-                mot_de_passe_chiffre = hashlib.sha256(str(chaine_mot_de_passe).encode('utf-8')).hexdigest()
-                nom = request.form.get('prenom') + '  ' + request.form.get('nom')
-                # Envoi des infos à la base de données
-                sql_obj.create_compte(nom, mot_de_passe_chiffre, request.form.get('mail'), request.form.get('classe'))
-                return redirect(url_for("profil",
-                                        info_msg="Votre compte a bien été créé,"
-                                                 "vous pouvez dès à présent accéder à votre profil"
-                                                 " et au service d'offre/demande de Tutorat."))
+            # Vérification que la classe est valide
+            if request.form.get('classe') in classes:
+                # Chiffrement du mdp
+                chaine_mot_de_passe = request.form.get('mdp')
+                mdp_confirm = request.form.get('mdp2')
+                if chaine_mot_de_passe == mdp_confirm:
+                    mot_de_passe_chiffre = hashlib.sha256(str(chaine_mot_de_passe).encode('utf-8')).hexdigest()
+                    nom = request.form.get('prenom') + '  ' + request.form.get('nom')
+                    # Envoi des infos à la base de données
+                    sql_obj.create_compte(nom, mot_de_passe_chiffre, request.form.get('mail'),
+                                          request.form.get('classe'))
+                    return redirect(url_for("profil",
+                                            info_msg="Votre compte a bien été créé,"
+                                                     "vous pouvez dès à présent accéder à votre profil"
+                                                     " et au service d'offre/demande de Tutorat."))
+                else:
+                    return render_template("authentification/inscription.html",
+                                           info_msg='Les mots de passe ne correspondent pas.', **locals())
             else:
-                return render_template("authentification/inscription.html", classes=sql_obj.classes_liste(),
-                                       info_msg='Les mots de passe ne correspondent pas.', **locals())
+                return render_template("authentification/inscription.html",
+                                       info_msg='Votre classe n\'est pas valide', **locals())
         else:
             return redirect(url_for('inscription',
                                     info_msg="Cette adresse email existe déjà"))
@@ -130,9 +137,8 @@ def profil():
     sql_obj = sql.MysqlObject()
     if check_connexion():
         mail = session['mail']
-        admin_user = sql_obj.get_user_info(mail)[0][4]
+        admin_user = check_admin()
         user = sql_obj.get_user_info(mail)[0][0]
-        css_state = sql_obj.get_css(mail)
         if request.args.get('info_msg'):
             info_msg = request.args.get('info_msg')
         return render_template("profil/profil_u.html", infos=sql_obj.get_user_info(mail)[0], days=days, **locals())
@@ -147,9 +153,8 @@ def profil_2():
     sql_obj = sql.MysqlObject()
     if check_connexion():
         mail = session['mail']
-        admin_user = sql_obj.get_user_info(mail)[0][4]
+        admin_user = check_admin()
         user = sql_obj.get_user_info(mail)[0][0]
-        css_state = sql_obj.get_css(mail)
         if request.args.get('info_msg'):
             info_msg = request.args.get('info_msg')
         return render_template("profil/profil_t_p.html", offres_creees=sql_obj.get_user_offres(mail),
@@ -196,9 +201,8 @@ def profil_update():
     sql_obj = sql.MysqlObject()
     if check_connexion():
         mail = session['mail']
-        admin_user = sql_obj.get_user_info(mail)[0][4]
+        admin_user = check_admin()
         user = sql_obj.get_user_info(mail)[0][0]
-        css_state = sql_obj.get_css(mail)
         classes = sql_obj.classes_liste()
         if len(request.form) == 0:
             return render_template("profil/profil_update.html", infos=sql_obj.get_user_info(mail)[0], **locals())
@@ -220,9 +224,8 @@ def admin_oc():
     sql_obj = sql.MysqlObject()
     if check_connexion():
         mail = session['mail']
-        admin_user = sql_obj.get_user_info(mail)[0][4]
+        admin_user = check_admin()
         user = sql_obj.get_user_info(mail)[0][0]
-        css_state = sql_obj.get_css(mail)
         if admin_user:
             if request.args.get('info_msg'):
                 info_msg = request.args.get('info_msg')
@@ -253,9 +256,8 @@ def admin_ov():
     sql_obj = sql.MysqlObject()
     if check_connexion():
         mail = session['mail']
-        admin_user = sql_obj.get_user_info(mail)[0][4]
+        admin_user = check_admin()
         user = sql_obj.get_user_info(mail)[0][0]
-        css_state = sql_obj.get_css(mail)
         if admin_user:
             if request.args.get('info_msg'):
                 info_msg = request.args.get('info_msg')
@@ -275,9 +277,8 @@ def admin_u():
     sql_obj = sql.MysqlObject()
     if check_connexion():
         mail = session['mail']
-        admin_user = sql_obj.get_user_info(mail)[0][4]
+        admin_user = check_admin()
         user = sql_obj.get_user_info(mail)[0][0]
-        css_state = sql_obj.get_css(mail)
         if admin_user:
             if request.args.get('info_msg'):
                 info_msg = request.args.get('info_msg')
@@ -300,9 +301,8 @@ def recherche():
     sql_obj = sql.MysqlObject()
     if check_connexion():
         mail = session['mail']
-        admin_user = sql_obj.get_user_info(mail)[0][4]
+        admin_user = check_admin()
         user = sql_obj.get_user_info(mail)[0][0]
-        css_state = sql_obj.get_css(mail)
         if request.args.get('info_msg'):
             info_msg = request.args.get('info_msg')
         if request.form.get('precedent'):
@@ -340,9 +340,8 @@ def creation():
     sql_obj = sql.MysqlObject()
     if check_connexion():
         mail = session['mail']
-        admin_user = sql_obj.get_user_info(mail)[0][4]
+        admin_user = check_admin()
         user = sql_obj.get_user_info(mail)[0][0]
-        css_state = sql_obj.get_css(mail)
         return render_template("creation.html", filieres=sql_obj.filieres_liste(), matieres=sql_obj.matieres_liste(),
                                days=days, **locals())
     # Redirection si l'utilisateur n'est pas connecté
@@ -358,9 +357,8 @@ def traitement_creation():
     sql_obj = sql.MysqlObject()
     if check_connexion():
         mail = session['mail']
-        admin_user = sql_obj.get_user_info(mail)[0][4]
+        admin_user = check_admin()
         user = sql_obj.get_user_info(mail)[0][0]
-        css_state = sql_obj.get_css(mail)
         horaires = []
         for i in range(0, 12, 2):
             if request.form.get(sql.horaires_reference[i], None) != '' and request.form.get(
@@ -472,10 +470,8 @@ def delete():
 # Suppression d'une offre (admin)
 @app.route('/delete2')
 def delete2():
-    sql_obj = sql.MysqlObject()
     if check_connexion():
-        mail = session['mail']
-        admin_user = sql_obj.get_user_info(mail)[0][4]
+        admin_user = check_admin()
         if admin_user:
             if request.args.get('id'):
                 offre_id = request.args.get('id')
@@ -493,10 +489,8 @@ def delete2():
 # Validation d'une offre (admin)
 @app.route('/validate')
 def validate():
-    sql_obj = sql.MysqlObject()
     if check_connexion():
-        mail = session['mail']
-        admin_user = sql_obj.get_user_info(mail)[0][4]
+        admin_user = check_admin()
         if admin_user:
             if request.args.get('id'):
                 disponible = 1
@@ -515,10 +509,8 @@ def validate():
 # Ban (admin)
 @app.route('/ban')
 def ban():
-    sql_obj = sql.MysqlObject()
     if check_connexion():
-        mail = session['mail']
-        admin_user = sql_obj.get_user_info(mail)[0][4]
+        admin_user = check_admin()
         if admin_user:
             if request.args.get('mail'):
                 mail = request.args.get('mail')
@@ -530,20 +522,6 @@ def ban():
         else:
             abort(403)
     else:
-        return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
-
-
-# CSS
-@app.route('/css')
-def css():
-    sql_obj = sql.MysqlObject()
-    if check_connexion():
-        mail = session['mail']
-        sql_obj.set_css(mail)
-        # Redirection page d'avant
-        return redirect(request.referrer)
-    else:
-        # Redirection si l'utilisateur n'est pas connecté
         return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
 
 
@@ -563,7 +541,7 @@ def reset():
     sql_obj = sql.MysqlObject()
     if check_connexion():
         mail = session['mail']
-        admin_user = sql_obj.get_user_info(mail)[0][4]
+        admin_user = check_admin()
         if admin_user == 1:
             sql_obj.reset()
             info_msg = 'Le site BlaBla Tutorat a bien été remis à zéro.'
@@ -599,11 +577,28 @@ def check_connexion():
         sql_obj = sql.MysqlObject()
         mail = session['mail']
         # Vérification mail existe
-        if sql_obj.mail_in_bdd(session['mail']):
+        if sql_obj.mail_in_bdd(mail):
             if sql_obj.check_ban(mail):
                 return False
             else:
                 return True
+        else:
+            return False
+    else:
+        return False
+
+
+# Vérification admin
+def check_admin():
+    if 'mail' in session:
+        sql_obj = sql.MysqlObject()
+        mail = session['mail']
+        # Vérification mail existe
+        if sql_obj.mail_in_bdd(mail):
+            if sql_obj.get_user_info(mail)[0][3] == "ADMIN":
+                return True
+            else:
+                return False
         else:
             return False
     else:

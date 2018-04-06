@@ -38,7 +38,8 @@ class MysqlObject:
         rows = self.cursor.fetchall()
         # On ne retourne que le nom
         for row in rows:
-            classes.append(row[0])
+            if row[0] != "ADMIN":
+                classes.append(row[0])
         return classes
 
     # Liste des matières

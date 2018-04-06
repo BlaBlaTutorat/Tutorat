@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  ven. 30 mars 2018 à 21:50
+-- Généré le :  ven. 06 avr. 2018 à 19:08
 -- Version du serveur :  5.7.19
 -- Version de PHP :  5.6.31
 
@@ -60,6 +60,7 @@ INSERT INTO `classes` (`NOM`) VALUES
 ('2G09'),
 ('2G10'),
 ('2G11'),
+('ADMIN'),
 ('BCPST1'),
 ('BCPST2'),
 ('ECE1'),
@@ -230,9 +231,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `mdp` varchar(1000) NOT NULL,
   `mail` varchar(50) NOT NULL,
   `classe` varchar(50) NOT NULL,
-  `admin` tinyint(1) NOT NULL DEFAULT '0',
   `ban` tinyint(1) NOT NULL DEFAULT '0',
-  `css` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`mail`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -240,11 +239,11 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Déchargement des données de la table `users`
 --
 
-INSERT INTO `users` (`nom`, `mdp`, `mail`, `classe`, `admin`, `ban`, `css`) VALUES
-('Admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 'admin@tutorat.fr', 'TS5', 1, 0, 0),
-('Antoine Labarussias', '1f0dea80a1af4eefa352c04bdaaa79f79433a7b458aaeaa927cb73ac9f63326a', 'antoinelabarussias@orange.fr', 'TS5', 1, 0, 0),
-('Marco Desmoulins', '7c8ccc86c11654af029457d90fdd9d013ce6fb011ee8fdb1374832268cc8d967', 'markopelo@gmail.com', 'TS5', 1, 0, 0),
-('Tao Blancheton', 'e07f52f45ffcfe004432b8f96fbe401378c255fbae4ad87ee64cff0cb8a77227', 'taotom63@gmail.com', 'TS5', 1, 0, 0);
+INSERT INTO `users` (`nom`, `mdp`, `mail`, `classe`, `ban`) VALUES
+('Admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 'admin@tutorat.fr', 'ADMIN', 0),
+('Antoine Labarussias', '1f0dea80a1af4eefa352c04bdaaa79f79433a7b458aaeaa927cb73ac9f63326a', 'antoinelabarussias@orange.fr', 'TS5', 0),
+('Marco Desmoulins', '7c8ccc86c11654af029457d90fdd9d013ce6fb011ee8fdb1374832268cc8d967', 'markopelo@gmail.com', 'TS5', 0),
+('Tao Blancheton', 'e07f52f45ffcfe004432b8f96fbe401378c255fbae4ad87ee64cff0cb8a77227', 'taotom63@gmail.com', 'TS5', 0);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
