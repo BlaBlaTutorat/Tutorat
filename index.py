@@ -12,7 +12,12 @@ days = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
 # Page d'accueil qui redirige vers la page de recherche ou page de login
 @app.route('/')
 def index():
-    return render_template("accueil.html")
+    sql_obj = sql.MysqlObject()
+    if check_connexion():
+        mail = session['mail']
+        admin_user = sql_obj.get_user_info(mail)[0][4]
+
+    return render_template("accueil.html", **locals())
 
 
 # Page de connexion
