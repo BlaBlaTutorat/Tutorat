@@ -323,6 +323,11 @@ class MysqlObject:
         self.cursor.execute("""DELETE FROM offres WHERE auteur = %s""", (mail,))
         self.conn.commit()
 
+    # Promouvoir
+    def promote(self, mail):
+        self.cursor.execute("""UPDATE users SET classe = 'ADMIN' WHERE mail = %s""", (mail,))
+        self.conn.commit()
+
     # Modification du profil
     def modify_user_info(self, mail, classe):
         self.cursor.execute("""UPDATE users SET classe = %s WHERE mail = %s """, (classe, mail))

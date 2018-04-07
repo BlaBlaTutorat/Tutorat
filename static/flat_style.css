@@ -953,6 +953,12 @@ footer a:hover {
 .reset_bb, .reset_bb:hover, .reset_bb:visited, .reset_bb:link {
     color: white;
 }
+
+.user_update_AB {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
 /* END Admin */
 
 /* Error */
@@ -961,7 +967,7 @@ footer a:hover {
     display: flex;
     flex-direction: column;
     justify-content: center;
-}
+    }
 
 .error p {
     text-align: center;

@@ -64,7 +64,8 @@
                         <p>Non</p>
                     {% endif %}
                 </div>
-                {% if user[5]==1 %}
+                <div class="user_update_AB">
+                {% if user[4]==1 %}
                     <a href="/ban?mail={{ user[2] }}" class="ban">
                         <button>Débannir</button>
                     </a>
@@ -73,6 +74,13 @@
                         <button>Bannir</button>
                     </a>
                 {% endif %}
+                {% if user[3]!='ADMIN' %}
+                    </br>
+                    <a href="/promote?mail={{ user[2] }}" class="ban">
+                        <button>Promouvoir</button>
+                    </a>
+                {% endif %}
+                </div>
             </div>
         {% endfor %}
     {% else %}
