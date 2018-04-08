@@ -17,11 +17,11 @@ def index():
         mail = session['mail']
         admin_user = check_admin()
 
-        # STATS
-        nbr_users = sql_obj.stat_nombre()
-        offres = sql_obj.stat_offres()
-        #demandes = sql_obj.stat_demandes()
-        #demandes_satisfaites = (sql_obj.stat_demandes() / sql_obj.stat_offres()) * 100
+    # STATS
+    nbr_users = sql_obj.stat_nombre()
+    offres = sql_obj.stat_offres()
+    #demandes = sql_obj.stat_demandes()
+    #demandes_satisfaites = (sql_obj.stat_demandes() / sql_obj.stat_offres()) * 100
 
     return render_template("accueil.html", **locals())
 

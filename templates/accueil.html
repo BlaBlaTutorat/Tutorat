@@ -7,22 +7,54 @@
 
 {% include 'mise_en_page/HEADER.html' %}
 
-<h1>Le Tutorat :</h1>
-<p> Connaissez-vous le principe du tutorat entre pairs ?</p>
+<div class="header">
+    <div>
+        <div id="header_icon"></div>
+        <nav>
+            <ul>
+                <li><a href="#Accueil">BlaBla-Tutorat</a></li>
+                <li><a href="#Presentation">Présentation</a></li>
+                <li><a href="#stat">Statistiques</a></li>
+            </ul>
+        </nav>
+        <div id="header_icon"></div>
+    </div>
+</div>
 
-    <p> Un élève qui se sent à l’aise dans une matière apporte régulièrement son aide à un autre élève qui souhaite progresser.</p>
+<div id ="Accueil">
+        <h1>Bienvenue sur le site de BlaBla-Tutorat !</h1>
+    <p>
+        <!-- mettre image type celle du cdi -->
+        <img src="">
+    </p>
+</div>
 
-    Ce système est bénéfique pour les deux élèves :
-        <dl>
-            <dt>le tuteur :</dt> <dd>Il acquière des compétences, car il doit comprendre d’où viennent les difficultés du tutoré, et reformuler ses connaissances.</dd> <dt>Le tutoré :</dt> <dd>Il bénéficie d’une aide personnalisée dans le cadre d’une relation différente de celle qu’il a avec son professeur en classe.</dd>
-        </dl>
+<div id="Presentation">
+    <h2>Le Tutorat :</h2>
+        <p> Connaissez-vous le principe du tutorat entre pairs ?</p>
 
-    <p>Remarque : Le tuteur peut accepter d’aider deux élèves en même temps, s’ils sont de la même classe.</p>
+        <p> Un élève qui se sent à l’aise dans une matière apporte régulièrement son aide à un autre élève qui souhaite progresser.</p>
 
-    <!-- mettre image type celle du cdi -->
-    <img src="">
+        <p>Ce système est bénéfique pour les deux élèves :</p>
+            <ul>
+                <li>le tuteur acquière des compétences, car il doit comprendre d’où viennent les difficultés du tutoré, et reformuler ses connaissances.</li>
+                <li>Le tutoré bénéficie d’une aide personnalisée dans le cadre d’une relation différente de celle qu’il a avec son professeur en classe.</li>
+            </ul>
+</div>
 
-<h1>Quelques statistiques :</h1>
+<div id="stat">
+    <dl><h2>Quelques statistiques :</h2>
+        <dt>Nombre d'utilisateurs inscrits :</dt>
+            <dd>{{nbr_users}}</dd>
+        <dt>Nombre d'offres créées :</dt>
+            <dd>{{offres}}</dd>
+        <!---<dt>Nombre de demandes postées :<dt>
+            <dd>{{demandes}}</dd>
+        <dt>Nombre de demandeurs qui ont trouvé un tuteur :</dt>
+             <dd>{{demandes_satisfaites}}</dd> --->
+    </dl>
+</div>
+
 
 
 {% include 'mise_en_page/FOOTER.html' %}

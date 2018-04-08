@@ -67,8 +67,7 @@
                         {% else %}
                             <a onclick="window.open('/profile/view/{{ offre[5] }}','profil','height=625,width=700')" title="Voir le profil">{{ sql_obj.get_user_pseudo(offre[5]) }}</a>
                             <br/>
-                            <br/>
-                            Il reste une place pour ce tutorat !
+                            (1 place restante)
                         {% endif %}
 
                         {% if offre[6] is none %}
