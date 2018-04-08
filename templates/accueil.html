@@ -7,63 +7,36 @@
 
 {% include 'mise_en_page/HEADER.html' %}
 
-<div class="header">
+<h1 id ="Accueil">Bienvenue sur BlaBla-Tutorat</h1>
+<div id="bloc_page_home">
+    
+    <!--- <img href=""> --->
+
     <div>
-        <div id="header_icon"></div>
-        <nav>
-            <ul>
-                <li><a href="#Accueil">BlaBla-Tutorat</a></li>
-                <li><a href="#Presentation">Présentation</a></li>
-                <li><a href="#stat">Statistiques</a></li>
-            </ul>
-        </nav>
-        <div id="header_icon"></div>
+        <h2 class="square_title">POURQUOI ET COMMENT</h2>
+        <p>Quelques difficultés dans une matière ou au contraire, envie d'apporter ton aide à un autre élève ?</p>
+        <p>BlaBla-Tutorat est conçu pour faciliter le service de tutorat entre pairs poposé au lycée Blaise-Pascal de Clermont-Ferrand</p>
+        <p>Il te permet de <a href = "/search">rechercher</a> les offres proposées par d'autres élèves.</p>
+        <p>Ou de <a href="/create">poster</a> une demande ou une offre afin qu'un potentiel tuteur puisse te venir en aide.</p>
+    </div>
+
+    <div id="Presentation">
+        <h2 class="square_title">PRINCIPE</h2>
+        <p> Connaissez-vous le principe du tutorat entre pairs ?</p>
+        <p> Un élève qui se sent à l’aise dans une matière apporte régulièrement son aide à un autre élève qui souhaite progresser.</p>
+        <p>Ce système est bénéfique pour les deux élèves :</p>
+        <p>- le tuteur acquière des compétences, car il doit comprendre d’où viennent les difficultés du tutoré, et reformuler ses connaissances.</p>
+        <p>- le tutoré bénéficie d’une aide personnalisée dans le cadre d’une relation différente de celle qu’il a avec son professeur en classe.</p>
+    </div>
+
+    <div id="stat">
+        <h2 class="square_title">QUELQUES STATISTIQUES</h2>
+        <p>Nombre d'utilisateurs inscrits : {{nbr_users}}</p>
+        <p>Nombre d'offres créées : {{offres}}</p>
+        <!--- <p>Nombre de demandes postées : {{demandes}}</p>
+        <p>Nombre de demandeurs qui ont trouvé un tuteur : {{demandes_satisfaites}}</p> --->
     </div>
 </div>
-
-<div id ="Accueil">
-        <h1>Bienvenue sur le site de BlaBla-Tutorat !</h1>
-</div>
-<div>
-    <p>Quelques difficultés dans une matière ou au contraire, envie d'apporter ton aide à un autre élève ?</p>
-    <p>BlaBla-Tutorat est conçu pour faciliter le service de <a href="#Presentation">tutorat entre pairs</a> poposé au lycée Blaise-Pascal de Clermont-Ferrand</p>
-    <p>Il te permet de <a href = "/search">Rechercher</a> les offres proposées par d'autres élèves.</p>
-    <p>Ou de poster une <a href="/create">demande</a>ou une <a href="create">offre</a> afin qu'un potentiel tuteur puisse te venir en aide.</p>
-</div>
-<div>
-    <p>
-        <!-- mettre image type celle du cdi -->
-        <img src="">
-    </p>
-</div>
-
-<div id="Presentation">
-    <h2>Le Tutorat :</h2>
-        <p> Connaissez-vous le principe du tutorat entre pairs ?</p>
-
-        <p> Un élève qui se sent à l’aise dans une matière apporte régulièrement son aide à un autre élève qui souhaite progresser.</p>
-
-        <p>Ce système est bénéfique pour les deux élèves :</p>
-            <ul>
-                <li>le tuteur acquière des compétences, car il doit comprendre d’où viennent les difficultés du tutoré, et reformuler ses connaissances.</li>
-                <li>Le tutoré bénéficie d’une aide personnalisée dans le cadre d’une relation différente de celle qu’il a avec son professeur en classe.</li>
-            </ul>
-</div>
-
-<div id="stat">
-    <dl><h2>Quelques statistiques :</h2>
-        <dt>Nombre d'utilisateurs inscrits :</dt>
-            <dd>{{nbr_users}}</dd>
-        <dt>Nombre d'offres créées :</dt>
-            <dd>{{offres}}</dd>
-        <!---<dt>Nombre de demandes postées :<dt>
-            <dd>{{demandes}}</dd>
-        <dt>Nombre de demandeurs qui ont trouvé un tuteur :</dt>
-             <dd>{{demandes_satisfaites}}</dd> --->
-    </dl>
-</div>
-
-
 
 {% include 'mise_en_page/FOOTER.html' %}
 

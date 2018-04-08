@@ -37,7 +37,7 @@ h3 {
     color: #f0f0f0
 }
 
-h2 {
+h2, h1 {
     text-align: center;
 }
 
@@ -248,6 +248,63 @@ footer a:hover {
     color: #7d7f81;
 }
 /* END FOOTER */
+
+/* Home */
+#Accueil {
+    margin-top: 100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#Accueil img {
+    align-self: center;
+    width: 200px;
+    height: 116px;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.title1 {
+    align-self: center;
+}
+
+.square_title {
+    width: 100px;
+    height: 100px;
+    background: #161616;
+    color: white;
+    font-size: 0.7em;
+    margin-right: 25px;
+    float: left;
+}
+
+#bloc_page_home {
+    display: flex;
+    justify-content: space-between;
+}
+
+#bloc_page_home div {
+    margin: 50px 50px 50px 50px;
+    width: 50%;
+    text-align: justify;
+}
+
+#bloc_page_home li, #bloc_page_home ul {
+    list-style-type: none;
+    text-decoration: none;
+}
+
+#bloc_page_home a:visited, #bloc_page_home a {
+    text-decoration: none;
+    color: black;
+}
+
+#bloc_page_home a:hover {
+    text-decoration: none;
+    color: #afb1b3;
+}
+/* END Home */
 
 /* Register */
 .register_bloc {
