@@ -543,7 +543,12 @@ def promote():
     else:
         return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
 
-
+# STATS
+@app.route('/Accueil')
+def stat():
+    sql_obj = sql.MysqlObject()
+    demandes_satisfaites = (sql_obj.stat_demandes() / sql_obj.stat_offres())*100
+    #afficher cette stat sur la page d'accueil
 # deconnexion
 @app.route('/disconnect')
 def deconnexion():

@@ -345,6 +345,30 @@ class MysqlObject:
         self.cursor.execute("""DELETE FROM `offres`""")
         self.conn.commit()
 
+    # Retourne les informations pour les statistiques :
+    def stat_nombre(self):
+        self.cursor.execute("""SELECT * FROM users""")
+        # nombre d'utilisateurs
+        n = 0
+        for x in self.cursor.fetchall():
+            n += 1
+        return n
+    # nombre de tutoré
+    def stat_demandes(self):
+        self.cursor.execute(""" SELECT * FROM demandes""")
+        d = 0
+        for x in self.cursor.fetchall():
+            d += 1
+        return d
+    # nombre d'offres :
+    def stat_offres(self):
+        self.cursor.execute("""SELECT * FROM offres""")
+        o = 0
+        for x in self.cursor.fetchall():
+          o += 1
+        return o
+
+
 
 # Retourne le nombre de places dispo
 def check_availability(offre):
@@ -356,4 +380,3 @@ def check_availability(offre):
             return 1
     else:
         return 0
-
