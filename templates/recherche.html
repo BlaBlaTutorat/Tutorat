@@ -63,22 +63,17 @@
                     <p class="element"><strong class="G">Matière:</strong> {{ offre[3] }}</p>
                     <p class="element"><strong class="G">Participant(s) :</strong>
                         {% if offre[5] is none %}
-                            Aucun
+                           Aucun
                         {% else %}
                             <a onclick="window.open('/profile/view/{{ offre[5] }}','profil','height=625,width=700')" title="Voir le profil">{{ sql_obj.get_user_pseudo(offre[5]) }}</a>
+                            <br/>
+                            <br/>
+                            Il reste une place pour ce tutorat !
                         {% endif %}
 
                         {% if offre[6] is none %}
-
                         {% else %}
                             <a onclick="window.open('/profile/view/{{ offre[6] }}','profil','height=625,width=700')" title="Voir le profil">{{ sql_obj.get_user_pseudo(offre[6]) }}</a>
-                        {% endif %}
-                    </p>
-                    <p class="element"><strong class="G">places restantes :</strong>
-                        {% if offre[5] is none %}
-                            2
-                        {% else %}
-                            1
                         {% endif %}
                     </p>
                 </div>

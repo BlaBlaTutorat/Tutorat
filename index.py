@@ -17,7 +17,14 @@ def index():
         mail = session['mail']
         admin_user = check_admin()
 
+        # STATS
+        nbr_users = sql_obj.stat_nombre()
+        offres = sql_obj.stat_offres()
+        demandes = sql_obj.stat_demandes()
+        demandes_satisfaites = (sql_obj.stat_demandes() / sql_obj.stat_offres()) * 100
+
     return render_template("accueil.html", **locals())
+
 
 
 # Page de connexion
@@ -543,12 +550,6 @@ def promote():
     else:
         return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
 
-# STATS
-@app.route('/Accueil')
-def stat():
-    sql_obj = sql.MysqlObject()
-    demandes_satisfaites = (sql_obj.stat_demandes() / sql_obj.stat_offres())*100
-    #afficher cette stat sur la page d'accueil
 # deconnexion
 @app.route('/disconnect')
 def deconnexion():
