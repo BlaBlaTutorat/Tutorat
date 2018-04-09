@@ -251,18 +251,17 @@ footer a:hover {
 
 /* Home */
 #Accueil {
-    margin-top: 100px;
+    margin-top: 150px;
     display: flex;
     flex-direction: row;
     justify-content: center;
 }
 
-#Accueil img {
+#bloc_page_home img {
+    width: 490px;
+    height: 280px;
     align-self: center;
-    width: 200px;
-    height: 116px;
-    margin-right: 10px;
-    margin-left: 10px;
+    margin: 50px 0 0 0;
 }
 
 .title1 {
@@ -281,26 +280,33 @@ footer a:hover {
 
 #bloc_page_home {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
 }
 
-#bloc_page_home div {
+.bloc_home {
+    display: flex;
+    justify-content: space-around;
+}
+
+.bloc_home div {
     margin: 50px 50px 50px 50px;
     width: 50%;
     text-align: justify;
 }
 
-#bloc_page_home li, #bloc_page_home ul {
+.bloc_home li, .bloc_home ul {
     list-style-type: none;
     text-decoration: none;
 }
 
-#bloc_page_home a:visited, #bloc_page_home a {
+.bloc_home a:visited, .bloc_home a {
     text-decoration: none;
     color: black;
 }
 
-#bloc_page_home a:hover {
+.bloc_home a:hover {
     text-decoration: none;
     color: #afb1b3;
 }
