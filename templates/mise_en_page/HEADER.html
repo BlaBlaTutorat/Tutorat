@@ -1,6 +1,6 @@
 <header>
     <div>
-        <a href="/" id="header_icon" class="header_icon"><img src="/static/main_logo.png"></a>
+        <a href="/" id="header_icon" class="header_icon"><img src="/static/img/main_logo.png"></a>
         {% if check_connexion() %}
             <nav>
                 <ul>
@@ -9,11 +9,11 @@
                 </ul>
             </nav>
             <div class="icon" id="header_icon">
-                <a href="/profile/view" class="profile" title="Voir votre profil"><img src="/static/profil.png"></a>
+                <a href="/profile/view" class="profile" title="Voir votre profil"><img src="/static/img/profil.png"></a>
                 {% if admin_user %}
-                    <a href="/admin/tutorials/validate" class="admin" title="Accéder à l'interface d'administration"><img src="/static/admin.png"></a>
+                    <a href="/admin/tutorials/validate" class="admin" title="Accéder à l'interface d'administration"><img src="/static/img/admin.png"></a>
                 {% endif %}
-                <a href="/disconnect" class="admin" title="Se déconnecter"><img src="/static/disconnect.png"></a>
+                <a href="/disconnect" class="admin" title="Se déconnecter"><img src="/static/img/disconnect.png"></a>
             </div>
         {% else %}
             <nav>
@@ -22,8 +22,8 @@
                 </ul>
             </nav>
             <div class="icon" id="header_icon">
-                <a href="/login" class="profile" title="Se connecter"><img src="/static/profil.png"></a>
-                <a href="/register" class="admin" title="S'inscrire"><img src="/static/register.png"></a>
+                <a href="/login" class="profile" title="Se connecter"><img src="/static/img/profil.png"></a>
+                <a href="/register" class="admin" title="S'inscrire"><img src="/static/img/register.png"></a>
             </div>
         {% endif %}
     </div>

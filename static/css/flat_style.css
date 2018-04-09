@@ -53,7 +53,7 @@ h2, h1 {
     flex-direction: column;
     justify-content: center;
     text-align: center;
-    background: url("croix.png") top right no-repeat, black;
+    background: url("../img/croix.png") top right no-repeat, black;
     color: white;
     font-size: 0.9em;
     line-height: 30px;
@@ -995,7 +995,7 @@ footer a:hover {
 }
 
 .quit_reset {
-    background-image: url("/static/croix.png");
+    background-image: url("/static/img/croix.png");
     width: 20px;
     height: 20px;
 }

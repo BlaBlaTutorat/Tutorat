@@ -19,7 +19,7 @@
             </ul>
         </nav>
         <div id="header_icon" class="icon">
-            <a href="/admin/tutorials/validate?reset_msg=True" class="admin" title="Réinitialiser le site"><img src="/static/reset.png"></a>
+            <a href="/admin/tutorials/validate?reset_msg=True" class="admin" title="Réinitialiser le site"><img src="/static/img/reset.png"></a>
         </div>
     </div>
 </div>
@@ -46,9 +46,9 @@
                 </div>
                 <div class="info_profil" id="informations2">
                     <p>{{ user[0] }}{% for tutorat in tutorats_actifs %}{% if tutorat[1] == user[2] %}
-                        <img src="/static/tuteur.png" id="tuteur" title="Nombre de tutorats créé par cet utilisateur">
+                        <img src="/static/img/tuteur.png" id="tuteur" title="Nombre de tutorats créé par cet utilisateur">
                     {% endif %}{% endfor %}{% for tutorat in tutorats_actifs %}
-                        {% if tutorat[5] == user[2] or tutorat[6] == user[2] %}<img src="/static/tutore.png" id="tutore"
+                        {% if tutorat[5] == user[2] or tutorat[6] == user[2] %}<img src="/static/img/tutore.png" id="tutore"
                                                                                     title="Nombre de tutorats suivi par cet utilisateur">
                         {% endif %}{% endfor %}</p>
                     <p><a href="mailto:{{ user[2] }}" title="Envoyer un mail">{{ user[2] }}</a></p>
