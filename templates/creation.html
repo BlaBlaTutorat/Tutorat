@@ -67,10 +67,7 @@
                     </SELECT></p>
                 <input type="submit" class="crea_offre" value="Créer mon offre"/>
                 <!--- A mettre en petit en remarque --->
-                <p title="Si les deux sont dans la même classe.">Remarque : un tuteur peut aider deux personnes.</p>
-                <!---à mettre en bas à droite en dessous des horaires --->
-                <a class="aide_creation" title="Afficher l'aide" <!---href="/aide_creation"---><img
-                    src="/static/img/help.png"></a>
+                <p class="remarque">Remarque : un tuteur peut aider deux personnes.</p>
             </div>
             <!-- Horaires -->
             <div id="horaires_crea">
@@ -83,13 +80,14 @@
                     <div class="table_crea" id="table_horaires_crea">
                         {% for i in range(0,6) %}
                             <p id="day_{{ i }}">
-                                <input type="text" name="debut_j{{ i }}" class="time start"/>
+                                <input type="text" name="debut_j{{ i }}" class="time start" id="time_start"/>
                                 à
-                                <input type="text" name="fin_j{{ i }}" class="time end"/>
+                                <input type="text" name="fin_j{{ i }}" class="time end" id="time_end"/>
                             </p>
                         {% endfor %}
                     </div>
                 </div>
+                <a class="aide_creation" title="Afficher l'aide" <!---href="/aide_creation"---><img src="/static/img/help.png"></a>
             </div>
         </div>
     </div>

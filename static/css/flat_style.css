@@ -606,6 +606,24 @@ footer a:hover {
 /* END Search */
 
 /* Create */
+.aide_creation {
+    margin-left: 81%;
+    margin-top: 20px;
+}
+
+.info_crea .remarque {
+    font-size: 0.7em;
+    margin: 0 0 0 0;
+}
+
+#time_start, #time_end {
+    border-radius: 0;
+    box-sizing: border-box;
+    border-bottom: 2px dashed white;
+    width: 30%;
+    text-align: center;
+}
+
 .creation {
     display: flex;
     flex-direction: column;
@@ -616,15 +634,15 @@ footer a:hover {
 
 .creation .bloc {
     background: white;
-    border-radius: 150px;
+    border-radius: 100px;
     border: 1px solid #18a3fa;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
     padding: 5px 10px 5px 10px;
-    min-width: 900px;
-    height: 350px;
+    min-width: 950px;
+    min-height: 450px;
 }
 
 .creation .element {
@@ -637,14 +655,17 @@ footer a:hover {
 }
 
 .creation .table_crea {
-    margin: auto 10px;
+    margin: auto 20px auto 20px;
     line-height: 30px;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
 }
 
 .info_crea {
     line-height: 50px;
     padding-right: 0;
-    margin-right: 0;
+    margin: 10px 0 0 0;
     max-width: 40%;
     min-width: 40%;
 }
@@ -657,10 +678,12 @@ footer a:hover {
     background: #18a3fa;
     border-radius: 15px;
     color: white;
+    max-width: 70%;
+    align-self: center;
 }
 
 #table_horaires_crea {
-    text-align: center;
+    text-align: right;
 }
 
 .tri3 {
@@ -673,14 +696,15 @@ footer a:hover {
 }
 
 .crea_offre {
-    margin-top: 65px;
-    margin-bottom: 0;
+    margin: 100px 0 0 0;
 }
 
 #horaires_crea {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-self: center;
+    margin-top: 40px;
 }
 
 .crea_title {
