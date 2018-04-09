@@ -3,7 +3,8 @@ import hashlib
 
 from flask import *
 
-import sql
+from python_files import sql
+from python_files import utils
 
 app = Flask(__name__)
 days = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
@@ -367,8 +368,8 @@ def traitement_creation():
         user = sql_obj.get_user_info(mail)[0][0]
         horaires = []
         for i in range(0, 12, 2):
-            debut = sql.get_horaire(i)
-            fin = sql.get_horaire(i+1)
+            debut = utils.get_horaire(i)
+            fin = utils.get_horaire(i + 1)
 
             if request.form.get(debut, None) != '' and request.form.get(
                     fin, None) != '':

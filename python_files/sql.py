@@ -4,7 +4,8 @@ import sys
 
 import mysql.connector
 
-import config
+from python_files import config
+from python_files import utils
 
 offres_par_page = 4
 
@@ -217,7 +218,7 @@ class MysqlObject:
         for time in horaires:
             if time != 0:
                 self.cursor.execute(
-                    """UPDATE offres SET """ + get_horaire(i) + """ = %s WHERE date_time = %s AND auteur = %s""",
+                    """UPDATE offres SET """ + utils.get_horaire(i) + """ = %s WHERE date_time = %s AND auteur = %s""",
                     (time, date_time, author))
             i += 1
         self.conn.commit()
@@ -233,12 +234,12 @@ class MysqlObject:
         offre = self.cursor.fetchall()[0]
         # Vérification auteur != participant
         if offre[1] != participant:
-            if check_availability(offre) == 2:
+            if utils.check_availability(offre) == 2:
                 # Update de la première colonne
                 self.cursor.execute("""UPDATE offres SET participant = %s WHERE id = %s """, (participant, offre_id))
                 self.conn.commit()
                 return 0
-            elif check_availability(offre) == 1:
+            elif utils.check_availability(offre) == 1:
                 # Update de la deuxième colonne + check si l'utilisateur n'est pas déjà participant à cette offre
                 if offre[5] != participant:
                     # Check si l'utilisateur est dans la même classe que le premier
@@ -265,7 +266,7 @@ class MysqlObject:
         offres_a_modif = self.cursor.fetchall()
         if len(offres_a_modif) == 1:
             offre_a_modif = offres_a_modif[0]
-            places_dispo = check_availability(offre_a_modif)
+            places_dispo = utils.check_availability(offre_a_modif)
             if places_dispo == 0:
                 if offre_a_modif[5] == mail:
                     self.cursor.execute(
@@ -368,23 +369,3 @@ class MysqlObject:
         for _ in self.cursor.fetchall():
             o += 1
         return o
-
-
-# Retourne le nombre de places dispo
-def check_availability(offre):
-    if offre[5] is None or offre[6] is None:
-        # Une place est disponible
-        if offre[5] is None and offre[6] is None:
-            return 2
-        else:
-            return 1
-    else:
-        return 0
-
-
-# Retourne le nom de la colonne sql pour un i
-def get_horaire(i):
-    if i % 2 == 0:
-        return "debut_j" + str(i // 2)
-    else:
-        return "fin_j" + str(i // 2)
