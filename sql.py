@@ -6,9 +6,7 @@ import mysql.connector
 
 import config
 
-horaires_reference = ["debut_j0", "fin_j0", "debut_j1", "fin_j1", "debut_j2", "fin_j2", "debut_j3", "fin_j3",
-                      "debut_j4", "fin_j4", "debut_j5", "fin_j5"]
-offre_par_page = 4
+offres_par_page = 4
 
 
 class MysqlObject:
@@ -155,7 +153,7 @@ class MysqlObject:
         offres = []
         self.cursor.execute(
             """SELECT * FROM offres WHERE disponible=1 AND (participant IS NULL OR participant2 IS NULL) LIMIT """ +
-            str(offre_par_page) + """ OFFSET """ + str(page * offre_par_page))
+            str(offres_par_page) + """ OFFSET """ + str(page * offres_par_page))
         rows = self.cursor.fetchall()
         # Tri des offres pour ne garder que celles où la classe du 1er participant est identique à celle de user
         for row in rows:
@@ -172,7 +170,7 @@ class MysqlObject:
         offres = []
         self.cursor.execute(
             """SELECT * FROM offres WHERE disponible=1 AND (participant IS NULL OR participant2 IS NULL) ORDER BY """
-            + option + """ LIMIT """ + str(offre_par_page) + """ OFFSET """ + str(page * offre_par_page))
+            + option + """ LIMIT """ + str(offres_par_page) + """ OFFSET """ + str(page * offres_par_page))
         rows = self.cursor.fetchall()
         # Tri des offres pour ne garder que celles où la classe du 1er participant est identique à celle de user
         for row in rows:
@@ -189,8 +187,8 @@ class MysqlObject:
         offres = []
         self.cursor.execute(
             """SELECT * FROM offres WHERE disponible=1 AND (participant IS NULL OR participant2 IS NULL)
-             AND """ + option + """ = '""" + option2 + """' LIMIT """ + str(offre_par_page) + """ OFFSET """ + str(
-                page * offre_par_page))
+             AND """ + option + """ = '""" + option2 + """' LIMIT """ + str(offres_par_page) + """ OFFSET """ + str(
+                page * offres_par_page))
         rows = self.cursor.fetchall()
         # Tri des offres pour ne garder que celles où la classe du 1er participant est identique à celle de user
         for row in rows:
@@ -219,7 +217,7 @@ class MysqlObject:
         for time in horaires:
             if time != 0:
                 self.cursor.execute(
-                    """UPDATE offres SET """ + horaires_reference[i] + """ = %s WHERE date_time = %s AND auteur = %s""",
+                    """UPDATE offres SET """ + get_horaire(i) + """ = %s WHERE date_time = %s AND auteur = %s""",
                     (time, date_time, author))
             i += 1
         self.conn.commit()
@@ -351,7 +349,7 @@ class MysqlObject:
         self.cursor.execute("""SELECT * FROM users""")
         # nombre d'utilisateurs
         n = 0
-        for x in self.cursor.fetchall():
+        for _ in self.cursor.fetchall():
             n += 1
         return n
 
@@ -359,7 +357,7 @@ class MysqlObject:
     def stat_demandes(self):
         self.cursor.execute(""" SELECT * FROM demandes""")
         d = 0
-        for x in self.cursor.fetchall():
+        for _ in self.cursor.fetchall():
             d += 1
         return d
 
@@ -367,7 +365,7 @@ class MysqlObject:
     def stat_offres(self):
         self.cursor.execute("""SELECT * FROM offres""")
         o = 0
-        for x in self.cursor.fetchall():
+        for _ in self.cursor.fetchall():
             o += 1
         return o
 
@@ -382,3 +380,11 @@ def check_availability(offre):
             return 1
     else:
         return 0
+
+
+# Retourne le nom de la colonne sql pour un i
+def get_horaire(i):
+    if i % 2 == 0:
+        return "debut_j" + str(i // 2)
+    else:
+        return "fin_j" + str(i // 2)

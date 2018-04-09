@@ -148,8 +148,8 @@ def profil():
         if request.args.get('info_msg'):
             info_msg = request.args.get('info_msg')
         return render_template("profil/profil_u.html", infos=sql_obj.get_user_info(mail)[0], days=days, **locals())
-    # Redirection si l'utilisateur n'est pas connecté
     else:
+        # Redirection si l'utilisateur n'est pas connecté
         return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
 
 
@@ -165,8 +165,8 @@ def profil_2():
             info_msg = request.args.get('info_msg')
         return render_template("profil/profil_t_p.html", offres_creees=sql_obj.get_user_offres(mail),
                                tutorats_actifs=sql_obj.get_user_tutorats(mail), days=days, **locals())
-    # Redirection si l'utilisateur n'est pas connecté
     else:
+        # Redirection si l'utilisateur n'est pas connecté
         return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
 
 
@@ -350,8 +350,8 @@ def creation():
         user = sql_obj.get_user_info(mail)[0][0]
         return render_template("creation.html", filieres=sql_obj.filieres_liste(), matieres=sql_obj.matieres_liste(),
                                days=days, **locals())
-    # Redirection si l'utilisateur n'est pas connecté
     else:
+        # Redirection si l'utilisateur n'est pas connecté
         return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
 
 
@@ -367,8 +367,8 @@ def traitement_creation():
         user = sql_obj.get_user_info(mail)[0][0]
         horaires = []
         for i in range(0, 12, 2):
-            debut = sql.horaires_reference[i]
-            fin = sql.horaires_reference[i + 1]
+            debut = sql.get_horaire(i)
+            fin = sql.get_horaire(i+1)
 
             if request.form.get(debut, None) != '' and request.form.get(
                     fin, None) != '':
@@ -397,8 +397,8 @@ def traitement_creation():
         else:
             # Erreur
             return render_template("error.html", message="Erreur - Veuillez renseigner au moins un horaire", **locals())
-    # Redirection si l'utilisateur n'est pas connecté
     else:
+        # Redirection si l'utilisateur n'est pas connecté
         return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
 
 
@@ -426,8 +426,8 @@ def enregistrement():
             # Erreur l'utilisateur n'est pas dans la même classe que le premier participant
             return redirect(
                 url_for("recherche", info_msg="Vous n'appartenez pas à la même classe que le premier participant"))
-    # Redirection si l'utilisateur n'est pas connecté
     else:
+        # Redirection si l'utilisateur n'est pas connecté
         return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
 
 
@@ -445,8 +445,8 @@ def quit_tutorat():
                 return redirect(url_for("profil", info_msg="Vous ne participez pas à ce Tutorat"))
         else:
             abort(403)
-    # Redirection si l'utilisateur n'est pas connecté
     else:
+        # Redirection si l'utilisateur n'est pas connecté
         return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
 
 
