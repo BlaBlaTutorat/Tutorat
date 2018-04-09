@@ -606,14 +606,18 @@ footer a:hover {
 /* END Search */
 
 /* Create */
+.crea_offre_bloc {
+    line-height: 20px;
+}
+
 .aide_creation {
-    margin-left: 81%;
-    margin-top: 20px;
+    margin: 10px 0 0 94.5%;
+    width: 18px;
+    height: 18px;
 }
 
 .info_crea .remarque {
     font-size: 0.7em;
-    margin: 0 0 0 0;
 }
 
 #time_start, #time_end {
@@ -671,15 +675,10 @@ footer a:hover {
 }
 
 .creation .horaire {
-    margin-right: 10px;
     display: flex;
-    justify-content: space-around;
-    margin-top: 3px;
     background: #18a3fa;
     border-radius: 15px;
     color: white;
-    max-width: 70%;
-    align-self: center;
 }
 
 #table_horaires_crea {
@@ -696,14 +695,13 @@ footer a:hover {
 }
 
 .crea_offre {
-    margin: 100px 0 0 0;
+    margin: 140px 0 0 0;
 }
 
 #horaires_crea {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-self: center;
+    width: 35%;
     margin-top: 40px;
 }
 
