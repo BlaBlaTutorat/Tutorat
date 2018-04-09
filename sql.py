@@ -203,8 +203,9 @@ class MysqlObject:
 
     # Listes des offres tri admin
     def offres_liste_tri_admin(self, user_search):
-        self.cursor.execute("""SELECT * FROM offres WHERE auteur = %s OR participant = %s OR participant2 = %s""",
-                            (user_search, user_search, user_search))
+        self.cursor.execute(
+            """SELECT * FROM offres WHERE auteur = %s OR participant = %s OR participant2 = %s AND disponible=1""",
+            (user_search, user_search, user_search))
         return self.cursor.fetchall()
 
     # Création d"une offre
@@ -218,8 +219,8 @@ class MysqlObject:
         for time in horaires:
             if time != 0:
                 self.cursor.execute(
-                    """UPDATE offres SET """ + horaires_reference[i] + """ = %s WHERE date_time = %s """,
-                    (time, date_time))
+                    """UPDATE offres SET """ + horaires_reference[i] + """ = %s WHERE date_time = %s AND auteur = %s""",
+                    (time, date_time, author))
             i += 1
         self.conn.commit()
 
@@ -353,6 +354,7 @@ class MysqlObject:
         for x in self.cursor.fetchall():
             n += 1
         return n
+
     # nombre de tutoré
     def stat_demandes(self):
         self.cursor.execute(""" SELECT * FROM demandes""")
@@ -360,14 +362,14 @@ class MysqlObject:
         for x in self.cursor.fetchall():
             d += 1
         return d
+
     # nombre d'offres :
     def stat_offres(self):
         self.cursor.execute("""SELECT * FROM offres""")
         o = 0
         for x in self.cursor.fetchall():
-          o += 1
+            o += 1
         return o
-
 
 
 # Retourne le nombre de places dispo

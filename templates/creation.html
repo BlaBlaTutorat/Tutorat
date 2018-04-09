@@ -4,9 +4,43 @@
 {% with name="Poster une offre" %}{% include "mise_en_page/HEAD.html" %}{% endwith %}
 
 <body>
+<style type="text/css" media="all">@import "/static/jquery.timepicker.min.css";</style>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/static/jquery.timepicker.min.js"></script>
+<script type="text/javascript" src="/static/jquery.datepair.min.js"></script>
+<!-- <link rel="stylesheet" type="text/css" href="/static/bootstrap-datepicker.css"/>
+<script type="text/javascript" src="/static/bootstrap-datepicker.js"></script> -->
+<script type="text/javascript">
+    jQuery(function () {
+        // Default.
+        $(".time.start").timepicker({
+            'timeFormat': 'H:i',
+            'forceRoundTime': true,
+            'minTime': '08:00',
+            'maxTime': '19:30',
+            'disableTextInput': true,
+            'noneOption': "Annuler"
+        });
+        $(".time.end").timepicker({
+            'timeFormat': 'H:i',
+            'forceRoundTime': true,
+            'minTime': '08:30',
+            'maxTime': '20:00',
+            'disableTextInput': true,
+            'showDuration': true,
+            'noneOption': "Annuler"
+        });
+
+        {% for i in range(0,6) %}
+            $("#day_{{ i }}").datepair({
+                'defaultTimeDelta': 1800000
+            });
+        {% endfor %}
+    });
+</script>
+
 
 {% include 'mise_en_page/HEADER.html' %}
-
 
 <h2 class="crea_title">Création d'une offre de Tutorat</h2>
 
@@ -32,11 +66,11 @@
                         {% endfor %}
                     </SELECT></p>
                 <input type="submit" class="crea_offre" value="Créer mon offre"/>
-            <!--- A mettre en petit en remarque --->
+                <!--- A mettre en petit en remarque --->
                 <p title="Si les deux sont dans la même classe.">Remarque : un tuteur peut aider deux personnes.</p>
                 <!---à mettre en bas à droite en dessous des horaires --->
-                <p>Besoin d'aide ?</p>
-            <a class="aide_creation" title="" <!---href="/aide_creation"---><img src="/static/help.png"></a>
+                <a class="aide_creation" title="Afficher l'aide" <!---href="/aide_creation"---><img
+                    src="/static/help.png"></a>
             </div>
             <!-- Horaires -->
             <div id="horaires_crea">
@@ -48,8 +82,11 @@
                     </div>
                     <div class="table_crea" id="table_horaires_crea">
                         {% for i in range(0,6) %}
-                            <p><input type="time" name="debut_j{{ i }}" step="1800" min="07:00" max="20:00"/><input
-                                    type="time" name="fin_j{{ i }}" step="1800" min="07:00" max="20:00"/></p>
+                            <p id="day_{{ i }}">
+                                <input type="text" name="debut_j{{ i }}" class="time start"/>
+                                à
+                                <input type="text" name="fin_j{{ i }}" class="time end"/>
+                            </p>
                         {% endfor %}
                     </div>
                 </div>

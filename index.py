@@ -20,11 +20,10 @@ def index():
     # STATS
     nbr_users = sql_obj.stat_nombre()
     offres = sql_obj.stat_offres()
-    #demandes = sql_obj.stat_demandes()
-    #demandes_satisfaites = (sql_obj.stat_demandes() / sql_obj.stat_offres()) * 100
+    # demandes = sql_obj.stat_demandes()
+    # demandes_satisfaites = (sql_obj.stat_demandes() / sql_obj.stat_offres()) * 100
 
     return render_template("accueil.html", **locals())
-
 
 
 # Page de connexion
@@ -368,13 +367,15 @@ def traitement_creation():
         user = sql_obj.get_user_info(mail)[0][0]
         horaires = []
         for i in range(0, 12, 2):
-            if request.form.get(sql.horaires_reference[i], None) != '' and request.form.get(
-                    sql.horaires_reference[i + 1],
-                    None) != '':
+            debut = sql.horaires_reference[i]
+            fin = sql.horaires_reference[i + 1]
+
+            if request.form.get(debut, None) != '' and request.form.get(
+                    fin, None) != '':
                 # L'élève a renseigné au moins un créneau horaire
                 process = True
-                horaires.append(request.form.get(sql.horaires_reference[i]))
-                horaires.append(request.form.get(sql.horaires_reference[i + 1]))
+                horaires.append(request.form.get(debut))
+                horaires.append(request.form.get(fin))
             else:
                 # Créneau horaire vide, on remplit avec des zéros
                 horaires.append(0)
@@ -549,6 +550,7 @@ def promote():
             abort(403)
     else:
         return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
+
 
 # deconnexion
 @app.route('/disconnect')
