@@ -25,8 +25,8 @@
                         <p>{{ infos[0] }}</p>
                         <!-- info modifiable -->
                         <p><input required type="email" name="mail" value="{{ infos[2] }}"></p>
-                        <p><input required type="password" name="mdp"></p>
-                        <p><input onpaste="return false" required type="password" name='mdp2'></p>
+                        <p><input type="password" name="mdp"></p>
+                        <p><input onpaste="return false" type="password" name='mdp2'></p>
                         <!-- Classe modifiable -->
                         <p><select class="tri4" required name="classe">
                             {% for classe in classes %}
