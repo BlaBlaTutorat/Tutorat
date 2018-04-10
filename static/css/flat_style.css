@@ -268,14 +268,15 @@ footer a:hover {
     align-self: center;
 }
 
-.square_title {
-    width: 100px;
-    height: 100px;
-    background: #161616;
+.square_title h2 {
+    margin: 0;
     color: white;
     font-size: 0.7em;
-    margin-right: 25px;
-    float: left;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 #bloc_page_home {
@@ -290,7 +291,7 @@ footer a:hover {
     justify-content: space-around;
 }
 
-.bloc_home div {
+.bloc_home .page_home {
     margin: 50px 50px 50px 50px;
     width: 50%;
     text-align: justify;
@@ -309,6 +310,14 @@ footer a:hover {
 .bloc_home a:hover {
     text-decoration: none;
     color: #afb1b3;
+}
+
+.square_title {
+    width: 100px;
+    height: 100px;
+    background: #18a3fa;
+    margin: 0 25px 0 0;
+    float: left;
 }
 /* END Home */
 
@@ -463,7 +472,7 @@ footer a:hover {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin: 300px auto auto;
+    margin: 15% 0 0 0;
 }
 
 .bloc_forgot textarea {
