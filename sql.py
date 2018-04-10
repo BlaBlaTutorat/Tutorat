@@ -4,8 +4,8 @@ import sys
 
 import mysql.connector
 
-from python_files import config
-from python_files import utils
+import config
+import utils
 
 offres_par_page = 4
 
