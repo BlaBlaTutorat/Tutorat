@@ -88,10 +88,9 @@
                         <input type="submit" class="crea_offre" value="Créer ma demande"/>
                     {% else %}
                         <input type="submit" class="crea_offre" value="Créer mon offre"/>
+                        <p class="remarque">
+                            <a title="Si elles sont dans la même classe">Remarque : un tuteur peut aider deux personnes</a></p>
                     {% endif %}
-                    <p class="remarque"> {% if not demande %}
-                        <a title="Si elles sont dans la même classe">Remarque : un tuteur peut aider deux personnes
-                            *</a>{% else %}{% endif %}</p>
                 </div>
             </div>
             <!-- Horaires -->
