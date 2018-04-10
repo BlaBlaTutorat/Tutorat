@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  ven. 06 avr. 2018 à 19:08
+-- Généré le :  mar. 10 avr. 2018 à 05:58
 -- Version du serveur :  5.7.19
 -- Version de PHP :  5.6.31
 
@@ -90,6 +90,36 @@ INSERT INTO `classes` (`NOM`) VALUES
 ('TS4'),
 ('TS5'),
 ('UPE2A');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `demandes`
+--
+
+DROP TABLE IF EXISTS `demandes`;
+CREATE TABLE IF NOT EXISTS `demandes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `auteur` varchar(50) NOT NULL,
+  `filiere` varchar(30) NOT NULL,
+  `matiere` varchar(30) NOT NULL,
+  `date_time` datetime NOT NULL,
+  `tuteur` varchar(50) DEFAULT NULL,
+  `disponible` tinyint(1) NOT NULL DEFAULT '0',
+  `debut_j0` time DEFAULT NULL,
+  `fin_j0` time DEFAULT NULL,
+  `debut_j1` time DEFAULT NULL,
+  `fin_j1` time DEFAULT NULL,
+  `debut_j2` time DEFAULT NULL,
+  `fin_j2` time DEFAULT NULL,
+  `debut_j3` time DEFAULT NULL,
+  `fin_j3` time DEFAULT NULL,
+  `debut_j4` time DEFAULT NULL,
+  `fin_j4` time DEFAULT NULL,
+  `debut_j5` time DEFAULT NULL,
+  `fin_j5` time DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -205,7 +235,7 @@ CREATE TABLE IF NOT EXISTS `offres` (
   `debut_j5` time DEFAULT NULL,
   `fin_j5` time DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `offres`

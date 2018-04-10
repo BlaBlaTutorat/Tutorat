@@ -21,8 +21,8 @@ def index():
     # STATS
     nbr_users = sql_obj.stat_nombre()
     offres = sql_obj.stat_offres()
-    # demandes = sql_obj.stat_demandes()
-    # demandes_satisfaites = (sql_obj.stat_demandes() / sql_obj.stat_offres()) * 100
+    demandes = sql_obj.stat_demandes()
+    demandes_satisfaites = int((sql_obj.stat_demandes() / sql_obj.stat_offres()) * 100)
 
     return render_template("accueil.html", **locals())
 
