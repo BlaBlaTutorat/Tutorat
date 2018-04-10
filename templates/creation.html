@@ -48,7 +48,7 @@
 
 <form method="post" action="/create">
     <h2 class="crea_title">Création d'une
-        <select name="categorie" onchange="this.form.submit()">
+        <select class="offre_demande" name="categorie" onchange="this.form.submit()">
             <option value="offre">offre</option>
             <option value="demande" {% if demande %}selected{% endif %}>demande</option>
         </select>

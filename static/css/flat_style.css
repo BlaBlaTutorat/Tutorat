@@ -612,6 +612,17 @@ footer a:hover {
 /* END Search */
 
 /* Create */
+.offre_demande {
+    font-size: 1em;
+    font-weight: bold;
+    font-family: "Gotham SSm A", sans-serif;
+    color: black;
+    border: none;
+    outline: none;
+    background: none;
+    min-width: 20%;
+}
+
 .crea_offre_bloc {
     line-height: 20px;
 }
@@ -712,7 +723,7 @@ footer a:hover {
 }
 
 .crea_title {
-    margin-top: 120px;
+    margin-top: 150px;
 }
 
 .form_crea {
