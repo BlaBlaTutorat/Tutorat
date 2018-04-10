@@ -152,7 +152,7 @@ def traitement_mdp_oublie():
             passwd = hashlib.sha256(str(passwd).encode('utf-8')).hexdigest()
 
             # Envoi du nouveau mot de passe à la base de donnée
-            sql_obj.modify_user_info_mdp(request.form['mail'], passwd))
+            sql_obj.modify_user_info_mdp(request.form['mail'], passwd)
 
 
             # Envoi de l'email
@@ -170,8 +170,7 @@ def traitement_mdp_oublie():
             # mailserver.sendmail('msg['From']', 'msg['From']', msg.as_string())
             # mailserver.quit()
             return redirect(
-                url_for('connexion', info_msg="Un nouveau mot de passe a été envoyé à " + request.form['mail'],
-                        info_msg="Veuillez le changer dès que vous serez connecté"))
+                url_for('connexion', info_msg="Un nouveau mot de passe a été envoyé à " + request.form['mail'] + "Veuillez le changer dès que vous serez connecté"))
 
         else:
             return redirect(url_for("sql.py", info_msg="Cette adresse e-mail ne correspond à aucun compte"))
