@@ -20,6 +20,19 @@
     </div>
 </div>
 
+{% if delete_account %}
+    <!-- Message supression -->
+    <div class="reset_msg">
+        <div class="header_reset">
+            <a href="/profile/view" class="quit_reset"></a>
+        </div>
+        <div class="reset_button">
+            <p>Êtes-vous sûr de vouloir suprimer votre compte ?</p>
+            <div class="button"><a href="/profile/delete" class="reset_bb">- Oui -</a></div>
+        </div>
+    </div>
+{% endif %}
+
 <div class="bloc_page_profil">
     <!-- Infos de l'utilisateur -->
     <div class="page_profil" id="info_profil">
@@ -40,7 +53,7 @@
                     <a href="/profile/update">
                         <button>Modifier</button>
                     </a>
-                    <a href="/profile/delete">
+                    <a href="/profile/view?delete=True">
                         <button>Supprimer</button>
                     </a>
                 </div>

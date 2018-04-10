@@ -141,6 +141,8 @@ def traitement_mdp_oublie():
 @app.route('/profile/view')
 def profil():
     sql_obj = sql.MysqlObject()
+    if request.args.get('delete'):
+        delete_account = request.args.get('delete')
     if check_connexion():
         mail = session['mail']
         admin_user = check_admin()
