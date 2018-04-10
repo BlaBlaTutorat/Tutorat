@@ -215,7 +215,16 @@ def profil_update():
             return render_template("profil/profil_update.html", infos=sql_obj.get_user_info(mail)[0], **locals())
         else:
             if request.form.get('classe') in classes:
-                sql_obj.modify_user_info(mail, request.form.get('classe'))
+                # Chiffrement du mdp
+                chaine_mot_de_passe = request.form.get('mdp')
+                mdp_confirm = request.form.get('mdp2')
+                mail2 = request.form.get('mail')
+                if chaine_mot_de_passe == mdp_confirm:
+                    mot_de_passe_chiffre = hashlib.sha256(str(chaine_mot_de_passe).encode('utf-8')).hexdigest()
+                    # Envoi des infos à la base de données
+                    sql_obj.modify_user_info_mdp(mail, mot_de_passe_chiffre)
+                    sql_obj.modify_user_info_mail(mail, mail2)
+                    sql_obj.modify_user_info(mail, request.form.get('classe'))
                 return redirect(url_for("profil", info_msg="Votre profil a bien été modifié."))
             else:
                 return render_template("error.html", message="Erreur - Veuillez vérifier les champs du formulaire",

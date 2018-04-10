@@ -328,9 +328,19 @@ class MysqlObject:
         self.cursor.execute("""UPDATE users SET classe = 'ADMIN' WHERE mail = %s""", (mail,))
         self.conn.commit()
 
-    # Modification du profil
+    # Modification du profil Classe
     def modify_user_info(self, mail, classe):
         self.cursor.execute("""UPDATE users SET classe = %s WHERE mail = %s """, (classe, mail))
+        self.conn.commit()
+
+    # Modification du profil mail
+    def modify_user_info_mail(self, mail, mail2):
+        self.cursor.execute("""UPDATE users SET mail = %s WHERE mail = %s """, (mail2, mail))
+        self.conn.commit()
+
+    # Modification du profil mdp
+    def modify_user_info_mdp(self, mail, mdp):
+        self.cursor.execute("""UPDATE users SET mdp = %s WHERE mail = %s """, (mdp, mail))
         self.conn.commit()
 
     # Création d'un compte
