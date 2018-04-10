@@ -472,7 +472,7 @@ footer a:hover {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin: 15% 0 0 0;
+    margin: 200px 0 0 0;
 }
 
 .bloc_forgot textarea {

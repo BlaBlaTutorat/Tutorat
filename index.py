@@ -6,9 +6,9 @@ from flask import *
 import sql
 import utils
 import random
-import smtplib
-from email.MIMEMultipart import MIMEMultipart
-from email.MIMEText import MIMEText
+#import smtplib
+#from email.MIMEMultipart import MIMEMultipart
+#from email.MIMEText import MIMEText
 
 app = Flask(__name__)
 days = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
