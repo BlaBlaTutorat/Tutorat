@@ -84,8 +84,14 @@
                         {% endfor %}
                     </SELECT></p>
                 <div class="crea_offre_bloc">
-                    <input type="submit" class="crea_offre" value="Créer mon offre"/>
-                    <p class="remarque"> {% if not demande %}<a title="Si elles sont dans la même classe">Remarque : un tuteur peut aider deux personnes *</a>{% else %}{% endif %}</p>
+                    {% if demande %}
+                        <input type="submit" class="crea_offre" value="Créer ma demande"/>
+                    {% else %}
+                        <input type="submit" class="crea_offre" value="Créer mon offre"/>
+                    {% endif %}
+                    <p class="remarque"> {% if not demande %}
+                        <a title="Si elles sont dans la même classe">Remarque : un tuteur peut aider deux personnes
+                            *</a>{% else %}{% endif %}</p>
                 </div>
             </div>
             <!-- Horaires -->
