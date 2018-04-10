@@ -861,8 +861,19 @@ footer a:hover {
 /* END Profil */
 
 /* MAJ-Profil */
-.change_profile {
-    margin-top: 20px;
+.boutton_u_profile {
+    display: flex;
+    justify-content: center;
+}
+
+.retour {
+    margin: 20px 5px 0 5px;
+    height: 20px;
+    min-width: 10px;
+}
+
+.change_profil {
+    text-align: center;
 }
 
 .majprofil {
