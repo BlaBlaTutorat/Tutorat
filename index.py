@@ -366,38 +366,72 @@ def traitement_creation():
         mail = session['mail']
         admin_user = check_admin()
         user = sql_obj.get_user_info(mail)[0][0]
-        horaires = []
-        for i in range(0, 12, 2):
-            debut = utils.get_horaire(i)
-            fin = utils.get_horaire(i + 1)
 
-            if request.form.get(debut, None) != '' and request.form.get(
-                    fin, None) != '':
-                # L'élève a renseigné au moins un créneau horaire
-                process = True
-                horaires.append(request.form.get(debut))
-                horaires.append(request.form.get(fin))
+        if len(request.form) == 1:
+            # Changement offre/demande
+            if request.form['categorie'] == "demande":
+                # On definit la catégorie sur demande
+                demande = True
+                classe = sql_obj.get_user_info(mail)[0][3]
+                return render_template("creation.html", filieres=sql_obj.filieres_liste(),
+                                       matieres=sql_obj.matieres_liste(),
+                                       days=days, **locals())
             else:
-                # Créneau horaire vide, on remplit avec des zéros
-                horaires.append(0)
-                horaires.append(0)
-        if process:
-            # Création
-            filieres = sql_obj.filieres_liste()
-            matieres = sql_obj.matieres_liste()
-            if request.form.get("filiere") in filieres and request.form.get("matiere") in matieres:
-                sql_obj.create_offre(mail, request.form.get('filiere'),
-                                     request.form.get('matiere'),
-                                     horaires)
-                return redirect(url_for(
-                    "recherche",
-                    info_msg="Votre offre a bien été créée. Elle est actuellement en attente de validation."))
-            else:
-                return render_template("error.html", message="Erreur - Veuillez vérifier les champs du formulaire",
-                                       **locals())
+                # Sinon on charge la template de base
+                return render_template("creation.html", filieres=sql_obj.filieres_liste(),
+                                       matieres=sql_obj.matieres_liste(),
+                                       days=days, **locals())
         else:
-            # Erreur
-            return render_template("error.html", message="Erreur - Veuillez renseigner au moins un horaire", **locals())
+            # Suite du formulaire de création
+            horaires = []
+            for i in range(0, 12, 2):
+                debut = utils.get_horaire(i)
+                fin = utils.get_horaire(i + 1)
+
+                if request.form.get(debut, None) != '' and request.form.get(
+                        fin, None) != '':
+                    # L'élève a renseigné au moins un créneau horaire
+                    process = True
+                    horaires.append(request.form.get(debut))
+                    horaires.append(request.form.get(fin))
+                else:
+                    # Créneau horaire vide, on remplit avec des zéros
+                    horaires.append(0)
+                    horaires.append(0)
+            if process:
+                # Création
+                filieres = sql_obj.filieres_liste()
+                matieres = sql_obj.matieres_liste()
+                if request.form.get("filiere"):
+                    # OFFRE
+                    if request.form.get("filiere") in filieres and request.form.get("matiere") in matieres:
+                        sql_obj.create_offre(mail, request.form.get('filiere'),
+                                             request.form.get('matiere'),
+                                             horaires)
+                        return redirect(url_for("recherche",
+                                                info_msg="Votre offre a bien été créée. Elle est actuellement"
+                                                         " en attente de validation."))
+                    else:
+                        return render_template("error.html",
+                                               message="Erreur - Veuillez vérifier les champs du formulaire",
+                                               **locals())
+                else:
+                    # DEMANDE
+                    if request.form.get("matiere") in matieres:
+                        sql_obj.create_demande(mail, request.form.get('classe'),
+                                               request.form.get('matiere'),
+                                               horaires)
+                        return redirect(url_for("recherche",
+                                                info_msg="Votre demande a bien été créée. Elle est actuellement"
+                                                         " en attente de validation."))
+                    else:
+                        return render_template("error.html",
+                                               message="Erreur - Veuillez vérifier les champs du formulaire",
+                                               **locals())
+            else:
+                # Erreur
+                return render_template("error.html", message="Erreur - Veuillez renseigner au moins un horaire",
+                                       **locals())
     else:
         # Redirection si l'utilisateur n'est pas connecté
         return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))

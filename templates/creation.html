@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html>
 
-{% with name="Poster une offre" %}{% include "mise_en_page/HEAD.html" %}{% endwith %}
+{% if demande %}
+    {% with name="Poster une demande" %}{% include "mise_en_page/HEAD.html" %}{% endwith %}
+{% else %}
+    {% with name="Poster une offre" %}{% include "mise_en_page/HEAD.html" %}{% endwith %}
+{% endif %}
 
 <!-- Horaires -->
 <style type="text/css" media="all">@import "/static/css/jquery.timepicker.min.css";</style>
@@ -42,23 +46,37 @@
 
 {% include 'mise_en_page/HEADER.html' %}
 
-<h2 class="crea_title">Création d'une offre de Tutorat</h2>
+<form method="post" action="/create">
+    <h2 class="crea_title">Création d'une
+        <select name="categorie" onchange="this.form.submit()">
+            <option value="offre">offre</option>
+            <option value="demande" {% if demande %}selected{% endif %}>demande</option>
+        </select>
+        de Tutorat
+    </h2>
+</form>
 
 <!-- Formulaire de création -->
 <form method="post" action="/create" class="form_crea">
     <div class="creation">
         <div class="bloc">
             <div class="info_crea">
-                <!-- Elève -->
-                <p class="element"><strong class="G">Vous voulez aider un élève de : </strong>
-                    <SELECT name="filiere" class="tri3" required>
-                        <option value="" disabled selected>- Filiere -</option>
-                        {% for filiere in filieres %}
-                            <option>{{ filiere }}</option>
-                        {% endfor %}
-                    </SELECT>
-                    <!-- Matière -->
-                <p class="element"><strong class="G">Vous souhaitez l'aider en : </strong>
+                {% if demande %}
+                    <p class="element"><strong class="G">Vous êtes en :</strong> {{ classe }}</p>
+                    <input type="hidden" name="classe" value="{{ classe }}"/>
+                {% else %}
+                    <!-- Filière -->
+                    <p class="element"><strong class="G">Vous voulez aider un élève de : </strong>
+                        <SELECT name="filiere" class="tri3" required>
+                            <option value="" disabled selected>- Filiere -</option>
+                            {% for filiere in filieres %}
+                                <option>{{ filiere }}</option>
+                            {% endfor %}
+                        </SELECT></p>
+                {% endif %}
+                <!-- Matière -->
+                <p class="element"><strong class="G">Vous souhaitez {% if demande %}être aidé{% else %}
+                    l'aider{% endif %} en : </strong>
                     <SELECT name="matiere" class="tri3" required>
                         <option value="" disabled selected>- Matiere -</option>
                         {% for matiere in matieres %}
@@ -67,7 +85,6 @@
                     </SELECT></p>
                 <div class="crea_offre_bloc">
                     <input type="submit" class="crea_offre" value="Créer mon offre"/>
-                    <!--- A mettre en petit en remarque --->
                     <p class="remarque">Remarque : un tuteur peut aider deux personnes.</p>
                 </div>
             </div>
@@ -89,7 +106,8 @@
                         {% endfor %}
                     </div>
                 </div>
-                <a class="aide_creation" title="Afficher l'aide" <!---href="/aide_creation"---><img src="/static/img/help.png"></a>
+                <a class="aide_creation" title="Afficher l'aide" <!---href="/aide_creation"---><img
+                    src="/static/img/help.png"></a>
             </div>
         </div>
     </div>

@@ -101,7 +101,7 @@ DROP TABLE IF EXISTS `demandes`;
 CREATE TABLE IF NOT EXISTS `demandes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `auteur` varchar(50) NOT NULL,
-  `filiere` varchar(30) NOT NULL,
+  `classe` varchar(30) NOT NULL,
   `matiere` varchar(30) NOT NULL,
   `date_time` datetime NOT NULL,
   `tuteur` varchar(50) DEFAULT NULL,
