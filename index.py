@@ -3,8 +3,8 @@ import hashlib
 
 from flask import *
 
-from python_files import sql
-from python_files import utils
+import sql
+import utils
 
 app = Flask(__name__)
 days = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
@@ -108,10 +108,9 @@ def traitement_inscription():
                     # Envoi des infos à la base de données
                     sql_obj.create_compte(nom, mot_de_passe_chiffre, request.form.get('mail'),
                                           request.form.get('classe'))
-                    return redirect(url_for("profil",
-                                            info_msg="Votre compte a bien été créé,"
-                                                     "vous pouvez dès à présent accéder à votre profil"
-                                                     " et au service d'offre/demande de Tutorat."))
+                    return redirect(url_for("connexion",
+                                            info_msg="Votre compte a bien été créé, "
+                                                     "vous pouvez dès à présent vous connecter"))
                 else:
                     return render_template("authentification/inscription.html",
                                            info_msg='Les mots de passe ne correspondent pas.', **locals())
