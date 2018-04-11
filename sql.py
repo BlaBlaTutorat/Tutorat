@@ -395,8 +395,14 @@ class MysqlObject:
         for time in horaires:
             if time != 0:
                 self.cursor.execute(
-                    """UPDATE offres SET """ + utils.get_horaire(
+                    """UPDATE demandes SET """ + utils.get_horaire(
                         i) + """ = %s WHERE date_time = %s AND auteur = %s""",
                     (time, date_time, author))
             i += 1
         self.conn.commit()
+
+    def demandes_liste(self, page):
+        self.cursor.execute(
+            """SELECT * FROM demandes WHERE disponible=1 AND tuteur IS NULL LIMIT """ +
+            str(offres_par_page) + """ OFFSET """ + str(page * offres_par_page))
+        return self.cursor.fetchall()

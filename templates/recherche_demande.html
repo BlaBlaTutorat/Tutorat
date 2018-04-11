@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+{% with name="Liste des offres" %}{% include "mise_en_page/HEAD.html" %}{% endwith %}
+
+<body oncontextmenu="return false">
+
+{% include 'mise_en_page/HEADER.html' %}
+
+<!-- Critères de recherche -->
+<form class="search" method="post" action="/search">
+    <div class="critere">
+
+        <a class="button" id="reset_filter" onclick="window.location.href=window.location.pathname">Réinitialiser les
+            filtres</a>
+
+        <!-- Rechargement de la page lors du changement de catégorie -->
+        <select class="tri" name="categorie" onchange="this.form.submit()">
+            <option value="offre">Offre</option>
+            <option value="demande" selected>Demande</option>
+        </select>
+
+
+    </div>
+
+    <!-- Gestion des pages-->
+    <div class="pages">
+        <p>
+            <input type="hidden" name="page" value="{{ page }}">
+            {% if page>0 %}<input type="submit" name="precedent" value="Page précédente">
+            {% else %}<input type="submit" name="suivant" value="Page suivante">{% endif %}
+            <strong class="G">{{ page + 1 }}</strong>
+            <input type="submit" name="suivant" value="Page suivante">
+        </p>
+    </div>
+</form>
+
+
+<!-- Liste des offres -->
+<div class="offres">
+    {% if demandes|length>0 %}
+        {% for demande in demandes %}
+            <br/>
+            <div class="bloc">
+                <div class="info">
+                    <p class="element"><strong class="G">Auteur:</strong> <a
+                            onclick="window.open('/profile/view/{{ demande[1] }}','profil','height=625,width=700')"
+                            title="Voir le profil">{{ sql_obj.get_user_pseudo(demande[1]) }}</a></p>
+                    <p class="element"><strong class="G">En classe de:</strong> {{ demande[2] }}</p>
+                    <p class="element"><strong class="G">Matière:</strong> {{ demande[3] }}</p>
+                </div>
+                <div id="horaires">
+                    <div class="horaire">
+                        <div class="table">
+                            {% for i in range(0,12,2) %}{% if demande[7+i] is not none and demande[8+i] is not none %}
+                                <p>{{ days[i//2] }}:</p>{% endif %}{% endfor %}
+                        </div>
+                        <div class="table" id="table_horaires">
+                            {% for i in range(0,12,2) %}{% if demande[7+i] is not none and demande[8+i] is not none %}
+                                <p>{{ 'h'.join((demande[7+i]|string).split(':')[:2]) }}
+                                    - {{ 'h'.join((demande[8+i]|string).split(':')[:2]) }}</p>{% endif %}{% endfor %}
+                        </div>
+                    </div>
+                    <form class="bouton" method="post" action="/apply">
+                        <input type="hidden" name="id" value="{{ demande[0] }}"/>
+                        <input type="submit" value="Se proposer comme tuteur"/>
+                    </form>
+                </div>
+            </div>
+            <br/>
+        {% endfor %}
+    {% else %}
+        <div class="search_none">
+            <div class="bloc" id="none_offre">
+                <p class="none_offre">Aucune demande n'a été trouvée</p>
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+{% include 'mise_en_page/FOOTER.html' %}
+
+</body>
+</html>

@@ -1,14 +1,15 @@
 # coding: utf-8
 import hashlib
+import random
 
 from flask import *
 
 import sql
 import utils
-import random
-#import smtplib
-#from email.MIMEMultipart import MIMEMultipart
-#from email.MIMEText import MIMEText
+
+# import smtplib
+# from email.MIMEMultipart import MIMEMultipart
+# from email.MIMEText import MIMEText
 
 app = Flask(__name__)
 days = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
@@ -138,7 +139,6 @@ def mdp_oublie():
 # Traitement Mot de passe oublié
 @app.route('/forgot', methods=['POST'])
 def traitement_mdp_oublie():
-
     sql_obj = sql.MysqlObject()
     if not check_connexion():
         if sql_obj.mail_in_bdd(request.form['mail']):
@@ -153,7 +153,6 @@ def traitement_mdp_oublie():
 
             # Envoi du nouveau mot de passe à la base de donnée
             sql_obj.modify_user_info_mdp(request.form['mail'], passwd)
-
 
             # Envoi de l'email
             # msg = MIMEMultipart()
@@ -170,7 +169,8 @@ def traitement_mdp_oublie():
             # mailserver.sendmail('msg['From']', 'msg['From']', msg.as_string())
             # mailserver.quit()
             return redirect(
-                url_for('connexion', info_msg="Un nouveau mot de passe a été envoyé à " + request.form['mail'] + "Veuillez le changer dès que vous serez connecté"))
+                url_for('connexion', info_msg="Un nouveau mot de passe a été envoyé à " + request.form[
+                    'mail'] + "Veuillez le changer dès que vous serez connecté"))
 
         else:
             return redirect(url_for("sql.py", info_msg="Cette adresse e-mail ne correspond à aucun compte"))
@@ -258,7 +258,7 @@ def profil_update():
         else:
             if request.form.get('classe') in classes:
                 # Chiffrement du mdp
-                if request.form.get('mdp')!='' and request.form.get('mdp2')!='':
+                if request.form.get('mdp') != '' and request.form.get('mdp2') != '':
                     chaine_mot_de_passe = request.form.get('mdp')
                     mdp_confirm = request.form.get('mdp2')
                     if chaine_mot_de_passe == mdp_confirm:
@@ -374,20 +374,33 @@ def recherche():
         # Variables locales utilisées dans les templates
         matieres = sql_obj.matieres_liste()
         filieres = sql_obj.filieres_liste()
-        if request.form.get("option") and not request.form.get("option2"):
-            # Formulaire de tri première étape
-            option = request.form.get("option")
-            return render_template("recherche.html", offres=sql_obj.offres_liste_tri(option, page, mail), days=days,
-                                   **locals())
-        elif request.form.get("option") and request.form.get("option2"):
-            # Formulaire de tri deuxième étape
-            option = request.form.get("option")
-            option2 = request.form.get("option2")
-            return render_template("recherche.html", offres=sql_obj.offres_liste_tri_2(option, option2, page, mail),
-                                   days=days, **locals())
-        else:
+
+        if request.form.get("categorie") == "demande":
+            # PARTIE DEMANDE
+
             # Aucune option de tri sélectionnée
-            return render_template("recherche.html", offres=sql_obj.offres_liste(page, mail), days=days, **locals())
+            return render_template("recherche_demande.html", demandes=sql_obj.demandes_liste(page), days=days, **locals())
+
+        else:
+            # PARTIE OFFRE
+
+            if request.form.get("option") and not request.form.get("option2"):
+                # Formulaire de tri première étape
+                option = request.form.get("option")
+                return render_template("recherche_offre.html", offres=sql_obj.offres_liste_tri(option, page, mail),
+                                       days=days,
+                                       **locals())
+            elif request.form.get("option") and request.form.get("option2"):
+                # Formulaire de tri deuxième étape
+                option = request.form.get("option")
+                option2 = request.form.get("option2")
+                return render_template("recherche_offre.html",
+                                       offres=sql_obj.offres_liste_tri_2(option, option2, page, mail),
+                                       days=days, **locals())
+            else:
+                # Aucune option de tri sélectionnée
+                return render_template("recherche_offre.html", offres=sql_obj.offres_liste(page, mail), days=days,
+                                       **locals())
 
     else:
         # Redirection si l'utilisateur n'est pas connecté
