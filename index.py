@@ -379,7 +379,8 @@ def recherche():
             # PARTIE DEMANDE
 
             # Aucune option de tri sélectionnée
-            return render_template("recherche_demande.html", demandes=sql_obj.demandes_liste(page), days=days, **locals())
+            return render_template("recherche_demande.html", demandes=sql_obj.demandes_liste(page), days=days,
+                                   **locals())
 
         else:
             # PARTIE OFFRE
@@ -509,7 +510,12 @@ def enregistrement():
     sql_obj = sql.MysqlObject()
     if check_connexion():
         mail = session['mail']
-        result_code = sql_obj.add_participant(request.form.get("id"), mail)
+
+        if request.form.get("categorie") == "demande":
+            result_code = sql_obj.add_tuteur(request.form.get("id"), mail)
+        else:
+            result_code = sql_obj.add_participant(request.form.get("id"), mail)
+
         if result_code == 0:
             # Pas d'erreur
             return redirect(

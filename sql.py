@@ -232,7 +232,6 @@ class MysqlObject:
     def add_participant(self, offre_id, participant):
         self.cursor.execute("""SELECT * FROM offres WHERE id=%s""", (offre_id,))
         offre = self.cursor.fetchall()[0]
-        # Vérification auteur != participant
         if offre[1] != participant:
             if utils.check_availability(offre) == 2:
                 # Update de la première colonne
@@ -258,6 +257,7 @@ class MysqlObject:
                 # Erreur l'offre est pleine
                 return 2
         else:
+            # auteur == tuteur
             return 3
 
     # Suppression d'un participant à une offre
@@ -303,19 +303,6 @@ class MysqlObject:
     """
         REQUETES DIVERSES SUR LA BDD
     """
-
-    # SET CSS
-    def set_css(self, mail):
-        self.cursor.execute("""UPDATE users SET css = NOT css WHERE mail = %s""", (mail,))
-        self.conn.commit()
-
-    # GET CSS
-    def get_css(self, mail):
-        self.cursor.execute("""SELECT css FROM users WHERE mail = %s""", (mail,))
-        if self.cursor.fetchall()[0][0] == 1:
-            return True
-        else:
-            return False
 
     # Ban
     def ban(self, mail):
@@ -401,8 +388,26 @@ class MysqlObject:
             i += 1
         self.conn.commit()
 
+    # Liste demandes sans tri
     def demandes_liste(self, page):
         self.cursor.execute(
             """SELECT * FROM demandes WHERE disponible=1 AND tuteur IS NULL LIMIT """ +
             str(offres_par_page) + """ OFFSET """ + str(page * offres_par_page))
         return self.cursor.fetchall()
+
+    # Ajout tuteur à une demande
+    def add_tuteur(self, demande_id, mail):
+        self.cursor.execute("""SELECT * FROM demandes WHERE id=%s""", (demande_id,))
+        demande = self.cursor.fetchall()[0]
+        if demande[1] != mail:
+            if demande[5] is None:
+                # Update de la première colonne
+                self.cursor.execute("""UPDATE demandes SET tuteur = %s WHERE id = %s """, (mail, demande_id))
+                self.conn.commit()
+                return 0
+            else:
+                # Erreur l'offre est pleine
+                return 2
+        else:
+            # auteur == tuteur
+            return 3
