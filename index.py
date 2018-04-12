@@ -7,10 +7,10 @@ from flask import *
 import sql
 import utils
 
-# import config
-# import smtplib
-# from email.mime.multipart import MIMEMultipart
-# from email.mime.text import MIMEText
+import config
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 app = Flask(__name__)
 days = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
@@ -156,21 +156,21 @@ def traitement_mdp_oublie():
             sql_obj.modify_user_info_mdp(request.form['mail'], passwd_hash)
 
             # Envoi de l'email
-            # msg = MIMEMultipart()
-            # msg['From'] = config.email
-            # msg['To'] = request.form['mail']
-            # msg['Subject'] = 'BlaBla-Tutorat/Nouveau mot de passe'
-            # message = 'Bonjour,\n Nous avons généré pour vous un nouveau mot de passe temporaire: '\
-            #          + passwd + '\n Veuillez le changer dès que vous vous connecterez à BlaBla-Tutorat.\n' \
-            #                     'Bonne journée.\nL\'équipe de BlaBla-Tutorat.\n\n\nCet e-mail a été généré' \
-            #                     ' automatiquement, merci de ne pas y répondre.' \
-            #                     ' Pour toute question, veuillez vous adresser aux documentalistes.'
-            # msg.attach(MIMEText(message))
-            # mailserver = smtplib.SMTP(config.smtp, config.smtp_port)
-            # mailserver.starttls()
-            # mailserver.login(msg['From'], config.email_password)
-            # mailserver.sendmail(msg['From'], msg['To'], msg.as_string())
-            # mailserver.quit()
+            #msg = MIMEMultipart()
+            #msg['From'] = config.email
+            #msg['To'] = request.form['mail']
+            #msg['Subject'] = 'BlaBla-Tutorat -- Nouveau mot de passe'
+            #message = 'Bonjour,\nNous avons généré pour vous un nouveau mot de passe : '\
+            #        + passwd + '\nVeuillez le changer dès que vous vous connecterez à BlaBla-Tutorat.\n' \
+            #        'L\'équipe de BlaBla-Tutorat vous souhaite une bonne journée.\n\n\n\n\nCet e-mail a été généré' \
+            #        ' automatiquement, merci de ne pas y répondre.' \
+            #        ' Pour toute question, veuillez vous adresser aux documentalistes.'
+            #msg.attach(MIMEText(message))
+            #mailserver = smtplib.SMTP(config.smtp, config.smtp_port)
+            #mailserver.starttls()
+            #mailserver.login(config.email, config.email_password)
+            #mailserver.sendmail(msg['From'], msg['To'], msg.as_string())
+            #mailserver.quit()
             return redirect(
                 url_for('connexion', info_msg="Un nouveau mot de passe vous a été envoyé."))
 
