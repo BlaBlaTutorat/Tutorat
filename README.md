@@ -26,6 +26,16 @@
     - Participant
     - Participant2
     - Créneaux horaires
+    
+- Demandes:
+    - Id (PRIMARY)
+    - Matière
+    - Auteur
+    - Classe
+    - Date de création
+    - Disponible (boolean)
+    - Tuteur
+    - Créneaux horaires
 
 - Matières:
     - LIBELLE (PRONOTE)
