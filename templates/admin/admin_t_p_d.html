@@ -1,40 +1,39 @@
 <!DOCTYPE html>
 <html>
 
-{% with name="Liste des offres" %}{% include "mise_en_page/HEAD.html" %}{% endwith %}
+{% with name="Administration" %}{% include "mise_en_page/HEAD.html" %}{% endwith %}
 
 <body oncontextmenu="return false">
 
 {% include 'mise_en_page/HEADER.html' %}
 
-<!-- Critères de recherche -->
-<form class="search" method="post" action="/search">
-    <div class="critere">
 
-        <a class="button" id="reset_filter" onclick="window.location.href=window.location.pathname">Réinitialiser les
-            filtres</a>
-
-        <!-- Rechargement de la page lors du changement de catégorie -->
-        <select class="tri" name="categorie" onchange="this.form.submit()">
-            <option value="offre">Offre</option>
-            <option value="demande" selected>Demande</option>
-        </select>
-
-
+<div class="header">
+    <div>
+        <div id="header_icon"></div>
+        <nav>
+            <ul>
+                <li><a href="/admin/tutorials/validate">A valider</a></li>
+                <li><a href="/admin/tutorials/progress">En cours</a></li>
+                <li><a href="/admin/users">Utilisateurs</a></li>
+            </ul>
+        </nav>
+        <div id="header_icon" class="icon">
+            <a href="/admin/tutorials/validate?reset_msg=True" class="admin" title="Réinitialiser le site"><img src="/static/img/reset.png"></a>
+        </div>
     </div>
+</div>
 
-    <!-- Gestion des pages-->
-    <div class="pages">
-        <p>
-            <input type="hidden" name="page" value="{{ page }}">
-            {% if page>0 %}<input type="submit" name="precedent" value="Page précédente">
-            {% else %}<input type="submit" name="suivant" value="Page suivante">{% endif %}
-            <strong class="G">{{ page + 1 }}</strong>
-            <input type="submit" name="suivant" value="Page suivante">
-        </p>
-    </div>
+
+<form method="post" class="user_search">
+    <h2>Rechercher un utilisateur</h2>
+    <input name="user_search" class="user_search_admin"/>
 </form>
 
+<aside>
+    <button><a href="/admin/tutorials/progress">Offres</a></button>
+    <button><a href="/admin/tutorials/progress/demandes">Demandes</a></button>
+</aside>
 
 <!-- Liste des offres -->
 <div class="offres">
@@ -61,11 +60,9 @@
                                     - {{ 'h'.join((demande[8+i]|string).split(':')[:2]) }}</p>{% endif %}{% endfor %}
                         </div>
                     </div>
-                    <form class="bouton" method="post" action="/apply">
-                        <input type="hidden" name="categorie" value="demande"/>
-                        <input type="hidden" name="id" value="{{ demande[0] }}"/>
-                        <input type="submit" value="Se proposer comme tuteur"/>
-                    </form>
+                    <a href="/delete4?id={{ demande[0] }}">
+                        <button>Supprimer</button>
+                    </a>
                 </div>
             </div>
             <br/>

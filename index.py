@@ -206,6 +206,7 @@ def profil_2():
         mail = session['mail']
         admin_user = check_admin()
         user = sql_obj.get_user_info(mail)[0][0]
+        demandes = sql_obj.get_user_demandes(mail)
         if request.args.get('info_msg'):
             info_msg = request.args.get('info_msg')
         return render_template("profil/profil_t_p.html", offres_creees=sql_obj.get_user_offres(mail),
@@ -312,6 +313,38 @@ def admin_oc():
         return redirect(url_for("connexion", info_msg='Connectez vous avant de continuer.'))
 
 
+# Page d'Administration demandes en courts
+@app.route('/admin/tutorials/progress/demandes', methods=['GET', 'POST'])
+def admin_oc2():
+    sql_obj = sql.MysqlObject()
+    if check_connexion():
+        mail = session['mail']
+        admin_user = check_admin()
+        user = sql_obj.get_user_info(mail)[0][0]
+        if admin_user:
+            if request.args.get('info_msg'):
+                info_msg = request.args.get('info_msg')
+            if request.form.get("user_search"):
+                user_search = request.form.get("user_search")
+                user_search = sql_obj.get_user_info_pseudo(user_search)
+                if len(user_search) == 1:
+                    # Un utilisateur a été trouvée
+                    return render_template("admin/admin_t_p_d.html",
+                                           demandes=sql_obj.demandes_liste_tri_admin(user_search[0][2]),
+                                           days=days, **locals())
+                else:
+                    # Pas d'utilisateur trouvé donc liste vide
+                    return render_template("admin/admin_t_p_d.html", demandes=[], days=days,
+                                           **locals())
+            else:
+                return render_template("admin/admin_t_p_d.html", demandes=sql_obj.demandes_liste_validees(),
+                                       days=days, **locals())
+        else:
+            abort(403)
+    else:
+        return redirect(url_for("connexion", info_msg='Connectez vous avant de continuer.'))
+
+
 # Page d'Administration offres à valider
 @app.route('/admin/tutorials/validate')
 def admin_ov():
@@ -325,7 +358,7 @@ def admin_ov():
                 info_msg = request.args.get('info_msg')
             if request.args.get('reset_msg'):
                 reset_msg = request.args.get('reset_msg')
-            return render_template("admin/admin_t_v.html", offres_V=sql_obj.offres_liste_valider(), days=days,
+            return render_template("admin/admin_t_v.html", offres_V=sql_obj.offres_liste_valider(), demandes_V=sql_obj.demandes_liste_valider(), days=days,
                                    **locals())
         else:
             abort(403)
@@ -347,10 +380,11 @@ def admin_u():
             if request.form.get("user_search"):
                 user_search = request.form.get("user_search")
                 return render_template("admin/admin_u.html", user_list=sql_obj.get_user_info_pseudo(user_search),
-                                       tutorats_actifs=sql_obj.offres_liste_validees(), days=days, **locals())
+                                       tutorats_actifs=sql_obj.offres_liste_validees(),
+                                       demandes=sql_obj.demandes_liste_validees(), days=days, **locals())
             else:
                 return render_template("admin/admin_u.html", user_list=sql_obj.liste_user(),
-                                       tutorats_actifs=sql_obj.offres_liste_validees(), days=days, **locals())
+                                       tutorats_actifs=sql_obj.offres_liste_validees(), demandes=sql_obj.demandes_liste_validees(), days=days, **locals())
         else:
             abort(403)
     else:
@@ -584,6 +618,31 @@ def delete():
         return redirect(url_for("connexion", info_msg='Connectez-vous avant de continuer.'))
 
 
+# Suppression d'une demande
+@app.route('/delete3')
+def delete3():
+    if check_connexion():
+        mail = session['mail']
+        if request.args.get('id'):
+            sql_obj = sql.MysqlObject()
+            demande_id = request.args.get('id')
+            demande = sql_obj.get_offre(demande_id)
+            # Vérification qu'une seule demande avec cet id existe
+            if len(demande) == 1:
+                # Vérification que l'auteur est celui qui demande la suppression
+                if mail == demande[0][1]:
+                    sql_obj.delete_demande(demande_id)
+                    return redirect(url_for("profil", info_msg="Votre demande a bien été supprimée."))
+                else:
+                    abort(403)
+            else:
+                abort(403)
+        else:
+            abort(403)
+    else:
+        return redirect(url_for("connexion", info_msg='Connectez-vous avant de continuer.'))
+
+
 # Suppression d'une offre (admin)
 @app.route('/delete2')
 def delete2():
@@ -602,6 +661,24 @@ def delete2():
     else:
         return redirect(url_for("connexion", info_msg='Connectez-vous avant de continuer.'))
 
+
+# Suppression d'une demande (admin)
+@app.route('/delete4')
+def delete4():
+    if check_connexion():
+        admin_user = check_admin()
+        if admin_user:
+            if request.args.get('id'):
+                demande_id = request.args.get('id')
+                sql_obj = sql.MysqlObject()
+                sql_obj.delete_demande(demande_id)
+                return redirect(url_for("admin_oc", info_msg="La suppression a bien été effectuée."))
+            else:
+                abort(403)
+        else:
+            abort(403)
+    else:
+        return redirect(url_for("connexion", info_msg='Connectez-vous avant de continuer.'))
 
 # Validation d'une offre (admin)
 @app.route('/validate')
@@ -622,6 +699,25 @@ def validate():
     else:
         return redirect(url_for("connexion", info_msg='Connectez-vous avant de continuer.'))
 
+
+# Validation d'une demande (admin)
+@app.route('/validate2')
+def validate2():
+    if check_connexion():
+        admin_user = check_admin()
+        if admin_user:
+            if request.args.get('id'):
+                disponible = 1
+                demande_id = request.args.get('id')
+                sql_obj = sql.MysqlObject()
+                sql_obj.validate_demande(demande_id, disponible)
+                return redirect(url_for("admin_ov", info_msg="La demande a bien été validée."))
+            else:
+                abort(403)
+        else:
+            abort(403)
+    else:
+        return redirect(url_for("connexion", info_msg='Connectez-vous avant de continuer.'))
 
 # Ban (admin)
 @app.route('/ban')

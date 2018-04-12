@@ -30,9 +30,14 @@
     <input name="user_search" class="user_search_admin"/>
 </form>
 
+<aside>
+    <button><a href="/admin/tutorials/progress">Offres</a></button>
+    <button><a href="/admin/tutorials/progress/demandes">Demandes</a></button>
+</aside>
+
 <!-- Liste des offres -->
 <div class="offres" id="tutorat_en_cours">
-    <h2>Tutorats en cours</h2>
+    <h2>Offres en cours</h2>
     {% if tutorats_actifs|length>0 %}
         {% for tutorat in tutorats_actifs %}
             <br/>
@@ -77,7 +82,7 @@
                         </div>
                     </div>
                     <a href="/delete2?id={{ tutorat[0] }}">
-                        <button>Supprimer ce tutorat</button>
+                        <button>Supprimer</button>
                     </a>
                 </div>
             </div>
@@ -85,7 +90,7 @@
         {% endfor %}
     {% else %}
         <div class="bloc" id="none_offre">
-            <p class="none_offre">Aucun tutorat n'a été trouvé</p>
+            <p class="none_offre">Aucune offre n'a été trouvé</p>
         </div>
     {% endif %}
 </div>

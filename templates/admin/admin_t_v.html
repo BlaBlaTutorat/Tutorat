@@ -41,7 +41,7 @@
 
 <!-- Liste des offres -->
 <div class="offres" id="tutorat_en_cours">
-    <h2 class="page_admin_title">Tutorats à valider</h2>
+    <h2 class="page_admin_title">Offre(s) à valider</h2>
     {% if offres_V|length>0 %}
         {% for offre in offres_V %}
             <br/>
@@ -84,6 +84,50 @@
     {% else %}
         <div class="bloc" id="none_offre">
             <p class="none_offre">Aucune offre n'a été trouvée</p>
+        </div>
+    {% endif %}
+</div>
+
+<div class="offres">
+    <h2>demande(s) à valider</h2>
+    {% if demandes_V|length>0 %}
+        {% for demande in demandes_V %}
+            <br/>
+            <div class="bloc">
+                <div class="info">
+                    <p class="element"><strong class="G">Auteur :</strong>
+                        <a onclick="open_profile_page('{{ demande[1] }}')" title="Voir le profil">{{ sql_obj.get_user_pseudo(demande[1]) }}</a>
+                    </p>
+                    <p class="element"><strong class="G">En classe de :</strong> {{ demande[2] }}</p>
+                    <p class="element"><strong class="G">Matière :</strong> {{ demande[3] }}</p>
+                </div>
+                <div id="horaires">
+                    <div class="horaire">
+                        <div class="table">
+                            {% for i in range(0,12,2) %}{% if demande[7+i] is not none and demande[8+i] is not none %}
+                                <p>{{ days[i//2] }}:</p>{% endif %}{% endfor %}
+                        </div>
+                        <div class="table" id="table_horaires">
+                            {% for i in range(0,12,2) %}{% if demande[7+i] is not none and demande[8+i] is not none %}
+                                <p>{{ 'h'.join((demande[7+i]|string).split(':')[:2]) }}
+                                    - {{ 'h'.join((demande[8+i]|string).split(':')[:2]) }}</p>{% endif %}{% endfor %}
+                        </div>
+                    </div>
+                    <a href="/delete4?id={{ demande[0] }}">
+                        <button>Supprimer la demande</button>
+                    </a>
+                    <a href="/validate2?id={{ demande[0] }}">
+                        <button>Valider la demande</button>
+                    </a>
+                </div>
+            </div>
+            <br/>
+        {% endfor %}
+    {% else %}
+        <div class="search_none">
+            <div class="bloc" id="none_offre">
+                <p class="none_offre">Aucune demande n'a été trouvée</p>
+            </div>
         </div>
     {% endif %}
 </div>

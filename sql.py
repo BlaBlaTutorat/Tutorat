@@ -371,6 +371,11 @@ class MysqlObject:
             d += 1
         return d
 
+    # Suppression d'une demande
+    def delete_demande(self, demande_id):
+        self.cursor.execute("""DELETE FROM demandes WHERE id = %s""", (demande_id,))
+        self.conn.commit()
+
     # Création d'une demande
     def create_demande(self, author, classe, matiere, horaires):
         date_time = datetime.datetime.now()
@@ -393,6 +398,34 @@ class MysqlObject:
         self.cursor.execute(
             """SELECT * FROM demandes WHERE disponible=1 AND tuteur IS NULL LIMIT """ +
             str(offres_par_page) + """ OFFSET """ + str(page * offres_par_page))
+        return self.cursor.fetchall()
+
+    # Liste demandes utilisateur
+    def get_user_demandes(self, mail):
+        self.cursor.execute(
+            """SELECT * FROM demandes WHERE auteur=%s""", (mail,))
+        return self.cursor.fetchall()
+
+    # Listes des demandes à valider
+    def demandes_liste_valider(self):
+        self.cursor.execute("""SELECT * FROM demandes WHERE disponible=0""")
+        return self.cursor.fetchall()
+
+    # Listes des demandes validées
+    def demandes_liste_validees(self):
+        self.cursor.execute("""SELECT * FROM demandes WHERE disponible=1""")
+        return self.cursor.fetchall()
+
+    # Validation d'une demande
+    def validate_demande(self, demande_id, disponible):
+        self.cursor.execute("""UPDATE demandes SET disponible = %s WHERE id = %s""", (disponible, demande_id))
+        self.conn.commit()
+
+    # Listes des offres tri admin
+    def demandes_liste_tri_admin(self, user_search):
+        self.cursor.execute(
+            """SELECT * FROM demandes WHERE auteur = %s OR tuteur = %s AND disponible=1""",
+            (user_search, user_search))
         return self.cursor.fetchall()
 
     # Ajout tuteur à une demande
