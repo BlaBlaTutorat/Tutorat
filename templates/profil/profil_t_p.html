@@ -224,7 +224,7 @@
                 {% endif %}
             {% endfor %}
         {% endif %}
-        {% if demandes|length<0 and offres_suivies|length<0 %}
+        {% if demandes|length==0 and offres_suivies|length==0 %}
             <div class="bloc" id="none_offre">
                 <p class="none_offre">Vous ne participez à aucun Tutorat</p>
                 <p class="none_offre"><a href="/search">
