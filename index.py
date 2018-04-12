@@ -7,9 +7,10 @@ from flask import *
 import sql
 import utils
 
+# import config
 # import smtplib
-# from email.MIMEMultipart import MIMEMultipart
-# from email.MIMEText import MIMEText
+# from email.mime.multipart import MIMEMultipart
+# from email.mime.text import MIMEText
 
 app = Flask(__name__)
 days = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
@@ -145,32 +146,33 @@ def traitement_mdp_oublie():
             # Génération nouveau mot de passe
             element = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-*/~$%&.:?!"
             passwd = ""
-            for i in range(24):
-                passwd = passwd + element[random.randint(0, 7)]
+            for i in range(12):
+                passwd = passwd + element[random.randint(0, 73)]
 
             # Chiffrage du nouveau mot de passe
-            passwd = hashlib.sha256(str(passwd).encode('utf-8')).hexdigest()
+            passwd_hash = hashlib.sha256(str(passwd).encode('utf-8')).hexdigest()
 
             # Envoi du nouveau mot de passe à la base de donnée
-            sql_obj.modify_user_info_mdp(request.form['mail'], passwd)
+            sql_obj.modify_user_info_mdp(request.form['mail'], passwd_hash)
 
             # Envoi de l'email
             # msg = MIMEMultipart()
-            # msg['From'] = 'notre_adresse@gmail.com'
+            # msg['From'] = config.email
             # msg['To'] = request.form['mail']
             # msg['Subject'] = 'BlaBla-Tutorat/Nouveau mot de passe'
-            # message = 'Bonjour,\n Nous avons généré pour vous un nouveau mot de passe temporaire.\n Veuillez le changer dès que vous vous connecterez à BlaBla-Tutorat.\Bonne journée.\L'équipe de BlaBla-Tutorat.\n\n Cet e-mail a été généré automatiquement, merci de ne pas y répondre. Pour toute question, veuillez vous adresser aux documentalistes.'
+            # message = 'Bonjour,\n Nous avons généré pour vous un nouveau mot de passe temporaire: '\
+            #          + passwd + '\n Veuillez le changer dès que vous vous connecterez à BlaBla-Tutorat.\n' \
+            #                     'Bonne journée.\nL\'équipe de BlaBla-Tutorat.\n\n\nCet e-mail a été généré' \
+            #                     ' automatiquement, merci de ne pas y répondre.' \
+            #                     ' Pour toute question, veuillez vous adresser aux documentalistes.'
             # msg.attach(MIMEText(message))
-            # mailserver = smtplib.SMTP('smtp.gmail.com', 587)
-            # mailserver.ehlo()
+            # mailserver = smtplib.SMTP(config.smtp, config.smtp_port)
             # mailserver.starttls()
-            # mailserver.ehlo()
-            # mailserver.login('msg['From'], 'PASSWORD')
-            # mailserver.sendmail('msg['From']', 'msg['From']', msg.as_string())
+            # mailserver.login(msg['From'], config.email_password)
+            # mailserver.sendmail(msg['From'], msg['To'], msg.as_string())
             # mailserver.quit()
             return redirect(
-                url_for('connexion', info_msg="Un nouveau mot de passe a été envoyé à " + request.form[
-                    'mail'] + "Veuillez le changer dès que vous serez connecté"))
+                url_for('connexion', info_msg="Un nouveau mot de passe vous a été envoyé."))
 
         else:
             return redirect(url_for("sql.py", info_msg="Cette adresse e-mail ne correspond à aucun compte"))
