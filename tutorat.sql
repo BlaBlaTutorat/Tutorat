@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  mar. 10 avr. 2018 à 05:58
+-- Généré le :  jeu. 12 avr. 2018 à 08:00
 -- Version du serveur :  5.7.19
 -- Version de PHP :  5.6.31
 
@@ -119,7 +119,15 @@ CREATE TABLE IF NOT EXISTS `demandes` (
   `debut_j5` time DEFAULT NULL,
   `fin_j5` time DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `demandes`
+--
+
+INSERT INTO `demandes` (`id`, `auteur`, `classe`, `matiere`, `date_time`, `tuteur`, `disponible`, `debut_j0`, `fin_j0`, `debut_j1`, `fin_j1`, `debut_j2`, `fin_j2`, `debut_j3`, `fin_j3`, `debut_j4`, `fin_j4`, `debut_j5`, `fin_j5`) VALUES
+(1, 'antoinelabarussias@orange.fr', 'TS5', 'LATIN', '2018-04-12 09:59:06', NULL, 1, NULL, NULL, '14:00:00', '14:30:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, 'taotom63@gmail.com', 'TS5', 'PHILOSOPHIE', '2018-04-12 10:00:09', NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '08:00:00', '09:00:00');
 
 -- --------------------------------------------------------
 
