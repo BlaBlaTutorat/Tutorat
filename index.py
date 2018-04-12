@@ -207,23 +207,23 @@ def profil_2():
         if request.args.get('info_msg'):
             info_msg = request.args.get('info_msg')
         return render_template("profil/profil_t_p.html", offres_creees=sql_obj.get_user_offres(mail),
-                               tutorats_actifs=sql_obj.get_user_tutorats(mail), days=days, **locals())
+                               offres_suivies=sql_obj.get_user_offres_suivies(mail), days=days, **locals())
     else:
         # Redirection si l'utilisateur n'est pas connecté
         return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
 
 
-# Page de supression Profil
+# Page de suppression Profil
 @app.route('/profile/delete')
 def profil_3():
     sql_obj = sql.MysqlObject()
     if check_connexion():
         mail = session['mail']
         sql_obj.delete_account(mail)
-        liste = sql_obj.get_user_tutorats(mail)
+        liste = sql_obj.get_user_offres_suivies(mail)
         for x in liste:
             sql_obj.delete_participant(x[0], mail)
-        return redirect(url_for('connexion', info_msg="Votre compte a bien été supprimé. Au revoir."))
+        return redirect(url_for('connexion', info_msg="Votre compte a bien été supprimé."))
     else:
         # Redirection si l'utilisateur n'est pas connecté
         return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
@@ -251,9 +251,9 @@ def profil_update():
     if check_connexion():
         mail = session['mail']
         admin_user = check_admin()
-        user = sql_obj.get_user_info(mail)[0][0]
         classes = sql_obj.classes_liste()
         if len(request.form) == 0:
+            # Pas de formulaire envoyé, on charge la page normalement
             return render_template("profil/profil_update.html", infos=sql_obj.get_user_info(mail)[0], **locals())
         else:
             if request.form.get('classe') in classes:

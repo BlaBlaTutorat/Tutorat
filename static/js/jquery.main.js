@@ -11,3 +11,8 @@ $(document).keydown(function (event) {
 $(document).on("contextmenu", function (e) {
     e.preventDefault();
 });
+
+// Fonction pour ouvrir page de profil
+function open_profile_page(mail){
+    window.open('/profile/view/' + mail,'profil','height=625,width=700')
+}

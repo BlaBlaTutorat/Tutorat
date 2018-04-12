@@ -124,11 +124,11 @@ class MysqlObject:
     """
 
     # Recherche des offres auxquelles participe l'utilisateur
-    def get_user_tutorats(self, mail):
+    def get_user_offres_suivies(self, mail):
         self.cursor.execute("""SELECT * FROM offres WHERE participant=%s OR participant2=%s""", (mail, mail))
         return self.cursor.fetchall()
 
-    # Récupération des offres propres à un utilisateur
+    # Récupération des offres créées par un utilisateur
     def get_user_offres(self, mail):
         self.cursor.execute("""SELECT * FROM offres WHERE auteur=%s""", (mail,))
         return self.cursor.fetchall()
