@@ -3,7 +3,7 @@
 
 {% with name=infos[0] %}{% include "mise_en_page/HEAD.html" %}{% endwith %}
 
-<body oncontextmenu="return false">
+<body>
 
 {% include 'mise_en_page/HEADER.html' %}
 
@@ -18,8 +18,11 @@
                     <p><strong class="G">Classe:</strong></p>
                 </div>
                 <div class="info_profil" id="informations2">
+                    <!-- Nom -->
                     <p>{{ infos[0] }}</p>
+                    <!-- Mail -->
                     <p><a href="mailto:{{ infos[2] }}">{{ infos[2] }}</a></p>
+                    <!-- Classe -->
                     <p>{{ infos[3] }}</p>
                 </div>
             </div>
