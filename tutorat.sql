@@ -139,7 +139,7 @@ DROP TABLE IF EXISTS `filieres`;
 CREATE TABLE IF NOT EXISTS `filieres` (
   `nom` varchar(50) NOT NULL,
   PRIMARY KEY (`nom`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `filieres`

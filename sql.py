@@ -338,7 +338,7 @@ class MysqlObject:
 
     # Reset
     def reset(self):
-        self.cursor.execute("""DELETE FROM `users` WHERE `admin` != 1""")
+        self.cursor.execute("""DELETE FROM `users` WHERE classe != 'ADMIN'""")
         self.cursor.execute("""DELETE FROM `offres`""")
         self.conn.commit()
 
