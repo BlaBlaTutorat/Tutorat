@@ -7,11 +7,6 @@ from flask import *
 import sql
 import utils
 
-import config
-import smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-
 app = Flask(__name__)
 days = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
 
@@ -134,6 +129,8 @@ def traitement_inscription():
 # Mot de passe oublié
 @app.route('/forgot', methods=['GET'])
 def mdp_oublie():
+    if request.args.get('info_msg'):
+        info_msg = request.args.get('info_msg')
     return render_template("authentification/mdp_oublie.html", **locals())
 
 
@@ -175,7 +172,7 @@ def traitement_mdp_oublie():
             #    url_for('connexion', info_msg="Un nouveau mot de passe vous a été envoyé."))
 
         else:
-            return redirect(url_for("sql.py", info_msg="Cette adresse e-mail ne correspond à aucun compte"))
+            return redirect(url_for("mdp_oublie", info_msg="Cette adresse e-mail ne correspond à aucun compte"))
     else:
         return redirect(url_for("recherche"))
 
