@@ -249,6 +249,8 @@ def profil_4(mail):
 def profil_update():
     sql_obj = sql.MysqlObject()
     if check_connexion():
+        if request.args.get('info_msg'):
+            info_msg = request.args.get('info_msg')
         mail = session['mail']
         admin_user = check_admin()
         classes = sql_obj.classes_liste()
@@ -258,16 +260,24 @@ def profil_update():
         else:
             if request.form.get('classe') in classes:
                 # Chiffrement du mdp
-                if request.form.get('mdp') != '' and request.form.get('mdp2') != '':
-                    chaine_mot_de_passe = request.form.get('mdp')
-                    mdp_confirm = request.form.get('mdp2')
-                    if chaine_mot_de_passe == mdp_confirm:
-                        mot_de_passe_chiffre = hashlib.sha256(str(chaine_mot_de_passe).encode('utf-8')).hexdigest()
-                        # Envoi des infos à la base de données
-                        sql_obj.modify_user_info_mdp(mail, mot_de_passe_chiffre)
-                mail2 = request.form.get('mail')
+                if request.form.get('mdp1') != '':
+                    A_mdp = hashlib.sha256(str(request.form.get('mdp1')).encode('utf-8')).hexdigest()
+                    if A_mdp != sql_obj.get_user_info(mail)[0][1]:
+                        return redirect(url_for("profil_update",
+                                                info_msg="Votre mot de passe n'a pas pu être modifié. Veuillez vérifier votre ancien mot de passe."))
+                    else:
+                        if request.form.get('mdp') == '' and request.form.get('mdp2') == '':
+                            return redirect(url_for("profil_update",
+                                                    info_msg="Votre mot de passe n'a pas pu être modifié. Vous n'avez pas rentré de nouveau mot de passe."))
+                        elif request.form.get('mdp') != request.form.get('mdp2'):
+                            return redirect(url_for("profil_update",
+                                                    info_msg="Votre mot de passe n'a pas pu être modifié. le nouveau mot de passe n'a pas été correctement confirmé."))
+                        else:
+                            chaine_mot_de_passe = request.form.get('mdp')
+                            mot_de_passe_chiffre = hashlib.sha256(str(chaine_mot_de_passe).encode('utf-8')).hexdigest()
+                            # Envoi des infos à la base de données
+                            sql_obj.modify_user_info_mdp(mail, mot_de_passe_chiffre)
                 # Envoi des infos à la base de données
-                sql_obj.modify_user_info_mail(mail, mail2)
                 sql_obj.modify_user_info(mail, request.form.get('classe'))
                 return redirect(url_for("profil", info_msg="Votre profil a bien été modifié."))
             else:
