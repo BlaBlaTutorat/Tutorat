@@ -160,7 +160,7 @@ def traitement_mdp_oublie():
             #msg['From'] = config.email
             #msg['To'] = request.form['mail']
             #msg['Subject'] = 'BlaBla-Tutorat -- Nouveau mot de passe'
-            #message = 'Bonjour,\nNous avons généré pour vous un nouveau mot de passe : '\
+            #message = 'Bonjour,\n\nNous avons généré pour vous un nouveau mot de passe : '\
             #        + passwd + '\nVeuillez le changer dès que vous vous connecterez à BlaBla-Tutorat.\n' \
             #        'L\'équipe de BlaBla-Tutorat vous souhaite une bonne journée.\n\n\n\n\nCet e-mail a été généré' \
             #        ' automatiquement, merci de ne pas y répondre.' \
@@ -171,8 +171,8 @@ def traitement_mdp_oublie():
             #mailserver.login(config.email, config.email_password)
             #mailserver.sendmail(msg['From'], msg['To'], msg.as_string())
             #mailserver.quit()
-            return redirect(
-                url_for('connexion', info_msg="Un nouveau mot de passe vous a été envoyé."))
+            #return redirect(
+            #    url_for('connexion', info_msg="Un nouveau mot de passe vous a été envoyé."))
 
         else:
             return redirect(url_for("sql.py", info_msg="Cette adresse e-mail ne correspond à aucun compte"))
