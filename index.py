@@ -260,23 +260,21 @@ def profil_update():
         else:
             if request.form.get('classe') in classes:
                 # Chiffrement du mdp
-                if request.form.get('mdp1') != '':
-                    A_mdp = hashlib.sha256(str(request.form.get('mdp1')).encode('utf-8')).hexdigest()
-                    if A_mdp != sql_obj.get_user_info(mail)[0][1]:
+                if request.form.get('mdp1') != '' and request.form.get('mdp') == '' and request.form.get('mdp2') == '':
+                    a_mdp = hashlib.sha256(str(request.form.get('mdp')).encode('utf-8')).hexdigest()
+                    if a_mdp != sql_obj.get_user_info(mail)[0][1]:
                         return redirect(url_for("profil_update",
                                                 info_msg="Votre mot de passe n'a pas pu être modifié. Veuillez vérifier votre ancien mot de passe."))
                     else:
-                        if request.form.get('mdp') == '' and request.form.get('mdp2') == '':
+                        if request.form.get('mdp1') != request.form.get('mdp2'):
                             return redirect(url_for("profil_update",
-                                                    info_msg="Votre mot de passe n'a pas pu être modifié. Vous n'avez pas rentré de nouveau mot de passe."))
-                        elif request.form.get('mdp') != request.form.get('mdp2'):
-                            return redirect(url_for("profil_update",
-                                                    info_msg="Votre mot de passe n'a pas pu être modifié. le nouveau mot de passe n'a pas été correctement confirmé."))
+                                                    info_msg="Votre mot de passe n'a pas pu être modifié. Les mots de passe ne sont pas indentiques.."))
                         else:
-                            chaine_mot_de_passe = request.form.get('mdp')
+                            chaine_mot_de_passe = request.form.get('mdp1')
                             mot_de_passe_chiffre = hashlib.sha256(str(chaine_mot_de_passe).encode('utf-8')).hexdigest()
                             # Envoi des infos à la base de données
                             sql_obj.modify_user_info_mdp(mail, mot_de_passe_chiffre)
+
                 # Envoi des infos à la base de données
                 sql_obj.modify_user_info(mail, request.form.get('classe'))
                 return redirect(url_for("profil", info_msg="Votre profil a bien été modifié."))
