@@ -117,6 +117,10 @@ aside button {
     width: 50%;
     margin: 5px 0 5px 0;
 }
+
+.date_creation {
+    font-size: 0.7em;
+}
 /* END Commun */
 
 /* HEADER */

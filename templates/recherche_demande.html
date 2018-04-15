@@ -43,7 +43,6 @@
             <br/>
             <div class="bloc">
                 <div class="info">
-                    <p>Demande créée le {{ demande[4].strftime('%d/%m/%Y') }}</p>
                     <p class="element"><strong class="G">Auteur :</strong>
                         <a onclick="open_profile_page('{{ demande[1] }}')" title="Voir le profil">{{ sql_obj.get_user_pseudo(demande[1]) }}</a>
                     </p>
@@ -51,6 +50,7 @@
                     <p class="element"><strong class="G">Matière:</strong> {{ demande[3] }}</p>
                 </div>
                 <div id="horaires">
+                    <p class="date_creation">Créée le {{ demande[4].strftime('%d/%m/%Y') }}</p>
                     <div class="horaire">
                         <div class="table">
                             {% for i in range(0,12,2) %}{% if demande[7+i] is not none and demande[8+i] is not none %}
