@@ -97,7 +97,7 @@ aside {
     right: 10px;
     background: white;
     box-shadow: 3px 3px 5px #888888;
-    width: 10%;
+    width: 15%;
     min-height: 10px;
     border-radius: 25px;
     display: flex;
@@ -107,7 +107,7 @@ aside {
 }
 
 aside a, aside a:hover, aside a:visited, aside a:link {
-    width: 65%;
+    width: 80%;
     color: white;
     font-family: "Gotham SSm A", sans-serif;
     text-decoration: none;
