@@ -1,9 +1,13 @@
 # coding: utf-8
 import hashlib
 import random
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 from flask import *
 
+import config
 import sql
 import utils
 
@@ -131,7 +135,12 @@ def traitement_inscription():
 def mdp_oublie():
     if request.args.get('info_msg'):
         info_msg = request.args.get('info_msg')
-    return render_template("authentification/mdp_oublie.html", **locals())
+
+    # Vérification configuration complète
+    if config.email != "" and config.email_password != "":
+        return render_template("authentification/mdp_oublie.html", **locals())
+    else:
+        return redirect(url_for('connexion', info_msg="Veuillez vous adresser directement aux documentalistes."))
 
 
 # Traitement Mot de passe oublié
@@ -153,23 +162,23 @@ def traitement_mdp_oublie():
             sql_obj.modify_user_info_mdp(request.form['mail'], passwd_hash)
 
             # Envoi de l'email
-            # msg = MIMEMultipart()
-            # msg['From'] = config.email
-            # msg['To'] = request.form['mail']
-            # msg['Subject'] = 'BlaBla-Tutorat -- Nouveau mot de passe'
-            # message = 'Bonjour,\n\nNous avons généré pour vous un nouveau mot de passe : '\
-            #        + passwd + '\nVeuillez le changer dès que vous vous connecterez à BlaBla-Tutorat.\n' \
-            #        'L\'équipe de BlaBla-Tutorat vous souhaite une bonne journée.\n\n\n\n\nCet e-mail a été généré' \
-            #        ' automatiquement, merci de ne pas y répondre.' \
-            #        ' Pour toute question, veuillez vous adresser aux documentalistes.'
-            # msg.attach(MIMEText(message))
-            # mailserver = smtplib.SMTP(config.smtp, config.smtp_port)
-            # mailserver.starttls()
-            # mailserver.login(config.email, config.email_password)
-            # mailserver.sendmail(msg['From'], msg['To'], msg.as_string())
-            # mailserver.quit()
-            # return redirect(
-            #    url_for('connexion', info_msg="Un nouveau mot de passe vous a été envoyé."))
+            msg = MIMEMultipart()
+            msg['From'] = config.email
+            msg['To'] = request.form['mail']
+            msg['Subject'] = 'BlaBla-Tutorat -- Nouveau mot de passe'
+            message = 'Bonjour,\n\nNous avons généré pour vous un nouveau mot de passe : ' \
+                      + passwd + '\nVeuillez le changer dès que vous vous connecterez à BlaBla-Tutorat.\n' \
+                                 'L\'équipe de BlaBla-Tutorat vous souhaite une bonne journée.\n\n\n\n\n' \
+                                 'Cet e-mail a été généré automatiquement, merci de ne pas y répondre.' \
+                                 ' Pour toute question, veuillez vous adresser aux documentalistes.'
+            msg.attach(MIMEText(message))
+            mailserver = smtplib.SMTP(config.smtp, config.smtp_port)
+            mailserver.starttls()
+            mailserver.login(config.email, config.email_password)
+            mailserver.sendmail(msg['From'], msg['To'], msg.as_string())
+            mailserver.quit()
+            return redirect(
+                url_for('connexion', info_msg="Un nouveau mot de passe vous a été envoyé."))
 
         else:
             return redirect(url_for("mdp_oublie", info_msg="Cette adresse e-mail ne correspond à aucun compte"))
