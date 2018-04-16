@@ -269,7 +269,7 @@ def profil_update():
         else:
             if request.form.get('classe') in classes:
                 # Chiffrement du mdp
-                if request.form.get('mdp1') != '' and request.form.get('mdp') == '' and request.form.get('mdp2') == '':
+                if request.form.get('mdp') != '':
                     a_mdp = hashlib.sha256(str(request.form.get('mdp')).encode('utf-8')).hexdigest()
                     if a_mdp != sql_obj.get_user_info(mail)[0][1]:
                         return redirect(url_for("profil_update",
@@ -279,7 +279,10 @@ def profil_update():
                         if request.form.get('mdp1') != request.form.get('mdp2'):
                             return redirect(url_for("profil_update",
                                                     info_msg="Votre mot de passe n'a pas pu être modifié."
-                                                             " Les mots de passe ne sont pas indentiques.."))
+                                                             " Les mots de passe ne sont pas indentiques."))
+                        elif request.form.get('mdp1') == '' and request.form.get('mdp2') == '':
+                            return redirect(url_for("profil_update",
+                                                    info_msg="Vous n'avez pas rentré un nouveau mot de passe."))
                         else:
                             chaine_mot_de_passe = request.form.get('mdp1')
                             mot_de_passe_chiffre = hashlib.sha256(str(chaine_mot_de_passe).encode('utf-8')).hexdigest()
