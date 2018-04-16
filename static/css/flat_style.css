@@ -548,19 +548,13 @@ footer a:hover {
     justify-content: center;
 }
 
-.critere select {
-    width: 20%;
-    margin-right: 15px;
-    margin-left: 15px;
-}
-
 .tri {
-    width: 30%;
+    width: 20%;
     border-radius: 40px;
     background-color: white;
     align-self: center;
     height: 40px;
-    margin-top: 5px;
+    margin: 5px 15px 0 15px;
     border: 1px solid #18a3fa;
 }
 
