@@ -497,16 +497,10 @@ footer a:hover {
     justify-content: center;
     padding: 5px 10px 5px 10px;
     min-width: 700px;
+    margin-top: 10%;
 }
 
-.bloc_forgot {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin: 200px 0 0 0;
-}
-
-.bloc_forgot textarea {
+.forgot textarea {
     width: 40%;
     height: 30px;
     box-sizing: border-box;
@@ -515,7 +509,7 @@ footer a:hover {
     background-color: white;
 }
 
-.bloc_forgot button {
+.forgot button {
     margin-top: 0;
 }
 /* END Forgot */
