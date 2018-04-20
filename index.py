@@ -158,7 +158,7 @@ def traitement_mdp_oublie():
             # Chiffrage du nouveau mot de passe
             passwd_hash = hashlib.sha256(str(passwd).encode('utf-8')).hexdigest()
 
-            # Envoi du nouveau mot de passe à la base de donnée
+            # Envoi du nouveau mot de passe à la base de données
             sql_obj.modify_user_info_mdp(request.form['mail'], passwd_hash)
 
             # Envoi de l'email

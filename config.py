@@ -11,4 +11,4 @@ smtp = "smtp.gmail.com"
 smtp_port = 587
 email = "tutorat.blaisepascal@gmail.com"
 # A COMPLETER EN PROD
-email_password = "3cW2W9su"
+email_password = ""
