@@ -905,10 +905,13 @@ footer a:hover {
     margin: 20px 5px 0 5px;
     height: 20px;
     min-width: 10px;
+    text-align: center;
 }
 
-.change_profil {
-    text-align: center;
+.retour a, .retour a:hover, .retour a:visited, .retour a:link {
+    text-decoration: none;
+    color: white;
+    font-family: "Gotham SSm A", sans-serif;
 }
 
 .majprofil {
