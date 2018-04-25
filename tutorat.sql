@@ -130,6 +130,12 @@ INSERT INTO `demandes` (`id`, `auteur`, `classe`, `matiere`, `date_time`, `tuteu
 (2, 'taotom63@gmail.com', 'TS5', 'PHILOSOPHIE', '2018-04-12 10:00:09', NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '08:00:00', '09:00:00');
 
 -- --------------------------------------------------------
+
+--
+-- Structure de la table `filieres`
+--
+
+DROP TABLE IF EXISTS `filieres`;
 CREATE TABLE `filieres` (
   `nom` varchar(50) NOT NULL,
   `classement` int(11) NOT NULL
