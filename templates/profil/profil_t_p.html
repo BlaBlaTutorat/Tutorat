@@ -23,7 +23,7 @@
 <div class="bloc_page_profil">
     <!-- Liste des offres crées par l'utilisateur -->
     <div class="offres" id="tutorat_en_cours">
-        <h2>Vos tutorats créés</h2>
+        <h2>Vos offres créées</h2>
         {% if offres_creees|length>0 %}
             {% for offre in offres_creees %}
                 <br/>
@@ -76,7 +76,7 @@
             {% endfor %}
         {% else %}
             <div class="bloc" id="none_offre">
-                <p class="none_offre">Vous n'avez pas encore crée d'offre</p>
+                <p class="none_offre">Vous n'avez pas encore créé d'offre</p>
                 <p class="none_offre"><a href="/create">
                     <button>Créer une offre</button>
                 </a></p>
@@ -136,7 +136,7 @@
     </div>
     <div class="offres" id="tutorat_en_cours">
         <!-- Liste des offres auxquelles participe l'utilisateur -->
-        <h2>Les tutorats auxquels vous participez</h2>
+        <h2>Les offres auxquelles vous participez</h2>
         {% if offres_suivies|length>0 %}
             {% for offre in offres_suivies %}
                 <br/>
@@ -226,7 +226,7 @@
         {% endif %}
         {% if demandes|length==0 and offres_suivies|length==0 %}
             <div class="bloc" id="none_offre">
-                <p class="none_offre">Vous ne participez à aucun Tutorat</p>
+                <p class="none_offre">Vous ne participez à aucune offre</p>
                 <p class="none_offre"><a href="/search">
                     <button>Rechercher une offre</button>
                 </a></p>
