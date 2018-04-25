@@ -130,40 +130,34 @@ INSERT INTO `demandes` (`id`, `auteur`, `classe`, `matiere`, `date_time`, `tuteu
 (2, 'taotom63@gmail.com', 'TS5', 'PHILOSOPHIE', '2018-04-12 10:00:09', NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '08:00:00', '09:00:00');
 
 -- --------------------------------------------------------
-
---
--- Structure de la table `filieres`
---
-
-DROP TABLE IF EXISTS `filieres`;
-CREATE TABLE IF NOT EXISTS `filieres` (
+CREATE TABLE `filieres` (
   `nom` varchar(50) NOT NULL,
-  PRIMARY KEY (`nom`)
+  `classement` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
--- Déchargement des données de la table `filieres`
+-- Contenu de la table `filieres`
 --
 
-INSERT INTO `filieres` (`nom`) VALUES
-('CPGE ECE'),
-('CPGE ECS'),
-('CPGE HK'),
-('CPGE KH'),
-('CPGE MP'),
-('CPGE MP*'),
-('CPGE MPSI'),
-('CPGE PC'),
-('CPGE PC*'),
-('CPGE PCSI'),
-('CPGE PSI'),
-('Première ES'),
-('Première L'),
-('Première S'),
-('Seconde'),
-('Terminale ES'),
-('Terminale L'),
-('Terminale S');
+INSERT INTO `filieres` (`nom`, `classement`) VALUES
+('CPGE ECE', 3),
+('CPGE ECS', 3),
+('CPGE HK', 3),
+('CPGE KH', 4),
+('CPGE MP', 4),
+('CPGE MP*', 4),
+('CPGE MPSI', 3),
+('CPGE PC', 4),
+('CPGE PC*', 4),
+('CPGE PCSI', 3),
+('CPGE PSI', 4),
+('Première ES', 1),
+('Première L', 1),
+('Première S', 1),
+('Seconde', 0),
+('Terminale ES', 2),
+('Terminale L', 2),
+('Terminale S', 2);
 
 -- --------------------------------------------------------
 
