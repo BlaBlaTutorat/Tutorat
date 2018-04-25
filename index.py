@@ -18,6 +18,7 @@ days = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
 # Page d'accueil qui redirige vers la page de recherche ou page de login
 @app.route('/')
 def index():
+    """Page d'accueil qui redirige vers la page de recherche ou page de login"""
     sql_obj = sql.MysqlObject()
     if check_connexion():
         mail = session['mail']
@@ -35,6 +36,7 @@ def index():
 # Page de connexion
 @app.route('/login', methods=['GET'])
 def connexion():
+    """Page de connexion"""
     # Verif que l'utilisateur est connecté si connecté --> page de recherche sinon --> chargement template
     sql_obj = sql.MysqlObject()
     if check_connexion():
@@ -50,6 +52,7 @@ def connexion():
 # Page de connexion
 @app.route('/login', methods=['POST'])
 def traitement_connexion():
+    """Compare les données rentré par l'utilisateur à celles de la BDD et nous connect si les données correspondent"""
     # Traitement du formulaire envoyé par l'utilisteur depuis la page login
     sql_obj = sql.MysqlObject()
     if not check_connexion():
@@ -86,6 +89,7 @@ def traitement_connexion():
 # Page d'inscription
 @app.route('/register', methods=['GET'])
 def inscription():
+    """Page d'inscription"""
     sql_obj = sql.MysqlObject()
     if not check_connexion():
         if request.args.get('info_msg'):
@@ -98,6 +102,7 @@ def inscription():
 
 @app.route('/register', methods=['POST'])
 def traitement_inscription():
+    """Envoie les données rentré par l'utilisateur à la BDD pour l'inscrire"""
     sql_obj = sql.MysqlObject()
     classes = sql_obj.classes_liste()
     if not check_connexion():
@@ -133,6 +138,7 @@ def traitement_inscription():
 # Mot de passe oublié
 @app.route('/forgot', methods=['GET'])
 def mdp_oublie():
+    """Page de mot de passe oublié"""
     if request.args.get('info_msg'):
         info_msg = request.args.get('info_msg')
 
@@ -146,6 +152,7 @@ def mdp_oublie():
 # Traitement Mot de passe oublié
 @app.route('/forgot', methods=['POST'])
 def traitement_mdp_oublie():
+    """Créée un nouveau mot de passe aléatoirement et l'envoie par mail à l'utilisateur"""
     sql_obj = sql.MysqlObject()
     if not check_connexion():
         if sql_obj.mail_in_bdd(request.form['mail']):
@@ -189,6 +196,7 @@ def traitement_mdp_oublie():
 # Page de Profil info utilisateur
 @app.route('/profile/view')
 def profil():
+    """Page de de profil avec les information de l'utilisateur"""
     sql_obj = sql.MysqlObject()
     if request.args.get('delete'):
         delete_account = request.args.get('delete')
@@ -207,6 +215,7 @@ def profil():
 # Page de Profil
 @app.route('/profile/tutorials')
 def profil_2():
+    """Page de profil avec la liste des offres et des demandes créées par l'utilisateur"""
     sql_obj = sql.MysqlObject()
     if check_connexion():
         mail = session['mail']
@@ -225,6 +234,7 @@ def profil_2():
 # Page de suppression Profil
 @app.route('/profile/delete')
 def profil_3():
+    """Suprime le compte utilisateur de la BDD"""
     sql_obj = sql.MysqlObject()
     if check_connexion():
         mail = session['mail']
@@ -241,6 +251,7 @@ def profil_3():
 # Page de profil d'un utilisateur
 @app.route('/profile/view/<mail>')
 def profil_4(mail):
+    """Popup avec les information de l'utilisateur qui correspond au mail cliqué"""
     sql_obj = sql.MysqlObject()
     if check_connexion():
         if sql_obj.mail_in_bdd(mail):
@@ -256,6 +267,7 @@ def profil_4(mail):
 # Page de modification du profil
 @app.route('/profile/update', methods=['GET', 'POST'])
 def profil_update():
+    """Page de mise a jour de profil, récolte les information données par l'utilisateur et les envoie a la BDD"""
     sql_obj = sql.MysqlObject()
     if check_connexion():
         if request.args.get('info_msg'):
@@ -303,6 +315,7 @@ def profil_update():
 # Page d'Administration offres en courts
 @app.route('/admin/tutorials/progress', methods=['GET', 'POST'])
 def admin_oc():
+    """Page d'administration qui affiche les offres en cours"""
     sql_obj = sql.MysqlObject()
     if check_connexion():
         mail = session['mail']
@@ -335,6 +348,7 @@ def admin_oc():
 # Page d'Administration demandes en courts
 @app.route('/admin/tutorials/progress/demandes', methods=['GET', 'POST'])
 def admin_oc2():
+    """Page d'administration qui affiche les demandes en cours"""
     sql_obj = sql.MysqlObject()
     if check_connexion():
         mail = session['mail']
@@ -367,6 +381,7 @@ def admin_oc2():
 # Page d'Administration offres à valider
 @app.route('/admin/tutorials/validate')
 def admin_ov():
+    """Page d'administration qui affiche les offres et demandes à valider"""
     sql_obj = sql.MysqlObject()
     if check_connexion():
         mail = session['mail']
@@ -388,6 +403,7 @@ def admin_ov():
 # Page d'Administration profile utilisateur
 @app.route('/admin/users', methods=['GET', 'POST'])
 def admin_u():
+    """Page d'administration qui affiche la liste des utilisateur du site"""
     sql_obj = sql.MysqlObject()
     if check_connexion():
         mail = session['mail']
@@ -414,6 +430,7 @@ def admin_u():
 # Page de recherche d'offres
 @app.route('/search', methods=['GET', 'POST'])
 def recherche():
+    """Page de recherche"""
     sql_obj = sql.MysqlObject()
     if check_connexion():
         mail = session['mail']
@@ -467,6 +484,7 @@ def recherche():
 # Affichage du formulaire de création d'une offre
 @app.route('/create', methods=['GET'])
 def creation():
+    """Page de création"""
     sql_obj = sql.MysqlObject()
     if check_connexion():
         mail = session['mail']
@@ -482,6 +500,7 @@ def creation():
 # Traitement du formulaire + upload bdd
 @app.route('/create', methods=['POST'])
 def traitement_creation():
+    """Envoie les données rentrées par lutilisateur à la BDD"""
     # On ne traite pas la demande dans le doute ou l'élève n'a pas renseigné de créneau horaire
     process = False
     sql_obj = sql.MysqlObject()
@@ -563,6 +582,7 @@ def traitement_creation():
 # Page d'enregistrement (s'enregistrer en tant que participant)
 @app.route('/apply', methods=['POST'])
 def enregistrement():
+    """Enregistre l'utilisateur comme participant à ce tutorat"""
     sql_obj = sql.MysqlObject()
     if check_connexion():
         mail = session['mail']
@@ -597,6 +617,7 @@ def enregistrement():
 # Suppression de la participation d'un utilisateur à une offre
 @app.route('/quit')
 def quit_tutorat():
+    """Sert à quitter un tutorat"""
     sql_obj = sql.MysqlObject()
     if check_connexion():
         if request.args.get('id'):
@@ -616,6 +637,7 @@ def quit_tutorat():
 # Suppression d'une offre
 @app.route('/delete')
 def delete():
+    """Suprime une offre"""
     if check_connexion():
         mail = session['mail']
         if request.args.get('id'):
@@ -636,6 +658,7 @@ def delete():
 # Suppression d'une demande
 @app.route('/delete3')
 def delete3():
+    """Suprime une demande"""
     if check_connexion():
         mail = session['mail']
         if request.args.get('id'):
@@ -657,6 +680,7 @@ def delete3():
 # Suppression d'une offre (admin)
 @app.route('/delete2')
 def delete2():
+    """Suprime une offre (version admin)"""
     if check_connexion():
         admin_user = check_admin()
         if admin_user:
@@ -676,6 +700,7 @@ def delete2():
 # Suppression d'une demande (admin)
 @app.route('/delete4')
 def delete4():
+    """Suprime une demande (version admin)"""
     if check_connexion():
         admin_user = check_admin()
         if admin_user:
@@ -695,6 +720,7 @@ def delete4():
 # Validation d'une offre (admin)
 @app.route('/validate')
 def validate():
+    """Sert à valider une offre"""
     if check_connexion():
         admin_user = check_admin()
         if admin_user:
@@ -715,6 +741,7 @@ def validate():
 # Validation d'une demande (admin)
 @app.route('/validate2')
 def validate2():
+    """Sert à valider une demande"""
     if check_connexion():
         admin_user = check_admin()
         if admin_user:
@@ -735,6 +762,7 @@ def validate2():
 # Ban (admin)
 @app.route('/ban')
 def ban():
+    """Bannis un utilisateur"""
     if check_connexion():
         admin_user = check_admin()
         if admin_user:
@@ -754,6 +782,7 @@ def ban():
 # Promouvoir (admin)
 @app.route('/promote')
 def promote():
+    """Promouvois un utilisateur admin"""
     if check_connexion():
         admin_user = check_admin()
         if admin_user:
@@ -773,6 +802,7 @@ def promote():
 # Deconnexion
 @app.route('/disconnect')
 def deconnexion():
+    """sert à se déconnecter du site"""
     if check_connexion():
         session.pop('mail', None)
         return redirect(url_for("connexion", info_msg='Vous avez bien été déconnecté.'))
@@ -783,6 +813,7 @@ def deconnexion():
 # Remise à 0
 @app.route('/reset')
 def reset():
+    """Remet a 0 le site"""
     sql_obj = sql.MysqlObject()
     if check_connexion():
         mail = session['mail']
@@ -800,23 +831,27 @@ def reset():
 # Gestion de l'erreur 404
 @app.errorhandler(404)
 def not_found(error):
+    """Affiche la page erreur 404"""
     return render_template("error.html", message="Erreur 404 - Ressource non trouvée", **locals())
 
 
 # Gestion de l'erreur 403
 @app.errorhandler(403)
 def forbidden(error):
+    """Affiche la page erreur 403"""
     return render_template("error.html", message="Erreur 403 - Accès Interdit", **locals())
 
 
 # Gestion de l'erreur 405
 @app.errorhandler(405)
 def method_not_allowed(error):
+    """Affiche la page erreur 405"""
     return render_template("error.html", message="Erreur 405 - Méthode de requête non autorisée", **locals())
 
 
 # Vérification connexion
 def check_connexion():
+    """Vérifie si l'utilisateur est connecté"""
     # Verification mail non nul
     if 'mail' in session:
         sql_obj = sql.MysqlObject()
@@ -835,6 +870,7 @@ def check_connexion():
 
 # Vérification admin
 def check_admin():
+    """Vérifie si l'utilisateur est admin"""
     if 'mail' in session:
         sql_obj = sql.MysqlObject()
         mail = session['mail']
