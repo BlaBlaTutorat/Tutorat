@@ -1,13 +1,9 @@
 # coding: utf-8
 import hashlib
 import random
-import smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
 
 from flask import *
 
-import config
 import sql
 import utils
 
@@ -135,12 +131,7 @@ def traitement_inscription():
 def mdp_oublie():
     if request.args.get('info_msg'):
         info_msg = request.args.get('info_msg')
-
-    # Vérification configuration complète
-    if config.email != "" and config.email_password != "":
-        return render_template("authentification/mdp_oublie.html", **locals())
-    else:
-        return redirect(url_for('connexion', info_msg="Veuillez vous adresser directement aux documentalistes."))
+    return render_template("authentification/mdp_oublie.html", **locals())
 
 
 # Traitement Mot de passe oublié
@@ -158,27 +149,27 @@ def traitement_mdp_oublie():
             # Chiffrage du nouveau mot de passe
             passwd_hash = hashlib.sha256(str(passwd).encode('utf-8')).hexdigest()
 
-            # Envoi du nouveau mot de passe à la base de données
+            # Envoi du nouveau mot de passe à la base de donnée
             sql_obj.modify_user_info_mdp(request.form['mail'], passwd_hash)
 
             # Envoi de l'email
-            msg = MIMEMultipart()
-            msg['From'] = config.email
-            msg['To'] = request.form['mail']
-            msg['Subject'] = 'BlaBla-Tutorat -- Nouveau mot de passe'
-            message = 'Bonjour,\n\nNous avons généré pour vous un nouveau mot de passe : ' \
-                      + passwd + '\nVeuillez le changer dès que vous vous connecterez à BlaBla-Tutorat.\n' \
-                                 'L\'équipe de BlaBla-Tutorat vous souhaite une bonne journée.\n\n\n\n\n' \
-                                 'Cet e-mail a été généré automatiquement, merci de ne pas y répondre.' \
-                                 ' Pour toute question, veuillez vous adresser aux documentalistes.'
-            msg.attach(MIMEText(message))
-            mailserver = smtplib.SMTP(config.smtp, config.smtp_port)
-            mailserver.starttls()
-            mailserver.login(config.email, config.email_password)
-            mailserver.sendmail(msg['From'], msg['To'], msg.as_string())
-            mailserver.quit()
-            return redirect(
-                url_for('connexion', info_msg="Un nouveau mot de passe vous a été envoyé."))
+            #msg = MIMEMultipart()
+            #msg['From'] = config.email
+            #msg['To'] = request.form['mail']
+            #msg['Subject'] = 'BlaBla-Tutorat -- Nouveau mot de passe'
+            #message = 'Bonjour,\n\nNous avons généré pour vous un nouveau mot de passe : '\
+            #        + passwd + '\nVeuillez le changer dès que vous vous connecterez à BlaBla-Tutorat.\n' \
+            #        'L\'équipe de BlaBla-Tutorat vous souhaite une bonne journée.\n\n\n\n\nCet e-mail a été généré' \
+            #       ' automatiquement, merci de ne pas y répondre.' \
+            #       ' Pour toute question, veuillez vous adresser aux documentalistes.'
+            # msg.attach(MIMEText(message))
+            #mailserver = smtplib.SMTP(config.smtp, config.smtp_port)
+            #mailserver.starttls()
+            #mailserver.login(config.email, config.email_password)
+            # mailserver.sendmail(msg['From'], msg['To'], msg.as_string())
+            #mailserver.quit()
+            #return redirect(
+            #    url_for('connexion', info_msg="Un nouveau mot de passe vous a été envoyé."))
 
         else:
             return redirect(url_for("mdp_oublie", info_msg="Cette adresse e-mail ne correspond à aucun compte"))
@@ -258,8 +249,6 @@ def profil_4(mail):
 def profil_update():
     sql_obj = sql.MysqlObject()
     if check_connexion():
-        if request.args.get('info_msg'):
-            info_msg = request.args.get('info_msg')
         mail = session['mail']
         admin_user = check_admin()
         classes = sql_obj.classes_liste()
@@ -269,27 +258,16 @@ def profil_update():
         else:
             if request.form.get('classe') in classes:
                 # Chiffrement du mdp
-                if request.form.get('mdp') != '':
-                    a_mdp = hashlib.sha256(str(request.form.get('mdp')).encode('utf-8')).hexdigest()
-                    if a_mdp != sql_obj.get_user_info(mail)[0][1]:
-                        return redirect(url_for("profil_update",
-                                                info_msg="Votre mot de passe n'a pas pu être modifié."
-                                                         " Veuillez vérifier votre ancien mot de passe."))
-                    else:
-                        if request.form.get('mdp1') != request.form.get('mdp2'):
-                            return redirect(url_for("profil_update",
-                                                    info_msg="Votre mot de passe n'a pas pu être modifié."
-                                                             " Les mots de passe ne sont pas indentiques."))
-                        elif request.form.get('mdp1') == '' and request.form.get('mdp2') == '':
-                            return redirect(url_for("profil_update",
-                                                    info_msg="Vous n'avez pas rentré de mot de passe."))
-                        else:
-                            chaine_mot_de_passe = request.form.get('mdp1')
-                            mot_de_passe_chiffre = hashlib.sha256(str(chaine_mot_de_passe).encode('utf-8')).hexdigest()
-                            # Envoi des infos à la base de données
-                            sql_obj.modify_user_info_mdp(mail, mot_de_passe_chiffre)
-
+                if request.form.get('mdp') != '' and request.form.get('mdp2') != '':
+                    chaine_mot_de_passe = request.form.get('mdp')
+                    mdp_confirm = request.form.get('mdp2')
+                    if chaine_mot_de_passe == mdp_confirm:
+                        mot_de_passe_chiffre = hashlib.sha256(str(chaine_mot_de_passe).encode('utf-8')).hexdigest()
+                        # Envoi des infos à la base de données
+                        sql_obj.modify_user_info_mdp(mail, mot_de_passe_chiffre)
+                mail2 = request.form.get('mail')
                 # Envoi des infos à la base de données
+                sql_obj.modify_user_info_mail(mail, mail2)
                 sql_obj.modify_user_info(mail, request.form.get('classe'))
                 return redirect(url_for("profil", info_msg="Votre profil a bien été modifié."))
             else:
@@ -377,8 +355,8 @@ def admin_ov():
                 info_msg = request.args.get('info_msg')
             if request.args.get('reset_msg'):
                 reset_msg = request.args.get('reset_msg')
-            return render_template("admin/admin_t_v.html", offres_V=sql_obj.offres_liste_valider(),
-                                   demandes_V=sql_obj.demandes_liste_valider(), days=days, **locals())
+            return render_template("admin/admin_t_v.html", offres_V=sql_obj.offres_liste_valider(), demandes_V=sql_obj.demandes_liste_valider(), days=days,
+                                   **locals())
         else:
             abort(403)
     else:
@@ -403,8 +381,7 @@ def admin_u():
                                        demandes=sql_obj.demandes_liste_validees(), days=days, **locals())
             else:
                 return render_template("admin/admin_u.html", user_list=sql_obj.liste_user(),
-                                       tutorats_actifs=sql_obj.offres_liste_validees(),
-                                       demandes=sql_obj.demandes_liste_validees(), days=days, **locals())
+                                       tutorats_actifs=sql_obj.offres_liste_validees(), demandes=sql_obj.demandes_liste_validees(), days=days, **locals())
         else:
             abort(403)
     else:
@@ -621,10 +598,15 @@ def delete():
         if request.args.get('id'):
             sql_obj = sql.MysqlObject()
             offre_id = request.args.get('id')
-            # Vérification que l'auteur est celui qui demande la suppression
-            if mail == sql_obj.get_offre(offre_id)[0][1]:
-                sql_obj.delete_offer(offre_id)
-                return redirect(url_for("profil", info_msg="Votre offre a bien été supprimée."))
+            offre = sql_obj.get_offre(offre_id)
+            # Vérification qu'une seule offre avec cet id existe
+            if len(offre) == 1:
+                # Vérification que l'auteur est celui qui demande la suppression
+                if mail == offre[0][1]:
+                    sql_obj.delete_offer(offre_id)
+                    return redirect(url_for("profil", info_msg="Votre offre a bien été supprimée."))
+                else:
+                    abort(403)
             else:
                 abort(403)
         else:
@@ -641,15 +623,19 @@ def delete3():
         if request.args.get('id'):
             sql_obj = sql.MysqlObject()
             demande_id = request.args.get('id')
-            # Vérification que l'auteur est celui qui demande la suppression
-            if mail == sql_obj.get_offre(demande_id)[0][1]:
-                sql_obj.delete_demande(demande_id)
-                return redirect(url_for("profil", info_msg="Votre demande a bien été supprimée."))
+            demande = sql_obj.get_offre(demande_id)
+            # Vérification qu'une seule demande avec cet id existe
+            if len(demande) == 1:
+                # Vérification que l'auteur est celui qui demande la suppression
+                if mail == demande[0][1]:
+                    sql_obj.delete_demande(demande_id)
+                    return redirect(url_for("profil", info_msg="Votre demande a bien été supprimée."))
+                else:
+                    abort(403)
             else:
                 abort(403)
         else:
             abort(403)
-
     else:
         return redirect(url_for("connexion", info_msg='Connectez-vous avant de continuer.'))
 
@@ -691,7 +677,6 @@ def delete4():
     else:
         return redirect(url_for("connexion", info_msg='Connectez-vous avant de continuer.'))
 
-
 # Validation d'une offre (admin)
 @app.route('/validate')
 def validate():
@@ -731,7 +716,6 @@ def validate2():
     else:
         return redirect(url_for("connexion", info_msg='Connectez-vous avant de continuer.'))
 
-
 # Ban (admin)
 @app.route('/ban')
 def ban():
@@ -770,7 +754,7 @@ def promote():
         return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
 
 
-# Deconnexion
+# deconnexion
 @app.route('/disconnect')
 def deconnexion():
     if check_connexion():
