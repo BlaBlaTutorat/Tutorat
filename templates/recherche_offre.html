@@ -86,13 +86,13 @@
                     <p class="date_creation">Créée le {{ offre[4].strftime('%d/%m/%Y') }}</p>
                     <div class="horaire">
                         <div class="table">
-                            {% for i in range(0,12,2) %}{% if offre[8+i] is not none and offre[9+i] is not none %}
-                                <p>{{ days[i//2] }}:</p>{% endif %}{% endfor %}
+                            {% for i in range(0,6) %}
+                                <p>{{ days[i] }}:</p>{% endfor %}
                         </div>
                         <div class="table" id="table_horaires">
-                            {% for i in range(0,12,2) %}{% if offre[8+i] is not none and offre[9+i] is not none %}
-                                <p>{{ 'h'.join((offre[8+i]|string).split(':')[:2]) }}
-                                    - {{ 'h'.join((offre[9+i]|string).split(':')[:2]) }}</p>{% endif %}{% endfor %}
+                            {% for i in range(0,6) %}
+                                <p>{{ (offre[8]|string).split(' ')[i*22:(i + 1)*22] }}</p>
+                            {% endfor %}
                         </div>
                     </div>
                     <form class="bouton" method="post" action="/apply">

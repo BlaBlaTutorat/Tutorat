@@ -19,7 +19,8 @@
             </ul>
         </nav>
         <div id="header_icon" class="icon">
-            <a href="/admin/tutorials/validate?reset_msg=True" class="admin" title="Réinitialiser le site"><img src="/static/img/reset.png"></a>
+            <a href="/admin/tutorials/validate?reset_msg=True" class="admin" title="Réinitialiser le site"><img
+                    src="/static/img/reset.png"></a>
         </div>
     </div>
 </div>
@@ -31,8 +32,12 @@
 </form>
 
 <aside>
-    <a href="/admin/tutorials/progress"><button>Offres</button></a>
-    <a href="/admin/tutorials/progress/demandes"><button>Demandes</button></a>
+    <a href="/admin/tutorials/progress">
+        <button>Offres</button>
+    </a>
+    <a href="/admin/tutorials/progress/demandes">
+        <button>Demandes</button>
+    </a>
 </aside>
 
 <!-- Liste des offres -->
@@ -44,7 +49,8 @@
             <div class="bloc">
                 <div class="info">
                     <p class="element"><strong class="G">Auteur :</strong>
-                        <a onclick="open_profile_page('{{ demande[1] }}')" title="Voir le profil">{{ sql_obj.get_user_pseudo(demande[1]) }}</a>
+                        <a onclick="open_profile_page('{{ demande[1] }}')"
+                           title="Voir le profil">{{ sql_obj.get_user_pseudo(demande[1]) }}</a>
                     </p>
                     <p class="element"><strong class="G">En classe de:</strong> {{ demande[2] }}</p>
                     <p class="element"><strong class="G">Matière:</strong> {{ demande[3] }}</p>
@@ -53,13 +59,13 @@
                     <p class="date_creation">Créée le {{ demande[4].strftime('%d/%m/%Y') }}</p>
                     <div class="horaire">
                         <div class="table">
-                            {% for i in range(0,12,2) %}{% if demande[7+i] is not none and demande[8+i] is not none %}
-                                <p>{{ days[i//2] }}:</p>{% endif %}{% endfor %}
+                            {% for i in range(0,6) %}
+                                <p>{{ days[i] }}:</p>{% endfor %}
                         </div>
                         <div class="table" id="table_horaires">
-                            {% for i in range(0,12,2) %}{% if demande[7+i] is not none and demande[8+i] is not none %}
-                                <p>{{ 'h'.join((demande[7+i]|string).split(':')[:2]) }}
-                                    - {{ 'h'.join((demande[8+i]|string).split(':')[:2]) }}</p>{% endif %}{% endfor %}
+                            {% for i in range(0,6) %}
+                                <p>{{ (demande[7]|string).split(' ')[i*22:(i + 1)*22] }}</p>
+                            {% endfor %}
                         </div>
                     </div>
                     <a href="/delete4?id={{ demande[0] }}">
