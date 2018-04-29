@@ -25,7 +25,7 @@
     - Disponible (boolean)
     - Participant
     - Participant2
-    - Créneaux horaires
+    - Horaires
     
 - Demandes:
     - Id (PRIMARY)
@@ -35,7 +35,7 @@
     - Date de création
     - Disponible (boolean)
     - Tuteur
-    - Créneaux horaires
+    - Horaires
 
 - Matières:
     - LIBELLE (PRONOTE)
