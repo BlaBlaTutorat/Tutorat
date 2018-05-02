@@ -23,48 +23,45 @@
 <div class="bloc_page_profil">
     <!-- Liste des offres crées par l'utilisateur -->
     <div class="offres" id="tutorat_en_cours">
-        <h2>Vos tutorats créés</h2>
+        <h2>Vos offres créées</h2>
         {% if offres_creees|length>0 %}
             {% for offre in offres_creees %}
                 <br/>
                 <div class="bloc" id="bloc_tuto">
                     <div class="info">
                         <p class="element"><strong class="G">Auteur:</strong>
-                            <a onclick="open_profile_page('{{ offre[1] }}')" title="Voir le profil">{{ sql_obj.get_user_pseudo(offre[1]) }}</a>
+                            <a onclick="open_profile_page('{{ offre[1] }}')"
+                               title="Voir le profil">{{ sql_obj.get_user_pseudo(offre[1]) }}</a>
                         </p>
                         <p class="element"><strong class="G">Pour des :</strong> {{ offre[2] }}</p>
                         <p class="element"><strong class="G">Matière:</strong> {{ offre[3] }}</p>
                         <p class="element"><strong class="G">Participant(s) :</strong>
-                        {% if offre[5] is none %}
-                            Aucun
-                        {% else %}
-                            <a onclick="open_profile_page('{{ offre[5] }}')"
-                               title="Voir le profil">{{ sql_obj.get_user_pseudo(offre[5]) }}</a>
-                            <br/>
-                        {% endif %}
+                            {% if offre[5] is none %}
+                                Aucun
+                            {% else %}
+                                <a onclick="open_profile_page('{{ offre[5] }}')"
+                                   title="Voir le profil">{{ sql_obj.get_user_pseudo(offre[5]) }}</a>
+                                <br/>
+                            {% endif %}
 
-                        {% if offre[6] is not none %}
-                            <a onclick="open_profile_page('{{ offre[6] }}')"
-                               title="Voir le profil">{{ sql_obj.get_user_pseudo(offre[6]) }}</a>
-                        {% endif %}
-                    </p>
+                            {% if offre[6] is not none %}
+                                <a onclick="open_profile_page('{{ offre[6] }}')"
+                                   title="Voir le profil">{{ sql_obj.get_user_pseudo(offre[6]) }}</a>
+                            {% endif %}
+                        </p>
                         <p class="element"><strong class="G">Etat de l'offre :</strong> {% if offre[7]==0 %}En
                             attente de validation{% else %}Publiée{% endif %}</p>
                     </div>
                     <div id="horaires">
                         <div class="horaire">
                             <div class="table">
-                                {% for i in range(0,12,2) %}
-                                    {% if offre[8+i] is not none and offre[9+i] is not none %}
-                                        <p>{{ days[i//2] }}:</p>
-                                    {% endif %}{% endfor %}
+                                {% for i in range(0,6) %}
+                                    <p>{{ days[i] }}:</p>{% endfor %}
                             </div>
                             <div class="table" id="table_horaires">
-                                {% for i in range(0,12,2) %}
-                                    {% if offre[8+i] is not none and offre[9+i] is not none %}
-                                        <p>{{ 'h'.join((offre[8+i]|string).split(':')[:2]) }}
-                                            - {{ 'h'.join((offre[9+i]|string).split(':')[:2]) }}</p>
-                                    {% endif %}{% endfor %}
+                                {% for i in range(0,6) %}
+                                    <p>{{ (offre[8]|string).split(' ')[i*22:(i + 1)*22] }}</p>
+                                {% endfor %}
                             </div>
                         </div>
                         <a href="/delete?id={{ offre[0] }}">
@@ -76,14 +73,14 @@
             {% endfor %}
         {% else %}
             <div class="bloc" id="none_offre">
-                <p class="none_offre">Vous n'avez pas encore crée d'offre</p>
+                <p class="none_offre">Vous n'avez pas encore créé d'offre</p>
                 <p class="none_offre"><a href="/create">
                     <button>Créer une offre</button>
                 </a></p>
             </div>
         {% endif %}
     </div>
-<div class="offres" id="tutorat_en_cours">
+    <div class="offres" id="tutorat_en_cours">
         <h2>Vos demandes créés</h2>
         {% if demandes|length>0 %}
             {% for demande in demandes %}
@@ -91,31 +88,32 @@
                 <div class="bloc">
                     <div class="info">
                         <p class="element"><strong class="G">Auteur:</strong>
-                            <a onclick="open_profile_page('{{ demande[1] }}')" title="Voir le profil">{{ sql_obj.get_user_pseudo(demande[1]) }}</a>
+                            <a onclick="open_profile_page('{{ demande[1] }}')"
+                               title="Voir le profil">{{ sql_obj.get_user_pseudo(demande[1]) }}</a>
                         </p>
                         <p class="element"><strong class="G">En classe de :</strong> {{ demande[2] }}</p>
                         <p class="element"><strong class="G">Matière:</strong> {{ demande[3] }}</p>
                         <p class="element"><strong class="G">Tuteur :</strong>
-                        {% if demande[5] is none %}
-                            Aucun
-                        {% else %}
-                            <a onclick="open_profile_page('{{ demande[5] }}')"
-                               title="Voir le profil">{{ sql_obj.get_user_pseudo(demande[5]) }}</a>
-                            <br/>
-                        {% endif %}
+                            {% if demande[5] is none %}
+                                Aucun
+                            {% else %}
+                                <a onclick="open_profile_page('{{ demande[5] }}')"
+                                   title="Voir le profil">{{ sql_obj.get_user_pseudo(demande[5]) }}</a>
+                                <br/>
+                            {% endif %}
                         <p class="element"><strong class="G">Etat de la demande :</strong> {% if demande[6]==0 %}En
                             attente de validation{% else %}Publiée{% endif %}</p>
                     </div>
                     <div id="horaires">
                         <div class="horaire">
                             <div class="table">
-                                {% for i in range(0,12,2) %}{% if demande[7+i] is not none and demande[8+i] is not none %}
-                                    <p>{{ days[i//2] }}:</p>{% endif %}{% endfor %}
+                                {% for i in range(0,6) %}
+                                    <p>{{ days[i] }}:</p>{% endfor %}
                             </div>
                             <div class="table" id="table_horaires">
-                                {% for i in range(0,12,2) %}{% if demande[7+i] is not none and demande[8+i] is not none %}
-                                    <p>{{ 'h'.join((demande[7+i]|string).split(':')[:2]) }}
-                                        - {{ 'h'.join((demande[8+i]|string).split(':')[:2]) }}</p>{% endif %}{% endfor %}
+                                {% for i in range(0,6) %}
+                                    <p>{{ (demande[7]|string).split(' ')[i*22:(i + 1)*22] }}</p>
+                                {% endfor %}
                             </div>
                         </div>
                         <a href="/delete3?id={{ demande[0] }}">
@@ -136,46 +134,47 @@
     </div>
     <div class="offres" id="tutorat_en_cours">
         <!-- Liste des offres auxquelles participe l'utilisateur -->
-        <h2>Les tutorats auxquels vous participez</h2>
+        <h2>Les offres auxquelles vous participez</h2>
         {% if offres_suivies|length>0 %}
             {% for offre in offres_suivies %}
                 <br/>
                 <div class="bloc">
                     <div class="info">
                         <p class="element"><strong class="G">Tuteur :</strong> <a
-                                onclick="open_profile_page('{{ offre[1] }}')" title="Voir le profil">{{ sql_obj.get_user_pseudo(offre[1]) }}</a>
+                                onclick="open_profile_page('{{ offre[1] }}')"
+                                title="Voir le profil">{{ sql_obj.get_user_pseudo(offre[1]) }}</a>
                         </p>
-                        <p class="element"><strong class="G">Mail du tuteur :</strong> <a href="mailto:{{ offre[1] }}" title="Envoyer un mail">{{ offre[1] }}</a></p>
+                        <p class="element"><strong class="G">Mail du tuteur :</strong> <a href="mailto:{{ offre[1] }}"
+                                                                                          title="Envoyer un mail">{{ offre[1] }}</a>
+                        </p>
                         <p class="element"><strong class="G">Matière:</strong> {{ offre[3] }}</p>
                         <p class="element"><strong class="G">Participants 1:</strong>
                             {% if offre[5] is none %}
                                 Personne
                             {% else %}
-                                <a onclick="open_profile_page('{{ offre[5] }}')" title="Voir le profil">{{ sql_obj.get_user_pseudo(offre[5]) }}</a>
+                                <a onclick="open_profile_page('{{ offre[5] }}')"
+                                   title="Voir le profil">{{ sql_obj.get_user_pseudo(offre[5]) }}</a>
                             {% endif %}
                         </p>
                         <p class="element"><strong class="G">Participants 2:</strong>
                             {% if offre[6] is none %}
                                 Personne
                             {% else %}
-                                <a onclick="open_profile_page('{{ offre[6] }}')" title="Voir le profil">{{ sql_obj.get_user_pseudo(offre[6]) }}</a>
+                                <a onclick="open_profile_page('{{ offre[6] }}')"
+                                   title="Voir le profil">{{ sql_obj.get_user_pseudo(offre[6]) }}</a>
                             {% endif %}
                         </p>
                     </div>
                     <div id="horaires">
                         <div class="horaire">
                             <div class="table">
-                                {% for i in range(0,12,2) %}
-                                    {% if offre[8+i] is not none and offre[9+i] is not none %}
-                                        <p>{{ days[i//2] }}:</p>
-                                    {% endif %}{% endfor %}
+                                {% for i in range(0,6) %}
+                                    <p>{{ days[i] }}:</p>{% endfor %}
                             </div>
                             <div class="table" id="table_horaires">
-                                {% for i in range(0,12,2) %}
-                                    {% if offre[8+i] is not none and offre[9+i] is not none %}
-                                        <p>{{ 'h'.join((offre[8+i]|string).split(':')[:2]) }}
-                                            - {{ 'h'.join((offre[9+i]|string).split(':')[:2]) }}</p>
-                                    {% endif %}{% endfor %}
+                                {% for i in range(0,6) %}
+                                    <p>{{ (offre[8]|string).split(' ')[i*22:(i + 1)*22] }}</p>
+                                {% endfor %}
                             </div>
                         </div>
                         <a href="/quit?id={{ offre[0] }}">
@@ -193,9 +192,11 @@
                     <div class="bloc">
                         <div class="info">
                             <p class="element"><strong class="G">Tuteur :</strong> <a
-                                    onclick="open_profile_page('{{ demande[5] }}')" title="Voir le profil">{{ sql_obj.get_user_pseudo(demande[5]) }}</a>
+                                    onclick="open_profile_page('{{ demande[5] }}')"
+                                    title="Voir le profil">{{ sql_obj.get_user_pseudo(demande[5]) }}</a>
                             </p>
-                            <p class="element"><strong class="G">Mail du tuteur :</strong> <a href="mailto:{{ demande[5] }}" title="Envoyer un mail">{{ demande[5] }}</a></p>
+                            <p class="element"><strong class="G">Mail du tuteur :</strong> <a
+                                    href="mailto:{{ demande[5] }}" title="Envoyer un mail">{{ demande[5] }}</a></p>
                             <p class="element"><strong class="G">Matière:</strong> {{ demande[3] }}</p>
                             <p class="element"><strong class="G">Participants :</strong> Moi</p>
                         </div>
@@ -226,7 +227,7 @@
         {% endif %}
         {% if demandes|length==0 and offres_suivies|length==0 %}
             <div class="bloc" id="none_offre">
-                <p class="none_offre">Vous ne participez à aucun Tutorat</p>
+                <p class="none_offre">Vous ne participez à aucune offre</p>
                 <p class="none_offre"><a href="/search">
                     <button>Rechercher une offre</button>
                 </a></p>
