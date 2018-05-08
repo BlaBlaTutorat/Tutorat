@@ -121,6 +121,28 @@ aside button {
 .date_creation {
     font-size: 0.6em;
 }
+
+table {
+    empty-cells: show;
+    width: 440px;
+    border-collapse: collapse;
+    margin-bottom: 13px;
+}
+
+td {
+    border: 1px solid black;
+}
+
+th {
+    font-size: 0.6em;
+    font-weight: normal;
+    text-align: left;
+}
+
+th, td {
+    height: 16px;
+    width: 22px;
+}
 /* END Commun */
 
 /* HEADER */
@@ -515,6 +537,22 @@ footer a:hover {
 /* END Forgot */
 
 /* Search */
+#jour-offre {
+    margin-top: 5px;
+}
+
+.heure-table {
+    margin-bottom: 0;
+}
+
+.white {
+    background: white;
+}
+
+.red {
+    background: #b9433c;
+}
+
 #reset_filter {
     position: fixed;
     bottom: 10px;
@@ -568,7 +606,7 @@ footer a:hover {
     justify-content: space-around;
     align-items: center;
     padding: 5px 10px 5px 10px;
-    min-width: 940px;
+    min-width: 1100px;
     min-height: 215px;
     margin: 10px auto 10px auto;
 }
@@ -583,12 +621,8 @@ footer a:hover {
 }
 
 .offres .table {
-    margin: auto 10px;
-}
-
-.table p {
-    margin-bottom: 4px;
-    margin-top: 4px;
+    line-height: 17px;
+    margin: 0 10px 0 10px;
 }
 
 .date {
@@ -600,8 +634,8 @@ footer a:hover {
 .info {
     padding-right: 0;
     margin-right: 0;
-    max-width: 60%;
-    min-width: 60%
+    max-width: 40%;
+    min-width: 40%
 }
 
 .offres .horaire {
