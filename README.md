@@ -5,6 +5,7 @@
 - SQL
 - HTML
 - CSS
+- JS
     
 #### Tables:
 - Utilisateurs:
