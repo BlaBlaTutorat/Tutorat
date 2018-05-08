@@ -546,11 +546,11 @@ footer a:hover {
 }
 
 .white {
-    background: white;
+    background: #eaeaec;
 }
 
 .red {
-    background: #b9433c;
+    background: #3b3e43;
 }
 
 #reset_filter {
