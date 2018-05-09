@@ -608,6 +608,7 @@ def modifier_demande():
         mail = session['mail']
         if request.args.get('id'):
             sql_obj = sql.MysqlObject()
+            admin_user = check_admin()
             demande_id = request.args.get('id')
             # Vérification que l'auteur est celui qui demande la suppression
             if mail == sql_obj.get_demande(demande_id)[0][1]:
@@ -630,6 +631,7 @@ def modifier_offre():
         mail = session['mail']
         if request.args.get('id'):
             sql_obj = sql.MysqlObject()
+            admin_user = check_admin()
             offre_id = request.args.get('id')
             # Vérification que l'auteur est celui qui demande la suppression
             if mail == sql_obj.get_offre(offre_id)[0][1]:
