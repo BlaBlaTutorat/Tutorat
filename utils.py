@@ -12,11 +12,3 @@ def check_availability(offre):
             return 1
     else:
         return 0
-
-
-# Retourne le nom de la colonne sql pour un i
-def get_horaire(i):
-    if i % 2 == 0:
-        return "debut_j" + str(i // 2)
-    else:
-        return "fin_j" + str(i // 2)
