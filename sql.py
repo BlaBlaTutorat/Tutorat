@@ -445,6 +445,13 @@ class MysqlObject:
             (author, classe, matiere, date_time, horaires))
         self.conn.commit()
 
+    # Récupération d'une demande
+    def get_demande(self, demande_id):
+        """Argument: Id de la demande
+        Fonction: Renvoie la demande"""
+        self.cursor.execute("""SELECT * FROM demandes WHERE id = %s""", (demande_id,))
+        return self.cursor.fetchall()
+
     # Liste demandes sans tri
     def demandes_liste(self, page):
         """Argument: numéro de la page

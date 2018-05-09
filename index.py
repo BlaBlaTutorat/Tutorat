@@ -601,6 +601,50 @@ def enregistrement():
         return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
 
 
+# Modification d'une demande
+@app.route('/edit_d')
+def modifier_demande():
+    if check_connexion():
+        mail = session['mail']
+        if request.args.get('id'):
+            sql_obj = sql.MysqlObject()
+            demande_id = request.args.get('id')
+            # Vérification que l'auteur est celui qui demande la suppression
+            if mail == sql_obj.get_demande(demande_id)[0][1]:
+                return render_template("edit/edit_d.html", demande=sql_obj.get_demande(demande_id)[0],
+                                       filieres=sql_obj.filieres_liste(), matieres=sql_obj.matieres_liste(),
+                                       days=days, **locals())
+            else:
+                abort(403)
+        else:
+            abort(403)
+
+    else:
+        return redirect(url_for("connexion", info_msg='Connectez-vous avant de continuer.'))
+
+
+# Modification d'une offre
+@app.route('/edit_o')
+def modifier_offre():
+    if check_connexion():
+        mail = session['mail']
+        if request.args.get('id'):
+            sql_obj = sql.MysqlObject()
+            offre_id = request.args.get('id')
+            # Vérification que l'auteur est celui qui demande la suppression
+            if mail == sql_obj.get_offre(offre_id)[0][1]:
+                return render_template("edit/edit_o.html", offre=sql_obj.get_offre(offre_id)[0],
+                                       filieres=sql_obj.filieres_liste(), matieres=sql_obj.matieres_liste(),
+                                       days=days, **locals())
+            else:
+                abort(403)
+        else:
+            abort(403)
+
+    else:
+        return redirect(url_for("connexion", info_msg='Connectez-vous avant de continuer.'))
+
+
 # Suppression de la participation d'un utilisateur à une offre
 @app.route('/quit')
 def quit_tutorat():
