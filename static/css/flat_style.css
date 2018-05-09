@@ -143,6 +143,10 @@ th, td {
     height: 16px;
     width: 22px;
 }
+
+.bold {
+    font-weight: bold;
+}
 /* END Commun */
 
 /* HEADER */
@@ -371,6 +375,18 @@ footer a:hover {
     background: #18a3fa;
     margin: 0 25px 0 0;
     float: left;
+}
+
+@media screen and (max-width: 1280px) {
+    .bloc_home {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .page_home {
+        margin: 15px 10px 15px 10px;
+        width: 65%;
+    }
 }
 /* END Home */
 
