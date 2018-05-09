@@ -7,40 +7,6 @@
     {% with name="Poster une offre" %}{% include "mise_en_page/HEAD.html" %}{% endwith %}
 {% endif %}
 
-<!-- Horaires -->
-<style type="text/css" media="all">@import "/static/css/jquery.timepicker.min.css";</style>
-<script type="text/javascript" src="/static/js/jquery.timepicker.min.js"></script>
-<script type="text/javascript" src="/static/js/jquery.datepair.min.js"></script>
-<script type="text/javascript">
-    jQuery(function () {
-        // Default.
-        $(".time.start").timepicker({
-            'timeFormat': 'H:i',
-            'forceRoundTime': true,
-            'minTime': '08:00',
-            'maxTime': '18:30',
-            'disableTextInput': true,
-            'noneOption': "Annuler"
-        });
-        $(".time.end").timepicker({
-            'timeFormat': 'H:i',
-            'forceRoundTime': true,
-            'minTime': '08:30',
-            'maxTime': '19:00',
-            'disableTextInput': true,
-            'showDuration': true,
-            'noneOption': "Annuler"
-        });
-
-        {% for i in range(0,6) %}
-            $("#day_{{ i }}").datepair({
-                'defaultTimeDelta': 1800000
-            });
-        {% endfor %}
-    });
-</script>
-<!-- Fin Horaires -->
-
 <body>
 
 {% include 'mise_en_page/HEADER.html' %}
@@ -88,25 +54,55 @@
                     {% else %}
                         <input type="submit" class="crea_offre" value="Créer mon offre"/>
                         <p class="remarque">
-                            <a title="Si elles sont dans la même classe">Remarque : un tuteur peut aider deux personnes</a></p>
+                            <a title="Si elles sont dans la même classe">Remarque : un tuteur peut aider deux
+                                personnes</a></p>
                     {% endif %}
                 </div>
             </div>
             <!-- Horaires -->
             <div id="horaires_crea">
+                <input type="hidden" id="horaires_data" name="horaires_data" value="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0"/>
                 <div class="horaire">
-                    <div class="table_crea">
+                    <div class="table" id="jour-offre">
                         {% for i in range(0,6) %}
-                            <p class="jours">{{ days[i] }}: </p>
+                            <p>{{ days[i] }}:</p>
                         {% endfor %}
                     </div>
-                    <div class="table_crea" id="table_horaires_crea">
+                    <div class="table" id="table_horaires">
+                        <table class="heure-table">
+                            <tr>
+                                <th>08h</th>
+                                <th></th>
+                                <th>09h</th>
+                                <th></th>
+                                <th>10h</th>
+                                <th></th>
+                                <th>11h</th>
+                                <th></th>
+                                <th>12h</th>
+                                <th></th>
+                                <th>13h</th>
+                                <th></th>
+                                <th>14h</th>
+                                <th></th>
+                                <th>15h</th>
+                                <th></th>
+                                <th>16h</th>
+                                <th></th>
+                                <th>17h</th>
+                                <th></th>
+                                <th>18h</th>
+                                <th></th>
+                            </tr>
+                        </table>
                         {% for i in range(0,6) %}
-                            <p id="day_{{ i }}">
-                                <input type="text" name="debut_j{{ i }}" class="time start" id="time_start"/>
-                                à
-                                <input type="text" name="fin_j{{ i }}" class="time end" id="time_end"/>
-                            </p>
+                            <table>
+                                <tr>
+                                    {% for j in range(0,23) %}
+                                        <td id="{{ i }} {{ j }}" class="white" onclick="horaire_click(event, this.id, this.className)"></td>
+                                    {% endfor %}
+                                </tr>
+                            </table>
                         {% endfor %}
                     </div>
                 </div>

@@ -9,7 +9,6 @@ from flask import *
 
 import config
 import sql
-import utils
 
 app = Flask(__name__)
 days = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
@@ -152,7 +151,7 @@ def mdp_oublie():
 # Traitement Mot de passe oublié
 @app.route('/forgot', methods=['POST'])
 def traitement_mdp_oublie():
-    """Créée un nouveau mot de passe aléatoirement et l'envoie par mail à l'utilisateur"""
+    """Créé un nouveau mot de passe aléatoirement et l'envoie par mail à l'utilisateur"""
     sql_obj = sql.MysqlObject()
     if not check_connexion():
         if sql_obj.mail_in_bdd(request.form['mail']):
@@ -196,7 +195,7 @@ def traitement_mdp_oublie():
 # Page de Profil info utilisateur
 @app.route('/profile/view')
 def profil():
-    """Page de de profil avec les information de l'utilisateur"""
+    """Page de de profil avec les informations de l'utilisateur"""
     sql_obj = sql.MysqlObject()
     if request.args.get('delete'):
         delete_account = request.args.get('delete')
@@ -234,7 +233,7 @@ def profil_2():
 # Page de suppression Profil
 @app.route('/profile/delete')
 def profil_3():
-    """Suprime le compte utilisateur de la BDD"""
+    """Supprime le compte utilisateur de la BDD"""
     sql_obj = sql.MysqlObject()
     if check_connexion():
         mail = session['mail']
@@ -251,7 +250,7 @@ def profil_3():
 # Page de profil d'un utilisateur
 @app.route('/profile/view/<mail>')
 def profil_4(mail):
-    """Popup avec les information de l'utilisateur qui correspond au mail cliqué"""
+    """Popup avec les informations de l'utilisateur qui correspond au mail cliqué"""
     sql_obj = sql.MysqlObject()
     if check_connexion():
         if sql_obj.mail_in_bdd(mail):
@@ -267,7 +266,7 @@ def profil_4(mail):
 # Page de modification du profil
 @app.route('/profile/update', methods=['GET', 'POST'])
 def profil_update():
-    """Page de mise a jour de profil, récolte les information données par l'utilisateur et les envoie a la BDD"""
+    """Page de mise à jour de profil, récolte les information données par l'utilisateur et les envoie à la BDD"""
     sql_obj = sql.MysqlObject()
     if check_connexion():
         if request.args.get('info_msg'):
@@ -403,7 +402,7 @@ def admin_ov():
 # Page d'Administration profile utilisateur
 @app.route('/admin/users', methods=['GET', 'POST'])
 def admin_u():
-    """Page d'administration qui affiche la liste des utilisateur du site"""
+    """Page d'administration qui affiche la liste des utilisateurs du site"""
     sql_obj = sql.MysqlObject()
     if check_connexion():
         mail = session['mail']
@@ -500,7 +499,7 @@ def creation():
 # Traitement du formulaire + upload bdd
 @app.route('/create', methods=['POST'])
 def traitement_creation():
-    """Envoie les données rentrées par lutilisateur à la BDD"""
+    """Envoie les données rentrées par l'utilisateur à la BDD"""
     # On ne traite pas la demande dans le doute ou l'élève n'a pas renseigné de créneau horaire
     process = False
     sql_obj = sql.MysqlObject()
@@ -525,21 +524,10 @@ def traitement_creation():
                                        days=days, **locals())
         else:
             # Suite du formulaire de création
-            horaires = []
-            for i in range(0, 12, 2):
-                debut = utils.get_horaire(i)
-                fin = utils.get_horaire(i + 1)
+            horaires = request.form["horaires_data"]
+            if horaires.find("1") > 1:
+                process = True
 
-                if request.form.get(debut, None) != '' and request.form.get(
-                        fin, None) != '':
-                    # L'élève a renseigné au moins un créneau horaire
-                    process = True
-                    horaires.append(request.form.get(debut))
-                    horaires.append(request.form.get(fin))
-                else:
-                    # Créneau horaire vide, on remplit avec des zéros
-                    horaires.append(0)
-                    horaires.append(0)
             if process:
                 # Création
                 filieres = sql_obj.filieres_liste()
@@ -637,7 +625,7 @@ def quit_tutorat():
 # Suppression d'une offre
 @app.route('/delete')
 def delete():
-    """Suprime une offre"""
+    """Supprime une offre"""
     if check_connexion():
         mail = session['mail']
         if request.args.get('id'):
@@ -658,7 +646,7 @@ def delete():
 # Suppression d'une demande
 @app.route('/delete3')
 def delete3():
-    """Suprime une demande"""
+    """Supprime une demande"""
     if check_connexion():
         mail = session['mail']
         if request.args.get('id'):
@@ -680,7 +668,7 @@ def delete3():
 # Suppression d'une offre (admin)
 @app.route('/delete2')
 def delete2():
-    """Suprime une offre (version admin)"""
+    """Supprime une offre (version admin)"""
     if check_connexion():
         admin_user = check_admin()
         if admin_user:
@@ -700,7 +688,7 @@ def delete2():
 # Suppression d'une demande (admin)
 @app.route('/delete4')
 def delete4():
-    """Suprime une demande (version admin)"""
+    """Supprime une demande (version admin)"""
     if check_connexion():
         admin_user = check_admin()
         if admin_user:
@@ -802,7 +790,7 @@ def promote():
 # Deconnexion
 @app.route('/disconnect')
 def deconnexion():
-    """sert à se déconnecter du site"""
+    """Sert à se déconnecter du site"""
     if check_connexion():
         session.pop('mail', None)
         return redirect(url_for("connexion", info_msg='Vous avez bien été déconnecté.'))
@@ -813,7 +801,7 @@ def deconnexion():
 # Remise à 0
 @app.route('/reset')
 def reset():
-    """Remet a 0 le site"""
+    """Remet à 0 le site"""
     sql_obj = sql.MysqlObject()
     if check_connexion():
         mail = session['mail']

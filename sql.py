@@ -253,15 +253,8 @@ class MysqlObject:
         date_time = datetime.datetime.now()
         date_time = date_time.strftime("%Y-%m-%d %H:%M:%S")
         self.cursor.execute(
-            """INSERT INTO offres (auteur, filiere, matiere, date_time) VALUES (%s, %s, %s, %s)""",
-            (author, classe, matiere, date_time))
-        i = 0
-        for time in horaires:
-            if time != 0:
-                self.cursor.execute(
-                    """UPDATE offres SET """ + utils.get_horaire(i) + """ = %s WHERE date_time = %s AND auteur = %s""",
-                    (time, date_time, author))
-            i += 1
+            """INSERT INTO offres (auteur, filiere, matiere, date_time, horaires) VALUES (%s, %s, %s, %s, %s)""",
+            (author, classe, matiere, date_time, horaires))
         self.conn.commit()
 
     # Suppression d'une offre
@@ -448,16 +441,8 @@ class MysqlObject:
         date_time = datetime.datetime.now()
         date_time = date_time.strftime("%Y-%m-%d %H:%M:%S")
         self.cursor.execute(
-            """INSERT INTO demandes (auteur, classe, matiere, date_time) VALUES (%s, %s, %s, %s)""",
-            (author, classe, matiere, date_time))
-        i = 0
-        for time in horaires:
-            if time != 0:
-                self.cursor.execute(
-                    """UPDATE demandes SET """ + utils.get_horaire(
-                        i) + """ = %s WHERE date_time = %s AND auteur = %s""",
-                    (time, date_time, author))
-            i += 1
+            """INSERT INTO demandes (auteur, classe, matiere, date_time, horaires) VALUES (%s, %s, %s, %s, %s)""",
+            (author, classe, matiere, date_time, horaires))
         self.conn.commit()
 
     # Liste demandes sans tri
