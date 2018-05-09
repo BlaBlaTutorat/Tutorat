@@ -15,21 +15,9 @@
         <div class="bloc">
             <div class="info_crea">
                 <!-- Filière -->
-                <p class="element"><strong class="G">Vous voulez aider un élève de : </strong>
-                    <SELECT name="filiere" class="tri3" required>
-                        <option value="" disabled>- Filiere -</option>
-                        {% for filiere in filieres %}
-                            <option {% if filiere == offre[2] %}selected{% endif %}>{{ filiere }}</option>
-                        {% endfor %}
-                    </SELECT></p>
+                <p class="element"><strong class="G">Vous voulez aider un élève de : </strong>{{ offre[2] }}</p>
                 <!-- Matière -->
-                <p class="element"><strong class="G">Vous souhaitez l'aider en : </strong>
-                    <SELECT name="matiere" class="tri3" required>
-                        <option value="" disabled>- Matiere -</option>
-                        {% for matiere in matieres %}
-                            <option {% if matiere == offre[3] %}selected{% endif %}>{{ matiere }}</option>
-                        {% endfor %}
-                    </SELECT></p>
+                <p class="element"><strong class="G">Vous souhaitez l'aider en : </strong>{{ offre[3] }}</p>
                 <div class="crea_offre_bloc">
                     <input type="submit" class="crea_offre" value="Modifier mon offre"/>
                     <p class="remarque">
@@ -77,7 +65,8 @@
                             <table>
                                 <tr>
                                     {% for j in range(0,22) %}
-                                        <td id="{{ i }} {{ j }}" class="{% if offre[8][(i*22)+j] == "0" %}white{% else %}red{% endif %}"
+                                        <td id="{{ i }} {{ j }}"
+                                            class="{% if offre[8][(i*22)+j] == "0" %}white{% else %}red{% endif %}"
                                             onclick="horaire_click(event, this.id, this.className)"></td>
                                     {% endfor %}
                                 </tr>

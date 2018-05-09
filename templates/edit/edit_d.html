@@ -16,37 +16,11 @@
     <div class="creation">
         <div class="bloc">
             <div class="info_crea">
-                {% if demande %}
-                    <p class="element"><strong class="G">Vous êtes en :</strong> {{ classe }}</p>
-                    <input type="hidden" name="classe" value="{{ classe }}"/>
-                {% else %}
-                    <!-- Filière -->
-                    <p class="element"><strong class="G">Vous voulez aider un élève de : </strong>
-                        <SELECT name="filiere" class="tri3" required>
-                            <option value="" disabled selected>- Filiere -</option>
-                            {% for filiere in filieres %}
-                                <option>{{ filiere }}</option>
-                            {% endfor %}
-                        </SELECT></p>
-                {% endif %}
+                <p class="element"><strong class="G">Vous êtes en :</strong> {{ demande[2] }}</p>
                 <!-- Matière -->
-                <p class="element"><strong class="G">Vous souhaitez {% if demande %}être aidé{% else %}
-                    l'aider{% endif %} en : </strong>
-                    <SELECT name="matiere" class="tri3" required>
-                        <option value="" disabled selected>- Matiere -</option>
-                        {% for matiere in matieres %}
-                            <option>{{ matiere }}</option>
-                        {% endfor %}
-                    </SELECT></p>
+                <p class="element"><strong class="G">Vous souhaitez être aidé en : </strong>{{ demande[3] }}</p>
                 <div class="crea_offre_bloc">
-                    {% if demande %}
-                        <input type="submit" class="crea_offre" value="Créer ma demande"/>
-                    {% else %}
-                        <input type="submit" class="crea_offre" value="Créer mon offre"/>
-                        <p class="remarque">
-                            <a title="Si elles sont dans la même classe">Remarque : un tuteur peut aider deux
-                                personnes</a></p>
-                    {% endif %}
+                    <input type="submit" class="crea_offre" value="Modifier ma demande"/>
                 </div>
             </div>
             <!-- Horaires -->
@@ -89,7 +63,9 @@
                             <table>
                                 <tr>
                                     {% for j in range(0,22) %}
-                                        <td id="{{ i }} {{ j }}" class="{% if demande[7][(i*22)+j] == "0" %}white{% else %}red{% endif %}" onclick="horaire_click(event, this.id, this.className)"></td>
+                                        <td id="{{ i }} {{ j }}"
+                                            class="{% if demande[7][(i*22)+j] == "0" %}white{% else %}red{% endif %}"
+                                            onclick="horaire_click(event, this.id, this.className)"></td>
                                     {% endfor %}
                                 </tr>
                             </table>
