@@ -61,7 +61,7 @@
             </div>
             <!-- Horaires -->
             <div id="horaires_crea">
-                <input type="hidden" id="horaires_data" name="horaires_data" value="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0"/>
+                <input type="hidden" id="horaires_data" name="horaires_data" value="000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"/>
                 <div class="horaire">
                     <div class="table" id="jour-offre">
                         {% for i in range(0,6) %}
@@ -98,7 +98,7 @@
                         {% for i in range(0,6) %}
                             <table>
                                 <tr>
-                                    {% for j in range(0,23) %}
+                                    {% for j in range(0,22) %}
                                         <td id="{{ i }} {{ j }}" class="white" onclick="horaire_click(event, this.id, this.className)"></td>
                                     {% endfor %}
                                 </tr>

@@ -26,7 +26,7 @@ function horaire_click(event, id, class_name) {
     var data = document.getElementById('horaires_data').value;
     var day = parseInt(id.split(" ")[0]);
     var hour = parseInt(id.split(" ")[1]);
-    var index = 2*((day*23)+hour);
+    var index = (day*22)+hour;
 
     if (class_name === "red") {
         document.getElementById(id).classList.remove("red");

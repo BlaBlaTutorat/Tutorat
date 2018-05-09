@@ -524,7 +524,7 @@ def traitement_creation():
         else:
             # Suite du formulaire de création
             horaires = request.form["horaires_data"]
-            if len([c for c in horaires if c == '1']) > 1:
+            if len([c for c in horaires if c == '1']) > 0:
                 process = True
 
             if process:

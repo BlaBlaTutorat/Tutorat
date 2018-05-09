@@ -88,8 +88,8 @@
                         {% for i in range(0,6) %}
                             <table>
                                 <tr>
-                                    {% for j in range(0,23) %}
-                                        <td id="{{ i }} {{ j }}" class="{% if demande[7][2*((i*23)+j)] == "0" %}white{% else %}red{% endif %}" onclick="horaire_click(event, this.id, this.className)"></td>
+                                    {% for j in range(0,22) %}
+                                        <td id="{{ i }} {{ j }}" class="{% if demande[7][(i*22)+j] == "0" %}white{% else %}red{% endif %}" onclick="horaire_click(event, this.id, this.className)"></td>
                                     {% endfor %}
                                 </tr>
                             </table>

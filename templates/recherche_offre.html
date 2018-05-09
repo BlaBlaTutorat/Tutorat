@@ -102,7 +102,7 @@
                             {% for i in range(0,6) %}
                                 <table>
                                     <tr>
-                                        {% for H in (offre[8]|string).split(' ')[i*22:(i + 1)*22] %}
+                                        {% for H in (offre[8]|list)[i*22:(i + 1)*22] %}
                                             {% if (H|int) == 0 %}
                                                 <td class="white"></td>
                                             {% elif (H|int) == 1 %}

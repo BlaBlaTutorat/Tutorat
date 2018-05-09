@@ -75,7 +75,7 @@
                             {% for i in range(0,6) %}
                                 <table>
                                     <tr>
-                                        {% for H in (demande[7]|string).split(' ')[i*22:(i + 1)*22] %}
+                                        {% for H in (demande[7]|list)[i*22:(i + 1)*22] %}
                                             {% if (H|int) == 0 %}
                                                 <td class="white"></td>
                                             {% elif (H|int) == 1 %}
