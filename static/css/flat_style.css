@@ -538,7 +538,8 @@ footer a:hover {
 
 /* Search */
 #jour-offre {
-    margin-top: 5px;
+    margin: 5px 10px 0 10px;
+    line-height: 17px;
 }
 
 .heure-table {
@@ -765,10 +766,16 @@ footer a:hover {
     background: #18a3fa;
     border-radius: 15px;
     color: white;
+    margin: 0 10px 0 10px;
 }
 
 #table_horaires_crea {
     text-align: right;
+}
+
+#table_horaires-2 {
+    text-align: center;
+    margin: 0 10px 0 10px;
 }
 
 .tri3 {
@@ -787,8 +794,7 @@ footer a:hover {
 #horaires_crea {
     display: flex;
     flex-direction: column;
-    width: 35%;
-    margin-top: 40px;
+    min-width: 35%;
 }
 
 .crea_title {
