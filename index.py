@@ -604,6 +604,7 @@ def enregistrement():
 # Modification d'une demande
 @app.route('/edit_d')
 def modifier_demande():
+    """Modification d'une demande"""
     if check_connexion():
         mail = session['mail']
         if request.args.get('id'):
@@ -627,6 +628,7 @@ def modifier_demande():
 # Modification d'une offre
 @app.route('/edit_o')
 def modifier_offre():
+    """Modification d'une offre"""
     if check_connexion():
         mail = session['mail']
         if request.args.get('id'):
