@@ -436,6 +436,10 @@ def recherche():
         user = sql_obj.get_user_info(mail)[0][0]
         if request.args.get('info_msg'):
             info_msg = request.args.get('info_msg')
+        if request.args.get('select_H'):
+            select_H = request.args.get('info_msg')
+        if request.args.get('offre'):
+            O = request.args.get('offre')
         if request.form.get('precedent'):
             page = int(request.form.get('page')) - 1
         elif request.form.get('suivant'):
@@ -576,13 +580,14 @@ def enregistrement():
 
         if request.form.get("categorie") == "demande":
             result_code = sql_obj.add_tuteur(request.form.get("id"), mail)
+            return redirect(url_for("select_2", tutorat_id=request.form.get("id")))
         else:
             result_code = sql_obj.add_participant(request.form.get("id"), mail)
 
         if result_code == 0:
             # Pas d'erreur
             return redirect(
-                url_for("recherche", info_msg="Votre participation à ce tutorat a bien été prise en compte."))
+                url_for("select", tutorat_id=request.form.get("id")))
         elif result_code == 1:
             # Erreur l'utilisateur participe déjà à l'offre
             return redirect(url_for("recherche", info_msg="Vous vous êtes déjà enregistré pour ce Tutorat"))
@@ -600,6 +605,64 @@ def enregistrement():
         # Redirection si l'utilisateur n'est pas connecté
         return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
 
+# Selection horaires (offre)
+@app.route('/select', methods=['GET', 'POST'])
+def select():
+    """Selection des horaires pour les offres"""
+    if check_connexion():
+        mail = session['mail']
+        sql_obj = sql.MysqlObject()
+        admin_user = check_admin()
+        if request.args.get('tutorat_id'):
+            id_offre = request.args.get('tutorat_id')
+
+            if mail == sql_obj.get_offre(id_offre)[0][5]:
+                return render_template("select_horaires.html", o=sql_obj.get_offre(id_offre)[0], days=days,
+                                           **locals())
+            elif mail == sql_obj.get_offre(id_offre)[0][6]:
+                return redirect(
+                    url_for("recherche", info_msg="Vous avez bien été ajouté en temps que participant à ce tutorat."))
+            else:
+                abort(403)
+
+        elif len(request.form) != 0:
+            horaires = request.form["horaires_data"]
+            sql_obj.modifier_offre(request.form.get("id"), horaires)
+            return redirect(
+                url_for("recherche", info_msg="Vous avez bien été ajouté en temps que participant à ce tutorat."))
+
+        else:
+            abort(404)
+
+    else:
+        return redirect(url_for("connexion", info_msg='Connectez-vous avant de continuer.'))
+
+# Selection horaires (demande)
+@app.route('/select_2', methods=['GET', 'POST'])
+def select_2():
+    """Selection des horaires pour les demandes"""
+    if check_connexion():
+        mail = session['mail']
+        sql_obj = sql.MysqlObject()
+        admin_user = check_admin()
+        if request.args.get('tutorat_id'):
+            id_demande = request.args.get('tutorat_id')
+
+            if mail == sql_obj.get_demande(id_demande)[0][5]:
+                return render_template("select_horaires_d.html", o=sql_obj.get_demande(id_demande)[0], days=days, **locals())
+            else:
+                abort(403)
+
+        elif len(request.form) != 0:
+            horaires = request.form["horaires_data"]
+            sql_obj.modifier_demande(request.form.get("id"), horaires)
+            return redirect(url_for("recherche", info_msg="Vous avez bien été ajouté en temps que tuteur."))
+
+        else:
+            abort(404)
+
+    else:
+        return redirect(url_for("connexion", info_msg='Connectez-vous avant de continuer.'))
 
 # Modification d'une demande (affichage)
 @app.route('/edit_d')
@@ -662,7 +725,7 @@ def modification_offre_demande():
         else:
             sql_obj.modifier_offre(id, horaires)
 
-        return redirect(url_for("profil2"))
+        return redirect(url_for("profil_2"))
     else:
         return redirect(url_for("connexion", info_msg='Connectez-vous avant de continuer.'))
 
@@ -676,9 +739,9 @@ def quit_tutorat():
             offre_id = request.args.get('id')
             mail = session['mail']
             if sql_obj.delete_participant(offre_id, mail):
-                return redirect(url_for("profil", info_msg="Votre retrait de ce Tutorat a bien été enregistré."))
+                return redirect(url_for("profil_2", info_msg="Votre retrait de ce Tutorat a bien été enregistré."))
             else:
-                return redirect(url_for("profil", info_msg="Vous ne participez pas à ce Tutorat"))
+                return redirect(url_for("profil_2", info_msg="Vous ne participez pas à ce Tutorat"))
         else:
             abort(403)
     else:

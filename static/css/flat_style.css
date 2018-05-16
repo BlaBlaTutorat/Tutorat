@@ -826,6 +826,32 @@ footer a:hover {
 }
 /* END Create */
 
+/* Select */
+.select_button {
+    width: 15%;
+    align-items: center;
+    margin: 0 10px 0 10px;
+
+}
+
+#select_H {
+    margin-left: 5px;
+}
+
+.help {
+    font-size: 0.6em;
+    color: #18a3fa;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.under_H {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+/* END Select */
+
 /* Profil */
 .info a {
     color: black;
