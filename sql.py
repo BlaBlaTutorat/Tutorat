@@ -525,3 +525,63 @@ class MysqlObject:
     def modifier_demande(self, demande_id, horaires):
         self.cursor.execute("""UPDATE demandes SET horaires = %s WHERE id = %s""", (horaires, demande_id))
         self.conn.commit()
+        
+    # Offres
+    def get_all_offres(self):
+        self.cursor.execute("""SELECT * FROM offres""")
+        offres = self.cursor.fetchall()
+        return  offres
+        
+    # Niveau classe
+    def get_class_level(self, classe):
+        self.cursor.execute("""SELECT classement FROM classes WHERE NOM = %s""", (classe,))
+        lvl = self.cursor.fetchall()[0]
+        return lvl
+        
+    #Niveau filière
+    def get_filiere_level(self, filiere):
+        self.cursor.execute("""SELECT classement FROM filieres WHERE nom = %s""", (filiere,))
+        lvl_o = self.cursor.fetchall()[0]
+        return lvl_o
+        
+    # Suggestion
+    def get_tutore_info(self, mail):
+        demandes = self.get_user_demandes(mail)
+            
+        # liste des suggestions de niveau 1 :
+        suggest_1 = []
+        # Liste des suggestions de niveau 2 :
+        suggest_2 = []
+        
+        for demande in demandes:
+           
+            # variables demandes :
+            matiere = demandes[3]
+            classe = demandes[2]
+            lvl = self.get_class_level(classe)
+            horaires = demandes[7]
+            
+            offres = self.get_all_offres()
+            
+            
+            
+            for x in offres :
+                
+                # variables offres :
+                
+                classe_o = x[2]
+                lvl_o = self.get_filiere_level(classe_o)
+                matiere_o = x[3]
+                horaires_o = x[8]
+                
+                if lvl_o >= lvl and matiere == matiere_o:
+                    suggest_1.append(x)
+                    n = 0
+                    for y in horaires :
+                        for z in horaires_o:
+                            if y == z:
+                                n += 1
+                
+                    if n >= 1:
+                        suggest_2.append(x)
+        return suggest_1, suggest_2
