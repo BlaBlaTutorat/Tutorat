@@ -474,6 +474,14 @@ class MysqlObject:
             """SELECT * FROM demandes WHERE auteur=%s""", (mail,))
         return self.cursor.fetchall()
 
+    # Liste demandes utilisateur
+    def get_user_demandes_tuteur(self, mail):
+        """Argument: Mail de l'utilisateur
+        Fonction: Renvoie la liste des demandes où l'utilisateur est le tuteur"""
+        self.cursor.execute(
+            """SELECT * FROM demandes WHERE tuteur=%s""", (mail,))
+        return self.cursor.fetchall()
+
     # Listes des demandes à valider
     def demandes_liste_valider(self):
         """Renvoie la liste des demandes à valider"""

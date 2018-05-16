@@ -220,6 +220,7 @@ def profil_2():
         admin_user = check_admin()
         user = sql_obj.get_user_info(mail)[0][0]
         demandes = sql_obj.get_user_demandes(mail)
+        demandes_T = sql_obj.get_user_demandes_tuteur(mail)
         if request.args.get('info_msg'):
             info_msg = request.args.get('info_msg')
         return render_template("profil/profil_t_p.html", offres_creees=sql_obj.get_user_offres(mail),

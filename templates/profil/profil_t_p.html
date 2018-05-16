@@ -216,7 +216,7 @@
     </div>
     <div class="offres" id="tutorat_en_cours">
         <!-- Liste des offres auxquelles participe l'utilisateur -->
-        <h2>Les offres auxquelles vous participez</h2>
+        <h2>Les tutorats auxquels vous participez</h2>
         {% if offres_suivies|length>0 %}
             {% for offre in offres_suivies %}
                 <br/>
@@ -305,8 +305,8 @@
                 <br/>
             {% endfor %}
         {% endif %}
-        {% if demandes|length>0 %}
-            {% for demande in demandes %}
+        {% if demandes_T|length>0 %}
+            {% for demande in demandes_T %}
                 {% if demande[5] is not none %}
                     <br/>
                     <div class="bloc">
