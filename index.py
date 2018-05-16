@@ -749,6 +749,25 @@ def quit_tutorat():
         # Redirection si l'utilisateur n'est pas connecté
         return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
 
+# Suppression de la participation d'un utilisateur à une offre
+@app.route('/quit_2')
+def quit_2():
+    """Sert à quitter une demande"""
+    sql_obj = sql.MysqlObject()
+    if check_connexion():
+        if request.args.get('id'):
+            demande_id = request.args.get('id')
+            mail = session['mail']
+            if sql_obj.quit_demande(demande_id, mail):
+                return redirect(url_for("profil_2", info_msg="Votre retrait de ce Tutorat a bien été enregistré."))
+            else:
+                return redirect(url_for("profil_2", info_msg="Vous ne participez pas à ce Tutorat"))
+        else:
+            abort(403)
+    else:
+        # Redirection si l'utilisateur n'est pas connecté
+        return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
+
 
 # Suppression d'une offre
 @app.route('/delete')

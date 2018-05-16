@@ -315,10 +315,12 @@
                                     onclick="open_profile_page('{{ demande[5] }}')"
                                     title="Voir le profil">{{ sql_obj.get_user_pseudo(demande[5]) }}</a>
                             </p>
-                            <p class="element"><strong class="G">Mail du tuteur :</strong> <a
-                                    href="mailto:{{ demande[5] }}" title="Envoyer un mail">{{ demande[5] }}</a></p>
+                            <p class="element"><strong class="G">Participants :</strong> <a
+                                    onclick="open_profile_page('{{ demande[1] }}')"
+                                    title="Voir le profil">{{ sql_obj.get_user_pseudo(demande[1]) }}</a></p>
+                            <p class="element"><strong class="G">Mail du tutoré :</strong> <a
+                                    href="mailto:{{ demande[1] }}" title="Envoyer un mail">{{ demande[1] }}</a></p>
                             <p class="element"><strong class="G">Matière:</strong> {{ demande[3] }}</p>
-                            <p class="element"><strong class="G">Participants :</strong> Moi</p>
                         </div>
                         <div id="horaires">
                             <p class="date_creation">Créée le {{ demande[4].strftime('%d/%m/%Y') }}</p>
@@ -370,7 +372,7 @@
                                     {% endfor %}
                                 </div>
                             </div>
-                            <a href="/delete3?id={{ demande[0] }}">
+                            <a href="/quit_2?id={{ demande[0] }}">
                                 <button>Quitter ce tutorat</button>
                             </a>
                         </div>
@@ -381,9 +383,9 @@
         {% endif %}
         {% if demandes|length==0 and offres_suivies|length==0 %}
             <div class="bloc" id="none_offre">
-                <p class="none_offre">Vous ne participez à aucune offre</p>
+                <p class="none_offre">Vous ne participez à aucun tutorat</p>
                 <p class="none_offre"><a href="/search">
-                    <button>Rechercher une offre</button>
+                    <button>Rechercher une offre/demande</button>
                 </a></p>
             </div>
         {% endif %}

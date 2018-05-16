@@ -488,6 +488,12 @@ class MysqlObject:
         self.cursor.execute("""SELECT * FROM demandes WHERE disponible=0""")
         return self.cursor.fetchall()
 
+    # Quitter une demande
+    def quit_demande(self, id, mail):
+        """Quitte la demande"""
+        self.cursor.execute("""UPDATE demandes SET tuteur = NULL WHERE id = %s AND tuteur = %s""", (id, mail,))
+        self.conn.commit()
+
     # Listes des demandes validées
     def demandes_liste_validees(self):
         """Renvoie la liste des demandes qui ont été validé"""
