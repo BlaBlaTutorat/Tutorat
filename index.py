@@ -879,7 +879,22 @@ def reset():
     else:
         return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
 
+# Suggestion d'offres
+@app.route('/suggest')
+def suggest():
+    sql_obj = sql.MysqlObject()
+    if check_connexion():
+        mail = session['mail']
+        sugest = sql_obj.get_tutore_info(mail)
+        suggest_1 = suggest[0]
+        suggest_2 = suggest[1]
+        
+        return render_template("suggestion/suggest.html", **locals())
 
+    else:
+        return redirect(url_for("connexion", info_msg='Connectez-vous avant de continuer.'))
+    
+    
 # Gestion de l'erreur 404
 @app.errorhandler(404)
 def not_found(error):
