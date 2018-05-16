@@ -12,7 +12,9 @@
 <!-- Formulaire de création -->
 <h2 class="crea_title">Modification d'une demande</h2>
 
-<form method="post" action="/edit_d" class="form_crea">
+<form method="post" action="/edit_apply" class="form_crea">
+    <input type="hidden" name="categorie" value="demande"/>
+    <input type="hidden" name="id" value="{{ demande[0] }}"/>
     <div class="creation">
         <div class="bloc">
             <div class="info_crea">

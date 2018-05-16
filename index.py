@@ -601,7 +601,7 @@ def enregistrement():
         return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
 
 
-# Modification d'une demande
+# Modification d'une demande (affichage)
 @app.route('/edit_d')
 def modifier_demande():
     """Modification d'une demande"""
@@ -625,7 +625,7 @@ def modifier_demande():
         return redirect(url_for("connexion", info_msg='Connectez-vous avant de continuer.'))
 
 
-# Modification d'une offre
+# Modification d'une offre (affichage)
 @app.route('/edit_o')
 def modifier_offre():
     """Modification d'une offre"""
@@ -648,6 +648,23 @@ def modifier_offre():
     else:
         return redirect(url_for("connexion", info_msg='Connectez-vous avant de continuer.'))
 
+# Modification d'une offre/demande (formulaire)
+@app.route('/edit_apply', methods=['POST'])
+def modification_offre_demande():
+    """Modification d'une offre"""
+    if check_connexion():
+        sql_obj = sql.MysqlObject()
+        mail = session['mail']
+        id = request.form.get('id')
+        horaires = request.form.get('horaires_data')
+        if request.form.get('categorie') == "demande":
+            sql_obj.modifier_demande(id, horaires)
+        else:
+            sql_obj.modifier_offre(id, horaires)
+
+        return redirect(url_for("profil2"))
+    else:
+        return redirect(url_for("connexion", info_msg='Connectez-vous avant de continuer.'))
 
 # Suppression de la participation d'un utilisateur à une offre
 @app.route('/quit')

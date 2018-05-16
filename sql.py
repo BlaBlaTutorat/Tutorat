@@ -340,6 +340,11 @@ class MysqlObject:
         self.cursor.execute("""UPDATE offres SET disponible = %s WHERE id = %s""", (disponible, offre_id))
         self.conn.commit()
 
+    # Modification d'une offre
+    def modifier_offre(self, offre_id, horaires):
+        self.cursor.execute("""UPDATE offres SET horaires = %s WHERE id = %s""", (horaires, offre_id))
+        self.conn.commit()
+
     """
         REQUETES DIVERSES SUR LA BDD
     """
@@ -515,3 +520,8 @@ class MysqlObject:
         else:
             # auteur == tuteur
             return 3
+
+    # Modification d'une demande
+    def modifier_demande(self, demande_id, horaires):
+        self.cursor.execute("""UPDATE demandes SET horaires = %s WHERE id = %s""", (horaires, demande_id))
+        self.conn.commit()

@@ -10,7 +10,9 @@
 <!-- Formulaire de création -->
 <h2 class="crea_title">Modification d'une offre</h2>
 
-<form method="post" action="/edit_o" class="form_crea">
+<form method="post" action="/edit_apply" class="form_crea">
+    <input type="hidden" name="categorie" value="offre"/>
+    <input type="hidden" name="id" value="{{ offre[0] }}"/>
     <div class="creation">
         <div class="bloc">
             <div class="info_crea">
