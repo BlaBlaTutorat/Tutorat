@@ -947,21 +947,36 @@ def reset():
         return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
 
 # Suggestion d'offres
-@app.route('/suggest')
-def suggest():
+@app.route('/suggest_o')
+def suggest_o():
     sql_obj = sql.MysqlObject()
     if check_connexion():
         mail = session['mail']
-        sugest = sql_obj.get_tutore_info(mail)
-        suggest_1 = suggest[0]
-        suggest_2 = suggest[1]
+        sugest_o = sql_obj.get_tutore_info(mail)
+        suggest_o1 = suggest_o[0]
+        suggest_o2 = suggest_o[1]
         
-        return render_template("suggestion/suggest.html", **locals())
+        return render_template("suggestion/suggest_o.html", **locals())
 
     else:
         return redirect(url_for("connexion", info_msg='Connectez-vous avant de continuer.'))
     
-    
+# Suggestion de demandes
+@app.route('/suggest_d')
+def suggest_d():
+    sql_obj = sql.MysqlObject()
+    if check_connexion():
+        mail = session['mail']
+        sugest_d = sql_obj.get_tuteur_info(mail)
+        suggest_d1 = suggest_d[0]
+        suggest_d2 = suggest_d[1]
+
+        return render_template("suggestion/suggest_d.html", **locals())
+
+    else:
+        return redirect(url_for("connexion", info_msg='Connectez-vous avant de continuer.'))
+
+
 # Gestion de l'erreur 404
 @app.errorhandler(404)
 def not_found(error):

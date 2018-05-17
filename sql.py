@@ -217,6 +217,26 @@ class MysqlObject:
                     offres.append(row)
         return offres
 
+    # Obtenir niveau élève
+    def classe_to_niveau(self, classe):
+        self.cursor.execute("""SELECT niveau FROM filieres WHERE classe=%s""", (classe,))
+        return self.cursor.fetchall()[0][0]
+
+    # Informations des demandes d'un certain utilisateur
+    def demandes_info(self, mail):
+        self.cursor.execute("""SELECT * FROM demandes WHERE auteur=%s""", (mail,))
+        return self.cursor.fetchall()
+
+
+
+    # Informations de toutes les offres créées
+    def offres_info(self,mail):
+        classe_o = self.get_user_info(mail)[0][3]
+        niveau_o = self.classe_to_niveau(classe_o)
+        self.cursor.execute("""SELECT * FROM offres""")
+        return self.cursor.fetchall(), niveau_o
+
+
     # Liste des offres selon 1 facteur de tri + 1 niveau/matiere
     def offres_liste_tri_2(self, option, option2, page, mail):
         """Argument: Mail de l'utilisateur, numéro de page, option de tri 1, option de tri 2
@@ -544,7 +564,17 @@ class MysqlObject:
     def get_all_offres(self):
         self.cursor.execute("""SELECT * FROM offres""")
         offres = self.cursor.fetchall()
-        return  offres
+        return offres
+
+    def get_all_demandes(self):
+        self.cursor.execute("""SELECT * FROM demandes""")
+        demandes = self.cursor.fetchall()
+        return demandes
+
+    def get_offres(selfself, mail):
+        self.cursor.execute("""SELECT * FROM offres WHERE auteur = %s""", (mail,))
+        offres_mail = self.cursor.fetchall()
+        return offres_mail
         
     # Niveau classe
     def get_class_level(self, classe):
@@ -558,7 +588,9 @@ class MysqlObject:
         lvl_o = self.cursor.fetchall()[0]
         return lvl_o
         
-    # Suggestion
+# Suggestion
+
+    # Offres
     def get_tutore_info(self, mail):
         demandes = self.get_user_demandes(mail)
             
@@ -599,3 +631,44 @@ class MysqlObject:
                     if n >= 1:
                         suggest_2.append(x)
         return suggest_1, suggest_2
+
+    # Demandes
+
+    def get_tuteur_info(self, mail):
+        offres = self.get_offres(mail)
+
+        # liste des suggestions de niveau 1 :
+        suggest_o1 = []
+        # Liste des suggestions de niveau 2 :
+        suggest_o2 = []
+
+        for offre in offres:
+
+            # variables offres :
+            matiere = offres[3]
+            filiere = offres[2]
+            lvl = self.get_filiere_level(filiere)
+            horaires = offres[7]
+
+            demandes = self.get_all_demandes()
+
+            for x in demandes:
+
+                # variables offres :
+
+                classe_d = x[2]
+                lvl_d = self.get_class_level(classe_d)
+                matiere_d = x[3]
+                horaires_d = x[7]
+
+                if lvl >= lvl_d and matiere == matiere_d:
+                    suggest_o1.append(x)
+                    n = 0
+                    for y in horaires:
+                        for z in horaires_d:
+                            if y == z:
+                                n += 1
+
+                    if n >= 1:
+                        suggest_o2.append(x)
+        return suggest_o1, suggest_o2
