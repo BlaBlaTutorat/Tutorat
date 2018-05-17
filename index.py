@@ -1,9 +1,13 @@
 # coding: utf-8
 import hashlib
 import random
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 from flask import *
 
+import config
 import sql
 
 app = Flask(__name__)
@@ -135,7 +139,11 @@ def mdp_oublie():
     """Page de mot de passe oublié"""
     if request.args.get('info_msg'):
         info_msg = request.args.get('info_msg')
-    return render_template("authentification/mdp_oublie.html", **locals())
+    # Vérification configuration complète
+    if config.email != "" and config.email_password != "":
+        return render_template("authentification/mdp_oublie.html", **locals())
+    else:
+        return redirect(url_for('connexion', info_msg="Veuillez vous adresser directement aux documentalistes."))
 
 
 # Traitement Mot de passe oublié
@@ -154,28 +162,26 @@ def traitement_mdp_oublie():
             # Chiffrage du nouveau mot de passe
             passwd_hash = hashlib.sha256(str(passwd).encode('utf-8')).hexdigest()
 
-            # Envoi du nouveau mot de passe à la base de donnée
+            # Envoi du nouveau mot de passe à la base de données
             sql_obj.modify_user_info_mdp(request.form['mail'], passwd_hash)
 
             # Envoi de l'email
-            #msg = MIMEMultipart()
-            #msg['From'] = config.email
-            #msg['To'] = request.form['mail']
-            #msg['Subject'] = 'BlaBla-Tutorat -- Nouveau mot de passe'
-            #message = 'Bonjour,\n\nNous avons généré pour vous un nouveau mot de passe : '\
-            #        + passwd + '\nVeuillez le changer dès que vous vous connecterez à BlaBla-Tutorat.\n' \
-            #        'L\'équipe de BlaBla-Tutorat vous souhaite une bonne journée.\n\n\n\n\nCet e-mail a été généré' \
-            #       ' automatiquement, merci de ne pas y répondre.' \
-            #       ' Pour toute question, veuillez vous adresser aux documentalistes.'
-            # msg.attach(MIMEText(message))
-            #mailserver = smtplib.SMTP(config.smtp, config.smtp_port)
-            #mailserver.starttls()
-            #mailserver.login(config.email, config.email_password)
-            # mailserver.sendmail(msg['From'], msg['To'], msg.as_string())
-            #mailserver.quit()
-            #return redirect(
-            #    url_for('connexion', info_msg="Un nouveau mot de passe vous a été envoyé."))
-
+            msg = MIMEMultipart()
+            msg['From'] = config.email
+            msg['To'] = request.form['mail']
+            msg['Subject'] = 'BlaBla-Tutorat -- Nouveau mot de passe'
+            message = 'Bonjour,\n\nNous avons généré pour vous un nouveau mot de passe : '\
+                    + passwd + '\nVeuillez le changer dès que vous vous connecterez à BlaBla-Tutorat.\n' \
+                    'L\'équipe de BlaBla-Tutorat vous souhaite une bonne journée.\n\n\n\n\nCet e-mail a été généré' \
+                   ' automatiquement, merci de ne pas y répondre.' \
+                   ' Pour toute question, veuillez vous adresser aux documentalistes.'
+            msg.attach(MIMEText(message))
+            mailserver = smtplib.SMTP(config.smtp, config.smtp_port)
+            mailserver.starttls()
+            mailserver.login(config.email, config.email_password)
+            mailserver.sendmail(msg['From'], msg['To'], msg.as_string())
+            mailserver.quit()
+            return redirect(url_for('connexion', info_msg="Un nouveau mot de passe vous a été envoyé."))
         else:
             return redirect(url_for("mdp_oublie", info_msg="Cette adresse e-mail ne correspond à aucun compte"))
     else:
@@ -260,6 +266,8 @@ def profil_update():
     """Page de mise à jour de profil, récolte les information données par l'utilisateur et les envoie à la BDD"""
     sql_obj = sql.MysqlObject()
     if check_connexion():
+        if request.args.get('info_msg'):
+            info_msg = request.args.get('info_msg')
         mail = session['mail']
         admin_user = check_admin()
         classes = sql_obj.classes_liste()
@@ -918,7 +926,7 @@ def promote():
         return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
 
 
-# deconnexion
+# Déconnexion
 @app.route('/disconnect')
 def deconnexion():
     """Sert à se déconnecter du site"""
