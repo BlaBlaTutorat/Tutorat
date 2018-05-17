@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+
+{% with name="Modifier une demande" %}{% include "mise_en_page/HEAD.html" %}{% endwith %}
+
+
+<body>
+
+{% include 'mise_en_page/HEADER.html' %}
+
+<!-- Formulaire de création -->
+<h2 class="crea_title">Modification d'une demande</h2>
+
+<form method="post" action="/edit_apply" class="form_crea">
+    <input type="hidden" name="categorie" value="demande"/>
+    <input type="hidden" name="id" value="{{ demande[0] }}"/>
+    <div class="creation">
+        <div class="bloc">
+            <div class="info_crea">
+                <p class="element"><strong class="G">Vous êtes en :</strong> {{ demande[2] }}</p>
+                <!-- Matière -->
+                <p class="element"><strong class="G">Vous souhaitez être aidé en : </strong>{{ demande[3] }}</p>
+                <div class="crea_offre_bloc">
+                    <input type="submit" class="crea_offre" value="Modifier ma demande"/>
+                </div>
+            </div>
+            <!-- Horaires -->
+            <div id="horaires_crea">
+                <input type="hidden" id="horaires_data" name="horaires_data" value="{{ demande[7] }}"/>
+                <div class="horaire">
+                    <div class="table" id="jour-offre">
+                        {% for i in range(0,6) %}
+                            <p>{{ days[i] }}:</p>
+                        {% endfor %}
+                    </div>
+                    <div class="table" id="table_horaires-2">
+                        <table class="heure-table">
+                            <tr>
+                                <th>08h</th>
+                                <th></th>
+                                <th>09h</th>
+                                <th></th>
+                                <th>10h</th>
+                                <th></th>
+                                <th>11h</th>
+                                <th></th>
+                                <th>12h</th>
+                                <th></th>
+                                <th>13h</th>
+                                <th></th>
+                                <th>14h</th>
+                                <th></th>
+                                <th>15h</th>
+                                <th></th>
+                                <th>16h</th>
+                                <th></th>
+                                <th>17h</th>
+                                <th></th>
+                                <th>18h</th>
+                                <th></th>
+                            </tr>
+                        </table>
+                        {% for i in range(0,6) %}
+                            <table>
+                                <tr>
+                                    {% for j in range(0,22) %}
+                                        <td id="{{ i }} {{ j }}"
+                                            class="{% if demande[7][(i*22)+j] == "0" %}white{% else %}red{% endif %}"
+                                            onclick="horaire_click(event, this.id, this.className)"></td>
+                                    {% endfor %}
+                                </tr>
+                            </table>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+{% include 'mise_en_page/FOOTER.html' %}
+
+</body>
+</html>

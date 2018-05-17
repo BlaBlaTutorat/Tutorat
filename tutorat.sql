@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  sam. 28 avr. 2018 à 17:17
+-- Généré le :  mer. 09 mai 2018 à 11:07
 -- Version du serveur :  5.7.19
 -- Version de PHP :  5.6.31
 
@@ -31,6 +31,7 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `classes`;
 CREATE TABLE IF NOT EXISTS `classes` (
   `NOM` varchar(6) NOT NULL,
+  `classement` int(11) NOT NULL,
   PRIMARY KEY (`NOM`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -38,58 +39,58 @@ CREATE TABLE IF NOT EXISTS `classes` (
 -- Déchargement des données de la table `classes`
 --
 
-INSERT INTO `classes` (`NOM`) VALUES
-('1ES1'),
-('1ES2'),
-('1ES3'),
-('1L1'),
-('1LES'),
-('1S1'),
-('1S2'),
-('1S3'),
-('1S4'),
-('1S5'),
-('2G01'),
-('2G02'),
-('2G03'),
-('2G04'),
-('2G05'),
-('2G06'),
-('2G07'),
-('2G08'),
-('2G09'),
-('2G10'),
-('2G11'),
-('ADMIN'),
-('BCPST1'),
-('BCPST2'),
-('ECE1'),
-('ECE2'),
-('ECS1'),
-('ECS2'),
-('HK1'),
-('HK2'),
-('KH'),
-('MP'),
-('MPSI1'),
-('MPSI2'),
-('MPX'),
-('PC'),
-('PCSI1'),
-('PCSI2'),
-('PCX'),
-('PSI'),
-('TES1'),
-('TES2'),
-('TES3'),
-('TL-ES'),
-('TL1'),
-('TS1'),
-('TS2'),
-('TS3'),
-('TS4'),
-('TS5'),
-('UPE2A');
+INSERT INTO `classes` (`NOM`, `classement`) VALUES
+('1ES1', 1),
+('1ES2', 1),
+('1ES3', 1),
+('1L1', 1),
+('1LES', 1),
+('1S1', 1),
+('1S2', 1),
+('1S3', 1),
+('1S4', 1),
+('1S5', 1),
+('2G01', 0),
+('2G02', 0),
+('2G03', 0),
+('2G04', 0),
+('2G05', 0),
+('2G06', 0),
+('2G07', 0),
+('2G08', 0),
+('2G09', 0),
+('2G10', 0),
+('2G11', 0),
+('ADMIN', 2000),
+('BCPST1', 3),
+('BCPST2', 3),
+('ECE1', 3),
+('ECE2', 3),
+('ECS1', 3),
+('ECS2', 3),
+('HK1', 3),
+('HK2', 3),
+('KH', 4),
+('MP', 4),
+('MPSI1', 3),
+('MPSI2', 3),
+('MPX', 4),
+('PC', 4),
+('PCSI1', 3),
+('PCSI2', 3),
+('PCX', 4),
+('PSI', 4),
+('TES1', 2),
+('TES2', 2),
+('TES3', 2),
+('TL-ES', 2),
+('TL1', 2),
+('TS1', 2),
+('TS2', 2),
+('TS3', 2),
+('TS4', 2),
+('TS5', 2),
+('UPE2A', 0);
 
 -- --------------------------------------------------------
 
@@ -106,7 +107,7 @@ CREATE TABLE IF NOT EXISTS `demandes` (
   `date_time` datetime NOT NULL,
   `tuteur` varchar(50) DEFAULT NULL,
   `disponible` tinyint(1) NOT NULL DEFAULT '0',
-  `horaires` varchar(300) NOT NULL DEFAULT '0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0',
+  `horaires` varchar(300) NOT NULL DEFAULT '000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
@@ -115,8 +116,8 @@ CREATE TABLE IF NOT EXISTS `demandes` (
 --
 
 INSERT INTO `demandes` (`id`, `auteur`, `classe`, `matiere`, `date_time`, `tuteur`, `disponible`, `horaires`) VALUES
-(1, 'antoinelabarussias@orange.fr', 'TS5', 'LATIN', '2018-04-12 09:59:06', NULL, 1, '1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0'),
-(2, 'taotom63@gmail.com', 'TS5', 'PHILOSOPHIE', '2018-04-12 10:00:09', NULL, 1, '1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0');
+(1, 'antoinelabarussias@orange.fr', 'TS5', 'LATIN', '2018-04-12 09:59:06', NULL, 1, '110000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000'),
+(2, 'taotom63@gmail.com', 'TS5', 'PHILOSOPHIE', '2018-04-12 10:00:09', NULL, 1, '110000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000');
 
 -- --------------------------------------------------------
 
@@ -219,7 +220,7 @@ CREATE TABLE IF NOT EXISTS `offres` (
   `participant` varchar(50) DEFAULT NULL,
   `participant2` varchar(50) DEFAULT NULL,
   `disponible` tinyint(1) NOT NULL DEFAULT '0',
-  `horaires` varchar(300) NOT NULL DEFAULT '0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0',
+  `horaires` varchar(300) NOT NULL DEFAULT '000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
@@ -228,12 +229,12 @@ CREATE TABLE IF NOT EXISTS `offres` (
 --
 
 INSERT INTO `offres` (`id`, `auteur`, `filiere`, `matiere`, `date_time`, `participant`, `participant2`, `disponible`, `horaires`) VALUES
-(1, 'marco.desmoulins@lilo.org', 'Terminale S', 'MATHEMATIQUES', '2018-02-22 00:00:00', 'antoinelabarussias@orange.fr', 'taotom63@gmail.com', 1, '1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1'),
-(2, 'taotom63@gmail.com', 'Terminale S', 'ISN', '2018-02-19 14:15:41', 'marco.desmoulins@lilo.org', NULL, 1, '1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0'),
-(3, 'antoinelabarussias@orange.fr', 'Terminale S', 'SCIENCES INGENIEUR', '2018-02-22 00:00:00', 'taotom63@gmail.com', NULL, 1, '1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0'),
-(4, 'antoinelabarussias@orange.fr', 'Seconde', 'FRANCAIS', '2018-02-22 00:00:00', NULL, NULL, 0, '1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0'),
-(5, 'antoinelabarussias@orange.fr', 'Terminale S', 'ISN', '2018-02-19 14:15:41', NULL, NULL, 1, '1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0'),
-(6, 'antoinelabarussias@orange.fr', 'Première S', 'SCIENCES INGENIEUR', '2018-02-22 00:00:00', NULL, NULL, 1, '1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0');
+(1, 'marco.desmoulins@lilo.org', 'Terminale S', 'MATHEMATIQUES', '2018-02-22 00:00:00', 'antoinelabarussias@orange.fr', 'taotom63@gmail.com', 1, '110000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000'),
+(2, 'taotom63@gmail.com', 'Terminale S', 'ISN', '2018-02-19 14:15:41', 'marco.desmoulins@lilo.org', NULL, 1, '110000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000'),
+(3, 'antoinelabarussias@orange.fr', 'Terminale S', 'SCIENCES INGENIEUR', '2018-02-22 00:00:00', 'taotom63@gmail.com', NULL, 1, '110000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000'),
+(4, 'antoinelabarussias@orange.fr', 'Seconde', 'FRANCAIS', '2018-02-22 00:00:00', NULL, NULL, 0, '110000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000'),
+(5, 'antoinelabarussias@orange.fr', 'Terminale S', 'ISN', '2018-02-19 14:15:41', NULL, NULL, 1, '110000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000'),
+(6, 'antoinelabarussias@orange.fr', 'Première S', 'SCIENCES INGENIEUR', '2018-02-22 00:00:00', NULL, NULL, 1, '110000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000');
 
 -- --------------------------------------------------------
 

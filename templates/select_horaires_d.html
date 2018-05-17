@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+{% with name="Liste des offres" %}{% include "mise_en_page/HEAD.html" %}{% endwith %}
+
+<body>
+
+{% include 'mise_en_page/HEADER.html' %}
+
+<h2 class="crea_title">Choix des horaires</h2>
+
+<form method="post" action="/select_2" class="form_crea">
+    <input type="hidden" name="id" value="{{ o[0] }}"/>
+    <div class="creation" id="select">
+        <div class="bloc">
+            <div class="info">
+                <p class="element"><strong class="G">Auteur:</strong>
+                    <a onclick="open_profile_page('{{ o[1] }}')" title="Voir le profil">{{ sql_obj.get_user_pseudo(o[1]) }}</a>
+                </p>
+                <p class="element"><strong class="G">En classe de:</strong> {{ o[2] }}</p>
+                <p class="element"><strong class="G">Matière:</strong> {{ o[3] }}</p>
+                </div>
+            <!-- Horaires -->
+            <div id="horaires_crea">
+                <input type="hidden" id="horaires_data" name="horaires_data" value="{{ o[7] }}"/>
+                <div class="horaire" id="select_H">
+                    <div class="table" id="jour-offre">
+                        {% for i in range(0,6) %}
+                            <p>{{ days[i] }}:</p>
+                        {% endfor %}
+                    </div>
+                    <div class="table" id="table_horaires-2">
+                        <table class="heure-table">
+                            <tr>
+                                <th>08h</th>
+                                <th></th>
+                                <th>09h</th>
+                                <th></th>
+                                <th>10h</th>
+                                <th></th>
+                                <th>11h</th>
+                                <th></th>
+                                <th>12h</th>
+                                <th></th>
+                                <th>13h</th>
+                                <th></th>
+                                <th>14h</th>
+                                <th></th>
+                                <th>15h</th>
+                                <th></th>
+                                <th>16h</th>
+                                <th></th>
+                                <th>17h</th>
+                                <th></th>
+                                <th>18h</th>
+                                <th></th>
+                            </tr>
+                        </table>
+                        {% for i in range(0,6) %}
+                            <table>
+                                <tr>
+                                    {% for j in range(0,22) %}
+                                        <td id="{{ i }} {{ j }}"
+                                            class="{% if o[7][(i*22)+j] == "0" %}white{% else %}red{% endif %}"
+                                            onclick="horaire_click(event, this.id, this.className)"></td>
+                                    {% endfor %}
+                                </tr>
+                            </table>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="under_H">
+                    <p title="Décochez les horaires qui ne vous correspondent pas. Atention, vous devez au minimum avoir 30min de tutorat et au maximum 1h." class="help">Aide</p>
+                    <input type="submit" class="select_button" value="Terminer"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+{% include 'mise_en_page/FOOTER.html' %}
+
+</body>
+</html>

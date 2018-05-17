@@ -253,15 +253,8 @@ class MysqlObject:
         date_time = datetime.datetime.now()
         date_time = date_time.strftime("%Y-%m-%d %H:%M:%S")
         self.cursor.execute(
-            """INSERT INTO offres (auteur, filiere, matiere, date_time) VALUES (%s, %s, %s, %s)""",
-            (author, classe, matiere, date_time))
-        i = 0
-        for time in horaires:
-            if time != 0:
-                self.cursor.execute(
-                    """UPDATE offres SET """ + utils.get_horaire(i) + """ = %s WHERE date_time = %s AND auteur = %s""",
-                    (time, date_time, author))
-            i += 1
+            """INSERT INTO offres (auteur, filiere, matiere, date_time, horaires) VALUES (%s, %s, %s, %s, %s)""",
+            (author, classe, matiere, date_time, horaires))
         self.conn.commit()
 
     # Suppression d'une offre
@@ -345,6 +338,11 @@ class MysqlObject:
     # Validation d'une offre
     def validate_offer(self, offre_id, disponible):
         self.cursor.execute("""UPDATE offres SET disponible = %s WHERE id = %s""", (disponible, offre_id))
+        self.conn.commit()
+
+    # Modification d'une offre
+    def modifier_offre(self, offre_id, horaires):
+        self.cursor.execute("""UPDATE offres SET horaires = %s WHERE id = %s""", (horaires, offre_id))
         self.conn.commit()
 
     """
@@ -448,17 +446,16 @@ class MysqlObject:
         date_time = datetime.datetime.now()
         date_time = date_time.strftime("%Y-%m-%d %H:%M:%S")
         self.cursor.execute(
-            """INSERT INTO demandes (auteur, classe, matiere, date_time) VALUES (%s, %s, %s, %s)""",
-            (author, classe, matiere, date_time))
-        i = 0
-        for time in horaires:
-            if time != 0:
-                self.cursor.execute(
-                    """UPDATE demandes SET """ + utils.get_horaire(
-                        i) + """ = %s WHERE date_time = %s AND auteur = %s""",
-                    (time, date_time, author))
-            i += 1
+            """INSERT INTO demandes (auteur, classe, matiere, date_time, horaires) VALUES (%s, %s, %s, %s, %s)""",
+            (author, classe, matiere, date_time, horaires))
         self.conn.commit()
+
+    # Récupération d'une demande
+    def get_demande(self, demande_id):
+        """Argument: Id de la demande
+        Fonction: Renvoie la demande"""
+        self.cursor.execute("""SELECT * FROM demandes WHERE id = %s""", (demande_id,))
+        return self.cursor.fetchall()
 
     # Liste demandes sans tri
     def demandes_liste(self, page):
@@ -477,11 +474,25 @@ class MysqlObject:
             """SELECT * FROM demandes WHERE auteur=%s""", (mail,))
         return self.cursor.fetchall()
 
+    # Liste demandes utilisateur
+    def get_user_demandes_tuteur(self, mail):
+        """Argument: Mail de l'utilisateur
+        Fonction: Renvoie la liste des demandes où l'utilisateur est le tuteur"""
+        self.cursor.execute(
+            """SELECT * FROM demandes WHERE tuteur=%s""", (mail,))
+        return self.cursor.fetchall()
+
     # Listes des demandes à valider
     def demandes_liste_valider(self):
         """Renvoie la liste des demandes à valider"""
         self.cursor.execute("""SELECT * FROM demandes WHERE disponible=0""")
         return self.cursor.fetchall()
+
+    # Quitter une demande
+    def quit_demande(self, id, mail):
+        """Quitte la demande"""
+        self.cursor.execute("""UPDATE demandes SET tuteur = NULL WHERE id = %s AND tuteur = %s""", (id, mail,))
+        self.conn.commit()
 
     # Listes des demandes validées
     def demandes_liste_validees(self):
@@ -523,3 +534,68 @@ class MysqlObject:
         else:
             # auteur == tuteur
             return 3
+
+    # Modification d'une demande
+    def modifier_demande(self, demande_id, horaires):
+        self.cursor.execute("""UPDATE demandes SET horaires = %s WHERE id = %s""", (horaires, demande_id))
+        self.conn.commit()
+        
+    # Offres
+    def get_all_offres(self):
+        self.cursor.execute("""SELECT * FROM offres""")
+        offres = self.cursor.fetchall()
+        return  offres
+        
+    # Niveau classe
+    def get_class_level(self, classe):
+        self.cursor.execute("""SELECT classement FROM classes WHERE NOM = %s""", (classe,))
+        lvl = self.cursor.fetchall()[0]
+        return lvl
+        
+    #Niveau filière
+    def get_filiere_level(self, filiere):
+        self.cursor.execute("""SELECT classement FROM filieres WHERE nom = %s""", (filiere,))
+        lvl_o = self.cursor.fetchall()[0]
+        return lvl_o
+        
+    # Suggestion
+    def get_tutore_info(self, mail):
+        demandes = self.get_user_demandes(mail)
+            
+        # liste des suggestions de niveau 1 :
+        suggest_1 = []
+        # Liste des suggestions de niveau 2 :
+        suggest_2 = []
+        
+        for demande in demandes:
+           
+            # variables demandes :
+            matiere = demandes[3]
+            classe = demandes[2]
+            lvl = self.get_class_level(classe)
+            horaires = demandes[7]
+            
+            offres = self.get_all_offres()
+            
+            
+            
+            for x in offres :
+                
+                # variables offres :
+                
+                classe_o = x[2]
+                lvl_o = self.get_filiere_level(classe_o)
+                matiere_o = x[3]
+                horaires_o = x[8]
+                
+                if lvl_o >= lvl and matiere == matiere_o:
+                    suggest_1.append(x)
+                    n = 0
+                    for y in horaires :
+                        for z in horaires_o:
+                            if y == z:
+                                n += 1
+                
+                    if n >= 1:
+                        suggest_2.append(x)
+        return suggest_1, suggest_2

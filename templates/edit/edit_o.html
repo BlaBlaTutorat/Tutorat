@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+{% with name="Modifier une offre" %}{% include "mise_en_page/HEAD.html" %}{% endwith %}
+
+<body>
+
+{% include 'mise_en_page/HEADER.html' %}
+
+<!-- Formulaire de création -->
+<h2 class="crea_title">Modification d'une offre</h2>
+
+<form method="post" action="/edit_apply" class="form_crea">
+    <input type="hidden" name="categorie" value="offre"/>
+    <input type="hidden" name="id" value="{{ offre[0] }}"/>
+    <div class="creation">
+        <div class="bloc">
+            <div class="info_crea">
+                <!-- Filière -->
+                <p class="element"><strong class="G">Vous voulez aider un élève de : </strong>{{ offre[2] }}</p>
+                <!-- Matière -->
+                <p class="element"><strong class="G">Vous souhaitez l'aider en : </strong>{{ offre[3] }}</p>
+                <div class="crea_offre_bloc">
+                    <input type="submit" class="crea_offre" value="Modifier mon offre"/>
+                    <p class="remarque">
+                        <a title="Si elles sont dans la même classe">Remarque : un tuteur peut aider deux
+                            personnes</a></p>
+                </div>
+            </div>
+            <!-- Horaires -->
+            <div id="horaires_crea">
+                <input type="hidden" id="horaires_data" name="horaires_data" value="{{ offre[8] }}"/>
+                <div class="horaire">
+                    <div class="table" id="jour-offre">
+                        {% for i in range(0,6) %}
+                            <p>{{ days[i] }}:</p>
+                        {% endfor %}
+                    </div>
+                    <div class="table" id="table_horaires-2">
+                        <table class="heure-table">
+                            <tr>
+                                <th>08h</th>
+                                <th></th>
+                                <th>09h</th>
+                                <th></th>
+                                <th>10h</th>
+                                <th></th>
+                                <th>11h</th>
+                                <th></th>
+                                <th>12h</th>
+                                <th></th>
+                                <th>13h</th>
+                                <th></th>
+                                <th>14h</th>
+                                <th></th>
+                                <th>15h</th>
+                                <th></th>
+                                <th>16h</th>
+                                <th></th>
+                                <th>17h</th>
+                                <th></th>
+                                <th>18h</th>
+                                <th></th>
+                            </tr>
+                        </table>
+                        {% for i in range(0,6) %}
+                            <table>
+                                <tr>
+                                    {% for j in range(0,22) %}
+                                        <td id="{{ i }} {{ j }}"
+                                            class="{% if offre[8][(i*22)+j] == "0" %}white{% else %}red{% endif %}"
+                                            onclick="horaire_click(event, this.id, this.className)"></td>
+                                    {% endfor %}
+                                </tr>
+                            </table>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+{% include 'mise_en_page/FOOTER.html' %}
+
+</body>
+</html>
