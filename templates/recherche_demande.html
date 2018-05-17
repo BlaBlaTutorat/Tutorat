@@ -15,11 +15,18 @@
             filtres</a>
 
         <!-- Rechargement de la page lors du changement de catégorie -->
-        <select class="tri" name="categorie" onchange="this.form.submit()">
+        <select class="tri" name="categorie"
+                onchange="if(document.getElementById('option')!=null){document.getElementById('option').selectedIndex = -1}
+                this.form.submit()">
             <option value="offre">Offre</option>
             <option value="demande" selected>Demande</option>
         </select>
 
+        <!-- Rechargement de la page lors du changement de la méthode de tri -->
+        <select class="tri" name="option" id="option" onchange="this.form.submit()">
+            <option value="" disabled selected>- Trier par -</option>
+            <option value="suggestion">Suggestion</option>
+        </select>
 
     </div>
 
@@ -44,7 +51,8 @@
             <div class="bloc">
                 <div class="info">
                     <p class="element"><strong class="G">Auteur :</strong>
-                        <a onclick="open_profile_page('{{ demande[1] }}')" title="Voir le profil">{{ sql_obj.get_user_pseudo(demande[1]) }}</a>
+                        <a onclick="open_profile_page('{{ demande[1] }}')"
+                           title="Voir le profil">{{ sql_obj.get_user_pseudo(demande[1]) }}</a>
                     </p>
                     <p class="element"><strong class="G">En classe de:</strong> {{ demande[2] }}</p>
                     <p class="element"><strong class="G">Matière:</strong> {{ demande[3] }}</p>
@@ -60,10 +68,28 @@
                         <div class="table" id="table_horaires">
                             <table class="heure-table">
                                 <tr>
-                                    <th>08h</th> <th></th> <th>09h</th> <th></th> <th>10h</th> <th></th>
-                                    <th>11h</th> <th></th> <th>12h</th> <th></th> <th>13h</th>
-                                    <th></th> <th>14h</th> <th></th> <th>15h</th> <th></th>
-                                    <th>16h</th> <th></th> <th>17h</th> <th></th> <th>18h</th> <th></th>
+                                    <th>08h</th>
+                                    <th></th>
+                                    <th>09h</th>
+                                    <th></th>
+                                    <th>10h</th>
+                                    <th></th>
+                                    <th>11h</th>
+                                    <th></th>
+                                    <th>12h</th>
+                                    <th></th>
+                                    <th>13h</th>
+                                    <th></th>
+                                    <th>14h</th>
+                                    <th></th>
+                                    <th>15h</th>
+                                    <th></th>
+                                    <th>16h</th>
+                                    <th></th>
+                                    <th>17h</th>
+                                    <th></th>
+                                    <th>18h</th>
+                                    <th></th>
                                 </tr>
                             </table>
                             {% for i in range(0,6) %}

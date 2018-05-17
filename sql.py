@@ -227,15 +227,12 @@ class MysqlObject:
         self.cursor.execute("""SELECT * FROM demandes WHERE auteur=%s""", (mail,))
         return self.cursor.fetchall()
 
-
-
     # Informations de toutes les offres créées
-    def offres_info(self,mail):
+    def offres_info(self, mail):
         classe_o = self.get_user_info(mail)[0][3]
         niveau_o = self.classe_to_niveau(classe_o)
         self.cursor.execute("""SELECT * FROM offres""")
         return self.cursor.fetchall(), niveau_o
-
 
     # Liste des offres selon 1 facteur de tri + 1 niveau/matiere
     def offres_liste_tri_2(self, option, option2, page, mail):
@@ -559,7 +556,7 @@ class MysqlObject:
     def modifier_demande(self, demande_id, horaires):
         self.cursor.execute("""UPDATE demandes SET horaires = %s WHERE id = %s""", (horaires, demande_id))
         self.conn.commit()
-        
+
     # Offres
     def get_all_offres(self):
         self.cursor.execute("""SELECT * FROM offres""")
@@ -571,63 +568,61 @@ class MysqlObject:
         demandes = self.cursor.fetchall()
         return demandes
 
-    def get_offres(selfself, mail):
+    def get_offres(self, mail):
         self.cursor.execute("""SELECT * FROM offres WHERE auteur = %s""", (mail,))
         offres_mail = self.cursor.fetchall()
         return offres_mail
-        
+
     # Niveau classe
     def get_class_level(self, classe):
         self.cursor.execute("""SELECT classement FROM classes WHERE NOM = %s""", (classe,))
         lvl = self.cursor.fetchall()[0]
         return lvl
-        
-    #Niveau filière
+
+    # Niveau filière
     def get_filiere_level(self, filiere):
         self.cursor.execute("""SELECT classement FROM filieres WHERE nom = %s""", (filiere,))
         lvl_o = self.cursor.fetchall()[0]
         return lvl_o
-        
-# Suggestion
+
+    # Suggestion
 
     # Offres
     def get_tutore_info(self, mail):
         demandes = self.get_user_demandes(mail)
-            
+
         # liste des suggestions de niveau 1 :
         suggest_1 = []
         # Liste des suggestions de niveau 2 :
         suggest_2 = []
-        
+
         for demande in demandes:
-           
+
             # variables demandes :
-            matiere = demandes[3]
-            classe = demandes[2]
+            matiere = demande[3]
+            classe = demande[2]
             lvl = self.get_class_level(classe)
-            horaires = demandes[7]
-            
+            horaires = demande[7]
+
             offres = self.get_all_offres()
-            
-            
-            
-            for x in offres :
-                
+
+            for x in offres:
+
                 # variables offres :
-                
+
                 classe_o = x[2]
                 lvl_o = self.get_filiere_level(classe_o)
                 matiere_o = x[3]
                 horaires_o = x[8]
-                
+
                 if lvl_o >= lvl and matiere == matiere_o:
                     suggest_1.append(x)
                     n = 0
-                    for y in horaires :
+                    for y in horaires:
                         for z in horaires_o:
                             if y == z:
                                 n += 1
-                
+
                     if n >= 1:
                         suggest_2.append(x)
         return suggest_1, suggest_2
@@ -645,10 +640,10 @@ class MysqlObject:
         for offre in offres:
 
             # variables offres :
-            matiere = offres[3]
-            filiere = offres[2]
+            matiere = offre[3]
+            filiere = offre[2]
             lvl = self.get_filiere_level(filiere)
-            horaires = offres[7]
+            horaires = offre[7]
 
             demandes = self.get_all_demandes()
 

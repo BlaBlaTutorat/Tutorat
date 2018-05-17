@@ -170,11 +170,11 @@ def traitement_mdp_oublie():
             msg['From'] = config.email
             msg['To'] = request.form['mail']
             msg['Subject'] = 'BlaBla-Tutorat -- Nouveau mot de passe'
-            message = 'Bonjour,\n\nNous avons généré pour vous un nouveau mot de passe : '\
-                    + passwd + '\nVeuillez le changer dès que vous vous connecterez à BlaBla-Tutorat.\n' \
-                    'L\'équipe de BlaBla-Tutorat vous souhaite une bonne journée.\n\n\n\n\nCet e-mail a été généré' \
-                   ' automatiquement, merci de ne pas y répondre.' \
-                   ' Pour toute question, veuillez vous adresser aux documentalistes.'
+            message = 'Bonjour,\n\nNous avons généré pour vous un nouveau mot de passe : ' \
+                      + passwd + '\nVeuillez le changer dès que vous vous connecterez à BlaBla-Tutorat.\n' \
+                                 'L\'équipe de BlaBla-Tutorat vous souhaite une bonne journée.\n\n\n\n\nCet e-mail a été généré' \
+                                 ' automatiquement, merci de ne pas y répondre.' \
+                                 ' Pour toute question, veuillez vous adresser aux documentalistes.'
             msg.attach(MIMEText(message))
             mailserver = smtplib.SMTP(config.smtp, config.smtp_port)
             mailserver.starttls()
@@ -377,7 +377,8 @@ def admin_ov():
                 info_msg = request.args.get('info_msg')
             if request.args.get('reset_msg'):
                 reset_msg = request.args.get('reset_msg')
-            return render_template("admin/admin_t_v.html", offres_V=sql_obj.offres_liste_valider(), demandes_V=sql_obj.demandes_liste_valider(), days=days,
+            return render_template("admin/admin_t_v.html", offres_V=sql_obj.offres_liste_valider(),
+                                   demandes_V=sql_obj.demandes_liste_valider(), days=days,
                                    **locals())
         else:
             abort(403)
@@ -404,7 +405,8 @@ def admin_u():
                                        demandes=sql_obj.demandes_liste_validees(), days=days, **locals())
             else:
                 return render_template("admin/admin_u.html", user_list=sql_obj.liste_user(),
-                                       tutorats_actifs=sql_obj.offres_liste_validees(), demandes=sql_obj.demandes_liste_validees(), days=days, **locals())
+                                       tutorats_actifs=sql_obj.offres_liste_validees(),
+                                       demandes=sql_obj.demandes_liste_validees(), days=days, **locals())
         else:
             abort(403)
     else:
@@ -422,10 +424,6 @@ def recherche():
         user = sql_obj.get_user_info(mail)[0][0]
         if request.args.get('info_msg'):
             info_msg = request.args.get('info_msg')
-        if request.args.get('select_H'):
-            select_H = request.args.get('info_msg')
-        if request.args.get('offre'):
-            O = request.args.get('offre')
         if request.form.get('precedent'):
             page = int(request.form.get('page')) - 1
         elif request.form.get('suivant'):
@@ -439,9 +437,24 @@ def recherche():
         if request.form.get("categorie") == "demande":
             # PARTIE DEMANDE
 
-            # Aucune option de tri sélectionnée
-            return render_template("recherche_demande.html", demandes=sql_obj.demandes_liste(page), days=days,
-                                   **locals())
+            if request.form.get("option"):
+                # Formulaire de tri première étape
+                option = request.form.get("option")
+
+                if option == "suggestion":
+
+                    suggest_d1, suggest_d2 = sql_obj.get_tuteur_info(mail)
+
+                    return render_template("suggestion/suggest_d.html", **locals())
+
+                else:
+                    # Défaut car pas d'autre paramètres de tri
+                    return render_template("recherche_demande.html", demandes=sql_obj.demandes_liste(page), days=days,
+                                           **locals())
+            else:
+                # Aucune option de tri sélectionnée
+                return render_template("recherche_demande.html", demandes=sql_obj.demandes_liste(page), days=days,
+                                       **locals())
 
         else:
             # PARTIE OFFRE
@@ -449,9 +462,18 @@ def recherche():
             if request.form.get("option") and not request.form.get("option2"):
                 # Formulaire de tri première étape
                 option = request.form.get("option")
-                return render_template("recherche_offre.html", offres=sql_obj.offres_liste_tri(option, page, mail),
-                                       days=days,
-                                       **locals())
+
+                # Cas spécial suggestions
+                if option == "suggestion":
+
+                    sugest_o1, suggest_o2 = sql_obj.get_tutore_info(mail)
+
+                    return render_template("suggestion/suggest_o.html", **locals())
+                else:
+                    return render_template("recherche_offre.html", offres=sql_obj.offres_liste_tri(option, page, mail),
+                                           days=days,
+                                           **locals())
+
             elif request.form.get("option") and request.form.get("option2"):
                 # Formulaire de tri deuxième étape
                 option = request.form.get("option")
@@ -591,6 +613,7 @@ def enregistrement():
         # Redirection si l'utilisateur n'est pas connecté
         return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
 
+
 # Selection horaires (offre)
 @app.route('/select', methods=['GET', 'POST'])
 def select():
@@ -604,7 +627,7 @@ def select():
 
             if mail == sql_obj.get_offre(id_offre)[0][5]:
                 return render_template("select_horaires.html", o=sql_obj.get_offre(id_offre)[0], days=days,
-                                           **locals())
+                                       **locals())
             elif mail == sql_obj.get_offre(id_offre)[0][6]:
                 return redirect(
                     url_for("recherche", info_msg="Vous avez bien été ajouté en temps que participant à ce tutorat."))
@@ -623,6 +646,7 @@ def select():
     else:
         return redirect(url_for("connexion", info_msg='Connectez-vous avant de continuer.'))
 
+
 # Selection horaires (demande)
 @app.route('/select_2', methods=['GET', 'POST'])
 def select_2():
@@ -635,7 +659,8 @@ def select_2():
             id_demande = request.args.get('tutorat_id')
 
             if mail == sql_obj.get_demande(id_demande)[0][5]:
-                return render_template("select_horaires_d.html", o=sql_obj.get_demande(id_demande)[0], days=days, **locals())
+                return render_template("select_horaires_d.html", o=sql_obj.get_demande(id_demande)[0], days=days,
+                                       **locals())
             else:
                 abort(403)
 
@@ -649,6 +674,7 @@ def select_2():
 
     else:
         return redirect(url_for("connexion", info_msg='Connectez-vous avant de continuer.'))
+
 
 # Modification d'une demande (affichage)
 @app.route('/edit_d')
@@ -697,6 +723,7 @@ def modifier_offre():
     else:
         return redirect(url_for("connexion", info_msg='Connectez-vous avant de continuer.'))
 
+
 # Modification d'une offre/demande (formulaire)
 @app.route('/edit_apply', methods=['POST'])
 def modification_offre_demande():
@@ -714,6 +741,7 @@ def modification_offre_demande():
         return redirect(url_for("profil_2"))
     else:
         return redirect(url_for("connexion", info_msg='Connectez-vous avant de continuer.'))
+
 
 # Suppression de la participation d'un utilisateur à une offre
 @app.route('/quit')
@@ -733,6 +761,7 @@ def quit_tutorat():
     else:
         # Redirection si l'utilisateur n'est pas connecté
         return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
+
 
 # Suppression de la participation d'un utilisateur à une offre
 @app.route('/quit_2')
@@ -845,6 +874,7 @@ def delete4():
     else:
         return redirect(url_for("connexion", info_msg='Connectez-vous avant de continuer.'))
 
+
 # Validation d'une offre (admin)
 @app.route('/validate')
 def validate():
@@ -885,6 +915,7 @@ def validate2():
             abort(403)
     else:
         return redirect(url_for("connexion", info_msg='Connectez-vous avant de continuer.'))
+
 
 # Ban (admin)
 @app.route('/ban')
@@ -953,37 +984,6 @@ def reset():
             abort(403)
     else:
         return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
-
-# Suggestion d'offres
-@app.route('/suggest_o')
-def suggest_o():
-    sql_obj = sql.MysqlObject()
-    if check_connexion():
-        mail = session['mail']
-        sugest_o = sql_obj.get_tutore_info(mail)
-        suggest_o1 = suggest_o[0]
-        suggest_o2 = suggest_o[1]
-        
-        return render_template("suggestion/suggest_o.html", **locals())
-
-    else:
-        return redirect(url_for("connexion", info_msg='Connectez-vous avant de continuer.'))
-    
-# Suggestion de demandes
-@app.route('/suggest_d')
-def suggest_d():
-    sql_obj = sql.MysqlObject()
-    if check_connexion():
-        mail = session['mail']
-        sugest_d = sql_obj.get_tuteur_info(mail)
-        suggest_d1 = suggest_d[0]
-        suggest_d2 = suggest_d[1]
-
-        return render_template("suggestion/suggest_d.html", **locals())
-
-    else:
-        return redirect(url_for("connexion", info_msg='Connectez-vous avant de continuer.'))
-
 
 # Gestion de l'erreur 404
 @app.errorhandler(404)
