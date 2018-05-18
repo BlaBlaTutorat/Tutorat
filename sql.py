@@ -592,9 +592,9 @@ class MysqlObject:
         demandes = self.get_user_demandes(mail)
 
         # liste des suggestions de niveau 1 :
-        suggest_1 = []
+        suggest_d1 = []
         # Liste des suggestions de niveau 2 :
-        suggest_2 = []
+        suggest_d2 = []
 
         for demande in demandes:
 
@@ -616,7 +616,7 @@ class MysqlObject:
                 horaires_o = x[8]
 
                 if lvl_o >= lvl and matiere == matiere_o:
-                    suggest_1.append(x)
+                    suggest_d1.append(x)
                     n = 0
                     for y in horaires:
                         for z in horaires_o:
@@ -624,8 +624,12 @@ class MysqlObject:
                                 n += 1
 
                     if n >= 1:
-                        suggest_2.append(x)
-        return suggest_1, suggest_2
+                        suggest_d2.append(x)
+                    else:
+                        return []
+                else:
+                    return []
+        return suggest_d1, suggest_d2
 
     # Demandes
 
@@ -666,4 +670,8 @@ class MysqlObject:
 
                     if n >= 1:
                         suggest_o2.append(x)
+                    else:
+                        return []
+                else:
+                    return []
         return suggest_o1, suggest_o2

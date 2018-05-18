@@ -466,7 +466,7 @@ def recherche():
                 # Cas spécial suggestions
                 if option == "suggestion":
 
-                    sugest_o1, suggest_o2 = sql_obj.get_tutore_info(mail)
+                    suggest_o1, suggest_o2 = sql_obj.get_tutore_info(mail)
 
                     return render_template("suggestion/suggest_o.html", **locals())
                 else:
