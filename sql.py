@@ -625,10 +625,7 @@ class MysqlObject:
 
                     if n >= 1:
                         suggest_d2.append(x)
-                    else:
-                        return []
-                else:
-                    return []
+        print(suggest_d1, suggest_d2)
         return suggest_d1, suggest_d2
 
     # Demandes
@@ -670,8 +667,5 @@ class MysqlObject:
 
                     if n >= 1:
                         suggest_o2.append(x)
-                    else:
-                        return []
-                else:
-                    return []
+        print(suggest_o1, suggest_o2)
         return suggest_o1, suggest_o2
