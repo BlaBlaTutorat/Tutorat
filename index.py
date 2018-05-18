@@ -467,8 +467,7 @@ def recherche():
                 if option == "suggestion":
 
                     suggest_o1, suggest_o2 = sql_obj.get_tutore_info(mail)
-
-                    return render_template("suggestion/suggest_o.html", **locals())
+                    return render_template("suggestion/suggest_o.html", days = days, **locals())
                 else:
                     return render_template("recherche_offre.html", offres=sql_obj.offres_liste_tri(option, page, mail),
                                            days=days,
