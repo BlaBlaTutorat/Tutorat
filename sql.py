@@ -585,6 +585,34 @@ class MysqlObject:
         lvl_o = self.cursor.fetchall()[0]
         return lvl_o
 
+    # Demande a-t-elle un tuteur ?
+    def demande_tuteur(self, id):
+        self.cursor.execute("""SELECT tuteur FROM demandes WHERE id=%s""", (id,))
+        tuteur_test = self.cursor.fetchall()
+        if tuteur_test != [(None,)]:
+            tuteur = 1
+        else:
+            tuteur = 0
+
+        print("tuteur_test", tuteur_test)
+        print("tuteur", tuteur)
+
+        return tuteur
+
+    # nombre de participants à un tutorat
+    def places(self, id):
+        self.cursor.execute("""SELECT participant AND participant2 FROM offres WHERE id=%s""", (id,))
+        participant_test = self.cursor.fetchall()
+        if participant_test != [(None), (None)]:
+            places_dispo = True
+        else:
+            places_dispo = False
+
+        print("participant_test", participant_test)
+        print("places_dispo", places_dispo)
+
+        return places_dispo # problème avec cette fonction à régler !!!!!!!!!
+
     # Suggestion
 
     # Offres
@@ -599,6 +627,7 @@ class MysqlObject:
         for demande in demandes:
 
             # variables demandes :
+            id_d = demande[0]
             matiere = demande[3]
             classe = demande[2]
             lvl = self.get_class_level(classe)
@@ -610,12 +639,14 @@ class MysqlObject:
 
                 # variables offres :
 
+
+                id_o = x[0]
                 classe_o = x[2]
                 lvl_o = self.get_filiere_level(classe_o)
                 matiere_o = x[3]
                 horaires_o = x[8]
 
-                if lvl_o >= lvl and matiere == matiere_o:
+                if lvl_o >= lvl and matiere == matiere_o and self.demande_tuteur(id_d) == 0 and self.places(id_o) == 1:
                     suggest_d1.append(x)
                     n = 0
                     for y in horaires:
@@ -641,6 +672,7 @@ class MysqlObject:
         for offre in offres:
 
             # variables offres :
+            id_o = offre[0]
             matiere = offre[3]
             filiere = offre[2]
             lvl = self.get_filiere_level(filiere)
@@ -651,13 +683,13 @@ class MysqlObject:
             for x in demandes:
 
                 # variables offres :
-
+                id_d = x[0]
                 classe_d = x[2]
                 lvl_d = self.get_class_level(classe_d)
                 matiere_d = x[3]
                 horaires_d = x[7]
 
-                if lvl >= lvl_d and matiere == matiere_d:
+                if lvl >= lvl_d and matiere == matiere_d and self.demande_tuteur(id_d) == 0 and self.places(id_o) == 1:
                     suggest_o1.append(x)
                     n = 0
                     for y in horaires:
