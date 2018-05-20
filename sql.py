@@ -603,7 +603,7 @@ class MysqlObject:
     def places(self, id):
         self.cursor.execute("""SELECT participant AND participant2 FROM offres WHERE id=%s""", (id,))
         participant_test = self.cursor.fetchall()[0]
-        if 0 in participant_test:
+        if 0 in participant_test or None in participant_test:
             places_dispo = True
         else:
             places_dispo = False
@@ -676,6 +676,7 @@ class MysqlObject:
                             if n >= 1:
                                 suggest_d2.append(x)
                                 suggest_d1.remove(x)
+        print(suggest_d1, suggest_d2)
         return suggest_d1, suggest_d2
 
     # Demandes
