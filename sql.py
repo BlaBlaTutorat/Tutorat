@@ -664,7 +664,7 @@ class MysqlObject:
                 horaires_o = x[8]
 
                 if lvl_o >= lvl and matiere == matiere_o and self.demande_tuteur(id_d) == 0 :
-                    if self.places(id_o) == True and not self.mail_in_offre(id_o, mail):
+                    if self.places(id_o) is True and not self.mail_in_offre(id_o, mail):
                         if not self.mail_in_demande(id_d, mail):
                             suggest_d1.append(x)
                             n = 0
@@ -710,7 +710,7 @@ class MysqlObject:
                 horaires_d = x[7]
 
                 if lvl >= lvl_d and matiere == matiere_d and self.demande_tuteur(id_d) == 0:
-                    if self.places(id_o) == True and not self.mail_in_demande(id_d, mail):
+                    if self.places(id_o) is True and not self.mail_in_demande(id_d, mail):
                         if not self.mail_in_offre(id_o, mail):
                             suggest_o1.append(x)
                             n = 0
