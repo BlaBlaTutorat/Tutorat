@@ -159,7 +159,7 @@ def traitement_mdp_oublie():
             for i in range(12):
                 passwd = passwd + element[random.randint(0, 73)]
 
-            # Chiffrage du nouveau mot de passe
+            # Chiffrement du nouveau mot de passe
             passwd_hash = hashlib.sha256(str(passwd).encode('utf-8')).hexdigest()
 
             # Envoi du nouveau mot de passe à la base de données
