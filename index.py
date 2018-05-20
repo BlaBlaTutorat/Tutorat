@@ -286,7 +286,6 @@ def profil_update():
                         sql_obj.modify_user_info_mdp(mail, mot_de_passe_chiffre)
                 mail2 = request.form.get('mail')
                 # Envoi des infos à la base de données
-                sql_obj.modify_user_info_mail(mail, mail2)
                 sql_obj.modify_user_info(mail, request.form.get('classe'))
                 return redirect(url_for("profil", info_msg="Votre profil a bien été modifié."))
             else:
