@@ -603,6 +603,7 @@ class MysqlObject:
     def places(self, id):
         self.cursor.execute("""SELECT participant AND participant2 FROM offres WHERE id=%s""", (id,))
         participant_test = self.cursor.fetchall()
+        print(participant_test)
         if participant_test != [(None), (None)]:
             places_dispo = True
         else:

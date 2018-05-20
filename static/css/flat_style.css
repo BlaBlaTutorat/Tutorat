@@ -553,6 +553,10 @@ footer a:hover {
 /* END Forgot */
 
 /* Search */
+#suggestion {
+    margin-bottom: 10px;
+}
+
 #jour-offre {
     margin: 5px 10px 0 10px;
     line-height: 17px;

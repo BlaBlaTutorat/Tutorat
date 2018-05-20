@@ -9,7 +9,7 @@
 
 <!-- Critères de recherche -->
 <form class="search" method="post" action="/search">
-    <div class="critere">
+    <div class="critere" id="suggestion">
 
         <a class="button" id="reset_filter" onclick="window.location.href=window.location.pathname">Réinitialiser les
             filtres</a>
@@ -40,6 +40,7 @@
 
 <!-- Liste des offres -->
 <div class="offres">
+    <h2>Niveau 1</h2>
     {% if offres|length>0 %}
         {% for offre in suggest_o2 %}
             <br/>
@@ -120,6 +121,7 @@
 </div>
 
 <div class="offres">
+    <h2>Niveau 2</h2>
     {% if offres|length>0 %}
         {% for offre in suggest_o1 %}
             <br/>
