@@ -602,9 +602,8 @@ class MysqlObject:
     # nombre de participants à un tutorat
     def places(self, id):
         self.cursor.execute("""SELECT participant AND participant2 FROM offres WHERE id=%s""", (id,))
-        participant_test = self.cursor.fetchall()
-        print(participant_test)
-        if participant_test != [(None), (None)]:
+        participant_test = self.cursor.fetchall()[0]
+        if 0 in participant_test:
             places_dispo = True
         else:
             places_dispo = False
@@ -614,6 +613,23 @@ class MysqlObject:
 
         return places_dispo # problème avec cette fonction à régler !!!!!!!!!
 
+    # Mail in demande ?
+    def mail_in_demande(self, id, mail):
+        self.cursor.execute("""SELECT tuteur FROM demandes where id = %s""", (id,))
+        tuteur = self.cursor.fetchall()[0]
+        if tuteur == mail :
+            return True
+        else:
+            return False
+
+    # mail in offre ?
+    def mail_in_offre(self, id, mail):
+        self.cursor.execute("""SELECT participant AND participant2 FROM offres where id = %s""", (id,))
+        participant = self.cursor.fetchall()
+        if mail in participant:
+            return True
+        else:
+            return False
     # Suggestion
 
     # Offres
@@ -647,18 +663,21 @@ class MysqlObject:
                 matiere_o = x[3]
                 horaires_o = x[8]
 
-                if lvl_o >= lvl and matiere == matiere_o and self.demande_tuteur(id_d) == 0 and self.places(id_o) == 1:
-                    suggest_d1.append(x)
-                    n = 0
-                    for y in horaires:
-                        for z in horaires_o:
-                            if y == z:
-                                n += 1
+                if lvl_o >= lvl and matiere == matiere_o and self.demande_tuteur(id_d) == 0 :
+                    if self.places(id_o) == 1 and not self.mail_in_offre(id_o, mail):
+                        if not self.mail_in_demande(id_d, mail):
+                            suggest_d1.append(x)
+                            n = 0
+                            for y in horaires:
+                                for z in horaires_o:
+                                    if y == z:
+                                        n += 1
 
-                    if n >= 1:
-                        suggest_d2.append(x)
-                        del suggest_d1[-1]
-        return suggest_d1, suggest_d2
+                            if n >= 1:
+                                suggest_d2.append(x)
+                                suggest_d1.remove(x)
+                                return suggest_d2
+                            return suggest_d1
 
     # Demandes
 
@@ -690,15 +709,18 @@ class MysqlObject:
                 matiere_d = x[3]
                 horaires_d = x[7]
 
-                if lvl >= lvl_d and matiere == matiere_d and self.demande_tuteur(id_d) == 0 and self.places(id_o) == 1:
-                    suggest_o1.append(x)
-                    n = 0
-                    for y in horaires:
-                        for z in horaires_d:
-                            if y == z:
-                                n += 1
+                if lvl >= lvl_d and matiere == matiere_d and self.demande_tuteur(id_d) == 0:
+                    if self.places(id_o) == 1 and not self.mail_in_demande(id_d, mail):
+                        if not self.mail_in_offre(id_o, mail):
+                            suggest_o1.append(x)
+                            n = 0
+                            for y in horaires:
+                                for z in horaires_d:
+                                    if y == z:
+                                        n += 1
 
-                    if n >= 1:
-                        suggest_o2.append(x)
-                        del suggest_o1[-1]
-        return suggest_o1, suggest_o2
+                            if n >= 1:
+                                suggest_o2.append(x)
+                                suggest_o1.remove(x)
+                                return suggest_o2
+                            return suggest_o1
