@@ -40,7 +40,7 @@
 
 <!-- Liste des offres -->
 <div class="offres">
-    <h2>Niveau 1</h2>
+    <h2 title="Les horaires ne vous corresponde peut-être pas.">Niveau 1</h2>
     {% if offres|length>0 %}
         {% for offre in suggest_o2 %}
             <br/>
@@ -121,7 +121,7 @@
 </div>
 
 <div class="offres">
-    <h2>Niveau 2</h2>
+    <h2 title="Les horaires vous corresponde.">Niveau 2</h2>
     {% if offres|length>0 %}
         {% for offre in suggest_o1 %}
             <br/>
