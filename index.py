@@ -466,7 +466,7 @@ def recherche():
                 if option == "suggestion":
 
                     suggest_o1, suggest_o2 = sql_obj.get_tutore_info(mail)
-                    return render_template("suggestion/suggest_o.html", days = days, **locals())
+                    return render_template("suggestion/suggest_o.html", days=days, **locals())
                 else:
                     return render_template("recherche_offre.html", offres=sql_obj.offres_liste_tri(option, page, mail),
                                            days=days,
@@ -586,14 +586,15 @@ def enregistrement():
 
         if request.form.get("categorie") == "demande":
             result_code = sql_obj.add_tuteur(request.form.get("id"), mail)
-            return redirect(url_for("select_2", tutorat_id=request.form.get("id")))
         else:
             result_code = sql_obj.add_participant(request.form.get("id"), mail)
 
         if result_code == 0:
             # Pas d'erreur
-            return redirect(
-                url_for("select", tutorat_id=request.form.get("id")))
+            if request.form.get("categorie") == "demande":
+                return redirect(url_for("select_2", tutorat_id=request.form.get("id")))
+            else:
+                return redirect(url_for("select", tutorat_id=request.form.get("id")))
         elif result_code == 1:
             # Erreur l'utilisateur participe déjà à l'offre
             return redirect(url_for("recherche", info_msg="Vous vous êtes déjà enregistré pour ce Tutorat"))
@@ -982,6 +983,7 @@ def reset():
             abort(403)
     else:
         return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
+
 
 # Gestion de l'erreur 404
 @app.errorhandler(404)
