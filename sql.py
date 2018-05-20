@@ -677,7 +677,7 @@ class MysqlObject:
             matiere = offre[3]
             filiere = offre[2]
             lvl = self.get_filiere_level(filiere)
-            horaires = offre[7]
+            horaires = offre[8]
 
             demandes = self.get_all_demandes()
 
