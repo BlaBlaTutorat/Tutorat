@@ -7,7 +7,7 @@ from email.mime.text import MIMEText
 
 from flask import *
 
-import config           # config1 en production
+import config          # config1 en production
 import sql
 
 app = Flask(__name__)
