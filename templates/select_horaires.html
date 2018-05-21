@@ -62,7 +62,7 @@
                                     {% for j in range(0,22) %}
                                         <td id="{{ i }} {{ j }}"
                                             class="{% if o[8][(i*22)+j] == "0" %}white{% else %}red{% endif %}"
-                                            onclick="horaire_click(event, this.id, this.className)"></td>
+                                            {% if o[8][(i*22)+j] != "0" %}onclick="horaire_click(event, this.id, this.className)"{% endif %}></td>
                                     {% endfor %}
                                 </tr>
                             </table>
