@@ -590,6 +590,7 @@ class MysqlObject:
         self.cursor.execute("""SELECT * FROM demandes WHERE id=%s""", (id,))
         tuteur_test =[]
         tuteur_test.append(self.cursor.fetchall()[0][5])
+        print('tut_test', tuteur_test)
         if not None in tuteur_test:
             tuteur = 1
         else:
@@ -675,6 +676,7 @@ class MysqlObject:
                     if self.places(id_o) is True and self.mail_in_offre(id_o, mail) is False:
                         if self.mail_in_demande(id_d, mail) is False:
                             suggest_d1.append(x)
+                            print('suggest_d1:' ,suggest_d1)
                             n = 0
                             for y in horaires:
                                 for z in horaires_o:
@@ -685,7 +687,10 @@ class MysqlObject:
                                         if n >= 1:
                                             suggest_d2.append(x)
                                             suggest_d1.remove(x)
-        print(suggest_d1, suggest_d2)
+                                            print('suggest_d1:', suggest_d1)
+                                            print('suggest_d2:', suggest_d2)
+
+        print('suggest :', suggest_d1, suggest_d2)
         return suggest_d1, suggest_d2
 
     # Demandes
@@ -722,6 +727,7 @@ class MysqlObject:
                     if self.places(id_o) is True and self.mail_in_demande(id_d, mail) is False:
                         if self.mail_in_offre(id_o, mail) is False:
                             suggest_o1.append(x)
+                            print('suggest_o1:', suggest_o1)
                             n = 0
                             for y in horaires:
                                 for z in horaires_d:
@@ -731,4 +737,7 @@ class MysqlObject:
                                         if n >= 1:
                                             suggest_o2.append(x)
                                             suggest_o1.remove(x)
+                                            print('suggest_o1:', suggest_o1)
+                                            print('suggest_o1:' ,suggest_o1)
+        print(suggest_o1, suggest_o2)
         return suggest_o1, suggest_o2
