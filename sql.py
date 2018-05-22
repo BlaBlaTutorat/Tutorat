@@ -594,27 +594,25 @@ class MysqlObject:
             tuteur = 1
         else:
             tuteur = 0
-
-        print("tuteur_test", tuteur_test)
-        print("tuteur", tuteur)
-
+        print('tuteur :', tuteur)
         return tuteur
 
     # nombre de participants à un tutorat
     def places(self, id):
         self.cursor.execute("""SELECT * FROM offres WHERE id=%s""", (id,))
-        participant_test = []
-        participant_test.append(self.cursor.fetchall()[0][5])
-        participant_test.append(self.cursor.fetchall[0][6])
-        if len(participant_test) <= 2:
-            places_dispo = True
+
+        participant = self.cursor.fetchall()[0][5]
+        participant2 = self.cursor.fetchall()[0][6]
+        print("participant_test", participant, participant2)
+
+        if len(participant) < 1 or len(participant2) < 1:
+            places = True
         else:
-            places_dispo = False
+            places = False
 
-        print("participant_test", participant_test)
-        print("places_dispo", places_dispo)
+        print("places_dispo", places)
 
-        return places_dispo
+        return places
 
     # Mail in demande ?
     def mail_in_demande(self, id, mail):
@@ -653,6 +651,7 @@ class MysqlObject:
 
             # variables demandes :
             id_d = demande[0]
+            print('id:', id_d)
             matiere = demande[3]
             classe = demande[2]
             lvl = self.get_class_level(classe)
@@ -666,6 +665,7 @@ class MysqlObject:
 
 
                 id_o = x[0]
+                print('id_o:', id_o)
                 classe_o = x[2]
                 lvl_o = self.get_filiere_level(classe_o)
                 matiere_o = x[3]
@@ -682,9 +682,9 @@ class MysqlObject:
                                         n += 1
 
 
-                            if n >= 1:
-                                suggest_d2.append(x)
-                                suggest_d1.remove(x)
+                                        if n >= 1:
+                                            suggest_d2.append(x)
+                                            suggest_d1.remove(x)
         print(suggest_d1, suggest_d2)
         return suggest_d1, suggest_d2
 
@@ -728,7 +728,7 @@ class MysqlObject:
                                     if y == z:
                                         n += 1
 
-                            if n >= 1:
-                                suggest_o2.append(x)
-                                suggest_o1.remove(x)
+                                        if n >= 1:
+                                            suggest_o2.append(x)
+                                            suggest_o1.remove(x)
         return suggest_o1, suggest_o2
