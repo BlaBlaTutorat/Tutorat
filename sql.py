@@ -590,7 +590,7 @@ class MysqlObject:
         self.cursor.execute("""SELECT * FROM demandes WHERE id=%s""", (id,))
         tuteur_test =[]
         tuteur_test.append(self.cursor.fetchall()[0][5])
-        if tuteur_test is not None:
+        if not None in tuteur_test:
             tuteur = 1
         else:
             tuteur = 0
