@@ -598,6 +598,7 @@ class MysqlObject:
         print('tuteur :', tuteur)
         return tuteur
 
+
     # nombre de participants à un tutorat
     def places(self, id):
         self.cursor.execute("""SELECT * FROM offres WHERE id=%s""", (id,))
