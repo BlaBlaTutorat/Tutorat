@@ -146,6 +146,14 @@ class MysqlObject:
         REQUETES CONCERNANT LES OFFRES SUR LA BDD
     """
 
+    # Liste offres utilisateur
+    def get_user_offres(self, mail):
+        """Argument: Mail de l'utilisateur
+        Fonction: Renvoie la liste des offres créées par l'utilisateur"""
+        self.cursor.execute(
+            """SELECT * FROM offres WHERE auteur=%s""", (mail,))
+        return self.cursor.fetchall()
+
     # Recherche des offres auxquelles participe l'utilisateur
     def get_user_offres_suivies(self, mail):
         """Argument: Mail de l'utilisateur
@@ -692,7 +700,7 @@ class MysqlObject:
     # Demandes
 
     def get_tuteur_info(self, mail):
-        offres = self.get_offres(mail)
+        offres = self.get_user_offres(mail)
 
         # liste des suggestions de niveau 1 :
         suggest_o1 = []
@@ -704,32 +712,37 @@ class MysqlObject:
             # variables offres :
             id_o = offre[0]
             matiere = offre[3]
-            filiere = offre[2]
-            lvl = self.get_filiere_level(filiere)
+            classe = offre[2]
+            lvl = self.get_filiere_level(classe)
             horaires = offre[8]
 
             demandes = self.get_all_demandes()
 
             for x in demandes:
 
-                # variables offres :
+                # variables demandes :
+
+
                 id_d = x[0]
                 classe_d = x[2]
                 lvl_d = self.get_class_level(classe_d)
                 matiere_d = x[3]
                 horaires_d = x[7]
 
-                if lvl >= lvl_d and matiere == matiere_d and self.demande_tuteur(id_d) == 0:
+                if lvl_d >= lvl and matiere == matiere_d and self.demande_tuteur(id_d) == 0:
                     if self.places(id_o) is True and self.mail_in_demande(id_d, mail) is False:
                         if self.mail_in_offre(id_o, mail) is False:
                             suggest_o1.append(x)
                             n = 0
-                            for y in horaires:
-                                for z in horaires_d:
-                                    if y == z:
-                                        n += 1
+                            for i in range(132):
+                                if int(horaires[i]) == 1 and int(horaires_d[i]) == 1:
+                                    n += 1
 
-                                        if n >= 1:
-                                            suggest_o2.append(x)
-        print(suggest_o1, suggest_o2)
-        return suggest_o1, suggest_o2
+                            if n >= 1:
+                                suggest_o2.append(x)
+                                del suggest_o1[-1]
+
+        suggest = []
+        suggest.append(suggest_o1)
+        suggest.append(suggest_o2)
+        return suggest

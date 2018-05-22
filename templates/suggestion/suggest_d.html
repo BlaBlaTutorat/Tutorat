@@ -32,9 +32,9 @@
 
 <!-- Liste des demandes -->
 <div class="offres">
-    <h2 title="Les horaires ne vous corresponde peut-être pas.">Niveau 1</h2>
+    <h2>Demande(s) avec des horaires qui vous coresponde</h2>
     {% if suggest_d2|length>0 %}
-        {% for demande in suggest_d2 %}
+        {% for offre in suggest_d2 %}
             <br/>
             <div class="bloc">
                 <div class="info">
@@ -82,7 +82,7 @@
                             {% for i in range(0,6) %}
                                 <table>
                                     <tr>
-                                        {% for H in (offre[8]|list)[i*22:(i + 1)*22] %}
+                                        {% for H in (offre[7]|list)[i*22:(i + 1)*22] %}
                                             {% if (H|int) == 0 %}
                                                 <td class="white"></td>
                                             {% elif (H|int) == 1 %}
@@ -97,7 +97,7 @@
                 <form class="bouton" method="post" action="/apply">
                     <input type="hidden" name="categorie" value="offre"/>
                     <input type="hidden" name="id" value="{{ offre[0] }}"/>
-                    <input type="submit" value="Accepter l'offre"/>
+                    <input type="submit" value="Accepter la demande"/>
                 </form>
             </div>
         </div>
@@ -114,9 +114,9 @@
 
 <!-- Liste des offres -->
 <div class="offres">
-    <h2 title="Les horaires vous corresponde.">Niveau 2</h2>
+    <h2>Demande(s) avec des horaires qui ne vous coresponde pas</h2>
     {% if suggest_d1|length>0 %}
-        {% for demande in suggest_d1 %}
+        {% for offre in suggest_d1 %}
             <br/>
             <div class="bloc">
                 <div class="info">
@@ -164,7 +164,7 @@
                             {% for i in range(0,6) %}
                                 <table>
                                     <tr>
-                                        {% for H in (offre[8]|list)[i*22:(i + 1)*22] %}
+                                        {% for H in (offre[7]|list)[i*22:(i + 1)*22] %}
                                             {% if (H|int) == 0 %}
                                                 <td class="white"></td>
                                             {% elif (H|int) == 1 %}
@@ -180,7 +180,7 @@
                     <form class="bouton" method="post" action="/apply">
                         <input type="hidden" name="categorie" value="offre"/>
                         <input type="hidden" name="id" value="{{ offre[0] }}"/>
-                        <input type="submit" value="Accepter l'offre"/>
+                        <input type="submit" value="Accepter la demande"/>
                     </form>
                 </div>
             </div>

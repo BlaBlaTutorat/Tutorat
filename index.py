@@ -444,8 +444,7 @@ def recherche():
 
                     suggest_d1 = sql_obj.get_tuteur_info(mail)[0]
                     suggest_d2 = sql_obj.get_tuteur_info(mail)[1]
-
-                    return render_template("suggestion/suggest_d.html", **locals())
+                    return render_template("suggestion/suggest_d.html", days=days, **locals())
 
                 else:
                     # Défaut car pas d'autre paramètres de tri
@@ -466,7 +465,8 @@ def recherche():
                 # Cas spécial suggestions
                 if option == "suggestion":
 
-                    suggest_o1, suggest_o2 = sql_obj.get_tutore_info(mail)
+                    suggest_o1 = sql_obj.get_tutore_info(mail)[0]
+                    suggest_o2 = sql_obj.get_tutore_info(mail)[1]
                     return render_template("suggestion/suggest_o.html", days=days, **locals())
                 else:
                     return render_template("recherche_offre.html", offres=sql_obj.offres_liste_tri(option, page, mail),
