@@ -587,9 +587,10 @@ class MysqlObject:
 
     # Demande a-t-elle un tuteur ?
     def demande_tuteur(self, id):
-        self.cursor.execute("""SELECT tuteur FROM demandes WHERE id=%s""", (id,))
-        tuteur_test = self.cursor.fetchall()
-        if tuteur_test != [(None,)]:
+        self.cursor.execute("""SELECT * FROM demandes WHERE id=%s""", (id,))
+        tuteur_test =[]
+        tuteur_test.append(self.cursor.fetchall()[0][5])
+        if tuteur_test is not None:
             tuteur = 1
         else:
             tuteur = 0
@@ -601,9 +602,11 @@ class MysqlObject:
 
     # nombre de participants à un tutorat
     def places(self, id):
-        self.cursor.execute("""SELECT participant AND participant2 FROM offres WHERE id=%s""", (id,))
-        participant_test = self.cursor.fetchall()[0]
-        if 0 in participant_test or None in participant_test:
+        self.cursor.execute("""SELECT * FROM offres WHERE id=%s""", (id,))
+        participant_test = []
+        participant_test.append(self.cursor.fetchall()[0][5])
+        participant_test.append(self.cursor.fetchall[0][6])
+        if len(participant_test) <= 2:
             places_dispo = True
         else:
             places_dispo = False
@@ -611,21 +614,26 @@ class MysqlObject:
         print("participant_test", participant_test)
         print("places_dispo", places_dispo)
 
-        return places_dispo # problème avec cette fonction à régler !!!!!!!!!
+        return places_dispo
 
     # Mail in demande ?
     def mail_in_demande(self, id, mail):
-        self.cursor.execute("""SELECT tuteur FROM demandes where id = %s""", (id,))
-        tuteur = self.cursor.fetchall()[0]
-        if tuteur == mail :
+        self.cursor.execute("""SELECT * FROM demandes where id = %s""", (id,))
+        tuteur = self.cursor.fetchall()[0][5]
+        print('tuteur =', tuteur)
+        print("mail =", mail)
+        if tuteur == mail:
             return True
         else:
             return False
 
     # mail in offre ?
     def mail_in_offre(self, id, mail):
-        self.cursor.execute("""SELECT participant AND participant2 FROM offres where id = %s""", (id,))
-        participant = self.cursor.fetchall()
+        self.cursor.execute("""SELECT * FROM offres where id = %s""", (id,))
+        participant = []
+        participant.append(self.cursor.fetchall()[0][5])
+        participant.append(self.cursor.fetchall()[0][6])
+        print('participant =', participant)
         if mail in participant:
             return True
         else:
@@ -663,9 +671,9 @@ class MysqlObject:
                 matiere_o = x[3]
                 horaires_o = x[8]
 
-                if lvl_o >= lvl and matiere == matiere_o and self.demande_tuteur(id_d) == 0 :
-                    if self.places(id_o) is True and not self.mail_in_offre(id_o, mail):
-                        if not self.mail_in_demande(id_d, mail):
+                if lvl_o >= lvl and matiere == matiere_o and self.demande_tuteur(id_d) == 0:
+                    if self.places(id_o) is True and self.mail_in_offre(id_o, mail) is False:
+                        if self.mail_in_demande(id_d, mail) is False:
                             suggest_d1.append(x)
                             n = 0
                             for y in horaires:
@@ -710,8 +718,8 @@ class MysqlObject:
                 horaires_d = x[7]
 
                 if lvl >= lvl_d and matiere == matiere_d and self.demande_tuteur(id_d) == 0:
-                    if self.places(id_o) is True and not self.mail_in_demande(id_d, mail):
-                        if not self.mail_in_offre(id_o, mail):
+                    if self.places(id_o) is True and self.mail_in_demande(id_d, mail) is False:
+                        if self.mail_in_offre(id_o, mail) is False:
                             suggest_o1.append(x)
                             n = 0
                             for y in horaires:
