@@ -602,12 +602,15 @@ class MysqlObject:
     # nombre de participants à un tutorat
     def places(self, id):
         self.cursor.execute("""SELECT * FROM offres WHERE id=%s""", (id,))
-        print("part", self.cursor.fetchall()[0][5])
-        print("part", self.cursor.fetchall()[0][6])
+
+        test = self.cursor.fetchall()[0]
+        print(test)
+        print(test[5])
+        print(test[6])
         participant = []
-        self.cursor.fetchall()[0][5].append(participant)
         participant2 = []
-        self.cursor.fetchall()[0][6].append(participant2)
+        participant.append(test[5])
+        participant2.append(test[6])
         print("participant_test", participant, participant2)
 
         if len(participant) < 1 or len(participant2) < 1:
