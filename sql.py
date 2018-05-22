@@ -591,12 +591,10 @@ class MysqlObject:
         self.cursor.execute("""SELECT * FROM demandes WHERE id=%s""", (id,))
         tuteur_test =[]
         tuteur_test.append(self.cursor.fetchall()[0][5])
-        print('tut_test', tuteur_test)
         if not None in tuteur_test:
             tuteur = 1
         else:
             tuteur = 0
-        print('tuteur :', tuteur)
         return tuteur
 
 
@@ -605,21 +603,15 @@ class MysqlObject:
         self.cursor.execute("""SELECT * FROM offres WHERE id=%s""", (id,))
 
         test = self.cursor.fetchall()[0]
-        print(test)
-        print(test[5])
-        print(test[6])
         participant = []
         participant2 = []
         participant.append(test[5])
         participant2.append(test[6])
-        print("participant_test", participant, participant2)
 
-        if len(participant) < 1 or len(participant2) < 1:
+        if None in participant or None in participant2:
             places = True
         else:
             places = False
-
-        print("places_dispo", places)
 
         return places
 
@@ -627,8 +619,6 @@ class MysqlObject:
     def mail_in_demande(self, id, mail):
         self.cursor.execute("""SELECT * FROM demandes where id = %s""", (id,))
         tuteur = self.cursor.fetchall()[0][5]
-        print('tuteur =', tuteur)
-        print("mail =", mail)
         if tuteur == mail:
             return True
         else:
@@ -637,10 +627,13 @@ class MysqlObject:
     # mail in offre ?
     def mail_in_offre(self, id, mail):
         self.cursor.execute("""SELECT * FROM offres where id = %s""", (id,))
+
+        fetchall = self.cursor.fetchall()[0]
         participant = []
-        participant.append(self.cursor.fetchall()[0][5])
-        participant.append(self.cursor.fetchall()[0][6])
-        print('participant =', participant)
+        participant.append(fetchall[5])
+        participant.append(fetchall[6])
+
+
         if mail in participant:
             return True
         else:
@@ -660,7 +653,6 @@ class MysqlObject:
 
             # variables demandes :
             id_d = demande[0]
-            print('id:', id_d)
             matiere = demande[3]
             classe = demande[2]
             lvl = self.get_class_level(classe)
@@ -674,7 +666,6 @@ class MysqlObject:
 
 
                 id_o = x[0]
-                print('id_o:', id_o)
                 classe_o = x[2]
                 lvl_o = self.get_filiere_level(classe_o)
                 matiere_o = x[3]
@@ -684,7 +675,6 @@ class MysqlObject:
                     if self.places(id_o) is True and self.mail_in_offre(id_o, mail) is False:
                         if self.mail_in_demande(id_d, mail) is False:
                             suggest_d1.append(x)
-                            print('suggest_d1:' ,suggest_d1)
                             n = 0
                             for y in horaires:
                                 for z in horaires_o:
@@ -694,9 +684,6 @@ class MysqlObject:
 
                                         if n >= 1:
                                             suggest_d2.append(x)
-                                            suggest_d1.remove(x)
-                                            print('suggest_d1:', suggest_d1)
-                                            print('suggest_d2:', suggest_d2)
 
         print('suggest :', suggest_d1, suggest_d2)
         return suggest_d1, suggest_d2
@@ -735,7 +722,6 @@ class MysqlObject:
                     if self.places(id_o) is True and self.mail_in_demande(id_d, mail) is False:
                         if self.mail_in_offre(id_o, mail) is False:
                             suggest_o1.append(x)
-                            print('suggest_o1:', suggest_o1)
                             n = 0
                             for y in horaires:
                                 for z in horaires_d:
@@ -744,8 +730,5 @@ class MysqlObject:
 
                                         if n >= 1:
                                             suggest_o2.append(x)
-                                            suggest_o1.remove(x)
-                                            print('suggest_o1:', suggest_o1)
-                                            print('suggest_o1:' ,suggest_o1)
         print(suggest_o1, suggest_o2)
         return suggest_o1, suggest_o2
