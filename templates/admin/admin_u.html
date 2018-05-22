@@ -65,12 +65,12 @@
                     </p>
                     <p><a href="mailto:{{ user[2] }}" title="Envoyer un mail">{{ user[2] }}</a></p>
                     <p>{{ user[3] }}</p>
-                    {% if user[4]==1 %}
+                    {% if user[3]=='ADMIN' %}
                         <p>Oui</p>
                     {% else %}
                         <p>Non</p>
                     {% endif %}
-                    {% if user[5]==1 %}
+                    {% if user[4]==1 %}
                         <p>Oui</p>
                     {% else %}
                         <p>Non</p>
