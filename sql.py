@@ -415,6 +415,7 @@ class MysqlObject:
         """Remet le site a 0"""
         self.cursor.execute("""DELETE FROM `users` WHERE classe != 'ADMIN'""")
         self.cursor.execute("""DELETE FROM `offres`""")
+        self.cursor.execute("""DELETE FROM `demandes`""")
         self.conn.commit()
 
     # Retourne les informations pour les statistiques :
