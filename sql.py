@@ -681,6 +681,7 @@ class MysqlObject:
                                     if y == z:
                                         n += 1
 
+
                             if n >= 1:
                                 suggest_d2.append(x)
                                 suggest_d1.remove(x)
