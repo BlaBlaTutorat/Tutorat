@@ -442,7 +442,8 @@ def recherche():
 
                 if option == "suggestion":
 
-                    suggest_d1, suggest_d2 = sql_obj.get_tuteur_info(mail)
+                    suggest_d1 = sql_obj.get_tuteur_info(mail)[0]
+                    suggest_d2 = sql_obj.get_tuteur_info(mail)[1]
 
                     return render_template("suggestion/suggest_d.html", **locals())
 

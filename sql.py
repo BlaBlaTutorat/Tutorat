@@ -676,17 +676,18 @@ class MysqlObject:
                         if self.mail_in_demande(id_d, mail) is False:
                             suggest_d1.append(x)
                             n = 0
-                            for y in horaires:
-                                for z in horaires_o:
-                                    if y == z:
-                                        n += 1
+                            for i in range(132):
+                                if int(horaires[i]) == 1 and int(horaires_o[i]) == 1:
+                                    n += 1
 
+                            if n >= 1:
+                                suggest_d2.append(x)
+                                del suggest_d1[-1]
 
-                                        if n >= 1:
-                                            suggest_d2.append(x)
-
-        print('suggest :', suggest_d1, suggest_d2)
-        return suggest_d1, suggest_d2
+        suggest = []
+        suggest.append(suggest_d1)
+        suggest.append(suggest_d2)
+        return suggest
 
     # Demandes
 
