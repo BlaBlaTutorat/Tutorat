@@ -604,8 +604,10 @@ class MysqlObject:
         self.cursor.execute("""SELECT * FROM offres WHERE id=%s""", (id,))
         print("part", self.cursor.fetchall()[0][5])
         print("part", self.cursor.fetchall()[0][6])
-        participant = self.cursor.fetchall()[0][5]
-        participant2 = self.cursor.fetchall()[0][6]
+        participant = []
+        self.cursor.fetchall()[0][5].append(participant)
+        participant2 = []
+        self.cursor.fetchall()[0][6].append(participant2)
         print("participant_test", participant, participant2)
 
         if len(participant) < 1 or len(participant2) < 1:
