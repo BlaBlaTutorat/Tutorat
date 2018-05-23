@@ -74,9 +74,18 @@ class MysqlObject:
     def delete_account(self, mail):
         """Argument: Mail de l'utilisateur
         Fonction: Suprime le compte utilisateur de la BDD et les offres et demandes créées par l'utilisateur"""
-        self.cursor.execute("""DELETE FROM users WHERE mail = %s""", (mail,))
         self.cursor.execute("""DELETE FROM offres WHERE auteur = %s""", (mail,))
         self.cursor.execute("""DELETE FROM demandes WHERE auteur = %s""", (mail,))
+        self.cursor.execute("""UPDATE offres SET participant = NULL WHERE participant = %s""", (mail,))
+        self.cursor.execute("""UPDATE offres SET participant2 = NULL WHERE participant2 = %s""", (mail,))
+        offres = self.get_all_offres()
+        for offre in offres:
+            if offre[5] is None and offre[6] is not None:
+                participant = offre[6]
+                offre_id = offre[0]
+                self.cursor.execute("""UPDATE offres SET participant = %s WHERE id = %s""", (participant, offre_id))
+                self.cursor.execute("""UPDATE offres SET participant2 = NULL WHERE id = %s""", (offre_id,))
+        self.cursor.execute("""DELETE FROM users WHERE mail = %s""", (mail,))
         self.conn.commit()
 
     # Listes des utilisateurs
