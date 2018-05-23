@@ -595,28 +595,21 @@ class MysqlObject:
         return lvl_o
 
     # Demande a-t-elle un tuteur ?
-    def demande_tuteur(self, id):
-        self.cursor.execute("""SELECT * FROM demandes WHERE id=%s""", (id,))
-        tuteur_test =[]
-        tuteur_test.append(self.cursor.fetchall()[0][5])
-        if not None in tuteur_test:
+    def demande_tuteur(self, id_d):
+        self.cursor.execute("""SELECT * FROM demandes WHERE id=%s""", (id_d,))
+        if self.cursor.fetchall()[0][5] is not None:
             tuteur = 1
         else:
             tuteur = 0
         return tuteur
 
-
     # nombre de participants à un tutorat
-    def places(self, id):
-        self.cursor.execute("""SELECT * FROM offres WHERE id=%s""", (id,))
+    def places(self, id_o):
+        self.cursor.execute("""SELECT * FROM offres WHERE id=%s""", (id_o,))
 
-        test = self.cursor.fetchall()[0]
-        participant = []
-        participant2 = []
-        participant.append(test[5])
-        participant2.append(test[6])
+        offre = self.cursor.fetchall()[0]
 
-        if None in participant or None in participant2:
+        if offre[5] is None or offre[6] is None:
             places = True
         else:
             places = False
@@ -624,8 +617,8 @@ class MysqlObject:
         return places
 
     # Mail in demande ?
-    def mail_in_demande(self, id, mail):
-        self.cursor.execute("""SELECT * FROM demandes where id = %s""", (id,))
+    def mail_in_demande(self, id_d, mail):
+        self.cursor.execute("""SELECT * FROM demandes where id = %s""", (id_d,))
         tuteur = self.cursor.fetchall()[0][5]
         if tuteur == mail:
             return True
@@ -633,19 +626,17 @@ class MysqlObject:
             return False
 
     # mail in offre ?
-    def mail_in_offre(self, id, mail):
-        self.cursor.execute("""SELECT * FROM offres where id = %s""", (id,))
+    def mail_in_offre(self, id_o, mail):
+        self.cursor.execute("""SELECT * FROM offres where id = %s""", (id_o,))
 
-        fetchall = self.cursor.fetchall()[0]
-        participant = []
-        participant.append(fetchall[5])
-        participant.append(fetchall[6])
+        offre = self.cursor.fetchall()[0]
+        participants = [offre[5], offre[6]]
 
-
-        if mail in participant:
+        if mail in participants:
             return True
         else:
             return False
+
     # Suggestion
 
     # Offres
@@ -672,7 +663,6 @@ class MysqlObject:
 
                 # variables offres :
 
-
                 id_o = x[0]
                 classe_o = x[2]
                 lvl_o = self.get_filiere_level(classe_o)
@@ -692,9 +682,7 @@ class MysqlObject:
                                 suggest_d2.append(x)
                                 del suggest_d1[-1]
 
-        suggest = []
-        suggest.append(suggest_d1)
-        suggest.append(suggest_d2)
+        suggest = [suggest_d1, suggest_d2]
         return suggest
 
     # Demandes
@@ -722,7 +710,6 @@ class MysqlObject:
 
                 # variables demandes :
 
-
                 id_d = x[0]
                 classe_d = x[2]
                 lvl_d = self.get_class_level(classe_d)
@@ -742,7 +729,5 @@ class MysqlObject:
                                 suggest_o2.append(x)
                                 del suggest_o1[-1]
 
-        suggest = []
-        suggest.append(suggest_o1)
-        suggest.append(suggest_o2)
+        suggest = [suggest_o1, suggest_o2]
         return suggest
