@@ -1,7 +1,7 @@
 # BlaBla-Tutorat
 **BlaBla-Tutorat** est une plateforme permettant de mettre en relation, au sein d'un établissement scolaire, des élèves ou étudiants souhaitant proposer ou recevoir de l'aide personnalisée.
 
-> Ce programme a éé réalisé dans le cadre du [projet d'ISN](http://info.blaisepascal.fr/blabla-tutorat) en 2018 par 3 élèves de tarminale S.
+> Ce programme a éé réalisé dans le cadre du [projet d'ISN](http://info.blaisepascal.fr/blabla-tutorat) en 2018 par 3 élèves de terminale S.
 
 #### Langages utilisés
 * Python3
@@ -46,4 +46,4 @@ email_password = "mdpmail"        # Mot de passe
 ![Structure de la base de données](/images/Struct_Bdd.png)
 
 ## Contact
-Utiliser
+Utiliser le [gestionnaire de problèmes](https://github.com/BlaBlaTutorat/Tutorat/issues) de Github
