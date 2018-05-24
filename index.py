@@ -7,7 +7,7 @@ from email.mime.text import MIMEText
 
 from flask import *
 
-import config          # config1 en production
+import config  # config1 en production
 import sql
 
 app = Flask(__name__)
@@ -733,10 +733,23 @@ def modification_offre_demande():
         mail = session['mail']
         id = request.form.get('id')
         horaires = request.form.get('horaires_data')
+
         if request.form.get('categorie') == "demande":
-            sql_obj.modifier_demande(id, horaires)
+            # Demande
+            demande = sql_obj.get_demande(id)
+            # Vérification que l'auteur est celui qui demande la modification
+            if mail == demande[0][1]:
+                sql_obj.modifier_demande(id, horaires)
+            else:
+                abort(403)
         else:
-            sql_obj.modifier_offre(id, horaires)
+            # Offre
+            offre = sql_obj.get_offre(id)
+            # Vérification que l'auteur est celui qui demande la modification
+            if mail == offre[0][1]:
+                sql_obj.modifier_offre(id, horaires)
+            else:
+                abort(403)
 
         return redirect(url_for("profil_2"))
     else:

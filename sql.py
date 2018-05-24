@@ -170,13 +170,6 @@ class MysqlObject:
         self.cursor.execute("""SELECT * FROM offres WHERE participant=%s OR participant2=%s""", (mail, mail))
         return self.cursor.fetchall()
 
-    # Récupération des offres créées par un utilisateur
-    def get_user_offres(self, mail):
-        """Argument: Mail de l'utilisateur
-        Fonction: Renvoie les offres créées par l'utilisateur"""
-        self.cursor.execute("""SELECT * FROM offres WHERE auteur=%s""", (mail,))
-        return self.cursor.fetchall()
-
     # Listes des offres à valider
     def offres_liste_valider(self):
         """Renvoie la liste des offres à valider"""
