@@ -35,7 +35,7 @@ email_password = "mdpmail"        # Mot de passe
 - JS
 
 ### Structure de la base de données
-[Structure de la base de données](/images/Struct_Bdd.png)
+![Structure de la base de données](/images/Struct_Bdd.png)
 
 - Utilisateurs:
     - Nom (PRIMARY)
