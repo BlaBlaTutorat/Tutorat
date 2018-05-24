@@ -187,7 +187,7 @@ class MysqlObject:
         """Argument: Id de l'offre
         Fonction: Renvoie l'offre"""
         self.cursor.execute("""SELECT * FROM offres WHERE id = %s""", (offer_id,))
-        return self.cursor.fetchall()
+        return self.cursor.fetchall()[0]
 
     # Listes des offres
     def offres_liste(self, page, mail):
@@ -493,7 +493,7 @@ class MysqlObject:
         """Argument: Id de la demande
         Fonction: Renvoie la demande"""
         self.cursor.execute("""SELECT * FROM demandes WHERE id = %s""", (demande_id,))
-        return self.cursor.fetchall()
+        return self.cursor.fetchall()[0]
 
     # Liste demandes sans tri
     def demandes_liste(self, page):

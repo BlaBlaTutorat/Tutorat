@@ -625,10 +625,10 @@ def select():
         if request.args.get('tutorat_id'):
             id_offre = request.args.get('tutorat_id')
 
-            if mail == sql_obj.get_offre(id_offre)[0][5]:
-                return render_template("select_horaires.html", o=sql_obj.get_offre(id_offre)[0], days=days,
+            if mail == sql_obj.get_offre(id_offre)[5]:
+                return render_template("select_horaires.html", o=sql_obj.get_offre(id_offre), days=days,
                                        **locals())
-            elif mail == sql_obj.get_offre(id_offre)[0][6]:
+            elif mail == sql_obj.get_offre(id_offre)[6]:
                 return redirect(
                     url_for("recherche", info_msg="Vous avez bien été ajouté en temps que participant à ce tutorat."))
             else:
@@ -658,8 +658,8 @@ def select_2():
         if request.args.get('tutorat_id'):
             id_demande = request.args.get('tutorat_id')
 
-            if mail == sql_obj.get_demande(id_demande)[0][5]:
-                return render_template("select_horaires_d.html", o=sql_obj.get_demande(id_demande)[0], days=days,
+            if mail == sql_obj.get_demande(id_demande)[5]:
+                return render_template("select_horaires_d.html", o=sql_obj.get_demande(id_demande), days=days,
                                        **locals())
             else:
                 abort(403)
@@ -687,8 +687,8 @@ def modifier_demande():
             admin_user = check_admin()
             demande_id = request.args.get('id')
             # Vérification que l'auteur est celui qui demande la suppression
-            if mail == sql_obj.get_demande(demande_id)[0][1]:
-                return render_template("edit/edit_d.html", demande=sql_obj.get_demande(demande_id)[0],
+            if mail == sql_obj.get_demande(demande_id)[1]:
+                return render_template("edit/edit_d.html", demande=sql_obj.get_demande(demande_id),
                                        filieres=sql_obj.filieres_liste(), matieres=sql_obj.matieres_liste(),
                                        days=days, **locals())
             else:
@@ -711,8 +711,8 @@ def modifier_offre():
             admin_user = check_admin()
             offre_id = request.args.get('id')
             # Vérification que l'auteur est celui qui demande la suppression
-            if mail == sql_obj.get_offre(offre_id)[0][1]:
-                return render_template("edit/edit_o.html", offre=sql_obj.get_offre(offre_id)[0],
+            if mail == sql_obj.get_offre(offre_id)[1]:
+                return render_template("edit/edit_o.html", offre=sql_obj.get_offre(offre_id),
                                        filieres=sql_obj.filieres_liste(), matieres=sql_obj.matieres_liste(),
                                        days=days, **locals())
             else:
@@ -738,7 +738,7 @@ def modification_offre_demande():
             # Demande
             demande = sql_obj.get_demande(id)
             # Vérification que l'auteur est celui qui demande la modification
-            if mail == demande[0][1]:
+            if mail == demande[1]:
                 sql_obj.modifier_demande(id, horaires)
             else:
                 abort(403)
@@ -746,7 +746,7 @@ def modification_offre_demande():
             # Offre
             offre = sql_obj.get_offre(id)
             # Vérification que l'auteur est celui qui demande la modification
-            if mail == offre[0][1]:
+            if mail == offre[1]:
                 sql_obj.modifier_offre(id, horaires)
             else:
                 abort(403)
@@ -806,14 +806,10 @@ def delete():
             sql_obj = sql.MysqlObject()
             offre_id = request.args.get('id')
             offre = sql_obj.get_offre(offre_id)
-            # Vérification qu'une seule offre avec cet id existe
-            if len(offre) == 1:
-                # Vérification que l'auteur est celui qui demande la suppression
-                if mail == offre[0][1]:
-                    sql_obj.delete_offer(offre_id)
-                    return redirect(url_for("profil", info_msg="Votre offre a bien été supprimée."))
-                else:
-                    abort(403)
+            # Vérification que l'auteur est celui qui demande la suppression
+            if mail == offre[1]:
+                sql_obj.delete_offer(offre_id)
+                return redirect(url_for("profil", info_msg="Votre offre a bien été supprimée."))
             else:
                 abort(403)
         else:
@@ -831,15 +827,11 @@ def delete3():
         if request.args.get('id'):
             sql_obj = sql.MysqlObject()
             demande_id = request.args.get('id')
-            demande = sql_obj.get_offre(demande_id)
-            # Vérification qu'une seule demande avec cet id existe
-            if len(demande) == 1:
-                # Vérification que l'auteur est celui qui demande la suppression
-                if mail == demande[0][1]:
-                    sql_obj.delete_demande(demande_id)
-                    return redirect(url_for("profil", info_msg="Votre demande a bien été supprimée."))
-                else:
-                    abort(403)
+            demande = sql_obj.get_demande(demande_id)
+            # Vérification que l'auteur est celui qui demande la suppression
+            if mail == demande[1]:
+                sql_obj.delete_demande(demande_id)
+                return redirect(url_for("profil", info_msg="Votre demande a bien été supprimée."))
             else:
                 abort(403)
         else:
