@@ -630,7 +630,7 @@ def select():
                                        **locals())
             elif mail == sql_obj.get_offre(id_offre)[6]:
                 return redirect(
-                    url_for("recherche", info_msg="Vous avez bien été ajouté en temps que participant à ce tutorat."))
+                    url_for("recherche", info_msg="Vous avez bien été ajouté en tant que participant à ce tutorat."))
             else:
                 abort(403)
 
@@ -638,7 +638,7 @@ def select():
             horaires = request.form["horaires_data"]
             sql_obj.modifier_offre(request.form.get("id"), horaires)
             return redirect(
-                url_for("recherche", info_msg="Vous avez bien été ajouté en temps que participant à ce tutorat."))
+                url_for("recherche", info_msg="Vous avez bien été ajouté en tant que participant à ce tutorat."))
 
         else:
             abort(404)
@@ -667,7 +667,7 @@ def select_2():
         elif len(request.form) != 0:
             horaires = request.form["horaires_data"]
             sql_obj.modifier_demande(request.form.get("id"), horaires)
-            return redirect(url_for("recherche", info_msg="Vous avez bien été ajouté en temps que tuteur."))
+            return redirect(url_for("recherche", info_msg="Vous avez bien été ajouté en tant que tuteur."))
 
         else:
             abort(404)
