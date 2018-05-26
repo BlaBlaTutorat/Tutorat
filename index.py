@@ -1054,7 +1054,7 @@ app.jinja_env.globals.update(check_connexion=check_connexion)
 
 # Nécessaire pour faire fontionner les sessions
 # (à garder secret pour que l'utilisateur ne puisse pas modifier les cookies)
-app.secret_key = secret_key
+app.secret_key = config.secret_key
 
 
 # Lancement du serveur lors de l'exécution du fichier
