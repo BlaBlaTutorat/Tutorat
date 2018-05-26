@@ -272,7 +272,7 @@ footer .div {
 footer .part {
     display: flex;
     justify-content: flex-start;
-    margin: 20px 0 20px 0;
+    margin: 20px 0 5px 0;
 }
 
 footer .s_part {
@@ -292,8 +292,8 @@ footer ul {
 }
 
 footer li {
-    line-height: 30px;
-    font-size: 0.9em;
+    line-height: 20px;
+    font-size: 0.8em;
 }
 
 footer a ul:visited, footer a:visited, footer a ul, footer a {
@@ -303,6 +303,7 @@ footer a ul:visited, footer a:visited, footer a ul, footer a {
 
 footer a:hover {
     color: #7d7f81;
+    font-size: 0.8em;
 }
 /* END FOOTER */
 
