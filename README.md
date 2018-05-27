@@ -33,6 +33,7 @@ host = "192.168.xxx.xxx"      # Adresse IP du serveur
 user = "useruser"             # Nom d'utilisateur de la base de données
 password = "mdpmdp"           # Mot de passe
 database = "tutorat"          # Nom de la base de données
+secret_key = "clefsecrète"    # Clef secrète
 
 # MAIL
 smtp = "smtp.gmail.com"           # Nom du serveur smtp
