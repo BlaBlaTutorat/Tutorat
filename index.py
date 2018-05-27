@@ -112,7 +112,7 @@ def traitement_inscription():
                 mdp_confirm = request.form.get('mdp2')
                 if chaine_mot_de_passe == mdp_confirm:
                     mot_de_passe_chiffre = hashlib.sha256(str(chaine_mot_de_passe).encode('utf-8')).hexdigest()
-                    nom = request.form.get('prenom') + '  ' + request.form.get('nom')
+                    nom = request.form.get('prenom') + ' ' + request.form.get('nom')
                     # Envoi des infos à la base de données
                     sql_obj.create_compte(nom, mot_de_passe_chiffre, request.form.get('mail'),
                                           request.form.get('classe'))
