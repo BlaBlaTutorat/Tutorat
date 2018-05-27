@@ -277,13 +277,23 @@ def profil_update():
         else:
             if request.form.get('classe') in classes:
                 # Chiffrement du mdp
-                if request.form.get('mdp1') != '' and request.form.get('mdp2') != '':
-                    chaine_mot_de_passe = request.form.get('mdp1')
-                    mdp_confirm = request.form.get('mdp2')
-                    if chaine_mot_de_passe == mdp_confirm:
-                        mot_de_passe_chiffre = hashlib.sha256(str(chaine_mot_de_passe).encode('utf-8')).hexdigest()
-                        # Envoi des infos à la base de données
-                        sql_obj.modify_user_info_mdp(mail, mot_de_passe_chiffre)
+                if request.form.get('mdp') != '':
+                    if hashlib.sha256(str(request.form.get('mdp')).encode('utf-8')).hexdigest() == sql_obj.get_user_info(mail)[0][1]:
+                        if request.form.get('mdp1') != '' and request.form.get('mdp2') != '':
+                            chaine_mot_de_passe = request.form.get('mdp1')
+                            mdp_confirm = request.form.get('mdp2')
+                            if chaine_mot_de_passe == mdp_confirm:
+                                mot_de_passe_chiffre = hashlib.sha256(str(chaine_mot_de_passe).encode('utf-8')).hexdigest()
+                                # Envoi des infos à la base de données
+                                sql_obj.modify_user_info_mdp(mail, mot_de_passe_chiffre)
+                            else:
+                                return redirect(url_for("profil_update",
+                                                        info_msg="Erreur - Vous n'avez pas correctement confirmé votre nouveau mot de passe."))
+                        else:
+                            return redirect(url_for("profil_update", info_msg="Erreur - Vous n'avez pas rentré de nouveau mot de passe."))
+                    else:
+                        return redirect(url_for("profil_update",
+                                                info_msg="Erreur - Veuillez vérifier votre ancien mot de passe."))
                 # Envoi des infos à la base de données
                 sql_obj.modify_user_info(mail, request.form.get('classe'))
                 return redirect(url_for("profil", info_msg="Votre profil a bien été modifié."))
