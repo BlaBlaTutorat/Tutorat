@@ -9,38 +9,62 @@
 
 <h2 class="log">Inscrivez vous :</h2>
 <!-- Formulaire de création -->
-<form method="post" action="/register" class="register_bloc">
-    <div class="bloc_inscription">
-        <div class="inscription">
-            <div class="reg">
-                <div class="critere">
-                    <p class="register">Entrez votre prénom :</p>
-                    <p class="register">Entrez votre nom :</p>
-                    <p class="register">Entrez une adresse email valide :</p>
-                    <p class="register">Choisissez un mot de passe :</p>
-                    <p class="register">Confirmez votre mot de passe :</p>
-                    <p class="register">Entrez votre classe :</p>
+{% if code_msg %}
+    <form method="post" action="/register/confirm" class="register_bloc">
+        <div class="bloc_inscription">
+            <div class="inscription">
+                <div class="reg">
+                    <div class="critere">
+                        <p title="Ce code vous a été envoyé par mail." id="code_de_v">Code de validation</p>
+                        <p><input required type="text" name="code_V"></p>
+                    </div>
                 </div>
-                <div class="critere">
-                    <p><input required type="text" name="prenom"></p>
-                    <p><input required type="text" name="nom"></p>
-                    <p><input required type="email" name="mail"></p>
-                    <p><input required type="password" name="mdp"></p>
-                    <p><input onpaste="return false" required type="password" name='mdp2'></p>
-                    <p><SELECT required name="classe" class="tri2">
-                        <option value="" selected disabled>- Classe -</option>
-                        {% for classe in classes %}
-                            <option>{{ classe }}</option>
-                        {% endfor %}
-                    </SELECT></p>
+                <div class="reg">
+                    <input type="submit" value="Valider"/>
+                    <input type="hidden" name="nom" value="{{ nom }}"/>
+                    <input type="hidden" name="mdp" value="{{ mdp }}"/>
+                    <input type="hidden" name="mail" value="{{ mail }}"/>
+                    <input type="hidden" name="classe" value="{{ classe }}"/>
+                    <input type="hidden" name="code" value="{{ code }}"/>
                 </div>
-            </div>
-            <div class="reg">
-                <input type="submit" value="Inscription"/>
             </div>
         </div>
-    </div>
-</form>
+    </form>
+{% else %}
+    <form method="post" action="/register" class="register_bloc">
+        <div class="bloc_inscription">
+            <div class="inscription">
+                <div class="reg">
+                    <div class="critere">
+                        <p class="register">Entrez votre prénom :</p>
+                        <p class="register">Entrez votre nom :</p>
+                        <p class="register">Entrez une adresse email valide :</p>
+                        <p class="register">Choisissez un mot de passe :</p>
+                        <p class="register">Confirmez votre mot de passe :</p>
+                        <p class="register">Entrez votre classe :</p>
+                    </div>
+                    <div class="critere">
+                        <p><input required type="text" name="prenom"></p>
+                        <p><input required type="text" name="nom"></p>
+                        <p><input required type="email" name="mail"></p>
+                        <p><input required type="password" name="mdp"></p>
+                        <p><input onpaste="return false" required type="password" name='mdp2'></p>
+                        <p><SELECT required name="classe" class="tri2">
+                            <option value="" selected disabled>- Classe -</option>
+                            {% for classe in classes %}
+                                <option>{{ classe }}</option>
+                            {% endfor %}
+                        </SELECT></p>
+                    </div>
+                </div>
+                <div class="reg">
+                    <input type="submit" value="Inscription"/>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endif %}
+
 {% include 'mise_en_page/FOOTER.html' %}
 
 </body>

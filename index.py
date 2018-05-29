@@ -92,6 +92,8 @@ def inscription():
     if not check_connexion():
         if request.args.get('info_msg'):
             info_msg = request.args.get('info_msg')
+        if request.args.get('code_msg'):
+            code_msg = request.args.get('code_msg')
         return render_template("authentification/inscription.html", classes=sql_obj.classes_liste(), **locals())
     else:
         # Redirection vers la page d'accueil
@@ -113,12 +115,12 @@ def traitement_inscription():
                 if chaine_mot_de_passe == mdp_confirm:
                     mot_de_passe_chiffre = hashlib.sha256(str(chaine_mot_de_passe).encode('utf-8')).hexdigest()
                     nom = request.form.get('prenom') + ' ' + request.form.get('nom')
-                    # Envoi des infos à la base de données
-                    sql_obj.create_compte(nom, mot_de_passe_chiffre, request.form.get('mail'),
-                                          request.form.get('classe'))
-                    return redirect(url_for("connexion",
-                                            info_msg="Votre compte a bien été créé, "
-                                                     "vous pouvez dès à présent vous connecter"))
+                    mail = request.form.get('mail')
+                    classe = request.form.get('classe')
+
+                    return redirect(url_for("confirm_register",
+                                            code_msg=True, C=True, nom=nom, mdp=mot_de_passe_chiffre, mail=mail, classe=classe))
+
                 else:
                     return render_template("authentification/inscription.html",
                                            info_msg='Les mots de passe ne correspondent pas.', **locals())
@@ -132,6 +134,69 @@ def traitement_inscription():
         # Redirection vers la page d'accueil
         return redirect(url_for("recherche"))
 
+
+# Confirmation inscription
+@app.route('/register/confirm', methods=['GET', 'POST'])
+def confirm_register():
+    """Page confirmation d'inscription"""
+    sql_obj = sql.MysqlObject()
+    if request.args.get('info_msg'):
+        info_msg = request.args.get('info_msg')
+    if request.args.get('nom'):
+        nom = request.args.get('nom')
+    if request.args.get('mdp'):
+        mot_de_passe_chiffre = request.args.get('mdp')
+    if request.args.get('mail'):
+        mail = request.args.get('mail')
+    if request.args.get('classe'):
+        classe = request.args.get('classe')
+    if request.args.get('code'):
+        code = request.args.get('code')
+    if request.args.get('C'):
+        C = request.args.get('C')
+    else:
+        C = False
+
+    if C:
+        # Génération du code
+        element = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-*/~$%&.:?!"
+        code = ""
+        for i in range(12):
+            code = code + element[random.randint(0, 73)]
+
+        # Envoi de l'email
+        msg = MIMEMultipart()
+        msg['From'] = config.email
+        msg['To'] = mail
+        msg['Subject'] = 'BlaBla-Tutorat -- Code de validation'
+        message = 'Bonjour,\n\nVoici le code de validation de votre inscription : ' \
+                      + code + '\nL\'équipe de BlaBla-Tutorat vous souhaite une bonne journée.\n\n\n\n\nCet e-mail a été généré' \
+                               ' automatiquement, merci de ne pas y répondre.' \
+                               ' Pour toute question, veuillez vous adresser aux documentalistes.'
+        msg.attach(MIMEText(message))
+        mailserver = smtplib.SMTP(config.smtp, config.smtp_port)
+        mailserver.starttls()
+        mailserver.login(config.email, config.email_password)
+        mailserver.sendmail(msg['From'], msg['To'], msg.as_string())
+        mailserver.quit()
+
+        return redirect(url_for("confirm_register", code_msg=True, nom=nom, mdp=mot_de_passe_chiffre, mail=mail, classe=classe, code=code))
+
+
+    if len(request.form) == 0:
+        return render_template("authentification/inscription.html",
+                               code_msg=True, nom=nom, mdp=mot_de_passe_chiffre, mail=mail, classe=classe, code=code)
+    else:
+        if request.form.get('code_V') == request.form.get('code'):
+            # Envoi des infos à la base de données
+            sql_obj.create_compte(request.form.get('nom'), request.form.get('mdp'), request.form.get('mail'),
+                                  request.form.get('classe'))
+            return redirect(url_for("connexion",
+                                        info_msg="Votre compte a bien été créé, "
+                                                 "vous pouvez dès à présent vous connecter"))
+        else:
+            return redirect(url_for("inscription",
+                                        info_msg="Vous n'avez pas tapé le bon code de validation. Veuillez recomencer votre inscription."))
 
 # Mot de passe oublié
 @app.route('/forgot', methods=['GET'])

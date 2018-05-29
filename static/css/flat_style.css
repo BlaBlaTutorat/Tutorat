@@ -411,6 +411,10 @@ footer a:hover {
     justify-content: space-around;
 }
 
+#code_de_v {
+    text-align: center;
+}
+
 .inscription {
     font-family: "Gotham SSm A", sans-serif;
     font-size: 1em;
