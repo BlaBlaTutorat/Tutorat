@@ -115,7 +115,7 @@ class MysqlObject:
     def get_user_info_pseudo(self, user_search):
         """Argument: Pseudo de l'utilisateur
         Fonction: renvoie les données de l'utilisateur"""
-        self.cursor.execute("""SELECT * FROM users WHERE nom = %s""", (user_search,))
+        self.cursor.execute("""SELECT * FROM users WHERE nom LIKE "%%s%" """, (user_search,))
         return self.cursor.fetchall()
 
     # Mail vers pseudo ( le mail existe )
