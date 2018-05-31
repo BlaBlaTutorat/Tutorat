@@ -159,10 +159,10 @@ def confirm_register():
 
     if C:
         # Génération du code
-        element = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-*/~$%&.:?!"
+        element = "0123456789"
         code = ""
-        for i in range(12):
-            code = code + element[random.randint(0, 73)]
+        for i in range(6):
+            code = code + element[random.randint(0, 9)]
 
         # Envoi de l'email
         msg = MIMEMultipart()
