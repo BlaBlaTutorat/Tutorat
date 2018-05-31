@@ -7,6 +7,8 @@ import mysql.connector
 import config
 import utils
 
+from operator import itemgetter
+
 offres_par_page = 4
 
 
@@ -60,7 +62,7 @@ class MysqlObject:
         """Renvoie la liste des filières"""
         filieres = []
         self.cursor.execute("""SELECT * FROM filieres""")
-        rows = self.cursor.fetchall()
+        rows = sorted(self.cursor.fetchall(), key=itemgetter(1))
         # On ne retourne que le nom
         for row in rows:
             filieres.append(row[0])

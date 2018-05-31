@@ -33,7 +33,7 @@
                     <!-- Filière -->
                     <p class="element"><strong class="G">Vous voulez aider un élève de : </strong>
                         <SELECT name="filiere" class="tri3" required>
-                            <option value="" disabled selected>- Filiere -</option>
+                            <option value="" disabled selected>- Filière -</option>
                             {% for filiere in filieres %}
                                 <option>{{ filiere }}</option>
                             {% endfor %}
@@ -43,7 +43,7 @@
                 <p class="element"><strong class="G">Vous souhaitez {% if demande %}être aidé{% else %}
                     l'aider{% endif %} en : </strong>
                     <SELECT name="matiere" class="tri3" required>
-                        <option value="" disabled selected>- Matiere -</option>
+                        <option value="" disabled selected>- Matière -</option>
                         {% for matiere in matieres %}
                             <option>{{ matiere }}</option>
                         {% endfor %}
