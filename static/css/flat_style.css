@@ -318,7 +318,8 @@ footer a:hover {
 }
 /* END FOOTER */
 
-/* Home */
+/*******************************************************************************
+ Home */
 #Accueil {
     margin-top: 150px;
     display: flex;
@@ -402,7 +403,10 @@ footer a:hover {
 }
 /* END Home */
 
-/* Register */
+/******************************************************************************
+ Register 
+*/
+ 
 .register_bloc {
     margin-bottom: 50px;
 }
@@ -465,7 +469,10 @@ footer a:hover {
 }
 /* END Register */
 
-/* Login */
+
+
+/******************************************************************************
+ Login */
 .login_bloc {
     margin-bottom: 50px;
 }
@@ -474,6 +481,7 @@ footer a:hover {
     text-decoration: none;
     color: white;
     cursor: pointer;
+    font-size: 0.8em;
 }
 
 .log {
@@ -483,6 +491,13 @@ footer a:hover {
 .login {
     margin-top: 20px;
     margin-bottom: 5px;
+}
+
+.password {
+	cursor: auto;
+	width: 80%;
+	padding-left: 10px;
+	padding-right: 10px;
 }
 
 .champs {
@@ -504,8 +519,14 @@ footer a:hover {
     flex-direction: column;
     justify-content: center;
     padding: 5px 10px 5px 10px;
-    min-width: 700px;
+    min-width: 600px;
 }
+
+.btn_connect {
+	font-size: 1.8em;
+	font-weight: bold;
+}
+
 
 .bloc_connexion {
     display: flex;
@@ -530,7 +551,8 @@ footer a:hover {
 }
 /* END Login */
 
-/* Forgot */
+/*******************************************************************************
+ Forgot */
 .reset {
     display: flex;
     flex-direction: column;
@@ -568,7 +590,11 @@ footer a:hover {
 }
 /* END Forgot */
 
-/* Search */
+
+
+
+/*******************************************************************************
+ Search */
 #suggestion {
     margin-bottom: 10px;
 }
@@ -751,7 +777,8 @@ footer a:hover {
 
 
 
-/* Create */
+/*********************************************************************************
+ Create */
 .offre_demande {
     font-size: 1em;
     font-weight: bold;
@@ -876,7 +903,9 @@ footer a:hover {
     justify-content: center;
     align-items: center;
 }
-/* END Create */
+/* 
+END Create 
+***********************************************************************************/
 
 /* Select */
 .select_button {
