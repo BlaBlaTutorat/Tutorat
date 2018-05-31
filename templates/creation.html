@@ -50,22 +50,35 @@
                     </SELECT></p>
                 <div class="crea_offre_bloc">
                     {% if demande %}
-                        <input type="submit" class="crea_offre" value="Créer ma demande"/>
+                        <input type="submit" class="crea_offre" value="Créer ma demande" title="La demande n'apparaitra qu'après validation par un administrateur."/>
+                        <p class="remarque">Remarques :</p>
+                        <ul class="remarque">
+                        	<li>La demande n'apparaitra qu'après validation par un administrateur.
+                        	</li>
+                        </ul>
+                        
+                            
                     {% else %}
-                        <input type="submit" class="crea_offre" value="Créer mon offre"/>
-                        <p class="remarque">
-                            <a title="Si elles sont dans la même classe">Remarque : un tuteur peut aider deux
-                                personnes</a></p>
+                        <input type="submit" class="crea_offre" value="Créer mon offre" title="L'offre n'apparaitra qu'après validation par un administrateur."/>
+                        <p class="remarque">Remarques :</p>
+                        <ul class="remarque">
+                        	<li>l'offre n'apparaitra qu'après validation par un administrateur.
+                        	</li>
+                        	<li>un tuteur peut aider jusqu'à deux personnes, si elles sont dans la même classe
+                        	</li>
+                        </ul>
+                        
                     {% endif %}
                 </div>
             </div>
             <!-- Horaires -->
             <div id="horaires_crea">
                 <input type="hidden" id="horaires_data" name="horaires_data" value="000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"/>
+                <p class="element"><strong class="G">Vos créneaux horaires disponibles :</strong></p>
                 <div class="horaire">
                     <div class="table" id="jour-offre">
                         {% for i in range(0,6) %}
-                            <p>{{ days[i] }}:</p>
+                            <p>{{ days[i] }}</p>
                         {% endfor %}
                     </div>
                     <div class="table" id="table_horaires-2">
@@ -96,7 +109,7 @@
                             </tr>
                         </table>
                         {% for i in range(0,6) %}
-                            <table>
+                            <table title="Cliquer pour séléctionner/déselectionner un créneau horaire">
                                 <tr>
                                     {% for j in range(0,22) %}
                                         <td id="{{ i }} {{ j }}" class="white" onclick="horaire_click(event, this.id, this.className)"></td>

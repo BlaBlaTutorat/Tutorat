@@ -648,7 +648,7 @@ footer a:hover {
 ***************************************************************************/
 .bloc {
     background: white;
-    border-radius: 60px;
+    border-radius: 40px;
     border: 1px solid;
     display: flex;
     flex-direction: row;
@@ -774,8 +774,10 @@ footer a:hover {
     height: 18px;
 }
 
-.info_crea .remarque {
+.remarque {
     font-size: 0.7em;
+    font-style: italic;
+    margin-left: 10px;
 }
 
 #time_start, #time_end {
@@ -854,7 +856,7 @@ footer a:hover {
 }
 
 .crea_offre {
-    margin: 140px 0 0 0;
+    margin: 40px 0 0 0;
 }
 
 #horaires_crea {
