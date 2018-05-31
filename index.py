@@ -102,7 +102,7 @@ def inscription():
 
 @app.route('/register', methods=['POST'])
 def traitement_inscription():
-    """Envoie les données rentré par l'utilisateur à la BDD pour l'inscrire"""
+    """Envoie les données rentrées par l'utilisateur à la BDD pour l'inscrire"""
     sql_obj = sql.MysqlObject()
     classes = sql_obj.classes_liste()
     if not check_connexion():
@@ -192,11 +192,11 @@ def confirm_register():
             sql_obj.create_compte(request.form.get('nom'), request.form.get('mdp'), request.form.get('mail'),
                                   request.form.get('classe'))
             return redirect(url_for("connexion",
-                                        info_msg="Votre compte a bien été créé, "
+                                        info_msg="Votre compte a bien été créé,\n"
                                                  "vous pouvez dès à présent vous connecter"))
         else:
             return redirect(url_for("inscription",
-                                        info_msg="Vous n'avez pas tapé le bon code de validation. Veuillez recomencer votre inscription."))
+                                    info_msg="Vous n'avez pas entré le bon code de validation.\nVeuillez recommencer votre inscription."))
 
 # Mot de passe oublié
 @app.route('/forgot', methods=['GET'])
@@ -467,6 +467,7 @@ def admin_u():
     if check_connexion():
         mail = session['mail']
         admin_user = check_admin()
+        user_search = ""
         user = sql_obj.get_user_info(mail)[0][0]
         if admin_user:
             if request.args.get('info_msg'):

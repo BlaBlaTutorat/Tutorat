@@ -434,7 +434,7 @@ footer a:hover {
     font-family: "Gotham SSm A", sans-serif;
     font-size: 1em;
     background: white;
-    border-radius: 100px;
+    border-radius: 40px;
     border: 1px solid #18a3fa;
     display: flex;
     flex-direction: column;
@@ -513,7 +513,7 @@ footer a:hover {
     font-family: "Gotham SSm A", sans-serif;
     font-size: 1em;
     background: white;
-    border-radius: 100px;
+    border-radius: 40px;
     border: 1px solid #18a3fa;
     display: flex;
     flex-direction: column;
@@ -566,7 +566,7 @@ footer a:hover {
     font-family: sans-serif;
     font-size: 1em;
     background: white;
-    border-radius: 100px;
+    border-radius: 40px;
     border: 1px solid #18a3fa;
     display: flex;
     flex-direction: column;
@@ -956,7 +956,7 @@ END Create
     font-family: sans-serif;
     font-size: 1em;
     background: white;
-    border-radius: 100px;
+    border-radius: 40px;
     border: 1px solid #18a3fa;
     display: flex;
     flex-direction: row;
@@ -967,8 +967,8 @@ END Create
 }
 
 .bloc_profil {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+  	grid-template-columns: auto auto;
     justify-content: center;
     margin: auto;
     align-items: center;
@@ -1119,16 +1119,31 @@ END Create
 /* Admin */
 .user_search {
     margin-top: 160px;
+    
+}
+
+.search_btn {
+	padding: 0px;
+ 	background: none;
+ 	border-radius: 0px;
+	border: none;
+	vertical-align: middle;
+}
+
+.search_form {
+	display: inline;
+	
 }
 
 .user_search_admin {
-    width: 20%;
+    width: 300px;
     height: 30px;
     border: 1px solid #161616;
     background-color: #18a3fa;
     color: white;
     font-family: "Gotham SSm A", sans-serif;
     font-size: 0.85em;
+    cursor: auto;
 }
 
 #tuteur, #tutore {
@@ -1143,13 +1158,17 @@ END Create
     margin-top: 180px;
 }
 
-#informations {
+.informations {
     width: 30%;
     margin-left: 15px;
 }
 
-#informations2 {
+.informations2 {
     width: 60%;
+}
+
+.user_etat {
+ grid-column: 1 / span 2;
 }
 
 #informations2 a {
@@ -1197,7 +1216,7 @@ END Create
     font-family: sans-serif;
     font-size: 1em;
     background: white;
-    border-radius: 100px;
+    border-radius: 40px;
     border: 1px solid #18a3fa;
     display: flex;
     flex-direction: row;
@@ -1266,6 +1285,7 @@ END Create
     display: flex;
     flex-direction: column;
     justify-content: center;
+    grid-column: 1 / span 2;
 }
 /* END Admin */
 
