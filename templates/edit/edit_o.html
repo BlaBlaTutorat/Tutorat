@@ -12,14 +12,14 @@
 
 <form method="post" action="/edit_apply" class="form_crea">
     <input type="hidden" name="categorie" value="offre"/>
-    <input type="hidden" name="id" value="{{ offre[0] }}"/>
+    <input type="hidden" name="id" value="{{ offre.id }}"/>
     <div class="creation">
         <div class="bloc">
             <div class="info_crea">
                 <!-- Filière -->
-                <p class="element"><strong class="G">Vous voulez aider un élève de : </strong>{{ offre[2] }}</p>
+                <p class="element"><strong class="G">Vous voulez aider un élève de : </strong>{{ offre.filiere }}</p>
                 <!-- Matière -->
-                <p class="element"><strong class="G">Vous souhaitez l'aider en : </strong>{{ offre[3] }}</p>
+                <p class="element"><strong class="G">Vous souhaitez l'aider en : </strong>{{ offre.matiere }}</p>
                 <div class="crea_offre_bloc">
                     <input type="submit" class="crea_offre" value="Modifier mon offre"/>
                     <p class="remarque">
@@ -29,7 +29,7 @@
             </div>
             <!-- Horaires -->
             <div id="horaires_crea">
-                <input type="hidden" id="horaires_data" name="horaires_data" value="{{ offre[8] }}"/>
+                <input type="hidden" id="horaires_data" name="horaires_data" value="{{ offre.horaires }}"/>
                 <div class="horaire">
                     <div class="table" id="jour-offre">
                         {% for i in range(0,6) %}
@@ -68,7 +68,7 @@
                                 <tr>
                                     {% for j in range(0,22) %}
                                         <td id="{{ i }} {{ j }}"
-                                            class="{% if offre[8][(i*22)+j] == "0" %}white{% else %}red{% endif %}"
+                                            class="{% if offre.horaires[(i*22)+j] == "0" %}white{% else %}red{% endif %}"
                                             onclick="horaire_click(event, this.id, this.className)"></td>
                                     {% endfor %}
                                 </tr>

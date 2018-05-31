@@ -73,17 +73,17 @@
 	                    
                 <div class="info_profil user_etat informations">
 	            	{% for tutorat in tutorats_actifs %}
-                        {% if tutorat[1] == user[2] %}
+                        {% if tutorat.auteur == user[2] %}
                             <img src="/static/img/tuteur.png" id="tuteur" title="Nombre d'offres créées par cet utilisateur">
                         {% endif %}
                     {% endfor %}
                     {% for tutorat in tutorats_actifs %}
-                        {% if tutorat[5] == user[2] or tutorat[6] == user[2] %}
+                        {% if tutorat.participant == user[2] or tutorat.participant2 == user[2] %}
                             <img src="/static/img/tutore.png" id="tutore" title="Nombre de tutorats suivis par cet utilisateur">
                         {% endif %}
                     {% endfor %}
                     {% for demande in demandes %}
-                        {% if demande[1] == user[2] %}
+                        {% if demande.auteur == user[2] %}
                             <img src="/static/img/demandeur.png" id="tutore" title="Nombre de demandes créées par cet utilisateur">
                         {% endif %}
                     {% endfor %}

@@ -4,9 +4,9 @@
 
 # Retourne le nombre de places dispo en fonction d'une offre
 def check_availability(offre):
-    if offre[5] is None or offre[6] is None:
+    if offre.participant is None or offre.participant2 is None:
         # Une place est disponible
-        if offre[5] is None and offre[6] is None:
+        if offre.participant is None and offre.participant2 is None:
             return 2
         else:
             return 1

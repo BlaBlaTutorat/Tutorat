@@ -1,13 +1,13 @@
 # coding: utf-8
 import datetime
 import sys
+from operator import itemgetter
 
 import mysql.connector
 
 import config
+import objects
 import utils
-
-from operator import itemgetter
 
 offres_par_page = 4
 
@@ -75,16 +75,16 @@ class MysqlObject:
     # Listes des utilisateurs
     def delete_account(self, mail):
         """Argument: Mail de l'utilisateur
-        Fonction: Suprime le compte utilisateur de la BDD et les offres et demandes créées par l'utilisateur"""
+        Fonction: Supprime le compte utilisateur de la BDD et les offres et demandes créées par l'utilisateur"""
         self.cursor.execute("""DELETE FROM offres WHERE auteur = %s""", (mail,))
         self.cursor.execute("""DELETE FROM demandes WHERE auteur = %s""", (mail,))
         self.cursor.execute("""UPDATE offres SET participant = NULL WHERE participant = %s""", (mail,))
         self.cursor.execute("""UPDATE offres SET participant2 = NULL WHERE participant2 = %s""", (mail,))
         offres = self.get_all_offres()
         for offre in offres:
-            if offre[5] is None and offre[6] is not None:
-                participant = offre[6]
-                offre_id = offre[0]
+            if offre.participant is None and offre.participant2 is not None:
+                participant = offre.participant2
+                offre_id = offre.id
                 self.cursor.execute("""UPDATE offres SET participant = %s WHERE id = %s""", (participant, offre_id))
                 self.cursor.execute("""UPDATE offres SET participant2 = NULL WHERE id = %s""", (offre_id,))
         self.cursor.execute("""DELETE FROM users WHERE mail = %s""", (mail,))
@@ -161,35 +161,56 @@ class MysqlObject:
     def get_user_offres(self, mail):
         """Argument: Mail de l'utilisateur
         Fonction: Renvoie la liste des offres créées par l'utilisateur"""
+        offres = []
         self.cursor.execute(
             """SELECT * FROM offres WHERE auteur=%s""", (mail,))
-        return self.cursor.fetchall()
+        # Conversion en objet Offre
+        rows = self.cursor.fetchall()
+        for row in rows:
+            offres.append(objects.Offre(row))
+        return offres
 
     # Recherche des offres auxquelles participe l'utilisateur
     def get_user_offres_suivies(self, mail):
         """Argument: Mail de l'utilisateur
         Fonction: Renvoie les offre auxquelles participe l'utilisateur"""
+        offres = []
         self.cursor.execute("""SELECT * FROM offres WHERE participant=%s OR participant2=%s""", (mail, mail))
-        return self.cursor.fetchall()
+        # Conversion en objet Offre
+        rows = self.cursor.fetchall()
+        for row in rows:
+            offres.append(objects.Offre(row))
+        return offres
 
     # Listes des offres à valider
     def offres_liste_valider(self):
         """Renvoie la liste des offres à valider"""
+        offres = []
         self.cursor.execute("""SELECT * FROM offres WHERE disponible=0""")
-        return self.cursor.fetchall()
+        # Conversion en objet Offre
+        rows = self.cursor.fetchall()
+        for row in rows:
+            offres.append(objects.Offre(row))
+        return offres
 
     # Listes des offres validées
     def offres_liste_validees(self):
         """Renvoie la liste des offres qui ont été validées"""
+        offres = []
         self.cursor.execute("""SELECT * FROM offres WHERE disponible=1""")
-        return self.cursor.fetchall()
+        # Conversion en objet Offre
+        rows = self.cursor.fetchall()
+        for row in rows:
+            offres.append(objects.Offre(row))
+        return offres
 
     # Récupération d'une offre
     def get_offre(self, offer_id):
         """Argument: Id de l'offre
         Fonction: Renvoie l'offre"""
         self.cursor.execute("""SELECT * FROM offres WHERE id = %s""", (offer_id,))
-        return self.cursor.fetchall()[0]
+        # Conversion en objet Offre
+        return objects.Offre(self.cursor.fetchall()[0])
 
     # Listes des offres
     def offres_liste(self, page, mail):
@@ -203,11 +224,12 @@ class MysqlObject:
         rows = self.cursor.fetchall()
         # Tri des offres pour ne garder que celles où la classe du 1er participant est identique à celle de user
         for row in rows:
-            if row[5] is None:
-                offres.append(row)
+            offre = objects.Offre(row)
+            if offre.participant is None:
+                offres.append(offre)
             else:
-                if classe == self.get_user_info(row[5])[0][3]:
-                    offres.append(row)
+                if classe == self.get_user_info(offre.participant)[0][3]:
+                    offres.append(offre)
         return offres
 
     # Liste des offres selon 1 facteur de tri
@@ -222,29 +244,13 @@ class MysqlObject:
         rows = self.cursor.fetchall()
         # Tri des offres pour ne garder que celles où la classe du 1er participant est identique à celle de user
         for row in rows:
-            if row[5] is None:
-                offres.append(row)
+            offre = objects.Offre(row)
+            if offre.participant is None:
+                offres.append(offre)
             else:
-                if classe == self.get_user_info(row[5])[0][3]:
-                    offres.append(row)
+                if classe == self.get_user_info(offre.participant)[0][3]:
+                    offres.append(offre)
         return offres
-
-    # Obtenir niveau élève
-    def classe_to_niveau(self, classe):
-        self.cursor.execute("""SELECT niveau FROM filieres WHERE classe=%s""", (classe,))
-        return self.cursor.fetchall()[0][0]
-
-    # Informations des demandes d'un certain utilisateur
-    def demandes_info(self, mail):
-        self.cursor.execute("""SELECT * FROM demandes WHERE auteur=%s""", (mail,))
-        return self.cursor.fetchall()
-
-    # Informations de toutes les offres créées
-    def offres_info(self, mail):
-        classe_o = self.get_user_info(mail)[0][3]
-        niveau_o = self.classe_to_niveau(classe_o)
-        self.cursor.execute("""SELECT * FROM offres""")
-        return self.cursor.fetchall(), niveau_o
 
     # Liste des offres selon 1 facteur de tri + 1 niveau/matiere
     def offres_liste_tri_2(self, option, option2, page, mail):
@@ -259,21 +265,27 @@ class MysqlObject:
         rows = self.cursor.fetchall()
         # Tri des offres pour ne garder que celles où la classe du 1er participant est identique à celle de user
         for row in rows:
-            if row[5] is None:
-                offres.append(row)
+            offre = objects.Offre(row)
+            if offre.participant is None:
+                offres.append(offre)
             else:
-                if classe == self.get_user_info(row[5])[0][3]:
-                    offres.append(row)
+                if classe == self.get_user_info(offre.participant)[0][3]:
+                    offres.append(offre)
         return offres
 
     # Listes des offres tri admin
     def offres_liste_tri_admin(self, user_search):
         """Argument: Mail de l'utilisateur
         Fonction: Renvoie la liste des offres quand on recherche un utilisateur"""
+        offres = []
         self.cursor.execute(
             """SELECT * FROM offres WHERE auteur = %s OR participant = %s OR participant2 = %s AND disponible=1""",
             (user_search, user_search, user_search))
-        return self.cursor.fetchall()
+        # Conversion en objet Offre
+        rows = self.cursor.fetchall()
+        for row in rows:
+            offres.append(objects.Offre(row))
+        return offres
 
     # Création d"une offre
     def create_offre(self, author, classe, matiere, horaires):
@@ -298,8 +310,8 @@ class MysqlObject:
         """Argument: Id de l'offre, mail du participant
         Fonction: Ajoute un participant à une offre"""
         self.cursor.execute("""SELECT * FROM offres WHERE id=%s""", (offre_id,))
-        offre = self.cursor.fetchall()[0]
-        if offre[1] != participant:
+        offre = objects.Offre(self.cursor.fetchall()[0])
+        if offre.auteur != participant:
             if utils.check_availability(offre) == 2:
                 # Update de la première colonne
                 self.cursor.execute("""UPDATE offres SET participant = %s WHERE id = %s """, (participant, offre_id))
@@ -307,9 +319,9 @@ class MysqlObject:
                 return 0
             elif utils.check_availability(offre) == 1:
                 # Update de la deuxième colonne + check si l'utilisateur n'est pas déjà participant à cette offre
-                if offre[5] != participant:
+                if offre.participant != participant:
                     # Check si l'utilisateur est dans la même classe que le premier
-                    if self.get_user_info(participant)[0][3] == self.get_user_info(offre[5])[0][3]:
+                    if self.get_user_info(participant)[0][3] == self.get_user_info(offre.participant)[0][3]:
                         self.cursor.execute("""UPDATE offres SET participant2 = %s WHERE id = %s """,
                                             (participant, offre_id))
                         self.conn.commit()
@@ -330,20 +342,20 @@ class MysqlObject:
     # Suppression d'un participant à une offre
     def delete_participant(self, offre_id, mail):
         """Argument: Id de l'offre, mail du participant
-        Fonction: Surpime le paticipant de l'offre"""
+        Fonction: Supprime le participant de l'offre"""
         self.cursor.execute("""SELECT * FROM offres WHERE id=%s""", (offre_id,))
         offres_a_modif = self.cursor.fetchall()
         if len(offres_a_modif) == 1:
-            offre_a_modif = offres_a_modif[0]
+            offre_a_modif = objects.Offre(offres_a_modif[0])
             places_dispo = utils.check_availability(offre_a_modif)
             if places_dispo == 0:
-                if offre_a_modif[5] == mail:
+                if offre_a_modif.participant == mail:
                     self.cursor.execute(
                         """UPDATE offres SET participant = participant2, participant2 = NULL WHERE id = %s """,
                         (offre_id,))
                     self.conn.commit()
                     return True
-                elif offre_a_modif[6] == mail:
+                elif offre_a_modif.participant2 == mail:
                     self.cursor.execute("""UPDATE offres SET participant2 = NULL WHERE id = %s """, (offre_id,))
                     self.conn.commit()
                     return True
@@ -351,7 +363,7 @@ class MysqlObject:
                     # L'utilisateur ne participe pas au Tutorat
                     return False
             elif places_dispo == 1:
-                if offre_a_modif[5] == mail:
+                if offre_a_modif.participant == mail:
                     self.cursor.execute("""UPDATE offres SET participant = NULL WHERE id = %s """, (offre_id,))
                     self.conn.commit()
                     return True
@@ -389,9 +401,9 @@ class MysqlObject:
         self.cursor.execute("""UPDATE offres SET participant2 = NULL WHERE participant2 = %s""", (mail,))
         offres = self.get_all_offres()
         for offre in offres:
-            if offre[5] is None and offre[6] is not None:
-                participant = offre[6]
-                offre_id = offre[0]
+            if offre.participant is None and offre.participant2 is not None:
+                participant = offre.participant2
+                offre_id = offre.id
                 self.cursor.execute("""UPDATE offres SET participant = %s WHERE id = %s""", (participant, offre_id))
                 self.cursor.execute("""UPDATE offres SET participant2 = NULL WHERE id = %s""", (offre_id,))
         self.conn.commit()
@@ -404,12 +416,12 @@ class MysqlObject:
         self.conn.commit()
 
     # Rétrograder
-    def retrogr(self, mail, classe = ""):
+    def retrograder(self, mail, classe=""):
         """Argument: Mail de l'utilisateur
         Fonction: retrograder un administrateur en utilisateur"""
         self.cursor.execute("""UPDATE users SET classe = '%s' WHERE mail = %s""", (mail, classe))
         self.conn.commit()
-        
+
     # Modification du profil Classe
     def modify_user_info(self, mail, classe):
         """Argument: Mail de l'utilisateur, classe choisi
@@ -502,50 +514,76 @@ class MysqlObject:
         """Argument: Id de la demande
         Fonction: Renvoie la demande"""
         self.cursor.execute("""SELECT * FROM demandes WHERE id = %s""", (demande_id,))
-        return self.cursor.fetchall()[0]
+        # Conversion en objet Demande
+        return objects.Demande(self.cursor.fetchall()[0])
 
     # Liste demandes sans tri
     def demandes_liste(self, page):
         """Argument: numéro de la page
-        Fonction: Renvoie la liste des demande"""
+        Fonction: Renvoie la liste des demandes"""
+        demandes = []
         self.cursor.execute(
             """SELECT * FROM demandes WHERE disponible=1 AND tuteur IS NULL LIMIT """ +
             str(offres_par_page) + """ OFFSET """ + str(page * offres_par_page))
-        return self.cursor.fetchall()
+        # Conversion en objet Demande
+        rows = self.cursor.fetchall()
+        for row in rows:
+            demandes.append(objects.Demande(row))
+        return demandes
 
     # Liste demandes utilisateur
     def get_user_demandes(self, mail):
         """Argument: Mail de l'utilisateur
         Fonction: Renvoie la liste des demandes créées par l'utilisateur"""
+        demandes = []
         self.cursor.execute(
             """SELECT * FROM demandes WHERE auteur=%s""", (mail,))
-        return self.cursor.fetchall()
+        # Conversion en objet Demande
+        rows = self.cursor.fetchall()
+        for row in rows:
+            demandes.append(objects.Demande(row))
+        return demandes
 
     # Liste demandes utilisateur
     def get_user_demandes_tuteur(self, mail):
         """Argument: Mail de l'utilisateur
         Fonction: Renvoie la liste des demandes où l'utilisateur est le tuteur"""
+        demandes = []
         self.cursor.execute(
             """SELECT * FROM demandes WHERE tuteur=%s""", (mail,))
-        return self.cursor.fetchall()
+        # Conversion en objet Demande
+        rows = self.cursor.fetchall()
+        for row in rows:
+            demandes.append(objects.Demande(row))
+        return demandes
 
     # Listes des demandes à valider
     def demandes_liste_valider(self):
         """Renvoie la liste des demandes à valider"""
+        demandes = []
         self.cursor.execute("""SELECT * FROM demandes WHERE disponible=0""")
-        return self.cursor.fetchall()
+        # Conversion en objet Demande
+        rows = self.cursor.fetchall()
+        for row in rows:
+            demandes.append(objects.Demande(row))
+        return demandes
 
     # Quitter une demande
-    def quit_demande(self, id, mail):
+    def quit_demande(self, id_d, mail):
         """Quitte la demande"""
-        self.cursor.execute("""UPDATE demandes SET tuteur = NULL WHERE id = %s AND tuteur = %s""", (id, mail,))
+        self.cursor.execute("""UPDATE demandes SET tuteur = NULL WHERE id = %s AND tuteur = %s""", (id_d, mail,))
         self.conn.commit()
 
     # Listes des demandes validées
     def demandes_liste_validees(self):
-        """Renvoie la liste des demandes qui ont été validé"""
+        """Renvoie la liste des demandes qui ont été validées"""
+        demandes = []
         self.cursor.execute("""SELECT * FROM demandes WHERE disponible=1""")
-        return self.cursor.fetchall()
+        # Conversion en objet Demande
+        rows = self.cursor.fetchall()
+        for row in rows:
+            demandes.append(objects.Demande(row))
+        return demandes
 
     # Validation d'une demande
     def validate_demande(self, demande_id, disponible):
@@ -558,19 +596,24 @@ class MysqlObject:
     def demandes_liste_tri_admin(self, user_search):
         """Argument: Mail de l'utilisateur
         Fonction: Renvoie la liste des demande e nfonction de l'utilisateur recherché"""
+        demandes = []
         self.cursor.execute(
             """SELECT * FROM demandes WHERE auteur = %s OR tuteur = %s AND disponible=1""",
             (user_search, user_search))
-        return self.cursor.fetchall()
+        # Conversion en objet Demande
+        rows = self.cursor.fetchall()
+        for row in rows:
+            demandes.append(objects.Demande(row))
+        return demandes
 
     # Ajout tuteur à une demande
     def add_tuteur(self, demande_id, mail):
         """Argument: id de la demande, mail de l'utilisateur
         Fonction: Ajoute un tuteur a la demande"""
         self.cursor.execute("""SELECT * FROM demandes WHERE id=%s""", (demande_id,))
-        demande = self.cursor.fetchall()[0]
-        if demande[1] != mail:
-            if demande[5] is None:
+        demande = objects.Demande(self.cursor.fetchall()[0])
+        if demande.auteur != mail:
+            if demande.tuteur is None:
                 # Update de la première colonne
                 self.cursor.execute("""UPDATE demandes SET tuteur = %s WHERE id = %s """, (mail, demande_id))
                 self.conn.commit()
@@ -589,19 +632,22 @@ class MysqlObject:
 
     # Offres
     def get_all_offres(self):
+        offres = []
         self.cursor.execute("""SELECT * FROM offres""")
-        offres = self.cursor.fetchall()
+        # Conversion en objet Offre
+        rows = self.cursor.fetchall()
+        for row in rows:
+            offres.append(objects.Offre(row))
         return offres
 
     def get_all_demandes(self):
+        demandes = []
         self.cursor.execute("""SELECT * FROM demandes""")
-        demandes = self.cursor.fetchall()
+        # Conversion en objet Demande
+        rows = self.cursor.fetchall()
+        for row in rows:
+            demandes.append(objects.Demande(row))
         return demandes
-
-    def get_offres(self, mail):
-        self.cursor.execute("""SELECT * FROM offres WHERE auteur = %s""", (mail,))
-        offres_mail = self.cursor.fetchall()
-        return offres_mail
 
     # Niveau classe
     def get_class_level(self, classe):
@@ -618,7 +664,7 @@ class MysqlObject:
     # Demande a-t-elle un tuteur ?
     def demande_tuteur(self, id_d):
         self.cursor.execute("""SELECT * FROM demandes WHERE id=%s""", (id_d,))
-        if self.cursor.fetchall()[0][5] is not None:
+        if objects.Demande(self.cursor.fetchall()[0]).tuteur is not None:
             tuteur = 1
         else:
             tuteur = 0
@@ -628,9 +674,9 @@ class MysqlObject:
     def places(self, id_o):
         self.cursor.execute("""SELECT * FROM offres WHERE id=%s""", (id_o,))
 
-        offre = self.cursor.fetchall()[0]
+        offre = objects.Offre(self.cursor.fetchall()[0])
 
-        if offre[5] is None or offre[6] is None:
+        if offre.participant is None or offre.participant2 is None:
             places = True
         else:
             places = False
@@ -640,7 +686,7 @@ class MysqlObject:
     # Mail in demande ?
     def mail_in_demande(self, id_d, mail):
         self.cursor.execute("""SELECT * FROM demandes where id = %s""", (id_d,))
-        tuteur = self.cursor.fetchall()[0][5]
+        tuteur = objects.Demande(self.cursor.fetchall()[0]).tuteur
         if tuteur == mail:
             return True
         else:
@@ -650,8 +696,8 @@ class MysqlObject:
     def mail_in_offre(self, id_o, mail):
         self.cursor.execute("""SELECT * FROM offres where id = %s""", (id_o,))
 
-        offre = self.cursor.fetchall()[0]
-        participants = [offre[5], offre[6]]
+        offre = objects.Offre(self.cursor.fetchall()[0])
+        participants = [offre.participant, offre.participant2]
 
         if mail in participants:
             return True
@@ -672,11 +718,11 @@ class MysqlObject:
         for demande in demandes:
 
             # variables demandes :
-            id_d = demande[0]
-            matiere = demande[3]
-            classe = demande[2]
+            id_d = demande.id
+            matiere = demande.matiere
+            classe = demande.classe
             lvl = self.get_class_level(classe)
-            horaires = demande[7]
+            horaires = demande.horaires
 
             offres = self.get_all_offres()
 
@@ -684,11 +730,11 @@ class MysqlObject:
 
                 # variables offres :
 
-                id_o = x[0]
-                classe_o = x[2]
-                lvl_o = self.get_filiere_level(classe_o)
-                matiere_o = x[3]
-                horaires_o = x[8]
+                id_o = x.id
+                filiere_o = x.filiere
+                lvl_o = self.get_filiere_level(filiere_o)
+                matiere_o = x.matiere
+                horaires_o = x.horaires
 
                 if lvl_o >= lvl and matiere == matiere_o and self.demande_tuteur(id_d) == 0:
                     if self.places(id_o) is True and self.mail_in_offre(id_o, mail) is False:
@@ -719,11 +765,11 @@ class MysqlObject:
         for offre in offres:
 
             # variables offres :
-            id_o = offre[0]
-            matiere = offre[3]
-            classe = offre[2]
-            lvl = self.get_filiere_level(classe)
-            horaires = offre[8]
+            id_o = offre.id
+            matiere = offre.matiere
+            filiere = offre.filiere
+            lvl = self.get_filiere_level(filiere)
+            horaires = offre.horaires
 
             demandes = self.get_all_demandes()
 
@@ -731,11 +777,11 @@ class MysqlObject:
 
                 # variables demandes :
 
-                id_d = x[0]
-                classe_d = x[2]
+                id_d = x.id
+                classe_d = x.classe
                 lvl_d = self.get_class_level(classe_d)
-                matiere_d = x[3]
-                horaires_d = x[7]
+                matiere_d = x.matiere
+                horaires_d = x.horaires
 
                 if lvl_d >= lvl and matiere == matiere_d and self.demande_tuteur(id_d) == 0:
                     if self.places(id_o) is True and self.mail_in_demande(id_d, mail) is False:

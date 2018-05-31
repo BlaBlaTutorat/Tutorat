@@ -10,19 +10,19 @@
 <h2 class="crea_title">Choix des horaires</h2>
 
 <form method="post" action="/select" class="form_crea">
-    <input type="hidden" name="id" value="{{ o[0] }}"/>
+    <input type="hidden" name="id" value="{{ o.id }}"/>
     <div class="creation" id="select">
         <div class="bloc">
             <div class="info">
                 <p class="element"><strong class="G">Auteur:</strong>
-                    <a onclick="open_profile_page('{{ o[1] }}')" title="Voir le profil">{{ sql_obj.get_user_pseudo(o[1]) }}</a>
+                    <a onclick="open_profile_page('{{ o.auteur }}')" title="Voir le profil">{{ sql_obj.get_user_pseudo(o.auteur) }}</a>
                 </p>
-                <p class="element"><strong class="G">Pour des:</strong> {{ o[2] }}</p>
-                <p class="element"><strong class="G">Matière:</strong> {{ o[3] }}</p>
+                <p class="element"><strong class="G">Pour des:</strong> {{ o.filiere }}</p>
+                <p class="element"><strong class="G">Matière:</strong> {{ o.matiere }}</p>
                 </div>
             <!-- Horaires -->
             <div id="horaires_crea">
-                <input type="hidden" id="horaires_data" name="horaires_data" value="{{ o[8] }}"/>
+                <input type="hidden" id="horaires_data" name="horaires_data" value="{{ o.horaires }}"/>
                 <div class="horaire" id="select_H">
                     <div class="table" id="jour-offre">
                         {% for i in range(0,6) %}
@@ -61,8 +61,8 @@
                                 <tr>
                                     {% for j in range(0,22) %}
                                         <td id="{{ i }} {{ j }}"
-                                            class="{% if o[8][(i*22)+j] == "0" %}white{% else %}red{% endif %}"
-                                            {% if o[8][(i*22)+j] != "0" %}onclick="horaire_click(event, this.id, this.className)"{% endif %}></td>
+                                            class="{% if o.horaires[(i*22)+j] == "0" %}white{% else %}red{% endif %}"
+                                            {% if o.horaires[(i*22)+j] != "0" %}onclick="horaire_click(event, this.id, this.className)"{% endif %}></td>
                                     {% endfor %}
                                 </tr>
                             </table>

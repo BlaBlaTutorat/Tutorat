@@ -119,7 +119,8 @@ def traitement_inscription():
                     classe = request.form.get('classe')
 
                     return redirect(url_for("confirm_register",
-                                            code_msg=True, C=True, nom=nom, mdp=mot_de_passe_chiffre, mail=mail, classe=classe))
+                                            code_msg=True, C=True, nom=nom, mdp=mot_de_passe_chiffre, mail=mail,
+                                            classe=classe))
 
                 else:
                     return render_template("authentification/inscription.html",
@@ -170,9 +171,9 @@ def confirm_register():
         msg['To'] = mail
         msg['Subject'] = 'BlaBla-Tutorat -- Code de validation'
         message = 'Bonjour,\n\nVoici le code de validation de votre inscription : ' \
-                      + code + '\nL\'équipe de BlaBla-Tutorat vous souhaite une bonne journée.\n\n\n\n\nCet e-mail a été généré' \
-                               ' automatiquement, merci de ne pas y répondre.' \
-                               ' Pour toute question, veuillez vous adresser aux documentalistes.'
+                  + code + '\nL\'équipe de BlaBla-Tutorat vous souhaite une bonne journée.\n\n\n\n\nCet e-mail a été généré' \
+                           ' automatiquement, merci de ne pas y répondre.' \
+                           ' Pour toute question, veuillez vous adresser aux documentalistes.'
         msg.attach(MIMEText(message))
         mailserver = smtplib.SMTP(config.smtp, config.smtp_port)
         mailserver.starttls()
@@ -180,8 +181,9 @@ def confirm_register():
         mailserver.sendmail(msg['From'], msg['To'], msg.as_string())
         mailserver.quit()
 
-        return redirect(url_for("confirm_register", code_msg=True, nom=nom, mdp=mot_de_passe_chiffre, mail=mail, classe=classe, code=code))
-
+        return redirect(
+            url_for("confirm_register", code_msg=True, nom=nom, mdp=mot_de_passe_chiffre, mail=mail, classe=classe,
+                    code=code))
 
     if len(request.form) == 0:
         return render_template("authentification/inscription.html",
@@ -192,11 +194,12 @@ def confirm_register():
             sql_obj.create_compte(request.form.get('nom'), request.form.get('mdp'), request.form.get('mail'),
                                   request.form.get('classe'))
             return redirect(url_for("connexion",
-                                        info_msg="Votre compte a bien été créé,\n"
-                                                 "vous pouvez dès à présent vous connecter"))
+                                    info_msg="Votre compte a bien été créé,\n"
+                                             "vous pouvez dès à présent vous connecter"))
         else:
             return redirect(url_for("inscription",
                                     info_msg="Vous n'avez pas entré le bon code de validation.\nVeuillez recommencer votre inscription."))
+
 
 # Mot de passe oublié
 @app.route('/forgot', methods=['GET'])
@@ -302,7 +305,7 @@ def profil_3():
         sql_obj.delete_account(mail)
         liste = sql_obj.get_user_offres_suivies(mail)
         for x in liste:
-            sql_obj.delete_participant(x[0], mail)
+            sql_obj.delete_participant(x.id, mail)
         return redirect(url_for('connexion', info_msg="Votre compte a bien été supprimé."))
     else:
         # Redirection si l'utilisateur n'est pas connecté
@@ -343,19 +346,22 @@ def profil_update():
             if request.form.get('classe') in classes:
                 # Chiffrement du mdp
                 if request.form.get('mdp') != '':
-                    if hashlib.sha256(str(request.form.get('mdp')).encode('utf-8')).hexdigest() == sql_obj.get_user_info(mail)[0][1]:
+                    if hashlib.sha256(str(request.form.get('mdp')).encode('utf-8')).hexdigest() == \
+                            sql_obj.get_user_info(mail)[0][1]:
                         if request.form.get('mdp1') != '' and request.form.get('mdp2') != '':
                             chaine_mot_de_passe = request.form.get('mdp1')
                             mdp_confirm = request.form.get('mdp2')
                             if chaine_mot_de_passe == mdp_confirm:
-                                mot_de_passe_chiffre = hashlib.sha256(str(chaine_mot_de_passe).encode('utf-8')).hexdigest()
+                                mot_de_passe_chiffre = hashlib.sha256(
+                                    str(chaine_mot_de_passe).encode('utf-8')).hexdigest()
                                 # Envoi des infos à la base de données
                                 sql_obj.modify_user_info_mdp(mail, mot_de_passe_chiffre)
                             else:
                                 return redirect(url_for("profil_update",
                                                         info_msg="Erreur - Vous n'avez pas correctement confirmé votre nouveau mot de passe."))
                         else:
-                            return redirect(url_for("profil_update", info_msg="Erreur - Vous n'avez pas rentré de nouveau mot de passe."))
+                            return redirect(url_for("profil_update",
+                                                    info_msg="Erreur - Vous n'avez pas rentré de nouveau mot de passe."))
                     else:
                         return redirect(url_for("profil_update",
                                                 info_msg="Erreur - Veuillez vérifier votre ancien mot de passe."))
@@ -700,10 +706,10 @@ def select():
         if request.args.get('tutorat_id'):
             id_offre = request.args.get('tutorat_id')
 
-            if mail == sql_obj.get_offre(id_offre)[5]:
+            if mail == sql_obj.get_offre(id_offre).participant:
                 return render_template("select_horaires.html", o=sql_obj.get_offre(id_offre), days=days,
                                        **locals())
-            elif mail == sql_obj.get_offre(id_offre)[6]:
+            elif mail == sql_obj.get_offre(id_offre).participant2:
                 return redirect(
                     url_for("recherche", info_msg="Vous avez bien été ajouté en tant que participant à ce tutorat."))
             else:
@@ -733,7 +739,7 @@ def select_2():
         if request.args.get('tutorat_id'):
             id_demande = request.args.get('tutorat_id')
 
-            if mail == sql_obj.get_demande(id_demande)[5]:
+            if mail == sql_obj.get_demande(id_demande).tuteur:
                 return render_template("select_horaires_d.html", o=sql_obj.get_demande(id_demande), days=days,
                                        **locals())
             else:
@@ -762,7 +768,7 @@ def modifier_demande():
             admin_user = check_admin()
             demande_id = request.args.get('id')
             # Vérification que l'auteur est celui qui demande la suppression
-            if mail == sql_obj.get_demande(demande_id)[1]:
+            if mail == sql_obj.get_demande(demande_id).auteur:
                 return render_template("edit/edit_d.html", demande=sql_obj.get_demande(demande_id),
                                        filieres=sql_obj.filieres_liste(), matieres=sql_obj.matieres_liste(),
                                        days=days, **locals())
@@ -786,7 +792,7 @@ def modifier_offre():
             admin_user = check_admin()
             offre_id = request.args.get('id')
             # Vérification que l'auteur est celui qui demande la suppression
-            if mail == sql_obj.get_offre(offre_id)[1]:
+            if mail == sql_obj.get_offre(offre_id).auteur:
                 return render_template("edit/edit_o.html", offre=sql_obj.get_offre(offre_id),
                                        filieres=sql_obj.filieres_liste(), matieres=sql_obj.matieres_liste(),
                                        days=days, **locals())
@@ -813,7 +819,7 @@ def modification_offre_demande():
             # Demande
             demande = sql_obj.get_demande(id)
             # Vérification que l'auteur est celui qui demande la modification
-            if mail == demande[1]:
+            if mail == demande.auteur:
                 sql_obj.modifier_demande(id, horaires)
             else:
                 abort(403)
@@ -821,7 +827,7 @@ def modification_offre_demande():
             # Offre
             offre = sql_obj.get_offre(id)
             # Vérification que l'auteur est celui qui demande la modification
-            if mail == offre[1]:
+            if mail == offre.auteur:
                 sql_obj.modifier_offre(id, horaires)
             else:
                 abort(403)
@@ -882,7 +888,7 @@ def delete():
             offre_id = request.args.get('id')
             offre = sql_obj.get_offre(offre_id)
             # Vérification que l'auteur est celui qui demande la suppression
-            if mail == offre[1]:
+            if mail == offre.auteur:
                 sql_obj.delete_offer(offre_id)
                 return redirect(url_for("profil", info_msg="Votre offre a bien été supprimée."))
             else:
@@ -904,7 +910,7 @@ def delete3():
             demande_id = request.args.get('id')
             demande = sql_obj.get_demande(demande_id)
             # Vérification que l'auteur est celui qui demande la suppression
-            if mail == demande[1]:
+            if mail == demande.auteur:
                 sql_obj.delete_demande(demande_id)
                 return redirect(url_for("profil", info_msg="Votre demande a bien été supprimée."))
             else:
@@ -1028,7 +1034,7 @@ def promote():
                 mail = request.args.get('mail')
                 sql_obj = sql.MysqlObject()
                 sql_obj.promote(mail)
-                return redirect(url_for("admin_u", 
+                return redirect(url_for("admin_u",
                                         info_msg="Le statut de cet utilisateur a bien été mis à jour."))
             else:
                 abort(403)
@@ -1048,8 +1054,8 @@ def retrogr():
             if request.args.get('mail'):
                 mail = request.args.get('mail')
                 sql_obj = sql.MysqlObject()
-                sql_obj.retrogr(mail)
-                return redirect(url_for("admin_u", 
+                sql_obj.retrograder(mail)
+                return redirect(url_for("admin_u",
                                         info_msg="Le statut de cet utilisateur a bien été mis à jour."))
             else:
                 abort(403)
@@ -1080,8 +1086,7 @@ def reset():
         admin_user = check_admin()
         if admin_user == 1:
             sql_obj.reset()
-            info_msg = 'Le site BlaBla Tutorat a bien été remis à zéro.'
-            return redirect(url_for('admin_ov', offres_V=sql_obj.offres_liste_valider(), days=days, **locals()))
+            return redirect(url_for('admin_ov', info_msg='Le site BlaBla Tutorat a bien été remis à zéro.'))
         else:
             abort(403)
     else:
@@ -1152,7 +1157,6 @@ app.jinja_env.globals.update(check_connexion=check_connexion)
 # Nécessaire pour faire fontionner les sessions
 # (à garder secret pour que l'utilisateur ne puisse pas modifier les cookies)
 app.secret_key = config.secret_key
-
 
 # Lancement du serveur lors de l'exécution du fichier
 if __name__ == '__main__':

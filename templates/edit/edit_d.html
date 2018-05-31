@@ -14,20 +14,20 @@
 
 <form method="post" action="/edit_apply" class="form_crea">
     <input type="hidden" name="categorie" value="demande"/>
-    <input type="hidden" name="id" value="{{ demande[0] }}"/>
+    <input type="hidden" name="id" value="{{ demande.id }}"/>
     <div class="creation">
         <div class="bloc">
             <div class="info_crea">
-                <p class="element"><strong class="G">Vous êtes en :</strong> {{ demande[2] }}</p>
+                <p class="element"><strong class="G">Vous êtes en :</strong> {{ demande.classe }}</p>
                 <!-- Matière -->
-                <p class="element"><strong class="G">Vous souhaitez être aidé en : </strong>{{ demande[3] }}</p>
+                <p class="element"><strong class="G">Vous souhaitez être aidé en : </strong>{{ demande.matiere }}</p>
                 <div class="crea_offre_bloc">
                     <input type="submit" class="crea_offre" value="Modifier ma demande"/>
                 </div>
             </div>
             <!-- Horaires -->
             <div id="horaires_crea">
-                <input type="hidden" id="horaires_data" name="horaires_data" value="{{ demande[7] }}"/>
+                <input type="hidden" id="horaires_data" name="horaires_data" value="{{ demande.horaires }}"/>
                 <div class="horaire">
                     <div class="table" id="jour-offre">
                         {% for i in range(0,6) %}
@@ -66,7 +66,7 @@
                                 <tr>
                                     {% for j in range(0,22) %}
                                         <td id="{{ i }} {{ j }}"
-                                            class="{% if demande[7][(i*22)+j] == "0" %}white{% else %}red{% endif %}"
+                                            class="{% if demande.horaires[(i*22)+j] == "0" %}white{% else %}red{% endif %}"
                                             onclick="horaire_click(event, this.id, this.className)"></td>
                                     {% endfor %}
                                 </tr>

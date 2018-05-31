@@ -51,14 +51,14 @@
             <div class="bloc">
                 <div class="info">
                     <p class="element"><strong class="G">Auteur :</strong>
-                        <a onclick="open_profile_page('{{ demande[1] }}')"
-                           title="Voir le profil">{{ sql_obj.get_user_pseudo(demande[1]) }}</a>
+                        <a onclick="open_profile_page('{{ demande.auteur }}')"
+                           title="Voir le profil">{{ sql_obj.get_user_pseudo(demande.auteur) }}</a>
                     </p>
-                    <p class="element"><strong class="G">En classe de :</strong> {{ demande[2] }}</p>
-                    <p class="element"><strong class="G">Matière :</strong> {{ demande[3] }}</p>
+                    <p class="element"><strong class="G">En classe de :</strong> {{ demande.classe }}</p>
+                    <p class="element"><strong class="G">Matière :</strong> {{ demande.matiere }}</p>
                 </div>
                 <div id="horaires">
-                    <p class="date_creation">Créée le {{ demande[4].strftime('%d/%m/%Y') }}</p>
+                    <p class="date_creation">Créée le {{ demande.date_time.strftime('%d/%m/%Y') }}</p>
                     <div class="horaire">
                         <div class="table" id="jour-offre">
                             {% for i in range(0,6) %}
@@ -95,7 +95,7 @@
                             {% for i in range(0,6) %}
                                 <table>
                                     <tr>
-                                        {% for H in (demande[7]|list)[i*22:(i + 1)*22] %}
+                                        {% for H in (demande.horaires|list)[i*22:(i + 1)*22] %}
                                             {% if (H|int) == 0 %}
                                                 <td class="white"></td>
                                             {% elif (H|int) == 1 %}
@@ -109,7 +109,7 @@
                     </div>
                     <form class="bouton" method="post" action="/apply">
                         <input type="hidden" name="categorie" value="demande"/>
-                        <input type="hidden" name="id" value="{{ demande[0] }}"/>
+                        <input type="hidden" name="id" value="{{ demande.id }}"/>
                         <input type="submit" value="Se proposer comme tuteur"/>
                     </form>
                 </div>
