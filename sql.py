@@ -399,10 +399,17 @@ class MysqlObject:
     # Promouvoir
     def promote(self, mail):
         """Argument: Mail de l'utilisateur
-        Fonction: Promouvois admin l'utilisateur"""
+        Fonction: promouvoir un utilisateur en administrateur"""
         self.cursor.execute("""UPDATE users SET classe = 'ADMIN' WHERE mail = %s""", (mail,))
         self.conn.commit()
 
+    # Rétrograder
+    def retrogr(self, mail, classe = ""):
+        """Argument: Mail de l'utilisateur
+        Fonction: retrograder un administrateur en utilisateur"""
+        self.cursor.execute("""UPDATE users SET classe = '%s' WHERE mail = %s""", (mail, classe))
+        self.conn.commit()
+        
     # Modification du profil Classe
     def modify_user_info(self, mail, classe):
         """Argument: Mail de l'utilisateur, classe choisi

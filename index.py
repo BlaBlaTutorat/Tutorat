@@ -1020,7 +1020,7 @@ def ban():
 # Promouvoir (admin)
 @app.route('/promote')
 def promote():
-    """Promouvois un utilisateur admin"""
+    """Promouvoir un utilisateur en administrateur"""
     if check_connexion():
         admin_user = check_admin()
         if admin_user:
@@ -1028,7 +1028,29 @@ def promote():
                 mail = request.args.get('mail')
                 sql_obj = sql.MysqlObject()
                 sql_obj.promote(mail)
-                return redirect(url_for("admin_u", info_msg="Le statut de cet utilisateur a bien été mis à jour."))
+                return redirect(url_for("admin_u", 
+                                        info_msg="Le statut de cet utilisateur a bien été mis à jour."))
+            else:
+                abort(403)
+        else:
+            abort(403)
+    else:
+        return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
+
+
+# Promouvoir (admin)
+@app.route('/retrogr')
+def retrogr():
+    """Rétrograder un administrateur en utilisateur"""
+    if check_connexion():
+        admin_user = check_admin()
+        if not admin_user:
+            if request.args.get('mail'):
+                mail = request.args.get('mail')
+                sql_obj = sql.MysqlObject()
+                sql_obj.retrogr(mail)
+                return redirect(url_for("admin_u", 
+                                        info_msg="Le statut de cet utilisateur a bien été mis à jour."))
             else:
                 abort(403)
         else:

@@ -55,11 +55,10 @@
                 
                                
                 <div class="info_profil informations">
-                    <p><strong class="G">Mail :</strong></p>
+                    <p><strong class="G">eMail :</strong></p>
                 </div>
                 <div class="info_profil informations2">
-                    <p><a href="mailto:{{ user[2] }}" title="Envoyer un mail">{{ user[2] }}</a></p>
-                    <p>{{ user[3] }}</p>
+                    <p><a href="mailto:{{ user[2] }}" title="Envoyer un eMail">{{ user[2] }}</a></p>
                 </div>
                 
                 {% if user[3]=='ADMIN' %}
@@ -75,17 +74,17 @@
                 <div class="info_profil user_etat informations">
 	            	{% for tutorat in tutorats_actifs %}
                         {% if tutorat[1] == user[2] %}
-                            <img src="/static/img/tuteur.png" id="tuteur" title="Nombre d'offres créés par cet utilisateur">
+                            <img src="/static/img/tuteur.png" id="tuteur" title="Nombre d'offres créées par cet utilisateur">
                         {% endif %}
                     {% endfor %}
                     {% for tutorat in tutorats_actifs %}
                         {% if tutorat[5] == user[2] or tutorat[6] == user[2] %}
-                            <img src="/static/img/tutore.png" id="tutore" title="Nombre de tutorats suivi par cet utilisateur">
+                            <img src="/static/img/tutore.png" id="tutore" title="Nombre de tutorats suivis par cet utilisateur">
                         {% endif %}
                     {% endfor %}
                     {% for demande in demandes %}
                         {% if demande[1] == user[2] %}
-                            <img src="/static/img/demandeur.png" id="tutore" title="Nombre de demandes crées par cet utilisateur">
+                            <img src="/static/img/demandeur.png" id="tutore" title="Nombre de demandes créées par cet utilisateur">
                         {% endif %}
                     {% endfor %}
 	            </div>
@@ -94,7 +93,7 @@
                 <div class="info_profil user_updateAB">
                     {% if user[4]==1 %}
                         <a href="/ban?mail={{ user[2] }}" class="ban">
-                            <button>Débannir</button>
+                            <button>Réintégrer</button>
                         </a>
                     {% else %}
                         <a href="/ban?mail={{ user[2] }}" class="ban">
