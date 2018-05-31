@@ -42,7 +42,7 @@
 
 <!-- Liste des offres -->
 <div class="offres" id="tutorat_en_cours">
-    <h2>Offres en cours</h2>
+    <h2>{{ tutorats_actifs|length }} offre{% if tutorats_actifs|length>1 %}s{% endif %} en cours</h2>
     {% if tutorats_actifs|length>0 %}
         {% for offre in tutorats_actifs %}
             <br/>

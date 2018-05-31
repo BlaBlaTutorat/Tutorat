@@ -42,7 +42,7 @@
 
 <!-- Liste des offres -->
 <div class="offres" id="tutorat_en_cours">
-    <h2 class="page_admin_title">Offre(s) à valider</h2>
+    <h2 class="page_admin_title">{{ offres_V|length }} offre{% if offres_V|length>1 %}s{% endif %} à valider</h2>
     {% if offres_V|length>0 %}
         {% for offre in offres_V %}
             <br/>
@@ -105,7 +105,7 @@
 </div>
 
 <div class="demandes">
-    <h2>Demande(s) à valider</h2>
+    <h2>{{ demandes_V|length }} demande{% if demandes_V|length>1 %}s{% endif %} à valider</h2>
     {% if demandes_V|length>0 %}
         {% for demande in demandes_V %}
             <br/>

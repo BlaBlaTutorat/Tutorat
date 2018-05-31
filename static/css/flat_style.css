@@ -156,7 +156,7 @@ Fond : #161616
 Couleur du thème : #18a3fa
 
 Offres : #a318fa
-Demandes  :#18faa3
+Demandes  :#10fa95
 
 ***************************************************************************/
 
@@ -640,7 +640,7 @@ footer a:hover {
     flex-direction: column;
     justify-content: center;
     margin: auto;
-    --base-color: #18faa3;
+    --base-color: #10fa95;
 }
 
 /**************************************************************************
@@ -648,7 +648,7 @@ footer a:hover {
 ***************************************************************************/
 .bloc {
     background: white;
-    border-radius: 100px;
+    border-radius: 60px;
     border: 1px solid;
     display: flex;
     flex-direction: row;
@@ -667,7 +667,7 @@ footer a:hover {
 }
 
 .demandes .bloc {
-    border-color: #18faa3;
+    border-color: #10fa95;
     min-width: 1100px;
     min-height: 215px;
     margin: 10px auto 10px auto;
@@ -713,7 +713,7 @@ footer a:hover {
 }
 
 .demandes .horaire {
-    background: #18faa3;
+    background: #10fa95;
 }
 
 #table_horaires
@@ -800,7 +800,7 @@ footer a:hover {
 }
 
 .creation.demandes .bloc {
-    border-color: #18faa3;
+    border-color: #10fa95;
 }
 
 .creation .element {
@@ -832,7 +832,7 @@ footer a:hover {
     background: #a318fa;
 }
 .creation.demandes .horaire {
-    background: #18faa3;
+    background: #10fa95;
 }
 
 #table_horaires_crea {

@@ -40,9 +40,9 @@
     </a>
 </aside>
 
-<!-- Liste des offres -->
-<div class="offres">
-    <h2>Demandes en cours</h2>
+<!-- Liste des demandes -->
+<div class="demandes">
+    <h2>{{ demandes|length }} demande{% if demandes|length>1 %}s{% endif %} en cours</h2>
     {% if demandes|length>0 %}
         {% for demande in demandes %}
             <br/>
