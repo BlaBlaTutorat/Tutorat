@@ -23,7 +23,7 @@
 
 <!-- Formulaire de création -->
 <form method="post" action="/create" class="form_crea">
-    <div class="creation">
+    <div class="creation {% if demande %} demandes {% else %} offres {% endif %}">
         <div class="bloc">
             <div class="info_crea">
                 {% if demande %}

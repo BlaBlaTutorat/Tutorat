@@ -149,6 +149,17 @@ th, td {
 }
 /* END Commun */
 
+/**************************************************************************
+  Constantes
+
+Fond : #161616
+Couleur du thème : #18a3fa
+
+Offres : #a318fa
+Demandes  :#18faa3
+
+***************************************************************************/
+
 /* HEADER */
 header nav, .header nav {
     margin-top: 25px;
@@ -621,23 +632,48 @@ footer a:hover {
     flex-direction: column;
     justify-content: center;
     margin: auto;
+    --base-color: #a318fa;
 }
 
-.offres .bloc {
+.demandes {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: auto;
+    --base-color: #18faa3;
+}
+
+/**************************************************************************
+  Bloc contenant offres et demandes
+***************************************************************************/
+.bloc {
     background: white;
-    border-radius: 120px;
-    border: 1px solid #18a3fa;
+    border-radius: 100px;
+    border: 1px solid;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
     padding: 5px 10px 5px 10px;
+    min-width: 950px;
+    min-height: 450px;
+}
+
+.offres .bloc {
+    border-color: #a318fa;
     min-width: 1100px;
     min-height: 215px;
     margin: 10px auto 10px auto;
 }
 
-.offres .element {
+.demandes .bloc {
+    border-color: #18faa3;
+    min-width: 1100px;
+    min-height: 215px;
+    margin: 10px auto 10px auto;
+}
+
+.offres .element, .demandes .element {
     margin-bottom: 2px;
     margin-top: 2px;
     padding: 0 0 5px 0;
@@ -646,7 +682,7 @@ footer a:hover {
     font-family: "Gotham SSm A", sans-serif;
 }
 
-.offres .table {
+.offres .table , .demandes .table {
     line-height: 17px;
     margin: 0 10px 0 10px;
 }
@@ -661,16 +697,23 @@ footer a:hover {
     padding-right: 0;
     margin-right: 0;
     max-width: 40%;
-    min-width: 40%
+    min-width: 40%;
 }
 
-.offres .horaire {
+.horaire {
     display: flex;
     justify-content: space-around;
     margin-top: 3px;
-    background: #18a3fa;
     border-radius: 15px;
     color: white;
+}
+
+.offres .horaire {
+    background: #a318fa;
+}
+
+.demandes .horaire {
+    background: #18faa3;
 }
 
 #table_horaires
@@ -704,6 +747,9 @@ footer a:hover {
     font-size: 2em;
 }
 /* END Search */
+
+
+
 
 /* Create */
 .offre_demande {
@@ -748,17 +794,13 @@ footer a:hover {
     margin: auto;
 }
 
-.creation .bloc {
-    background: white;
-    border-radius: 100px;
-    border: 1px solid #18a3fa;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    padding: 5px 10px 5px 10px;
-    min-width: 950px;
-    min-height: 450px;
+
+.creation.offres .bloc {
+    border-color: #a318fa;
+}
+
+.creation.demandes .bloc {
+    border-color: #18faa3;
 }
 
 .creation .element {
@@ -786,12 +828,11 @@ footer a:hover {
     min-width: 40%;
 }
 
-.creation .horaire {
-    display: flex;
-    background: #18a3fa;
-    border-radius: 15px;
-    color: white;
-    margin: 0 10px 0 10px;
+.creation.offres .horaire {
+    background: #a318fa;
+}
+.creation.demandes .horaire {
+    background: #18faa3;
 }
 
 #table_horaires_crea {
