@@ -75,6 +75,9 @@ def traitement_connexion():
                 return redirect(url_for('connexion',
                                         info_msg="Erreur lors de la connexion, veuillez vérifier les informations"
                                                  " saisies puis réessayez."))
+        elif sql_obj.mail_in_register(mail):
+            return redirect(
+                url_for("confirm_register", code_msg=True, mail=mail, info_msg="Veuillez finaliser votre inscription."))
         else:
             return redirect(url_for('connexion',
                                     info_msg="Aucun compte ne correspond à l'adresse email renseignée."))
@@ -117,10 +120,13 @@ def traitement_inscription():
                     nom = request.form.get('prenom') + ' ' + request.form.get('nom')
                     mail = request.form.get('mail')
                     classe = request.form.get('classe')
+                    code = "000000"
+                    sql_obj.create_compte_validate(nom, mot_de_passe_chiffre, mail,
+                                                   classe, code)
+
 
                     return redirect(url_for("confirm_register",
-                                            code_msg=True, C=True, nom=nom, mdp=mot_de_passe_chiffre, mail=mail,
-                                            classe=classe))
+                                            code_msg=True, C=True, mail=mail))
 
                 else:
                     return render_template("authentification/inscription.html",
@@ -141,18 +147,12 @@ def traitement_inscription():
 def confirm_register():
     """Page confirmation d'inscription"""
     sql_obj = sql.MysqlObject()
-    if request.args.get('info_msg'):
-        info_msg = request.args.get('info_msg')
-    if request.args.get('nom'):
-        nom = request.args.get('nom')
-    if request.args.get('mdp'):
-        mot_de_passe_chiffre = request.args.get('mdp')
     if request.args.get('mail'):
         mail = request.args.get('mail')
-    if request.args.get('classe'):
-        classe = request.args.get('classe')
-    if request.args.get('code'):
-        code = request.args.get('code')
+    if request.args.get('info_msg2'):
+        info_msg2 = request.args.get('info_msg2')
+    else:
+        info_msg2 = ""
     if request.args.get('C'):
         C = request.args.get('C')
     else:
@@ -181,24 +181,52 @@ def confirm_register():
         mailserver.sendmail(msg['From'], msg['To'], msg.as_string())
         mailserver.quit()
 
-        return redirect(
-            url_for("confirm_register", code_msg=True, nom=nom, mdp=mot_de_passe_chiffre, mail=mail, classe=classe,
-                    code=code))
+        sql_obj.code_update(code, mail)
+        if info_msg2 != "":
+            return redirect(
+                url_for("confirm_register", code_msg=True, mail=mail, info_msg2=info_msg2))
+        else:
+            return redirect(
+                url_for("confirm_register", code_msg=True, mail=mail))
 
     if len(request.form) == 0:
+        info = sql_obj.info_register(mail)
+        nom = info[0][0]
+        mdp = info[0][1]
+        mail = info[0][2]
+        classe = info[0][3]
+        code = info[0][4]
         return render_template("authentification/inscription.html",
-                               code_msg=True, nom=nom, mdp=mot_de_passe_chiffre, mail=mail, classe=classe, code=code)
+                               code_msg=True, **locals())
     else:
         if request.form.get('code_V') == request.form.get('code'):
             # Envoi des infos à la base de données
+            sql_obj.delete_register(request.form.get('mail'))
             sql_obj.create_compte(request.form.get('nom'), request.form.get('mdp'), request.form.get('mail'),
                                   request.form.get('classe'))
             return redirect(url_for("connexion",
                                     info_msg="Votre compte a bien été créé,\n"
                                              "vous pouvez dès à présent vous connecter"))
         else:
-            return redirect(url_for("inscription",
-                                    info_msg="Vous n'avez pas entré le bon code de validation.\nVeuillez recommencer votre inscription."))
+            return redirect(url_for("confirm_register",
+                                    code_msg=True, C=True, mail=request.form.get('mail'), info_msg2="Vous n'avez pas tapé le bon code. Un nouveau vous a été envoyé par mail."))
+
+
+# Annuler l'inscription
+@app.route('/del_register', methods=['GET', 'POST'])
+def del_register():
+    """Annuler l'inscription"""
+    sql_obj = sql.MysqlObject()
+    if request.args.get('mail'):
+        mail = request.args.get('mail')
+        if sql_obj.mail_in_register(mail):
+            sql_obj.delete_register(mail)
+            return redirect(url_for("connexion", info_msg="Vous avez bien annulé votre inscription sur BlaBla-Tutorat."))
+        else:
+            abort(404)
+    else:
+        abort(404)
+
 
 
 # Mot de passe oublié

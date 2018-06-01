@@ -72,7 +72,34 @@ class MysqlObject:
         REQUETES CONCERNANT LES UTILISATEURS SUR LA BDD
     """
 
-    # Listes des utilisateurs
+    # Inscription intermédiaire
+    def create_compte_validate(self, nom, mdp, mail, classe, code):
+        """Argument: Mail de l'utilisateur, nom, mot de passe, classe et le code de valisation
+        Fonction: Envoie les données à la BDD et créer un compte utilisateur intermédiaire"""
+        self.cursor.execute(
+            """INSERT INTO register (nom, mdp, mail, classe, code) VALUES (%s, %s, %s, %s, %s)""", (nom, mdp, mail, classe, code))
+        self.conn.commit()
+
+    def code_update(self, code, mail):
+        """Argument: code de validation et mail
+        Fonction: ajoute le bon code de validation d'inscription a la bdd"""
+        self.cursor.execute("""UPDATE register SET code = %s WHERE mail = %s""", (code, mail))
+        self.conn.commit()
+
+    # Info pour linscription
+    def info_register(self, mail):
+        """Renvoie les info utilisateur pour l'inscription"""
+        self.cursor.execute("""SELECT * FROM register WHERE mail=%s""", (mail,))
+        return self.cursor.fetchall()
+
+    # Supression info inscription
+    def delete_register(self, mail):
+        """Argument: Mail de l'utilisateur
+        Fonction: Supprime les info d'inscription"""
+        self.cursor.execute("""DELETE FROM register WHERE mail = %s""", (mail,))
+        self.conn.commit()
+
+    # Supression de compte
     def delete_account(self, mail):
         """Argument: Mail de l'utilisateur
         Fonction: Supprime le compte utilisateur de la BDD et les offres et demandes créées par l'utilisateur"""
@@ -101,6 +128,16 @@ class MysqlObject:
         """Argument: Mail de l'utilisateur
         Fonction: Vérifie si le mail existe"""
         self.cursor.execute("""SELECT mail FROM users WHERE mail =%s""", (mail,))
+        if len(self.cursor.fetchall()) != 0:
+            return True
+        else:
+            return False
+
+    # Vérifier si le mail existe
+    def mail_in_register(self, mail):
+        """Argument: Mail de l'utilisateur
+        Fonction: Vérifie si le mail existe"""
+        self.cursor.execute("""SELECT mail FROM register WHERE mail =%s""", (mail,))
         if len(self.cursor.fetchall()) != 0:
             return True
         else:
@@ -457,6 +494,7 @@ class MysqlObject:
         self.cursor.execute("""DELETE FROM `users` WHERE classe != 'ADMIN'""")
         self.cursor.execute("""DELETE FROM `offres`""")
         self.cursor.execute("""DELETE FROM `demandes`""")
+        self.cursor.execute("""DELETE FROM `register`""")
         self.conn.commit()
 
     # Retourne les informations pour les statistiques :

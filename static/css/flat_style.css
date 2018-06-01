@@ -153,7 +153,7 @@ th, td {
   Constantes
 
 Fond : #161616
-Couleur du thème : #18a3fa
+Couleur du thï¿½me : #18a3fa
 
 Offres : #a318fa
 Demandes  :#10fa95
@@ -423,7 +423,16 @@ footer a:hover {
 
 .reg {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
+}
+
+.reg .button, .reg input {
+    margin: 0 3px 0 3px;
+}
+
+#register_button {
+    color: white;
+    padding: 0 5px 0 5px;
 }
 
 #code_de_v {
