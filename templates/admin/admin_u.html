@@ -25,15 +25,7 @@
     </div>
 </div>
 
-
-<form method="post" class="user_search">
-    <h2>Rechercher un utilisateur</h2>
-    <p class="search_form">
-	    <input name="user_search" class="user_search_admin" placeholder="chercher dans le nom..." 
-	    	   value="{{ user_search }}" />
-	    <input class="search_btn" type="image" src="/static/img/search.png" alt="Chercher" title="Chercher" />
-    </p>
-</form>
+{% include '/blocs/search_user.html' %}
 
 
 <!-- Liste des users -->

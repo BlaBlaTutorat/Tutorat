@@ -77,9 +77,9 @@
                                     <tr>
                                         {% for H in (offre.horaires|list)[i*22:(i + 1)*22] %}
                                             {% if (H|int) == 0 %}
-                                                <td class="white"></td>
+                                                <td class="white" title="{{ get_crenau(loop.index) }}"></td>
                                             {% elif (H|int) == 1 %}
-                                                <td class="red"></td>
+                                                <td class="red" title="{{ get_crenau(loop.index) }}"></td>
                                             {% endif %}
                                         {% endfor %}
                                     </tr>

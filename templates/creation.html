@@ -109,10 +109,11 @@
                             </tr>
                         </table>
                         {% for i in range(0,6) %}
-                            <table title="Cliquer pour séléctionner/déselectionner un créneau horaire">
+                            <table>
                                 <tr>
                                     {% for j in range(0,22) %}
-                                        <td id="{{ i }} {{ j }}" class="white" onclick="horaire_click(event, this.id, this.className)"></td>
+                                        <td id="{{ i }} {{ j }}" class="white" onclick="horaire_click(event, this.id, this.className)"
+                                            title="Cliquer pour séléctionner/déselectionner le créneau horaire&#13;{{ get_crenau(loop.index) }}"></td>
                                     {% endfor %}
                                 </tr>
                             </table>

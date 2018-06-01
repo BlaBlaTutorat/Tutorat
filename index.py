@@ -1155,11 +1155,25 @@ def get_identites():
     return config.identites
 
 
+def get_crenau(n):
+    return get_heure(n)+ " - " + get_heure(n+1)
+    
+    
+def get_heure(n):
+    H = str(8+(n-1)//2)+"h"
+    if (n-1)%2 == 1:
+        M = "30"
+    else:
+        M = "00"
+    return H+M
+    
+    
+    
+    
 # Possibilité d'appeler la fonction check_connexion() depuis un template html
-
 app.jinja_env.globals.update(check_connexion=check_connexion)
 app.jinja_env.globals.update(get_identites=get_identites)
-
+app.jinja_env.globals.update(get_crenau=get_crenau)
 # Nécessaire pour faire fontionner les sessions
 # (à garder secret pour que l'utilisateur ne puisse pas modifier les cookies)
 app.secret_key = config.secret_key

@@ -26,10 +26,8 @@
 </div>
 
 
-<form method="post" class="user_search">
-    <h2>Rechercher un utilisateur</h2>
-    <input name="user_search" class="user_search_admin"/>
-</form>
+{% include '/blocs/search_user.html' %}
+
 
 <aside>
     <a href="/admin/tutorials/progress">
@@ -48,35 +46,37 @@
             <br/>
             <div class="bloc">
                 <div class="info">
-                    <p class="element"><strong class="G">Auteur:</strong>
+                    <p class="element"><strong class="G">Auteur :</strong>
                         <a onclick="open_profile_page('{{ offre.auteur }}')"
                            title="Voir le profil">{{ sql_obj.get_user_pseudo(offre.auteur) }}</a>
                     </p>
-                    <p class="element"><strong class="G">Pour des:</strong> {{ offre.filiere }}</p>
-                    <p class="element"><strong class="G">Matière:</strong> {{ offre.classe }}</p>
-                    <p class="element"><strong class="G">Participant 1:</strong>
-                        {% if offre.participant is none %}
-                            Personne
+                    <p class="element"><strong class="G">Pour des :</strong> {{ offre.filiere }}</p>
+                    <p class="element"><strong class="G">Matière :</strong> {{ offre.classe }}</p>
+                    
+                    <p class="element"><strong class="G">Participant{% if offre.participant is not none and offre.participant2 is not none%}s{% endif %} :</strong>
+                        {% if offre.participant is none  and offre.participant2 is none %}
+                        	aucun
                         {% else %}
-                            <a onclick="open_profile_page('{{ offre.participant }}')"
-                               title="Voir le profil">{{ sql_obj.get_user_pseudo(offre.participant) }}</a>
+                        	<ul>
+	                        {% for p in [offre.participant, offre.participant2] %}
+								{% if p is not none %}
+									<li>
+									<a onclick="open_profile_page('{{ p }}')"
+		                               title="Voir le profil">{{ sql_obj.get_user_pseudo(p) }}</a>
+		                            </li>
+		                        {% endif %}
+	                        {% endfor %}
+	                        </ul>
                         {% endif %}
                     </p>
-                    <p class="element"><strong class="G">Participant 2:</strong>
-                        {% if offre.participant2 is none %}
-                            Personne
-                        {% else %}
-                            <a onclick="open_profile_page('{{ offre.participant2 }}')"
-                               title="Voir le profil">{{ sql_obj.get_user_pseudo(offre.participant2) }}</a>
-                        {% endif %}
-                    </p>
+                    
                 </div>
                 <div id="horaires">
                     <p class="date_creation">Créée le {{ offre.date_time.strftime('%d/%m/%Y') }}</p>
                     <div class="horaire">
                         <div class="table" id="jour-offre">
                             {% for i in range(0,6) %}
-                                <p>{{ days[i] }}:</p>
+                                <p>{{ days[i] }}</p>
                             {% endfor %}
                         </div>
                         <div class="table" id="table_horaires">
@@ -93,9 +93,9 @@
                                     <tr>
                                         {% for H in (offre.horaires|list)[i*22:(i + 1)*22] %}
                                             {% if (H|int) == 0 %}
-                                                <td class="white"></td>
+                                                <td class="white" title="{{ get_crenau(loop.index) }}"></td>
                                             {% elif (H|int) == 1 %}
-                                                <td class="red"></td>
+                                                <td class="red" title="{{ get_crenau(loop.index) }}"></td>
                                             {% endif %}
                                         {% endfor %}
                                     </tr>
