@@ -6,3 +6,5 @@ __pycache__/
 .project
 .pydevproject
 .settings/
+
+.wsgi
