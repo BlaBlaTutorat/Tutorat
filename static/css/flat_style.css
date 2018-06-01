@@ -968,10 +968,10 @@ END Create
 
 .bloc_profil {
     display: grid;
-  	grid-template-columns: auto auto;
+  	grid-template-columns: 200px auto;
   	grid-column-gap: 10px;
-  	grid-column-gap: 10px;
-    justify-content: center;
+  	grid-row-gap: 10px;
+    
     margin: auto;
     align-items: center;
 }
@@ -1162,11 +1162,15 @@ END Create
 }
 
 .informations {
-    margin-left: 10px;
+    text-align: right;
 }
 
-.informations2 {
-    
+.informations p {
+    margin: 0;
+}
+
+.informations2 p {
+    margin: 0;
 }
 
 .user_etat {
@@ -1220,17 +1224,17 @@ END Create
     background: white;
     border-radius: 40px;
     border: 1px solid #18a3fa;
-    justify-content: space-around;
-    padding: 5px 10px 5px 10px;
+    
+    padding: 10px 5px 10px 5px;
     min-width: 650px;
-    height: 350px;
+    
     margin-top: 10px;
     margin-bottom: 10px;
 }
 
 .ban {
-    width: 10%;
     margin-right: 15px;
+    margin-left: 15px;
 }
 
 #admin1 {

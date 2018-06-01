@@ -48,7 +48,7 @@
                 <div class="info_profil informations2">
                     <p>{{ user[0] }}
                         {% if user[3]=='ADMIN' %}
-	                        <img src="/static/img/administrateur.png" title="Administrateur">
+	                        <img src="/static/img/administrateur.png" title="Administrateur" width=20>
 	                    {% endif %}
                     </p>
                 </div>
@@ -61,7 +61,7 @@
                     <p><a href="mailto:{{ user[2] }}" title="Envoyer un eMail">{{ user[2] }}</a></p>
                 </div>
                 
-                {% if user[3]=='ADMIN' %}
+                {% if user[3]!='ADMIN' %}
 	                <div class="info_profil informations">
 	                    <p><strong class="G">Classe :</strong></p>
 	                </div>
@@ -70,8 +70,11 @@
 	                </div>
 	            {% endif %}
 	                    
-	                    
-                <div class="info_profil user_etat informations">
+	            <div class="info_profil informations">
+	            	<p><strong class="G">Activité :</strong></p>
+	            </div>   
+	                 
+                <div class="info_profil informations2">
 	            	{% for tutorat in tutorats_actifs %}
                         {% if tutorat.auteur == user[2] %}
                             <img src="/static/img/tuteur.png" id="tuteur" title="Nombre d'offres créées par cet utilisateur">
@@ -90,14 +93,14 @@
 	            </div>
                 
                 
-                <div class="info_profil user_updateAB">
+                <div class="info_profil informations user_updateAB">
                     {% if user[4]==1 %}
                         <a href="/ban?mail={{ user[2] }}" class="ban">
-                            <button>Réintégrer</button>
+                            <button title="Réintégrer l'utilisateur">Réintégrer</button>
                         </a>
                     {% else %}
                         <a href="/ban?mail={{ user[2] }}" class="ban">
-                            <button>Bannir</button>
+                            <button title="Bannir l'utilisateur = lui interdire l'accès au site.">Bannir</button>
                         </a>
                     {% endif %}
                 </div>
