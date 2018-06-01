@@ -110,7 +110,7 @@ def traitement_inscription():
     classes = sql_obj.classes_liste()
     if not check_connexion():
         if not sql_obj.mail_in_bdd(request.form['mail']) and not sql_obj.mail_in_register(request.form['mail']):
-            # Vérification que la classe est valide
+            # Vérification que la classe est valid
             if request.form.get('classe') in classes:
                 # Chiffrement du mdp
                 chaine_mot_de_passe = request.form.get('mdp')
