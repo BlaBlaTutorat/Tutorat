@@ -969,6 +969,8 @@ END Create
 .bloc_profil {
     display: grid;
   	grid-template-columns: auto auto;
+  	grid-column-gap: 10px;
+  	grid-column-gap: 10px;
     justify-content: center;
     margin: auto;
     align-items: center;
@@ -1144,6 +1146,7 @@ END Create
     font-family: "Gotham SSm A", sans-serif;
     font-size: 0.85em;
     cursor: auto;
+    padding : 0px 10px 0px 10px;
 }
 
 #tuteur, #tutore {
@@ -1159,12 +1162,11 @@ END Create
 }
 
 .informations {
-    width: 30%;
-    margin-left: 15px;
+    margin-left: 10px;
 }
 
 .informations2 {
-    width: 60%;
+    
 }
 
 .user_etat {
@@ -1218,8 +1220,6 @@ END Create
     background: white;
     border-radius: 40px;
     border: 1px solid #18a3fa;
-    display: flex;
-    flex-direction: row;
     justify-content: space-around;
     padding: 5px 10px 5px 10px;
     min-width: 650px;
@@ -1285,7 +1285,7 @@ END Create
     display: flex;
     flex-direction: column;
     justify-content: center;
-    grid-column: 1 / span 2;
+    
 }
 /* END Admin */
 

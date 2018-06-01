@@ -1151,8 +1151,14 @@ def check_admin():
         return False
 
 
+def get_identites():
+    return config.identites
+
+
 # Possibilité d'appeler la fonction check_connexion() depuis un template html
+
 app.jinja_env.globals.update(check_connexion=check_connexion)
+app.jinja_env.globals.update(get_identites=get_identites)
 
 # Nécessaire pour faire fontionner les sessions
 # (à garder secret pour que l'utilisateur ne puisse pas modifier les cookies)
