@@ -23,7 +23,7 @@
 * mysql-connector
 
 ### Fichier de configuration
-Un fichier de configuration, nommé config.py, comportant des données confidentielles doit être placé dans le répertoire du programme principal index.py.
+Un fichier de configuration, nommé `config.py`, comportant des données confidentielles doit être placé dans le répertoire du programme principal index.py.
 
 Structure du fichier :
 ``` python
@@ -31,15 +31,23 @@ Structure du fichier :
 
 host = "192.168.xxx.xxx"      # Adresse IP du serveur
 user = "useruser"             # Nom d'utilisateur de la base de données
-password = "mdpmdp"           # Mot de passe
+password = "mdpmdp"           # Mot de passe de la base de données
 database = "tutorat"          # Nom de la base de données
-secret_key = "clefsecrète"    # Clef secrète
+secret_key = "clefsecrète"    # Clef secrète Flask (voir [Sessions Flask](http://flask.pocoo.org/docs/1.0/quickstart/#sessions))
 
 # MAIL
 smtp = "smtp.gmail.com"           # Nom du serveur smtp
 smtp_port = 587                   # Port du serveur
 email = "admintutorat@gmail.com"  # Adresse mail
 email_password = "mdpmail"        # Mot de passe
+
+# Identités et adresses email
+identites = ({'nom'   : "Jean Dupond",            # Identité du webmaster
+              'email' : "jeanjean@mail.fr"},
+             {'nom'   : "Marcel",                 # Identité des développeurs
+              'email' : ""},
+             ...
+              )
 ```
 
 
