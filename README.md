@@ -23,7 +23,7 @@
 * mysql-connector
 
 ### Fichier de configuration
-Un fichier de configuration, nommé `config.py`, comportant des données confidentielles doit être placé dans le répertoire du programme principal index.py.
+Un fichier de configuration, nommé `config.py`, comportant des données confidentielles doit être placé dans le répertoire du programme principal `index.py`.
 
 Structure du fichier :
 ``` python
