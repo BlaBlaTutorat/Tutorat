@@ -61,7 +61,7 @@ def traitement_connexion():
         mdp_chiffre = hashlib.sha256(str(mdp).encode('utf-8')).hexdigest()
         # comparer les infos à celle de la base de données
         if sql_obj.mail_in_bdd(mail):
-            if sql_obj.get_crypt_mdp(mail)[0][0] == mdp_chiffre:
+            if sql_obj.get_user_info(mail).mdp == mdp_chiffre:
                 if not sql_obj.check_ban(mail):
                     session['mail'] = mail
                     return redirect(url_for('recherche',
@@ -290,10 +290,10 @@ def profil():
     if check_connexion():
         mail = session['mail']
         admin_user = check_admin()
-        user = sql_obj.get_user_info(mail)[0][0]
+        user = sql_obj.get_user_info(mail).nom
         if request.args.get('info_msg'):
             info_msg = request.args.get('info_msg')
-        return render_template("profil/profil_u.html", infos=sql_obj.get_user_info(mail)[0], days=days, **locals())
+        return render_template("profil/profil_u.html", infos=sql_obj.get_user_info(mail), days=days, **locals())
     else:
         # Redirection si l'utilisateur n'est pas connecté
         return page_connexion()
@@ -307,7 +307,7 @@ def profil_2():
     if check_connexion():
         mail = session['mail']
         admin_user = check_admin()
-        user = sql_obj.get_user_info(mail)[0][0]
+        user = sql_obj.get_user_info(mail).nom
         demandes = sql_obj.get_user_demandes(mail)
         demandes_t = sql_obj.get_user_demandes_tuteur(mail)
         if request.args.get('info_msg'):
@@ -343,7 +343,7 @@ def profil_4(mail):
     sql_obj = sql.MysqlObject()
     if check_connexion():
         if sql_obj.mail_in_bdd(mail):
-            return render_template("profil/profil_visit.html", infos=sql_obj.get_user_info(mail)[0], **locals())
+            return render_template("profil/profil_visit.html", infos=sql_obj.get_user_info(mail), **locals())
         else:
             return render_template("error.html", message="Erreur - Cet utilisateur n'existe pas",
                                    **locals())
@@ -365,13 +365,13 @@ def profil_update():
         classes = sql_obj.classes_liste()
         if len(request.form) == 0:
             # Pas de formulaire envoyé, on charge la page normalement
-            return render_template("profil/profil_update.html", infos=sql_obj.get_user_info(mail)[0], **locals())
+            return render_template("profil/profil_update.html", infos=sql_obj.get_user_info(mail), **locals())
         else:
             if request.form.get('classe') in classes:
                 # Chiffrement du mdp
                 if request.form.get('mdp') != '':
                     if hashlib.sha256(str(request.form.get('mdp')).encode('utf-8')).hexdigest() == \
-                            sql_obj.get_user_info(mail)[0][1]:
+                            sql_obj.get_user_info(mail).nom:
                         if request.form.get('mdp1') != '' and request.form.get('mdp2') != '':
                             chaine_mot_de_passe = request.form.get('mdp1')
                             mdp_confirm = request.form.get('mdp2')
@@ -409,17 +409,17 @@ def admin_oc():
     if check_connexion():
         mail = session['mail']
         admin_user = check_admin()
-        user = sql_obj.get_user_info(mail)[0][0]
+        user = sql_obj.get_user_info(mail).nom
         if admin_user:
             if request.args.get('info_msg'):
                 info_msg = request.args.get('info_msg')
             if request.form.get("user_search"):
                 user_search = request.form.get("user_search")
-                user_search = sql_obj.get_user_info_pseudo(user_search)
-                if len(user_search) == 1:
+                user_search_liste = sql_obj.get_user_info_pseudo(user_search)
+                if len(user_search_liste) == 1:
                     # Un utilisateur a été trouvée
                     return render_template("admin/admin_t_p.html",
-                                           tutorats_actifs=sql_obj.offres_liste_tri_admin(user_search[0][2]),
+                                           tutorats_actifs=sql_obj.offres_liste_tri_admin(user_search_liste[0].mail),
                                            days=days, **locals())
                 else:
                     # Pas d'utilisateur trouvé donc liste vide
@@ -442,17 +442,17 @@ def admin_oc2():
     if check_connexion():
         mail = session['mail']
         admin_user = check_admin()
-        user = sql_obj.get_user_info(mail)[0][0]
+        user = sql_obj.get_user_info(mail).nom
         if admin_user:
             if request.args.get('info_msg'):
                 info_msg = request.args.get('info_msg')
             if request.form.get("user_search"):
                 user_search = request.form.get("user_search")
-                user_search = sql_obj.get_user_info_pseudo(user_search)
-                if len(user_search) == 1:
+                user_search_liste = sql_obj.get_user_info_pseudo(user_search)
+                if len(user_search_liste) == 1:
                     # Un utilisateur a été trouvée
                     return render_template("admin/admin_t_p_d.html",
-                                           demandes=sql_obj.demandes_liste_tri_admin(user_search[0][2]),
+                                           demandes=sql_obj.demandes_liste_tri_admin(user_search_liste[0].mail),
                                            days=days, **locals())
                 else:
                     # Pas d'utilisateur trouvé donc liste vide
@@ -475,7 +475,7 @@ def admin_ov():
     if check_connexion():
         mail = session['mail']
         admin_user = check_admin()
-        user = sql_obj.get_user_info(mail)[0][0]
+        user = sql_obj.get_user_info(mail).nom
         if admin_user:
             if request.args.get('info_msg'):
                 info_msg = request.args.get('info_msg')
@@ -499,7 +499,7 @@ def admin_u():
         mail = session['mail']
         admin_user = check_admin()
         user_search = ""
-        user = sql_obj.get_user_info(mail)[0][0]
+        user = sql_obj.get_user_info(mail).nom
         if admin_user:
             if request.args.get('info_msg'):
                 info_msg = request.args.get('info_msg')
@@ -526,7 +526,7 @@ def recherche():
     if check_connexion():
         mail = session['mail']
         admin_user = check_admin()
-        user = sql_obj.get_user_info(mail)[0][0]
+        user = sql_obj.get_user_info(mail).nom
         if request.args.get('info_msg'):
             info_msg = request.args.get('info_msg')
         if request.form.get('precedent'):
@@ -604,7 +604,7 @@ def creation():
     if check_connexion():
         mail = session['mail']
         admin_user = check_admin()
-        user = sql_obj.get_user_info(mail)[0][0]
+        user = sql_obj.get_user_info(mail).nom
         return render_template("creation.html", filieres=sql_obj.filieres_liste(), matieres=sql_obj.matieres_liste(),
                                days=days, **locals())
     else:
@@ -622,14 +622,14 @@ def traitement_creation():
     if check_connexion():
         mail = session['mail']
         admin_user = check_admin()
-        user = sql_obj.get_user_info(mail)[0][0]
+        user = sql_obj.get_user_info(mail).nom
 
         if len(request.form) == 1:
             # Changement offre/demande
             if request.form['categorie'] == "demande":
                 # On definit la catégorie sur demande
                 demande = True
-                classe = sql_obj.get_user_info(mail)[0][3]
+                classe = sql_obj.get_user_info(mail).classe
                 return render_template("creation.html", filieres=sql_obj.filieres_liste(),
                                        matieres=sql_obj.matieres_liste(),
                                        days=days, **locals())
@@ -1176,7 +1176,7 @@ def check_admin():
         mail = session['mail']
         # Vérification mail existe
         if sql_obj.mail_in_bdd(mail):
-            if sql_obj.get_user_info(mail)[0][3] == "ADMIN":
+            if sql_obj.get_user_info(mail).classe == "ADMIN":
                 return True
             else:
                 return False

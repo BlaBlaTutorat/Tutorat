@@ -49,12 +49,12 @@
                 <div class="info">
                     <p class="element"><strong class="G">Auteur:</strong> <a
                             onclick="open_profile_page('{{ offre[1] }}')"
-                            title="Voir le profil">{{ sql_obj.get_user_pseudo(offre[1]) }}</a>
+                            title="Voir le profil">{{ sql_obj.get_user_info(offre.auteur).nom }}</a>
                     </p>
-                    <p class="element"><strong class="G">Matière:</strong> {{ offre[3] }}</p>
+                    <p class="element"><strong class="G">Matière:</strong> {{ offre.matiere }}</p>
                 </div>
                 <div id="horaires">
-                    <p class="date_creation">Créée le {{ offre[4].strftime('%d/%m/%Y') }}</p>
+                    <p class="date_creation">Créée le {{ offre.date_time.strftime('%d/%m/%Y') }}</p>
                     <div class="horaire">
                         <div class="table" id="jour-offre">
                             {% for i in range(0,6) %}
@@ -91,7 +91,7 @@
                             {% for i in range(0,6) %}
                                 <table>
                                     <tr>
-                                        {% for H in (offre[8]|list)[i*22:(i + 1)*22] %}
+                                        {% for H in (offre.horaires|list)[i*22:(i + 1)*22] %}
                                             {% if (H|int) == 0 %}
                                                 <td class="white"></td>
                                             {% elif (H|int) == 1 %}
@@ -105,7 +105,7 @@
                     </div>
                     <form class="bouton" method="post" action="/apply">
                         <input type="hidden" name="categorie" value="offre"/>
-                        <input type="hidden" name="id" value="{{ offre[0] }}"/>
+                        <input type="hidden" name="id" value="{{ offre.id }}"/>
                         <input type="submit" value="Accepter l'offre"/>
                     </form>
                 </div>
@@ -131,13 +131,13 @@
             <div class="bloc">
                 <div class="info">
                     <p class="element"><strong class="G">Auteur:</strong> <a
-                            onclick="open_profile_page('{{ offre[1] }}')"
-                            title="Voir le profil">{{ sql_obj.get_user_pseudo(offre[1]) }}</a>
+                            onclick="open_profile_page('{{ offre.auteur }}')"
+                            title="Voir le profil">{{ sql_obj.get_user_info(offre.auteur).nom }}</a>
                     </p>
-                    <p class="element"><strong class="G">Matière:</strong> {{ offre[3] }}</p>
+                    <p class="element"><strong class="G">Matière:</strong> {{ offre.matiere }}</p>
                 </div>
                 <div id="horaires">
-                    <p class="date_creation">Créée le {{ offre[4].strftime('%d/%m/%Y') }}</p>
+                    <p class="date_creation">Créée le {{ offre.date_time.strftime('%d/%m/%Y') }}</p>
                     <div class="horaire">
                         <div class="table" id="jour-offre">
                             {% for i in range(0,6) %}
@@ -174,7 +174,7 @@
                             {% for i in range(0,6) %}
                                 <table>
                                     <tr>
-                                        {% for H in (offre[8]|list)[i*22:(i + 1)*22] %}
+                                        {% for H in (offre.horaires|list)[i*22:(i + 1)*22] %}
                                             {% if (H|int) == 0 %}
                                                 <td class="white"></td>
                                             {% elif (H|int) == 1 %}
@@ -188,7 +188,7 @@
                     </div>
                     <form class="bouton" method="post" action="/apply">
                         <input type="hidden" name="categorie" value="offre"/>
-                        <input type="hidden" name="id" value="{{ offre[0] }}"/>
+                        <input type="hidden" name="id" value="{{ offre.id }}"/>
                         <input type="submit" value="Accepter l'offre"/>
                     </form>
                 </div>

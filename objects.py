@@ -26,3 +26,13 @@ class Demande:
         self.tuteur = sql[5]
         self.dispo = sql[6]
         self.horaires = sql[7]
+
+
+class Utilisateur:
+
+    def __init__(self, sql):
+        self.nom = sql[0]
+        self.mdp = sql[1]
+        self.mail = sql[2]
+        self.classe = sql[3]
+        self.ban = sql[4]

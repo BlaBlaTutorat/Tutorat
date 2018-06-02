@@ -72,7 +72,7 @@
                 <div class="info">
                     <p class="element"><strong class="G">Auteur :</strong>
                         <a onclick="open_profile_page('{{ offre.auteur }}')"
-                           title="Voir le profil">{{ sql_obj.get_user_pseudo(offre.auteur) }}</a>
+                           title="Voir le profil">{{ sql_obj.get_user_info(offre.auteur).nom }}</a>
                     </p>
                     <p class="element"><strong class="G">Pour des :</strong> {{ offre.filiere }}</p>
                     <p class="element"><strong class="G">Matière :</strong> {{ offre.matiere }}</p>
@@ -81,7 +81,7 @@
                             Aucun
                         {% else %}
                             <a onclick="open_profile_page('{{ offre.participant }}')"
-                               title="Voir le profil">{{ sql_obj.get_user_pseudo(offre.participant) }}</a>
+                               title="Voir le profil">{{ sql_obj.get_user_info(offre.participant).nom }}</a>
                             <br/>
                             (1 place restante)
                         {% endif %}

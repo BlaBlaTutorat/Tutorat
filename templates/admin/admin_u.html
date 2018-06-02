@@ -24,8 +24,8 @@
                     <p><strong class="G">Nom :</strong></p>
                 </div>
                 <div class="info_profil informations2">
-                    <p>{{ user[0] }}
-                        {% if user[3]=='ADMIN' %}
+                    <p>{{ user.nom }}
+                        {% if user.classe=='ADMIN' %}
                             <img src="/static/img/administrateur.png" title="Administrateur" width=20>
                         {% endif %}
                     </p>
@@ -36,15 +36,15 @@
                     <p><strong class="G">eMail :</strong></p>
                 </div>
                 <div class="info_profil informations2">
-                    <p><a href="mailto:{{ user[2] }}" title="Envoyer un eMail">{{ user[2] }}</a></p>
+                    <p><a href="mailto:{{ user.mail }}" title="Envoyer un eMail">{{ user.mail }}</a></p>
                 </div>
 
-                {% if user[3]!='ADMIN' %}
+                {% if user.classe!='ADMIN' %}
                     <div class="info_profil informations">
                         <p><strong class="G">Classe :</strong></p>
                     </div>
                     <div class="info_profil informations2">
-                        <p>{{ user[3] }}</p>
+                        <p>{{ user.classe }}</p>
                     </div>
                 {% endif %}
 
@@ -54,19 +54,19 @@
 
                 <div class="info_profil informations2">
                     {% for tutorat in tutorats_actifs %}
-                        {% if tutorat.auteur == user[2] %}
+                        {% if tutorat.auteur == user.mail %}
                             <img src="/static/img/tuteur.png" id="tuteur"
                                  title="Nombre d'offres créées par cet utilisateur">
                         {% endif %}
                     {% endfor %}
                     {% for tutorat in tutorats_actifs %}
-                        {% if tutorat.participant == user[2] or tutorat.participant2 == user[2] %}
+                        {% if tutorat.participant == user.mail or tutorat.participant2 == user.mail %}
                             <img src="/static/img/tutore.png" id="tutore"
                                  title="Nombre de tutorats suivis par cet utilisateur">
                         {% endif %}
                     {% endfor %}
                     {% for demande in demandes %}
-                        {% if demande.auteur == user[2] %}
+                        {% if demande.auteur == user.mail %}
                             <img src="/static/img/demandeur.png" id="tutore"
                                  title="Nombre de demandes créées par cet utilisateur">
                         {% endif %}
@@ -75,12 +75,12 @@
 
 
                 <div class="info_profil informations user_updateAB">
-                    {% if user[4]==1 %}
-                        <a href="/ban?mail={{ user[2] }}" class="ban">
+                    {% if user.ban==1 %}
+                        <a href="/ban?mail={{ user.ban }}" class="ban">
                             <button title="Réintégrer l'utilisateur">Réintégrer</button>
                         </a>
                     {% else %}
-                        <a href="/ban?mail={{ user[2] }}" class="ban">
+                        <a href="/ban?mail={{ user.ban }}" class="ban">
                             <button title="Bannir l'utilisateur = lui interdire l'accès au site.">Bannir</button>
                         </a>
                     {% endif %}
@@ -88,12 +88,12 @@
 
                 <div class="info_profil user_updateAB">
 
-                    {% if user[3]!='ADMIN' %}
-                        <a href="/promote?mail={{ user[2] }}" class="ban">
+                    {% if user.classe!='ADMIN' %}
+                        <a href="/promote?mail={{ user.mail }}" class="ban">
                             <button title="Promouvoir au grade d'administrateur">Promouvoir</button>
                         </a>
                     {% else %}
-                        <a href="/retrogr?mail={{ user[2] }}" class="ban">
+                        <a href="/retrogr?mail={{ user.mail }}" class="ban">
                             <button title="Rétrograder au grade d'utilisateur">Rétrograder</button>
                         </a>
                     {% endif %}

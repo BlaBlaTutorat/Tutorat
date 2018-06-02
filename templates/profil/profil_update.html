@@ -29,8 +29,8 @@
                     </div>
                     <div class="info_profil">
                         <!-- Nom non modifiable -->
-                        <p>{{ infos[0] }}</p>
-                        <p>{{ infos[2] }}</p>
+                        <p>{{ infos.nom }}</p>
+                        <p>{{ infos.mail }}</p>
                         <!-- Infos modifiable -->
                         <p><input type="password" name="mdp"></p>
                         <p><input type="password" name="mdp1"></p>
@@ -38,7 +38,7 @@
                         <!-- Classe modifiable -->
                         <p><select class="tri4" required name="classe">
                             {% for classe in classes %}
-                                <option {% if classe == infos[3] %}selected{% endif %}>{{ classe }}</option>
+                                <option {% if classe == infos.classe %}selected{% endif %}>{{ classe }}</option>
                             {% endfor %}
                         </select></p>
                     </div>

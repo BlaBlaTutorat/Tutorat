@@ -52,7 +52,7 @@
                 <div class="info">
                     <p class="element"><strong class="G">Auteur :</strong>
                         <a onclick="open_profile_page('{{ demande.auteur }}')"
-                           title="Voir le profil">{{ sql_obj.get_user_pseudo(demande.auteur) }}</a>
+                           title="Voir le profil">{{ sql_obj.get_user_info(demande.auteur).nom }}</a>
                     </p>
                     <p class="element"><strong class="G">En classe de :</strong> {{ demande.classe }}</p>
                     <p class="element"><strong class="G">Matière :</strong> {{ demande.matiere }}</p>
