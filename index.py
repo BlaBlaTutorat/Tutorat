@@ -554,11 +554,13 @@ def recherche():
 
                 else:
                     # Défaut car pas d'autre paramètres de tri
-                    return render_template("recherche/recherche_demande.html", demandes=sql_obj.demandes_liste(page), days=days,
+                    return render_template("recherche/recherche_demande.html", demandes=sql_obj.demandes_liste(page),
+                                           days=days,
                                            **locals())
             else:
                 # Aucune option de tri sélectionnée
-                return render_template("recherche/recherche_demande.html", demandes=sql_obj.demandes_liste(page), days=days,
+                return render_template("recherche/recherche_demande.html", demandes=sql_obj.demandes_liste(page),
+                                       days=days,
                                        **locals())
 
         else:
@@ -575,7 +577,8 @@ def recherche():
                     suggest_o2 = sql_obj.get_tutore_info(mail)[1]
                     return render_template("suggestion/suggest_o.html", days=days, **locals())
                 else:
-                    return render_template("recherche/recherche_offre.html", offres=sql_obj.offres_liste_tri(option, page, mail),
+                    return render_template("recherche/recherche_offre.html",
+                                           offres=sql_obj.offres_liste_tri(option, page, mail),
                                            days=days,
                                            **locals())
 
@@ -588,8 +591,8 @@ def recherche():
                                        days=days, **locals())
             else:
                 # Aucune option de tri sélectionnée
-                return render_template("recherche/recherche_offre.html", offres=sql_obj.offres_liste(page, mail), days=days,
-                                       **locals())
+                return render_template("recherche/recherche_offre.html", offres=sql_obj.offres_liste(page, mail),
+                                       days=days, **locals())
 
     else:
         # Redirection si l'utilisateur n'est pas connecté
@@ -605,8 +608,8 @@ def creation():
         mail = session['mail']
         admin_user = check_admin()
         user = sql_obj.get_user_info(mail).nom
-        return render_template("creation/creation.html", filieres=sql_obj.filieres_liste(), matieres=sql_obj.matieres_liste(),
-                               days=days, **locals())
+        return render_template("creation/creation.html", filieres=sql_obj.filieres_liste(),
+                               matieres=sql_obj.matieres_liste(), days=days, **locals())
     else:
         # Redirection si l'utilisateur n'est pas connecté
         return page_connexion()
@@ -1033,13 +1036,19 @@ def validate2():
 def ban():
     """Bannis un utilisateur"""
     if check_connexion():
+        mail = session['mail']
         admin_user = check_admin()
         if admin_user:
             if request.args.get('mail'):
-                mail = request.args.get('mail')
-                sql_obj = sql.MysqlObject()
-                sql_obj.ban(mail)
-                return redirect(url_for("admin_u", info_msg="Le statut de cet utilisateur a bien été mis à jour."))
+                mail_u = request.args.get('mail')
+                if mail_u != mail:
+                    sql_obj = sql.MysqlObject()
+                    sql_obj.ban(mail_u)
+                    return redirect(url_for("admin_u",
+                                            info_msg="Le statut de cet utilisateur a bien été mis à jour."))
+                else:
+                    return render_template("error.html", message="Erreur - Vous ne pouvez pas vous bannir",
+                                           **locals())
             else:
                 abort(403)
         else:
@@ -1143,12 +1152,10 @@ def method_not_allowed(error):
     return render_template("error.html", message="Erreur 405 - Méthode de requête non autorisée", **locals())
 
 
-
 def page_connexion():
     return page_connexion()
-    
-    
-    
+
+
 # Vérification connexion
 def check_connexion():
     """Vérifie si l'utilisateur est connecté"""
