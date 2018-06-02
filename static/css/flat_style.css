@@ -981,9 +981,17 @@ END Create
   	grid-template-columns: 200px auto;
   	grid-column-gap: 10px;
   	grid-row-gap: 10px;
-    
     margin: auto;
     align-items: center;
+}
+
+#visit-profil {
+    width: 650px;
+    align-self: center;
+}
+
+#visit-profil2 {
+    padding: 0 0 0 0;
 }
 
 .info_profil {
