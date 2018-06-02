@@ -15,7 +15,7 @@
         <div class="bloc">
             <div class="info">
                 <p class="element"><strong class="G">Auteur:</strong>
-                    <a onclick="open_profile_page('{{ o.auteur }}')" title="Voir le profil">{{ sql_obj.get_user_pseudo(o.auteur) }}</a>
+                    <a onclick="open_profile_page('{{ o.auteur }}')" title="Voir le profil">{{ sql_obj.get_user_info(o.auteur).nom }}</a>
                 </p>
                 <p class="element"><strong class="G">Pour des:</strong> {{ o.filiere }}</p>
                 <p class="element"><strong class="G">Matière:</strong> {{ o.matiere }}</p>
