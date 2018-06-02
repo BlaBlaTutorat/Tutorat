@@ -1078,7 +1078,7 @@ def retrogr():
     """Rétrograder un administrateur en utilisateur"""
     if check_connexion():
         admin_user = check_admin()
-        if not admin_user:
+        if admin_user:
             if request.args.get('mail'):
                 mail = request.args.get('mail')
                 sql_obj = sql.MysqlObject()
@@ -1086,7 +1086,7 @@ def retrogr():
                 return redirect(url_for("admin_u",
                                         info_msg="Le statut de cet utilisateur a bien été mis à jour."))
             else:
-                abort(403)
+                abort(404)
         else:
             abort(403)
     else:
