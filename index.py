@@ -296,7 +296,7 @@ def profil():
         return render_template("profil/profil_u.html", infos=sql_obj.get_user_info(mail)[0], days=days, **locals())
     else:
         # Redirection si l'utilisateur n'est pas connecté
-        return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
+        return page_connexion()
 
 
 # Page de Profil
@@ -316,7 +316,7 @@ def profil_2():
                                offres_suivies=sql_obj.get_user_offres_suivies(mail), days=days, **locals())
     else:
         # Redirection si l'utilisateur n'est pas connecté
-        return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
+        return page_connexion()
 
 
 # Page de suppression Profil
@@ -333,7 +333,7 @@ def profil_3():
         return redirect(url_for('connexion', info_msg="Votre compte a bien été supprimé."))
     else:
         # Redirection si l'utilisateur n'est pas connecté
-        return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
+        return page_connexion()
 
 
 # Page de profil d'un utilisateur
@@ -349,7 +349,7 @@ def profil_4(mail):
                                    **locals())
     else:
         # Redirection si l'utilisateur n'est pas connecté
-        return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
+        return page_connexion()
 
 
 # Page de modification du profil
@@ -398,7 +398,7 @@ def profil_update():
                                        **locals())
     else:
         # Redirection si l'utilisateur n'est pas connecté
-        return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
+        return page_connexion()
 
 
 # Page d'Administration offres en courts
@@ -593,7 +593,7 @@ def recherche():
 
     else:
         # Redirection si l'utilisateur n'est pas connecté
-        return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
+        return page_connexion()
 
 
 # Affichage du formulaire de création d'une offre
@@ -609,7 +609,7 @@ def creation():
                                days=days, **locals())
     else:
         # Redirection si l'utilisateur n'est pas connecté
-        return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
+        return page_connexion()
 
 
 # Traitement du formulaire + upload bdd
@@ -680,7 +680,7 @@ def traitement_creation():
                                        **locals())
     else:
         # Redirection si l'utilisateur n'est pas connecté
-        return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
+        return page_connexion()
 
 
 # Page d'enregistrement (s'enregistrer en tant que participant)
@@ -717,7 +717,7 @@ def enregistrement():
                 url_for("recherche", info_msg="Vous n'appartenez pas à la même classe que le premier participant"))
     else:
         # Redirection si l'utilisateur n'est pas connecté
-        return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
+        return page_connexion()
 
 
 # Selection horaires (offre)
@@ -879,7 +879,7 @@ def quit_tutorat():
             abort(403)
     else:
         # Redirection si l'utilisateur n'est pas connecté
-        return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
+        return page_connexion()
 
 
 # Suppression de la participation d'un utilisateur à une offre
@@ -899,7 +899,7 @@ def quit_2():
             abort(403)
     else:
         # Redirection si l'utilisateur n'est pas connecté
-        return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
+        return page_connexion()
 
 
 # Suppression d'une offre
@@ -1045,7 +1045,7 @@ def ban():
         else:
             abort(403)
     else:
-        return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
+        return page_connexion()
 
 
 # Promouvoir (admin)
@@ -1066,7 +1066,7 @@ def promote():
         else:
             abort(403)
     else:
-        return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
+        return page_connexion()
 
 
 # Retrograder (admin)
@@ -1092,7 +1092,7 @@ def retrogr():
         else:
             abort(403)
     else:
-        return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
+        return page_connexion()
 
 
 # Déconnexion
@@ -1119,7 +1119,7 @@ def reset():
         else:
             abort(403)
     else:
-        return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
+        return page_connexion()
 
 
 # Gestion de l'erreur 404
@@ -1143,6 +1143,12 @@ def method_not_allowed(error):
     return render_template("error.html", message="Erreur 405 - Méthode de requête non autorisée", **locals())
 
 
+
+def page_connexion():
+    return page_connexion()
+    
+    
+    
 # Vérification connexion
 def check_connexion():
     """Vérifie si l'utilisateur est connecté"""
@@ -1181,7 +1187,7 @@ def check_admin():
 
 
 def get_identites():
-    return config.identites
+    return config.developp, config.webmaster
 
 
 def get_crenau(n):
