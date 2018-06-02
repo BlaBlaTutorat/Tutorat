@@ -554,11 +554,11 @@ def recherche():
 
                 else:
                     # Défaut car pas d'autre paramètres de tri
-                    return render_template("recherche_demande.html", demandes=sql_obj.demandes_liste(page), days=days,
+                    return render_template("recherche/recherche_demande.html", demandes=sql_obj.demandes_liste(page), days=days,
                                            **locals())
             else:
                 # Aucune option de tri sélectionnée
-                return render_template("recherche_demande.html", demandes=sql_obj.demandes_liste(page), days=days,
+                return render_template("recherche/recherche_demande.html", demandes=sql_obj.demandes_liste(page), days=days,
                                        **locals())
 
         else:
@@ -575,7 +575,7 @@ def recherche():
                     suggest_o2 = sql_obj.get_tutore_info(mail)[1]
                     return render_template("suggestion/suggest_o.html", days=days, **locals())
                 else:
-                    return render_template("recherche_offre.html", offres=sql_obj.offres_liste_tri(option, page, mail),
+                    return render_template("recherche/recherche_offre.html", offres=sql_obj.offres_liste_tri(option, page, mail),
                                            days=days,
                                            **locals())
 
@@ -583,12 +583,12 @@ def recherche():
                 # Formulaire de tri deuxième étape
                 option = request.form.get("option")
                 option2 = request.form.get("option2")
-                return render_template("recherche_offre.html",
+                return render_template("recherche/recherche_offre.html",
                                        offres=sql_obj.offres_liste_tri_2(option, option2, page, mail),
                                        days=days, **locals())
             else:
                 # Aucune option de tri sélectionnée
-                return render_template("recherche_offre.html", offres=sql_obj.offres_liste(page, mail), days=days,
+                return render_template("recherche/recherche_offre.html", offres=sql_obj.offres_liste(page, mail), days=days,
                                        **locals())
 
     else:
@@ -605,7 +605,7 @@ def creation():
         mail = session['mail']
         admin_user = check_admin()
         user = sql_obj.get_user_info(mail).nom
-        return render_template("creation.html", filieres=sql_obj.filieres_liste(), matieres=sql_obj.matieres_liste(),
+        return render_template("creation/creation.html", filieres=sql_obj.filieres_liste(), matieres=sql_obj.matieres_liste(),
                                days=days, **locals())
     else:
         # Redirection si l'utilisateur n'est pas connecté
@@ -630,12 +630,12 @@ def traitement_creation():
                 # On definit la catégorie sur demande
                 demande = True
                 classe = sql_obj.get_user_info(mail).classe
-                return render_template("creation.html", filieres=sql_obj.filieres_liste(),
+                return render_template("creation/creation.html", filieres=sql_obj.filieres_liste(),
                                        matieres=sql_obj.matieres_liste(),
                                        days=days, **locals())
             else:
                 # Sinon on charge la template de base
-                return render_template("creation.html", filieres=sql_obj.filieres_liste(),
+                return render_template("creation/creation.html", filieres=sql_obj.filieres_liste(),
                                        matieres=sql_obj.matieres_liste(),
                                        days=days, **locals())
         else:
@@ -732,7 +732,7 @@ def select():
             id_offre = request.args.get('tutorat_id')
 
             if mail == sql_obj.get_offre(id_offre).participant:
-                return render_template("select_horaires.html", o=sql_obj.get_offre(id_offre), days=days,
+                return render_template("selection/select_horaires.html", o=sql_obj.get_offre(id_offre), days=days,
                                        **locals())
             elif mail == sql_obj.get_offre(id_offre).participant2:
                 return redirect(
@@ -765,7 +765,7 @@ def select_2():
             id_demande = request.args.get('tutorat_id')
 
             if mail == sql_obj.get_demande(id_demande).tuteur:
-                return render_template("select_horaires_d.html", o=sql_obj.get_demande(id_demande), days=days,
+                return render_template("selection/select_horaires_d.html", o=sql_obj.get_demande(id_demande), days=days,
                                        **locals())
             else:
                 abort(403)
