@@ -1299,6 +1299,7 @@ END Create
     display: flex;
     flex-direction: column;
     justify-content: center;
+    font-size: 0.9em;
     
 }
 /* END Admin */

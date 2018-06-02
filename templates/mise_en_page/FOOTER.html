@@ -1,15 +1,15 @@
 <footer>
 {% with %}
-	{% set identites = get_identites() %}
+	{% set developp, webmaster = get_identites() %}
     <a href="http://www.entauvergne.fr/public/0630018C/Pages/Pr%C3%A9sentation.aspx" class="div">
     	<img src="/static/img/footer_logo.png" title="Lien vers le site du lycée"></a>
     <div class="div">
         <div class="part">
-        	{% if identites|length>1 %}
+        	{% if developp|length>1 %}
             <div class="s_part">
                 <ul>
-                    <li><h3>Développeur{% if identites|length>2 %}s{% endif %}</h3></li>
-                    {% for identite in identites %}
+                    <li><h3>Développeur{% if developp|length>2 %}s{% endif %}</h3></li>
+                    {% for identite in developp %}
                     	<li><a href="mailto:{{ identite.email }}">{{ identite.nom }}</a></li>
                     {% endfor %}
                 </ul>
@@ -20,7 +20,7 @@
             <div>
                 <ul>
                     <li><h3>Informations & Contact</h3></li>
-                    <li>Lycée Blaise Pascal</li>
+                    <li>Cité Scolaire Blaise Pascal</li>
                     <li>36 Avenue Carnot, 63037 Clermont-Ferrand</li>
                     <li><a href="mailto:0630018c@ac-clermont.fr">0630018c@ac-clermont.fr</a></li>
                 </ul>
@@ -31,7 +31,7 @@
         	<div class="s_part">
 	        	<ul>
 	            	<li><h3>Webmaster</h3></li>
-	            	<li><a href="mailto:{{ identites[0].email }}">{{ identites[0].nom }}</a></li>
+	            	<li><a href="mailto:{{ identites[0].email }}">{{ webmaster[0].nom }}</a></li>
 	            </ul>
 			</div>
 			
