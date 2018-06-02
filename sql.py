@@ -7,7 +7,6 @@ import mysql.connector
 
 import config
 import objects
-import utils
 
 offres_par_page = 4
 
@@ -77,7 +76,8 @@ class MysqlObject:
         """Argument: Mail de l'utilisateur, nom, mot de passe, classe et le code de valisation
         Fonction: Envoie les données à la BDD et créer un compte utilisateur intermédiaire"""
         self.cursor.execute(
-            """INSERT INTO register (nom, mdp, mail, classe, code) VALUES (%s, %s, %s, %s, %s)""", (nom, mdp, mail, classe, code))
+            """INSERT INTO register (nom, mdp, mail, classe, code) VALUES (%s, %s, %s, %s, %s)""",
+            (nom, mdp, mail, classe, code))
         self.conn.commit()
 
     def code_update(self, code, mail):
@@ -349,12 +349,12 @@ class MysqlObject:
         self.cursor.execute("""SELECT * FROM offres WHERE id=%s""", (offre_id,))
         offre = objects.Offre(self.cursor.fetchall()[0])
         if offre.auteur != participant:
-            if utils.check_availability(offre) == 2:
+            if self.places(offre.id) == 2:
                 # Update de la première colonne
                 self.cursor.execute("""UPDATE offres SET participant = %s WHERE id = %s """, (participant, offre_id))
                 self.conn.commit()
                 return 0
-            elif utils.check_availability(offre) == 1:
+            elif self.places(offre.id) == 1:
                 # Update de la deuxième colonne + check si l'utilisateur n'est pas déjà participant à cette offre
                 if offre.participant != participant:
                     # Check si l'utilisateur est dans la même classe que le premier
@@ -384,7 +384,7 @@ class MysqlObject:
         offres_a_modif = self.cursor.fetchall()
         if len(offres_a_modif) == 1:
             offre_a_modif = objects.Offre(offres_a_modif[0])
-            places_dispo = utils.check_availability(offre_a_modif)
+            places_dispo = self.places(offre_a_modif.id)
             if places_dispo == 0:
                 if offre_a_modif.participant == mail:
                     self.cursor.execute(
@@ -453,10 +453,10 @@ class MysqlObject:
         self.conn.commit()
 
     # Rétrograder
-    def retrograder(self, mail, classe=""):
+    def retrograder(self, mail, classe="1ES1"):
         """Argument: Mail de l'utilisateur
         Fonction: retrograder un administrateur en utilisateur"""
-        self.cursor.execute("""UPDATE users SET classe = '%s' WHERE mail = %s""", (mail, classe))
+        self.cursor.execute("""UPDATE users SET classe = %s WHERE mail = %s""", (mail, classe))
         self.conn.commit()
 
     # Modification du profil Classe
@@ -708,18 +708,20 @@ class MysqlObject:
             tuteur = 0
         return tuteur
 
-    # nombre de participants à un tutorat
+    # Nombre de places dispo dans une offre
     def places(self, id_o):
         self.cursor.execute("""SELECT * FROM offres WHERE id=%s""", (id_o,))
 
         offre = objects.Offre(self.cursor.fetchall()[0])
 
         if offre.participant is None or offre.participant2 is None:
-            places = True
+            # Une place est disponible
+            if offre.participant is None and offre.participant2 is None:
+                return 2
+            else:
+                return 1
         else:
-            places = False
-
-        return places
+            return 0
 
     # Mail in demande ?
     def mail_in_demande(self, id_d, mail):
@@ -742,7 +744,9 @@ class MysqlObject:
         else:
             return False
 
-    # Suggestion
+    """
+        SUGGESTIONS
+    """
 
     # Offres
     def get_tutore_info(self, mail):
@@ -755,36 +759,27 @@ class MysqlObject:
 
         for demande in demandes:
 
-            # variables demandes :
-            id_d = demande.id
-            matiere = demande.matiere
-            classe = demande.classe
-            lvl = self.get_class_level(classe)
-            horaires = demande.horaires
+            # variable demandes :
+            lvl = self.get_class_level(demande.classe)
 
             offres = self.get_all_offres()
 
-            for x in offres:
+            for offre in offres:
 
-                # variables offres :
+                # variable offres :
+                lvl_o = self.get_filiere_level(offre.filiere)
 
-                id_o = x.id
-                filiere_o = x.filiere
-                lvl_o = self.get_filiere_level(filiere_o)
-                matiere_o = x.matiere
-                horaires_o = x.horaires
-
-                if lvl_o >= lvl and matiere == matiere_o and self.demande_tuteur(id_d) == 0:
-                    if self.places(id_o) is True and self.mail_in_offre(id_o, mail) is False:
-                        if self.mail_in_demande(id_d, mail) is False:
-                            suggest_d1.append(x)
+                if lvl_o >= lvl and demande.matiere == offre.matiere and self.demande_tuteur(demande.id) == 0:
+                    if self.places(offre.id) > 0 and self.mail_in_offre(offre.id, mail) is False:
+                        if self.mail_in_demande(demande.id, mail) is False:
+                            suggest_d1.append(offre)
                             n = 0
                             for i in range(132):
-                                if int(horaires[i]) == 1 and int(horaires_o[i]) == 1:
+                                if int(demande.horaires[i]) == 1 and int(offre.horaires[i]) == 1:
                                     n += 1
 
                             if n >= 1:
-                                suggest_d2.append(x)
+                                suggest_d2.append(offre)
                                 del suggest_d1[-1]
 
         suggest = [suggest_d1, suggest_d2]
@@ -802,36 +797,27 @@ class MysqlObject:
 
         for offre in offres:
 
-            # variables offres :
-            id_o = offre.id
-            matiere = offre.matiere
-            filiere = offre.filiere
-            lvl = self.get_filiere_level(filiere)
-            horaires = offre.horaires
+            # variable offres :
+            lvl = self.get_filiere_level(offre.filiere)
 
             demandes = self.get_all_demandes()
 
-            for x in demandes:
+            for demande in demandes:
 
-                # variables demandes :
+                # variable demandes :
+                lvl_d = self.get_class_level(demande.classe)
 
-                id_d = x.id
-                classe_d = x.classe
-                lvl_d = self.get_class_level(classe_d)
-                matiere_d = x.matiere
-                horaires_d = x.horaires
-
-                if lvl_d >= lvl and matiere == matiere_d and self.demande_tuteur(id_d) == 0:
-                    if self.places(id_o) is True and self.mail_in_demande(id_d, mail) is False:
-                        if self.mail_in_offre(id_o, mail) is False:
-                            suggest_o1.append(x)
+                if lvl_d >= lvl and offre.matiere == demande.matiere and self.demande_tuteur(demande.id) == 0:
+                    if self.places(offre.id) > 0 and self.mail_in_demande(demande.id, mail) is False:
+                        if self.mail_in_offre(offre.id, mail) is False:
+                            suggest_o1.append(demande)
                             n = 0
                             for i in range(132):
-                                if int(horaires[i]) == 1 and int(horaires_d[i]) == 1:
+                                if int(offre.horaires[i]) == 1 and int(demande.horaires[i]) == 1:
                                     n += 1
 
                             if n >= 1:
-                                suggest_o2.append(x)
+                                suggest_o2.append(demande)
                                 del suggest_o1[-1]
 
         suggest = [suggest_o1, suggest_o2]

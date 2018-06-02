@@ -8,24 +8,10 @@
 {% include 'mise_en_page/HEADER.html' %}
 
 
-<div class="header">
-    <div>
-        <div id="header_icon"></div>
-        <nav>
-            <ul>
-                <li><a href="/admin/tutorials/validate">A valider</a></li>
-                <li><a href="/admin/tutorials/progress">En cours</a></li>
-                <li><a href="/admin/users">Utilisateurs</a></li>
-            </ul>
-        </nav>
-        <div id="header_icon" class="icon">
-            <a href="/admin/tutorials/validate?reset_msg=True" class="admin" title="Réinitialiser le site"><img
-                    src="/static/img/reset.png"></a>
-        </div>
-    </div>
-</div>
+{% include'mise_en_page/HEADER_ADMIN.html' %}
 
-{% include '/blocs/search_user.html' %}
+
+{% include 'blocs/search_user.html' %}
 
 
 <!-- Liste des users -->
@@ -40,51 +26,54 @@
                 <div class="info_profil informations2">
                     <p>{{ user[0] }}
                         {% if user[3]=='ADMIN' %}
-	                        <img src="/static/img/administrateur.png" title="Administrateur" width=20>
-	                    {% endif %}
+                            <img src="/static/img/administrateur.png" title="Administrateur" width=20>
+                        {% endif %}
                     </p>
                 </div>
-                
-                               
+
+
                 <div class="info_profil informations">
                     <p><strong class="G">eMail :</strong></p>
                 </div>
                 <div class="info_profil informations2">
                     <p><a href="mailto:{{ user[2] }}" title="Envoyer un eMail">{{ user[2] }}</a></p>
                 </div>
-                
+
                 {% if user[3]!='ADMIN' %}
-	                <div class="info_profil informations">
-	                    <p><strong class="G">Classe :</strong></p>
-	                </div>
-	                <div class="info_profil informations2">
-	                    <p>{{ user[3] }}</p>
-	                </div>
-	            {% endif %}
-	                    
-	            <div class="info_profil informations">
-	            	<p><strong class="G">Activité :</strong></p>
-	            </div>   
-	                 
+                    <div class="info_profil informations">
+                        <p><strong class="G">Classe :</strong></p>
+                    </div>
+                    <div class="info_profil informations2">
+                        <p>{{ user[3] }}</p>
+                    </div>
+                {% endif %}
+
+                <div class="info_profil informations">
+                    <p><strong class="G">Activité :</strong></p>
+                </div>
+
                 <div class="info_profil informations2">
-	            	{% for tutorat in tutorats_actifs %}
+                    {% for tutorat in tutorats_actifs %}
                         {% if tutorat.auteur == user[2] %}
-                            <img src="/static/img/tuteur.png" id="tuteur" title="Nombre d'offres créées par cet utilisateur">
+                            <img src="/static/img/tuteur.png" id="tuteur"
+                                 title="Nombre d'offres créées par cet utilisateur">
                         {% endif %}
                     {% endfor %}
                     {% for tutorat in tutorats_actifs %}
                         {% if tutorat.participant == user[2] or tutorat.participant2 == user[2] %}
-                            <img src="/static/img/tutore.png" id="tutore" title="Nombre de tutorats suivis par cet utilisateur">
+                            <img src="/static/img/tutore.png" id="tutore"
+                                 title="Nombre de tutorats suivis par cet utilisateur">
                         {% endif %}
                     {% endfor %}
                     {% for demande in demandes %}
                         {% if demande.auteur == user[2] %}
-                            <img src="/static/img/demandeur.png" id="tutore" title="Nombre de demandes créées par cet utilisateur">
+                            <img src="/static/img/demandeur.png" id="tutore"
+                                 title="Nombre de demandes créées par cet utilisateur">
                         {% endif %}
                     {% endfor %}
-	            </div>
-                
-                
+                </div>
+
+
                 <div class="info_profil informations user_updateAB">
                     {% if user[4]==1 %}
                         <a href="/ban?mail={{ user[2] }}" class="ban">
@@ -96,20 +85,20 @@
                         </a>
                     {% endif %}
                 </div>
-                
+
                 <div class="info_profil user_updateAB">
-           
+
                     {% if user[3]!='ADMIN' %}
                         <a href="/promote?mail={{ user[2] }}" class="ban">
                             <button title="Promouvoir au grade d'administrateur">Promouvoir</button>
                         </a>
                     {% else %}
-                    	<a href="/retrogr?mail={{ user[2] }}" class="ban">
+                        <a href="/retrogr?mail={{ user[2] }}" class="ban">
                             <button title="Rétrograder au grade d'utilisateur">Rétrograder</button>
                         </a>
                     {% endif %}
                 </div>
-                
+
             </div>
         {% endfor %}
     {% else %}

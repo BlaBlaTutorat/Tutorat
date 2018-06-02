@@ -124,9 +124,7 @@ def traitement_inscription():
                     sql_obj.create_compte_validate(nom, mot_de_passe_chiffre, mail,
                                                    classe, code)
 
-
-                    return redirect(url_for("confirm_register",
-                                            code_msg=True, C=True, mail=mail))
+                    return redirect(url_for("confirm_register", code_msg=True, C=True, mail=mail))
 
                 else:
                     return render_template("authentification/inscription.html",
@@ -154,11 +152,11 @@ def confirm_register():
     else:
         info_msg2 = ""
     if request.args.get('C'):
-        C = request.args.get('C')
+        envoyer_code = request.args.get('C')
     else:
-        C = False
+        envoyer_code = False
 
-    if C:
+    if envoyer_code:
         # Génération du code
         element = "0123456789"
         code = ""
@@ -171,8 +169,8 @@ def confirm_register():
         msg['To'] = mail
         msg['Subject'] = 'BlaBla-Tutorat -- Code de validation'
         message = 'Bonjour,\n\nVoici le code de validation de votre inscription : ' \
-                  + code + '\nL\'équipe de BlaBla-Tutorat vous souhaite une bonne journée.\n\n\n\n\nCet e-mail a été généré' \
-                           ' automatiquement, merci de ne pas y répondre.' \
+                  + code + '\nL\'équipe de BlaBla-Tutorat vous souhaite une bonne journée.\n\n\n\n\n' \
+                           'Cet e-mail a été généré automatiquement, merci de ne pas y répondre.' \
                            ' Pour toute question, veuillez vous adresser aux documentalistes.'
         msg.attach(MIMEText(message))
         mailserver = smtplib.SMTP(config.smtp, config.smtp_port)
@@ -183,11 +181,9 @@ def confirm_register():
 
         sql_obj.code_update(code, mail)
         if info_msg2 != "":
-            return redirect(
-                url_for("confirm_register", code_msg=True, mail=mail, info_msg2=info_msg2))
+            return redirect(url_for("confirm_register", code_msg=True, mail=mail, info_msg2=info_msg2))
         else:
-            return redirect(
-                url_for("confirm_register", code_msg=True, mail=mail))
+            return redirect(url_for("confirm_register", code_msg=True, mail=mail))
 
     if len(request.form) == 0:
         info = sql_obj.info_register(mail)
@@ -196,8 +192,7 @@ def confirm_register():
         mail = info[0][2]
         classe = info[0][3]
         code = info[0][4]
-        return render_template("authentification/inscription.html",
-                               code_msg=True, **locals())
+        return render_template("authentification/inscription.html", code_msg=True, **locals())
     else:
         if request.form.get('code_V') == request.form.get('code'):
             # Envoi des infos à la base de données
@@ -208,8 +203,9 @@ def confirm_register():
                                     info_msg="Votre compte a bien été créé,\n"
                                              "vous pouvez dès à présent vous connecter"))
         else:
-            return redirect(url_for("confirm_register",
-                                    code_msg=True, C=True, mail=request.form.get('mail'), info_msg2="Vous n'avez pas tapé le bon code. Un nouveau vous a été envoyé par mail."))
+            return redirect(
+                url_for("confirm_register", code_msg=True, C=True, mail=request.form.get('mail'),
+                        info_msg2="Vous n'avez pas tapé le bon code. Un nouveau vous a été envoyé par mail."))
 
 
 # Annuler l'inscription
@@ -221,12 +217,12 @@ def del_register():
         mail = request.args.get('mail')
         if sql_obj.mail_in_register(mail):
             sql_obj.delete_register(mail)
-            return redirect(url_for("connexion", info_msg="Vous avez bien annulé votre inscription sur BlaBla-Tutorat."))
+            return redirect(
+                url_for("connexion", info_msg="Vous avez bien annulé votre inscription sur BlaBla-Tutorat."))
         else:
             abort(404)
     else:
         abort(404)
-
 
 
 # Mot de passe oublié
@@ -268,8 +264,8 @@ def traitement_mdp_oublie():
             msg['Subject'] = 'BlaBla-Tutorat -- Nouveau mot de passe'
             message = 'Bonjour,\n\nNous avons généré pour vous un nouveau mot de passe : ' \
                       + passwd + '\nVeuillez le changer dès que vous vous connecterez à BlaBla-Tutorat.\n' \
-                                 'L\'équipe de BlaBla-Tutorat vous souhaite une bonne journée.\n\n\n\n\nCet e-mail a été généré' \
-                                 ' automatiquement, merci de ne pas y répondre.' \
+                                 'L\'équipe de BlaBla-Tutorat vous souhaite une bonne journée.\n\n\n\n\nCet e-mail' \
+                                 ' a été généré automatiquement, merci de ne pas y répondre.' \
                                  ' Pour toute question, veuillez vous adresser aux documentalistes.'
             msg.attach(MIMEText(message))
             mailserver = smtplib.SMTP(config.smtp, config.smtp_port)
@@ -313,7 +309,7 @@ def profil_2():
         admin_user = check_admin()
         user = sql_obj.get_user_info(mail)[0][0]
         demandes = sql_obj.get_user_demandes(mail)
-        demandes_T = sql_obj.get_user_demandes_tuteur(mail)
+        demandes_t = sql_obj.get_user_demandes_tuteur(mail)
         if request.args.get('info_msg'):
             info_msg = request.args.get('info_msg')
         return render_template("profil/profil_t_p.html", offres_creees=sql_obj.get_user_offres(mail),
@@ -386,10 +382,11 @@ def profil_update():
                                 sql_obj.modify_user_info_mdp(mail, mot_de_passe_chiffre)
                             else:
                                 return redirect(url_for("profil_update",
-                                                        info_msg="Erreur - Vous n'avez pas correctement confirmé votre nouveau mot de passe."))
+                                                        info_msg="Erreur - Vous n'avez pas correctement confirmé votre"
+                                                                 " nouveau mot de passe."))
                         else:
-                            return redirect(url_for("profil_update",
-                                                    info_msg="Erreur - Vous n'avez pas rentré de nouveau mot de passe."))
+                            return redirect(url_for(
+                                "profil_update", info_msg="Erreur - Vous n'avez pas rentré de nouveau mot de passe."))
                     else:
                         return redirect(url_for("profil_update",
                                                 info_msg="Erreur - Veuillez vérifier votre ancien mot de passe."))
@@ -840,23 +837,23 @@ def modification_offre_demande():
     if check_connexion():
         sql_obj = sql.MysqlObject()
         mail = session['mail']
-        id = request.form.get('id')
+        id_od = request.form.get('id')
         horaires = request.form.get('horaires_data')
 
         if request.form.get('categorie') == "demande":
             # Demande
-            demande = sql_obj.get_demande(id)
+            demande = sql_obj.get_demande(id_od)
             # Vérification que l'auteur est celui qui demande la modification
             if mail == demande.auteur:
-                sql_obj.modifier_demande(id, horaires)
+                sql_obj.modifier_demande(id_od, horaires)
             else:
                 abort(403)
         else:
             # Offre
-            offre = sql_obj.get_offre(id)
+            offre = sql_obj.get_offre(id_od)
             # Vérification que l'auteur est celui qui demande la modification
             if mail == offre.auteur:
-                sql_obj.modifier_offre(id, horaires)
+                sql_obj.modifier_offre(id_od, horaires)
             else:
                 abort(403)
 
@@ -1072,21 +1069,26 @@ def promote():
         return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
 
 
-# Promouvoir (admin)
+# Retrograder (admin)
 @app.route('/retrogr')
 def retrogr():
     """Rétrograder un administrateur en utilisateur"""
     if check_connexion():
+        mail = session['mail']
         admin_user = check_admin()
         if admin_user:
             if request.args.get('mail'):
-                mail = request.args.get('mail')
-                sql_obj = sql.MysqlObject()
-                sql_obj.retrograder(mail)
-                return redirect(url_for("admin_u",
-                                        info_msg="Le statut de cet utilisateur a bien été mis à jour."))
+                mail_u = request.args.get('mail')
+                if mail_u != mail:
+                    sql_obj = sql.MysqlObject()
+                    sql_obj.retrograder(mail_u)
+                    return redirect(url_for("admin_u",
+                                            info_msg="Le statut de cet utilisateur a bien été mis à jour."))
+                else:
+                    return render_template("error.html", message="Erreur - Vous ne pouvez pas vous rétrograder",
+                                           **locals())
             else:
-                abort(404)
+                abort(403)
         else:
             abort(403)
     else:
@@ -1110,7 +1112,6 @@ def reset():
     """Remet à 0 le site"""
     sql_obj = sql.MysqlObject()
     if check_connexion():
-        mail = session['mail']
         admin_user = check_admin()
         if admin_user == 1:
             sql_obj.reset()
@@ -1184,21 +1185,19 @@ def get_identites():
 
 
 def get_crenau(n):
-    return get_heure(n)+ " - " + get_heure(n+1)
-    
-    
+    return get_heure(n) + " - " + get_heure(n + 1)
+
+
 def get_heure(n):
-    H = str(8+(n-1)//2)+"h"
-    if (n-1)%2 == 1:
-        M = "30"
+    h = str(8 + (n - 1) // 2) + "h"
+    if (n - 1) % 2 == 1:
+        m = "30"
     else:
-        M = "00"
-    return H+M
-    
-    
-    
-    
-# Possibilité d'appeler la fonction check_connexion() depuis un template html
+        m = "00"
+    return h + m
+
+
+# Possibilité d'appeler différentes fonctions depuis un template html
 app.jinja_env.globals.update(check_connexion=check_connexion)
 app.jinja_env.globals.update(get_identites=get_identites)
 app.jinja_env.globals.update(get_crenau=get_crenau)

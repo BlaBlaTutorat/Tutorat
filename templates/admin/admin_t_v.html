@@ -8,22 +8,7 @@
 {% include 'mise_en_page/HEADER.html' %}
 
 
-<div class="header">
-    <div>
-        <div id="header_icon"></div>
-        <nav>
-            <ul>
-                <li><a href="/admin/tutorials/validate">A valider</a></li>
-                <li><a href="/admin/tutorials/progress">En cours</a></li>
-                <li><a href="/admin/users">Utilisateurs</a></li>
-            </ul>
-        </nav>
-        <div id="header_icon" class="icon">
-            <a href="/admin/tutorials/validate?reset_msg=True" class="admin" title="Réinitialiser le site"><img
-                    src="/static/img/reset.png"></a>
-        </div>
-    </div>
-</div>
+{% include 'mise_en_page/HEADER_ADMIN.html' %}
 
 
 {% if reset_msg %}
