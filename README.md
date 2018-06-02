@@ -42,12 +42,17 @@ email = "admintutorat@gmail.com"  # Adresse mail
 email_password = "mdpmail"        # Mot de passe
 
 # Identités et adresses email
-identites = ({'nom'   : "Jean Dupond",            # Identité du webmaster
-              'email' : "jeanjean@mail.fr"},
-             {'nom'   : "Marcel",                 # Identité des développeurs
-              'email' : ""},
-             ...
-              )
+webmaster = ({'nom': "nom_du_webmaster",  # Identité du webmaster
+              'email': "email_du_webmaster"},)
+
+developp = ({'nom': "Faury Cédrick",  # Identité des développeurs du site BlaBla-Tutorat
+             'email': "cedrick.faury@ac-clermont.Fr"},
+            {'nom': "Blancheton Tao",
+             'email': "taotom63@gmail.com"},
+            {'nom': "Desmoulins Marco",
+             'email': "marco.desmoulins@lilo.org"},
+            {'nom': "Labarussias Antoine",
+             'email': "antoinelabarussias@orange.fr"})
 ```
 
 
