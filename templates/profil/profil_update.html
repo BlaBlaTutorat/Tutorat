@@ -11,7 +11,13 @@
     <div class="bloc_page_profil">
         <div class="page_profil">
             <div class="bloc_profil" id="maj_profil">
-                <h2>Vos informations</h2>
+                <div>
+                    <h2>Vos informations</h2>
+                    <div class="boutton_u_profile">
+                        <button class="retour"><a href="/profile/view">Retour</a></button>
+                        <input class="retour" type="submit" value="Enregistrer">
+                    </div>
+                </div>
                 <div class="profil">
                     <div class="info_profil">
                         <p><strong class="G">Nom:</strong></p>
@@ -36,10 +42,6 @@
                             {% endfor %}
                         </select></p>
                     </div>
-                </div>
-                <div class="boutton_u_profile">
-                    <button class="retour"><a href="/profile/view">Retour</a></button>
-                    <input class="retour" type="submit" value="Enregistrer"></>
                 </div>
             </div>
         </div>
