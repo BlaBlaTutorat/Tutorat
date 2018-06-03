@@ -55,6 +55,7 @@ class MysqlObject:
         for row in rows:
             matieres.append(row[0])
         return matieres
+    
 
     # Liste des filières
     def filieres_liste(self):
@@ -565,6 +566,31 @@ class MysqlObject:
         for row in rows:
             demandes.append(objects.Demande(row))
         return demandes
+    
+    
+    # Liste des matières/filieres parmis les offres/demandes disponibles
+    def liste_dispo(self, colonne, table):
+        """ Renvoie la liste des matières parmi les offres/demandes disponibles
+            :colonne: 'matiere' ou 'filiere'
+            :table: type d'élément : 'offres' ou 'demandes'
+        """
+        if table == 'demandes':
+            self.cursor.execute(
+                """SELECT DISTINCT """+colonne+""" FROM demandes WHERE disponible=1 AND tuteur IS NULL""")
+            mat = self.cursor.fetchall()
+            mat = [m[0] for m in mat]
+        elif table == 'offres':
+            self.cursor.execute(
+                """SELECT DISTINCT """+colonne+""" FROM offres WHERE disponible=1 AND (participant IS NULL OR participant2 IS NULL)""")
+            mat = self.cursor.fetchall()
+            mat = [m[0] for m in mat]
+        else:
+            mat = []
+        return mat
+    
+    
+    
+    
 
     # Liste demandes utilisateur
     def get_user_demandes(self, mail):

@@ -536,12 +536,14 @@ def recherche():
         else:
             page = 0
         # Variables locales utilisées dans les templates
-        matieres = sql_obj.matieres_liste()
-        filieres = sql_obj.filieres_liste()
+        #matieres = sql_obj.matieres_liste()
+        
+        #filieres = sql_obj.filieres_liste()
 
         if request.form.get("categorie") == "demande":
             # PARTIE DEMANDE
-
+            matieres = sql_obj.liste_dispo('matiere', 'demandes')
+            
             if request.form.get("option"):
                 # Formulaire de tri première étape
                 option = request.form.get("option")
@@ -563,7 +565,8 @@ def recherche():
 
         else:
             # PARTIE OFFRE
-
+            matieres = sql_obj.liste_dispo('matiere', 'offres')
+            filieres = sql_obj.liste_dispo('filiere', 'offres')
             if request.form.get("option") and not request.form.get("option2"):
                 # Formulaire de tri première étape
                 option = request.form.get("option")
