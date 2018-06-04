@@ -570,10 +570,11 @@ footer a:hover {
     width: 100%;
     text-align: center;
     line-height: 2px;
+    
 }
 
 .forgot {
-    font-family: sans-serif;
+    font-family: "Gotham SSm A", sans-serif;
     font-size: 1em;
     background: white;
     border-radius: 40px;
@@ -582,7 +583,7 @@ footer a:hover {
     flex-direction: column;
     justify-content: center;
     padding: 5px 10px 5px 10px;
-    min-width: 700px;
+    min-width: 600px;
     margin-top: 10%;
 }
 
