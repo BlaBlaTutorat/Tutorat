@@ -1168,7 +1168,7 @@ def method_not_allowed(error):
 
 
 def page_connexion():
-    return page_connexion()
+    return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
 
 
 # Vérification connexion
