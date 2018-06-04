@@ -557,8 +557,8 @@ def recherche():
         if request.form.get("categorie") == "demande":
             # PARTIE DEMANDE
             matieres = sql_obj.liste_dispo('matiere', 'demandes')
-            
-            if request.form.get("option"):
+
+            if request.form.get("option") and not request.form.get("option2"):
                 # Formulaire de tri première étape
                 option = request.form.get("option")
 
@@ -574,7 +574,16 @@ def recherche():
                     return render_template("recherche/recherche_demande.html", 
                                            demandes = lst[page*npp:(page+1)*npp],
                                            days=days, **locals())
-                    
+
+            elif request.form.get("option") and request.form.get("option2"):
+                # Formulaire de tri deuxième étape
+                option = request.form.get("option")
+                option2 = request.form.get("option2")
+                lst = sql_obj.liste_demandes(mail, option, option2)
+                npages = (len(lst)-1)//npp + 1
+                return render_template("recherche/recherche_demande.html",
+                                       demandes = lst[page*npp:(page+1)*npp],
+                                       days=days, **locals())
                     
             else:
                 # Aucune option de tri sélectionnée
