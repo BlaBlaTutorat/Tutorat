@@ -76,11 +76,11 @@
 
                 <div class="info_profil informations user_updateAB">
                     {% if user.ban==1 %}
-                        <a href="/ban?mail={{ user.ban }}" class="ban">
+                        <a href="/ban?mail={{ user.mail }}" class="ban">
                             <button title="Réintégrer l'utilisateur">Réintégrer</button>
                         </a>
                     {% else %}
-                        <a href="/ban?mail={{ user.ban }}" class="ban">
+                        <a href="/ban?mail={{ user.mail }}" class="ban">
                             <button title="Bannir l'utilisateur = lui interdire l'accès au site.">Bannir</button>
                         </a>
                     {% endif %}

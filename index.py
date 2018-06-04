@@ -555,20 +555,16 @@ def recherche():
                     return render_template("suggestion/suggest_d.html", days=days, **locals())
 
                 else:
-                    return render_template("recherche_offre.html", 
+                    return render_template("recherche/recherche_offre.html", 
                                            offres = sql_obj.liste_demandes(page, mail, option),
                                            days=days, **locals())
                     
                     
-                    
-#                     # Défaut car pas d'autre paramètres de tri
-#                     return render_template("recherche_demande.html", 
-#                                            demandes = sql_obj.demandes_liste(page), days=days,
-#                                            **locals())
-            else:
+
                 # Aucune option de tri sélectionnée
-                return render_template("recherche_demande.html", 
+                return render_template("recherche/recherche_demande.html", 
                                        demandes = sql_obj.liste_demandes(page, mail), days=days,
+
                                        **locals())
 
         
@@ -592,21 +588,22 @@ def recherche():
                 
                 
                 else:
-                    return render_template("recherche_offre.html", 
+                    return render_template("recherche/recherche_offre.html", 
                                            offres = sql_obj.liste_offres(page, mail, option),
                                            days=days, **locals())
+
 
             elif request.form.get("option") and request.form.get("option2"):
                 # Formulaire de tri deuxième étape
                 option = request.form.get("option")
                 option2 = request.form.get("option2")
                 
-                return render_template("recherche_offre.html",
+                return render_template("recherche/recherche_offre.html",
                                        offres = sql_obj.liste_offres(page, mail, option, option2),
                                        days=days, **locals())
             else:
                 # Aucune option de tri sélectionnée
-                return render_template("recherche_offre.html", 
+                return render_template("recherche/recherche_offre.html", 
                                        offres = sql_obj.liste_offres(page, mail),
                                        days=days, **locals())
 
@@ -627,8 +624,8 @@ def creation():
         mail = session['mail']
         admin_user = check_admin()
         user = sql_obj.get_user_info(mail).nom
-        return render_template("creation.html", filieres=sql_obj.filieres_liste(), matieres=sql_obj.matieres_liste(),
-                               days=days, **locals())
+        return render_template("creation/creation.html", filieres=sql_obj.filieres_liste(),
+                               matieres=sql_obj.matieres_liste(), days=days, **locals())
     else:
         # Redirection si l'utilisateur n'est pas connecté
         return page_connexion()
@@ -652,12 +649,12 @@ def traitement_creation():
                 # On definit la catégorie sur demande
                 demande = True
                 classe = sql_obj.get_user_info(mail).classe
-                return render_template("creation.html", filieres=sql_obj.filieres_liste(),
+                return render_template("creation/creation.html", filieres=sql_obj.filieres_liste(),
                                        matieres=sql_obj.matieres_liste(),
                                        days=days, **locals())
             else:
                 # Sinon on charge la template de base
-                return render_template("creation.html", filieres=sql_obj.filieres_liste(),
+                return render_template("creation/creation.html", filieres=sql_obj.filieres_liste(),
                                        matieres=sql_obj.matieres_liste(),
                                        days=days, **locals())
         else:
@@ -754,7 +751,7 @@ def select():
             id_offre = request.args.get('tutorat_id')
 
             if mail == sql_obj.get_offre(id_offre).participant:
-                return render_template("select_horaires.html", o=sql_obj.get_offre(id_offre), days=days,
+                return render_template("selection/select_horaires.html", o=sql_obj.get_offre(id_offre), days=days,
                                        **locals())
             elif mail == sql_obj.get_offre(id_offre).participant2:
                 return redirect(
@@ -787,7 +784,7 @@ def select_2():
             id_demande = request.args.get('tutorat_id')
 
             if mail == sql_obj.get_demande(id_demande).tuteur:
-                return render_template("select_horaires_d.html", o=sql_obj.get_demande(id_demande), days=days,
+                return render_template("selection/select_horaires_d.html", o=sql_obj.get_demande(id_demande), days=days,
                                        **locals())
             else:
                 abort(403)
@@ -1055,13 +1052,19 @@ def validate2():
 def ban():
     """Bannis un utilisateur"""
     if check_connexion():
+        mail = session['mail']
         admin_user = check_admin()
         if admin_user:
             if request.args.get('mail'):
-                mail = request.args.get('mail')
-                sql_obj = sql.MysqlObject()
-                sql_obj.ban(mail)
-                return redirect(url_for("admin_u", info_msg="Le statut de cet utilisateur a bien été mis à jour."))
+                mail_u = request.args.get('mail')
+                if mail_u != mail:
+                    sql_obj = sql.MysqlObject()
+                    sql_obj.ban(mail_u)
+                    return redirect(url_for("admin_u",
+                                            info_msg="Le statut de cet utilisateur a bien été mis à jour."))
+                else:
+                    return render_template("error.html", message="Erreur - Vous ne pouvez pas vous bannir",
+                                           **locals())
             else:
                 abort(403)
         else:
@@ -1165,12 +1168,10 @@ def method_not_allowed(error):
     return render_template("error.html", message="Erreur 405 - Méthode de requête non autorisée", **locals())
 
 
-
 def page_connexion():
     return page_connexion()
-    
-    
-    
+
+
 # Vérification connexion
 def check_connexion():
     """Vérifie si l'utilisateur est connecté"""

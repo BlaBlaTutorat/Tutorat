@@ -506,10 +506,10 @@ class MysqlObject:
         self.conn.commit()
 
     # Rétrograder
-    def retrograder(self, mail, classe="1ES1"):
+    def retrograder(self, mail):
         """Argument: Mail de l'utilisateur
         Fonction: retrograder un administrateur en utilisateur"""
-        self.cursor.execute("""UPDATE users SET classe = %s WHERE mail = %s""", (mail, classe))
+        self.cursor.execute("""UPDATE users SET classe = %s WHERE mail = %s""", ("1ES1", mail))
         self.conn.commit()
 
     # Modification du profil Classe
