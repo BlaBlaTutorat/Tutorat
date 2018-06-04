@@ -560,11 +560,10 @@ def recherche():
                                            days=days, **locals())
                     
                     
-
+            else:
                 # Aucune option de tri sélectionnée
                 return render_template("recherche/recherche_demande.html", 
                                        demandes = sql_obj.liste_demandes(page, mail), days=days,
-
                                        **locals())
 
         
