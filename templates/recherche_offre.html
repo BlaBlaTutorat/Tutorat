@@ -17,8 +17,8 @@
         <!-- Rechargement de la page lors du changement de catégorie -->
         <select class="tri" name="categorie"
                 onchange="if(document.getElementById('option2')!=null){document.getElementById('option2').selectedIndex = -1}
-                if(document.getElementById('option')!=null){document.getElementById('option').selectedIndex = -1}
-                this.form.submit()">
+			              if(document.getElementById('option')!=null){document.getElementById('option').selectedIndex = -1}
+			              this.form.submit()">
             <option value="offre" selected>Offre</option>
             <option value="demande">Demande</option>
         </select>
@@ -51,18 +51,12 @@
                 {% endif %}
             </select>
         {% endif %}
+        
     </div>
 
     <!-- Gestion des pages-->
-    <div class="pages">
-        <p>
-            <input type="hidden" name="page" value="{{ page }}">
-            {% if page>0 %}<input type="submit" name="precedent" value="Page précédente">
-            {% else %}<input type="submit" name="suivant" value="Page suivante">{% endif %}
-            <strong class="G">{{ page + 1 }}</strong>
-            <input type="submit" name="suivant" value="Page suivante">
-        </p>
-    </div>
+    {% with page=page %}{% include "blocs/gestion_pages.html" %}{% endwith %}
+    
 </form>
 
 <!-- Liste des offres -->

@@ -555,48 +555,67 @@ def recherche():
                     return render_template("suggestion/suggest_d.html", days=days, **locals())
 
                 else:
-                    # Défaut car pas d'autre paramètres de tri
-                    return render_template("recherche_demande.html", demandes=sql_obj.demandes_liste(page), days=days,
-                                           **locals())
+                    return render_template("recherche_offre.html", 
+                                           offres = sql_obj.liste_demandes(page, mail, option),
+                                           days=days, **locals())
+                    
+                    
+                    
+#                     # Défaut car pas d'autre paramètres de tri
+#                     return render_template("recherche_demande.html", 
+#                                            demandes = sql_obj.demandes_liste(page), days=days,
+#                                            **locals())
             else:
                 # Aucune option de tri sélectionnée
-                return render_template("recherche_demande.html", demandes=sql_obj.demandes_liste(page), days=days,
+                return render_template("recherche_demande.html", 
+                                       demandes = sql_obj.liste_demandes(page, mail), days=days,
                                        **locals())
 
+        
+        
         else:
-            # PARTIE OFFRE
+            # PARTIE OFFRES
             matieres = sql_obj.liste_dispo('matiere', 'offres')
             filieres = sql_obj.liste_dispo('filiere', 'offres')
+            
+            
             if request.form.get("option") and not request.form.get("option2"):
                 # Formulaire de tri première étape
                 option = request.form.get("option")
 
-                # Cas spécial suggestions
+                # Cas spécial suggestions (pas de niveau 2)
                 if option == "suggestion":
-
                     suggest_o1 = sql_obj.get_tutore_info(mail)[0]
                     suggest_o2 = sql_obj.get_tutore_info(mail)[1]
-                    return render_template("suggestion/suggest_o.html", days=days, **locals())
+                    return render_template("suggestion/suggest_o.html", 
+                                           days=days, **locals())
+                
+                
                 else:
-                    return render_template("recherche_offre.html", offres=sql_obj.offres_liste_tri(option, page, mail),
-                                           days=days,
-                                           **locals())
+                    return render_template("recherche_offre.html", 
+                                           offres = sql_obj.liste_offres(page, mail, option),
+                                           days=days, **locals())
 
             elif request.form.get("option") and request.form.get("option2"):
                 # Formulaire de tri deuxième étape
                 option = request.form.get("option")
                 option2 = request.form.get("option2")
+                
                 return render_template("recherche_offre.html",
-                                       offres=sql_obj.offres_liste_tri_2(option, option2, page, mail),
+                                       offres = sql_obj.liste_offres(page, mail, option, option2),
                                        days=days, **locals())
             else:
                 # Aucune option de tri sélectionnée
-                return render_template("recherche_offre.html", offres=sql_obj.offres_liste(page, mail), days=days,
-                                       **locals())
+                return render_template("recherche_offre.html", 
+                                       offres = sql_obj.liste_offres(page, mail),
+                                       days=days, **locals())
 
     else:
         # Redirection si l'utilisateur n'est pas connecté
         return page_connexion()
+
+
+
 
 
 # Affichage du formulaire de création d'une offre

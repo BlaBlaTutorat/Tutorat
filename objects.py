@@ -16,7 +16,6 @@ class Offre:
 
 
 class Demande:
-
     def __init__(self, sql):
         self.id = sql[0]
         self.auteur = sql[1]
@@ -29,7 +28,6 @@ class Demande:
 
 
 class Utilisateur:
-
     def __init__(self, sql):
         self.nom = sql[0]
         self.mdp = sql[1]
