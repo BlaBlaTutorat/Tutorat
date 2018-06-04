@@ -15,7 +15,7 @@
             <ul>
             	<li class="tool"><a href="/profile/view" class="logged" title="Voir votre profil">{{user}}</a></li>
             	{% if admin_user %}
-                    <li class="tool"><a href="/profile/view"  title="Voir votre profil"><img src="/static/img/adminprofil.png"></a></li>
+                    <li class="tool"><a href="/profile/view" title="Voir votre profil"><img src="/static/img/adminprofil.png"></a></li>
                 {% else %}
                 	<li class="tool"><a href="/profile/view" title="Voir votre profil"><img src="/static/img/profil.png"></a></li>
                 {% endif %}
@@ -35,8 +35,10 @@
             
             <!-- Barres d'outils -->
             <nav class="icon" id="header_tools">
+            <ul>
                 <li class="tool"><a href="/login" title="Se connecter"><img src="/static/img/profil.png"></a></li>
                 <li class="tool"><a href="/register" title="S'inscrire"><img src="/static/img/register.png"></a></li>
+            </ul>
             </nav>
         {% endif %}
     </div>

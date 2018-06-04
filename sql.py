@@ -8,7 +8,7 @@ import mysql.connector
 import config
 import objects
 
-offres_par_page = 4
+elem_par_page = 4
 
 
 class MysqlObject:
@@ -247,76 +247,123 @@ class MysqlObject:
         # Conversion en objet Offre
         return objects.Offre(self.cursor.fetchall()[0])
 
-    # Listes des offres
-    def offres_liste(self, page, mail):
-        """Argument: Mail de l'utilisateur, numéro de la page
-        Fonction: Renvoie la liste des offres valides pour l'utilisateur"""
-        classe = self.get_user_info(mail).classe
-        offres = []
-        self.cursor.execute(
-            """SELECT * FROM offres WHERE disponible=1 AND (participant IS NULL OR participant2 IS NULL) LIMIT """ +
-            str(offres_par_page) + """ OFFSET """ + str(page * offres_par_page))
-        rows = self.cursor.fetchall()
-        # Tri des offres pour ne garder que celles où la classe du 1er participant est identique à celle de user
-        for row in rows:
-            offre = objects.Offre(row)
-            if offre.participant is None:
-                offres.append(offre)
-            else:
-                if classe == self.get_user_info(offre.participant).classe:
-                    offres.append(offre)
-        return offres
+#     # Listes des offres
+#     def offres_liste(self, page, mail, offres_par_page = offres_par_page):
+#         """Argument: Mail de l'utilisateur, numéro de la page
+#         Fonction: Renvoie la liste des offres valides pour l'utilisateur"""
+#         classe = self.get_user_info(mail).classe
+#         offres = []
+#         self.cursor.execute(
+#             """SELECT * FROM offres WHERE disponible=1 AND (participant IS NULL OR participant2 IS NULL) LIMIT """ +
+#             str(offres_par_page) + """ OFFSET """ + str(page * offres_par_page))
+#         rows = self.cursor.fetchall()
+#         # Tri des offres pour ne garder que celles où la classe du 1er participant est identique à celle de user
+#         for row in rows:
+#             offre = objects.Offre(row)
+#             if offre.participant is None:
+#                 offres.append(offre)
+#             else:
+#                 if classe == self.get_user_info(offre.participant).classe:
+#                     offres.append(offre)
+#         return offres
 
-    # Liste des offres selon 1 facteur de tri
-    def offres_liste_tri(self, option, page, mail):
-        """Argument: Mail de l'utilisateur, numéro de page, option de tri choisi
-        Fonction: Renvoie la liste des offres valides pour l'utilisateur et trié"""
-        classe = self.get_user_info(mail).classe
-        offres = []
-        self.cursor.execute(
-            """SELECT * FROM offres WHERE disponible=1 AND (participant IS NULL OR participant2 IS NULL) ORDER BY """
-            + option + """ LIMIT """ + str(offres_par_page) + """ OFFSET """ + str(page * offres_par_page))
-        rows = self.cursor.fetchall()
-        # Tri des offres pour ne garder que celles où la classe du 1er participant est identique à celle de user
-        for row in rows:
-            offre = objects.Offre(row)
-            if offre.participant is None:
-                offres.append(offre)
-            else:
-                if classe == self.get_user_info(offre.participant).classe:
-                    offres.append(offre)
-        return offres
+#     # Liste des offres selon 1 facteur de tri
+#     def offres_liste_tri(self, option, page, mail, offres_par_page = offres_par_page):
+#         """Argument: Mail de l'utilisateur, numéro de page, option de tri choisi
+#         Fonction: Renvoie la liste des offres valides pour l'utilisateur et trié"""
+#         classe = self.get_user_info(mail).classe
+#         offres = []
+#         self.cursor.execute(
+#             """SELECT * FROM offres WHERE disponible=1 AND (participant IS NULL OR participant2 IS NULL) ORDER BY """
+#             + option + """ LIMIT """ + str(offres_par_page) + """ OFFSET """ + str(page * offres_par_page))
+#         rows = self.cursor.fetchall()
+#         # Tri des offres pour ne garder que celles où la classe du 1er participant est identique à celle de user
+#         for row in rows:
+#             offre = objects.Offre(row)
+#             if offre.participant is None:
+#                 offres.append(offre)
+#             else:
+#                 if classe == self.get_user_info(offre.participant).classe:
+#                     offres.append(offre)
+#         return offres
 
-    # Liste des offres selon 1 facteur de tri + 1 niveau/matiere
-    def offres_liste_tri_2(self, option, option2, page, mail):
-        """ Argument: Mail de l'utilisateur, numéro de page, option de tri 1, option de tri 2
-            Fonction: Renvoie la liste des offres valides pour l'utilisateur
-             et trié"""
-        classe = self.get_user_info(mail).classe
-        offres = []
-        self.cursor.execute(
-            """SELECT * FROM offres WHERE disponible=1 AND (participant IS NULL OR participant2 IS NULL)
-             AND """ + option + """ = '""" + option2 + """' LIMIT """ + str(offres_par_page) + """ OFFSET """ + str(
-                page * offres_par_page))
-        rows = self.cursor.fetchall()
-        # Tri des offres pour ne garder que celles où la classe du 1er participant est identique à celle de user
-        for row in rows:
-            offre = objects.Offre(row)
-            if offre.participant is None: # Place dsponible
-                offres.append(offre)
-            else:
-                if classe == self.get_user_info(offre.participant).classe:
-                    offres.append(offre)
-        return offres
+#     # Liste des offres selon 1 facteur de tri + 1 niveau/matiere
+#     def offres_liste_tri_2(self, option, option2, page, mail, offres_par_page = offres_par_page):
+#         """ Argument: Mail de l'utilisateur, numéro de page, option de tri 1, option de tri 2
+#             Fonction: Renvoie la liste des offres valides pour l'utilisateur
+#              et trié"""
+#         classe = self.get_user_info(mail).classe
+#         offres = []
+#         self.cursor.execute(
+#             """SELECT * FROM offres WHERE disponible=1 AND (participant IS NULL OR participant2 IS NULL)
+#              AND """ + option + """ = '""" + option2 + """' LIMIT """ + str(offres_par_page) + """ OFFSET """ + str(
+#                 page * offres_par_page))
+#         rows = self.cursor.fetchall()
+#         # Tri des offres pour ne garder que celles où la classe du 1er participant est identique à celle de user
+#         for row in rows:
+#             offre = objects.Offre(row)
+#             if offre.participant is None: # Place dsponible
+#                 offres.append(offre)
+#             else:
+#                 if classe == self.get_user_info(offre.participant).classe:
+#                     offres.append(offre)
+#         return offres
     
+    
+    
+#     # Liste des offres compatibles avec l'utilisateur
+#     def liste_offres(self, page, mail, option = None, option2 = None, n_par_page = elem_par_page):
+#         """Renvoie la liste des offres compatibles avec l'utilisateur connecté (même classe)
+#         
+#             :page: numéro de page
+#             :n_par_page: nombre d'éléments à afficher par page
+#             :mail: adresse de l'utilisateur connecté
+#             :option: premier niveau de selection
+#             :option2: 2ème niveau de selection
+#         
+#         """
+#         
+#         classe = self.get_user_info(mail).classe
+#         
+#         offres = []
+#         
+#         if option is not None:
+#             if option2 is not None:
+#                 self.cursor.execute(
+#                     """SELECT * FROM offres WHERE disponible=1 AND (participant IS NULL OR participant2 IS NULL)
+#                      AND """ + option + """ = '""" + option2 + """' LIMIT """ + str(n_par_page) + """ OFFSET """ + str(
+#                         page * n_par_page))
+#             else:
+#                 self.cursor.execute(
+#                     """SELECT * FROM offres WHERE disponible=1 AND (participant IS NULL OR participant2 IS NULL) ORDER BY """
+#                     + option + """ LIMIT """ + str(n_par_page) + """ OFFSET """ + str(page * n_par_page))
+#         else:
+#             self.cursor.execute(
+#                 """SELECT * FROM offres WHERE disponible=1 AND (participant IS NULL OR participant2 IS NULL) LIMIT """ +
+#                 str(n_par_page) + """ OFFSET """ + str(page * n_par_page))
+#         
+#         
+#         rows = self.cursor.fetchall()
+#         # Tri des offres pour ne garder que celles où ...
+#         for row in rows:
+#             offre = objects.Offre(row)
+#             if classe == "ADMIN":           # Amdinistrateur !
+#                 offres.append(offre)
+#                 continue
+#             
+#             if offre.participant is None:   # ... les deux places sont disponibles
+#                 offres.append(offre)
+#             else:
+#                 if classe == self.get_user_info(offre.participant).classe: # ... la classe du 1er participant est identique à celle de user
+#                     offres.append(offre)
+#         return offres
     
     
     
     # Liste des offres compatibles avec l'utilisateur
-    def liste_offres(self, page, mail, option = None, option2 = None):
+    def liste_offres(self, mail, option = None, option2 = None):
         """Renvoie la liste des offres compatibles avec l'utilisateur connecté (même classe)
         
-            :page: numéro de page
             :mail: adresse de l'utilisateur connecté
             :option: premier niveau de selection
             :option2: 2ème niveau de selection
@@ -327,20 +374,23 @@ class MysqlObject:
         
         offres = []
         
+        if classe == "ADMIN":           # Amdinistrateur !
+            condition = "(1>0)"         # Tout !
+        else:
+            condition = "disponible=1 AND (participant IS NULL OR participant2 IS NULL)"
+
+        
         if option is not None:
             if option2 is not None:
                 self.cursor.execute(
-                    """SELECT * FROM offres WHERE disponible=1 AND (participant IS NULL OR participant2 IS NULL)
-                     AND """ + option + """ = '""" + option2 + """' LIMIT """ + str(offres_par_page) + """ OFFSET """ + str(
-                        page * offres_par_page))
+                    """SELECT * FROM offres WHERE """+condition+"""
+                     AND """ + option + """ = '""" + option2 + "'" )
             else:
                 self.cursor.execute(
-                    """SELECT * FROM offres WHERE disponible=1 AND (participant IS NULL OR participant2 IS NULL) ORDER BY """
-                    + option + """ LIMIT """ + str(offres_par_page) + """ OFFSET """ + str(page * offres_par_page))
+                    """SELECT * FROM offres WHERE """+condition+"""
+                    ORDER BY """ + option)
         else:
-            self.cursor.execute(
-                """SELECT * FROM offres WHERE disponible=1 AND (participant IS NULL OR participant2 IS NULL) LIMIT """ +
-                str(offres_par_page) + """ OFFSET """ + str(page * offres_par_page))
+            self.cursor.execute("""SELECT * FROM offres WHERE """+condition)
         
         
         rows = self.cursor.fetchall()
@@ -356,11 +406,8 @@ class MysqlObject:
             else:
                 if classe == self.get_user_info(offre.participant).classe: # ... la classe du 1er participant est identique à celle de user
                     offres.append(offre)
+        
         return offres
-    
-    
-    
-    
     
 
     # Listes des offres tri admin
@@ -608,26 +655,67 @@ class MysqlObject:
         # Conversion en objet Demande
         return objects.Demande(self.cursor.fetchall()[0])
 
-    # Liste demandes sans tri
-    def demandes_liste(self, page):
-        """Argument: numéro de la page
-        Fonction: Renvoie la liste des demandes"""
-        demandes = []
-        self.cursor.execute(
-            """SELECT * FROM demandes WHERE disponible=1 AND tuteur IS NULL LIMIT """ +
-            str(offres_par_page) + """ OFFSET """ + str(page * offres_par_page))
-        # Conversion en objet Demande
-        rows = self.cursor.fetchall()
-        for row in rows:
-            demandes.append(objects.Demande(row))
-        return demandes
+#     # Liste demandes sans tri
+#     def demandes_liste(self, page):
+#         """Argument: numéro de la page
+#         Fonction: Renvoie la liste des demandes"""
+#         demandes = []
+#         self.cursor.execute(
+#             """SELECT * FROM demandes WHERE disponible=1 AND tuteur IS NULL LIMIT """ +
+#             str(offres_par_page) + """ OFFSET """ + str(page * offres_par_page))
+#         # Conversion en objet Demande
+#         rows = self.cursor.fetchall()
+#         for row in rows:
+#             demandes.append(objects.Demande(row))
+#         return demandes
     
+    
+#     # Liste des offres compatibles avec l'utilisateur
+#     def liste_demandes(self, page, mail, option = None, option2 = None, n_par_page = elem_par_page):
+#         """Renvoie la liste des demandes compatibles avec l'utilisateur connecté (classe inférieure)
+#         
+#             :page: numéro de page (à partir de 0)
+#             :n_par_page: nombre d'éléments à afficher par page
+#             :mail: adresse de l'utilisateur connecté
+#             :option: premier niveau de selection
+#             :option2: 2ème niveau de selection
+#         
+#         """
+#         classe = self.get_user_info(mail).classe
+#         niveau = self.get_class_level(classe)
+#         demandes = []
+#         
+#         if option is not None:
+#             if option2 is not None:
+#                 self.cursor.execute(
+#                     """SELECT * FROM demandes WHERE disponible=1 AND tuteur IS NULL
+#                      AND """ + option + """ = '""" + option2 + """' LIMIT """ + str(n_par_page) \
+#                                                              + """ OFFSET """ + str(page * n_par_page))
+#             else:
+#                 self.cursor.execute(
+#                     """SELECT * FROM demandes WHERE disponible=1 AND tuteur IS NULL ORDER BY """
+#                     + option + """ LIMIT """ + str(n_par_page) + \
+#                               """ OFFSET """ + str(page * n_par_page))
+#         else:
+#             self.cursor.execute(
+#                 """SELECT * FROM demandes WHERE disponible=1 AND tuteur IS NULL LIMIT """  + str(n_par_page) +\
+#                                                                             """ OFFSET """ + str(page * n_par_page))
+#         
+#         
+#         rows = self.cursor.fetchall()
+#         
+#         
+#         # Tri des demandes pour ne garder que celles où le niveau de l'utilisateur est supérieur au niveau de la demande
+#         for row in rows:
+#             demande = objects.Demande(row)
+#             if niveau > self.get_class_level(demande.classe):
+#                 demandes.append(demande)
+#         return demandes
     
     # Liste des offres compatibles avec l'utilisateur
-    def liste_demandes(self, page, mail, option = None, option2 = None):
+    def liste_demandes(self, mail, option = None, option2 = None):
         """Renvoie la liste des demandes compatibles avec l'utilisateur connecté (classe inférieure)
         
-            :page: numéro de page
             :mail: adresse de l'utilisateur connecté
             :option: premier niveau de selection
             :option2: 2ème niveau de selection
@@ -637,31 +725,38 @@ class MysqlObject:
         niveau = self.get_class_level(classe)
         demandes = []
         
+        if classe == "ADMIN":           # Amdinistrateur !
+            condition = "(1>0)"         # Tout !
+        else:
+            condition = "disponible=1 AND tuteur IS NULL"
+            
+            
         if option is not None:
             if option2 is not None:
                 self.cursor.execute(
-                    """SELECT * FROM demandes WHERE disponible=1 AND tuteur IS NULL
-                     AND """ + option + """ = '""" + option2 + """' LIMIT """ + str(offres_par_page) + """ OFFSET """ + str(
-                        page * offres_par_page))
+                    """SELECT * FROM demandes WHERE """+condition+"""
+                     AND """ + option + """ = '""" + option2 + """'""" )
             else:
                 self.cursor.execute(
-                    """SELECT * FROM demandes WHERE disponible=1 AND tuteur IS NULL ORDER BY """
-                    + option + """ LIMIT """ + str(offres_par_page) + """ OFFSET """ + str(page * offres_par_page))
+                    """SELECT * FROM demandes WHERE """+condition+"""
+                    ORDER BY """ + option)
         else:
             self.cursor.execute(
-                """SELECT * FROM demandes WHERE disponible=1 AND tuteur IS NULL LIMIT """ +
-                str(offres_par_page) + """ OFFSET """ + str(page * offres_par_page))
-        
-        
+                """SELECT * FROM demandes WHERE """+condition)
+
         rows = self.cursor.fetchall()
-        
         
         # Tri des demandes pour ne garder que celles où le niveau de l'utilisateur est supérieur au niveau de la demande
         for row in rows:
             demande = objects.Demande(row)
+            if classe == "ADMIN":           # Amdinistrateur !
+                demandes.append(demande)
+                continue
+            
             if niveau > self.get_class_level(demande.classe):
                 demandes.append(demande)
         return demandes
+    
     
     
     

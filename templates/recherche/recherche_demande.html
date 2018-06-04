@@ -46,14 +46,14 @@
     </div>
 
     <!-- Gestion des pages-->
-    {% with page=page %}{% include "blocs/gestion_pages.html" %}{% endwith %}
+    {% include "blocs/gestion_pages.html" %}
     
 </form>
 
 
 <!-- Liste des demandes -->
 <div class="demandes">
-    {% if demandes|length>0 %}
+    {% if demandes|length > 0 %}
         {% for demande in demandes %}
             <br/>
             <div class="bloc">
