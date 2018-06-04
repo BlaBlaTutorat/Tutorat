@@ -5,7 +5,7 @@
 
 <body>
 
-{% include 'mise_en_page/HEADER.html' %}
+{% with user=user %}{% include 'mise_en_page/HEADER.html' %}{% endwith %}
 
 <!-- Critères de recherche -->
 <form class="search" method="post" action="/search">

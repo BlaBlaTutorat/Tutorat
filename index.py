@@ -708,7 +708,7 @@ def enregistrement():
     sql_obj = sql.MysqlObject()
     if check_connexion():
         mail = session['mail']
-
+        name = ""
         if request.form.get("categorie") == "demande":
             result_code = sql_obj.add_tuteur(request.form.get("id"), mail)
         else:
@@ -745,6 +745,7 @@ def select():
     if check_connexion():
         mail = session['mail']
         sql_obj = sql.MysqlObject()
+        user = sql_obj.get_user_info(mail).nom
         admin_user = check_admin()
         if request.args.get('tutorat_id'):
             id_offre = request.args.get('tutorat_id')
@@ -778,6 +779,7 @@ def select_2():
     if check_connexion():
         mail = session['mail']
         sql_obj = sql.MysqlObject()
+        user = sql_obj.get_user_info(mail).nom
         admin_user = check_admin()
         if request.args.get('tutorat_id'):
             id_demande = request.args.get('tutorat_id')
