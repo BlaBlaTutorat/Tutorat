@@ -23,7 +23,7 @@
             <option value="demande" selected>Demande</option>
         </select>
 
-		<!-- Rechargement de la page lors du changement de la méthode de tri -->
+        <!-- Rechargement de la page lors du changement de la méthode de tri -->
         <select class="tri" name="option" id="option"
                 onchange="if(document.getElementById('option2')!=null){document.getElementById('option2').selectedIndex = -1}
                 this.form.submit()">
@@ -32,14 +32,14 @@
             <option value="matiere" {% if option == "matiere" %}selected{% endif %}>Matière
             <option value="suggestion">Suggestion</option>
         </select>
-        
+
         {% if option == "matiere" %}
             <!-- Paramètre de tri 2 -->
             <select id="option2" class="tri" name="option2" onchange="this.form.submit()">
-	        	<option value="" disabled selected>- Sélectionner une matière -</option>
-	            {% for matiere in matieres %}
-	                <option {% if option2 == matiere %}selected{% endif %}>{{ matiere }}</option>
-	            {% endfor %}
+                <option value="" disabled selected>- Sélectionner une matière -</option>
+                {% for matiere in matieres %}
+                    <option {% if option2 == matiere %}selected{% endif %}>{{ matiere }}</option>
+                {% endfor %}
             </select>
         {% endif %}
 
@@ -47,7 +47,7 @@
 
     <!-- Gestion des pages-->
     {% include "blocs/gestion_pages.html" %}
-    
+
 </form>
 
 
@@ -64,10 +64,13 @@
                     </p>
                     <p class="element"><strong class="G">En classe de :</strong> {{ demande.classe }}</p>
                     <p class="element"><strong class="G">Matière :</strong> {{ demande.matiere }}</p>
+                    {% if demande.tuteur is not none %}
+                        <p class="element"><strong class="G">Tuteur :</strong> {{ demande.tuteur }}</p>
+                    {% endif %}
                 </div>
                 <div id="horaires">
                     <p class="date_creation">Créée le {{ demande.date_time.strftime('%d/%m/%Y') }}</p>
-                    
+
                     {% with elem=demande %}{% include 'blocs/creneaux_horaires.html' %}{% endwith %}
                     
                     {% if not admin_user%}
@@ -76,9 +79,6 @@
                         <input type="hidden" name="id" value="{{ demande.id }}"/>
                         <input type="submit" value="Se proposer comme tuteur"/>
                     </form>
-                    
-                    
-                    
                     {% else %}
 	                    <a href="/delete2?id={{ demande.id }}">
 	                        <button>Supprimer la demande</button>

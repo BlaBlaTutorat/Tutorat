@@ -16,17 +16,14 @@
 
         <!-- Rechargement de la page lors du changement de catégorie -->
         <select class="tri" name="categorie"
-                onchange="if(document.getElementById('option2')!=null){document.getElementById('option2').selectedIndex = -1}
-                if(document.getElementById('option')!=null){document.getElementById('option').selectedIndex = -1}
+                onchange="if(document.getElementById('option')!=null){document.getElementById('option').selectedIndex = -1}
                 this.form.submit()">
             <option value="offre" selected>Offre</option>
             <option value="demande">Demande</option>
         </select>
 
         <!-- Rechargement de la page lors du changement de la méthode de tri -->
-        <select class="tri" name="option" id="option"
-                onchange="if(document.getElementById('option2')!=null){document.getElementById('option2').selectedIndex = -1}
-                this.form.submit()">
+        <select class="tri" name="option" id="option" onchange="this.form.submit()">
             <option value="" disabled>- Trier par -</option>
             <option value="date_time">Date croissante</option>
             <option value="filiere">Filière</option>
@@ -40,8 +37,9 @@
 
 <!-- Liste des offres -->
 <div class="offres">
-    <h2>{% if suggest_o2|length>1 %}{{ suggest_o2|length }}{% else %}Aucune{% endif %} offre{% if suggest_o2|length>1 %}s{% endif %} 
-    correspondant avec vos demandes (filière + matière + horaires)</h2>
+    <h2>{% if suggest_o2|length>1 %}{{ suggest_o2|length }}{% else %}Aucune{% endif %} offre{% if suggest_o2|length>1 %}
+        s{% endif %}
+        correspondant avec vos demandes (filière + matière + horaires)</h2>
     {% if suggest_o2|length>0 %}
         {% for offre in suggest_o2 %}
             <br/>
@@ -122,9 +120,10 @@
 </div>
 
 <div class="offres">
-    <h2>{% if suggest_o1|length>1 %}{{ suggest_o1|length }}{% else %}Aucune{% endif %} offre{% if suggest_o1|length>1 %}s{% endif %} 
-    susceptible{% if suggest_o1|length>1 %}s{% endif %} 
-    de correspondre avec vos demandes (filière + matière)</h2>
+    <h2>{% if suggest_o1|length>1 %}{{ suggest_o1|length }}{% else %}Aucune{% endif %} offre{% if suggest_o1|length>1 %}
+        s{% endif %}
+        susceptible{% if suggest_o1|length>1 %}s{% endif %}
+        de correspondre avec vos demandes (filière + matière)</h2>
     {% if suggest_o1|length>0 %}
         {% for offre in suggest_o1 %}
             <br/>

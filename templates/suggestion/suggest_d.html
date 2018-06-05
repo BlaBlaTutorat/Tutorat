@@ -15,13 +15,14 @@
             filtres</a>
 
         <!-- Rechargement de la page lors du changement de catégorie -->
-        <select class="tri" name="categorie" onchange="this.form.submit()">
+        <select class="tri" name="categorie" onchange="if(document.getElementById('option')!=null){document.getElementById('option').selectedIndex = -1}
+                this.form.submit()">
             <option value="offre">Offre</option>
             <option value="demande" selected>Demande</option>
         </select>
 
         <!-- Rechargement de la page lors du changement de la méthode de tri -->
-        <select class="tri" name="option" onchange="this.form.submit()">
+        <select class="tri" name="option" id="option" onchange="this.form.submit()">
             <option value="" disabled>- Trier par -</option>
             <option value="suggestion" selected>Suggestion</option>
         </select>
@@ -32,7 +33,8 @@
 
 <!-- Liste des demandes -->
 <div class="demandes">
-    <h2>{% if suggest_d2|length>1 %}{{ suggest_d2|length }}{% else %}Aucune{% endif %} demande{% if suggest_d2|length>1 %}s{% endif %} correspondant avec vos offres (filière + matière + horaires)</h2>
+    <h2>{% if suggest_d2|length>1 %}{{ suggest_d2|length }}{% else %}Aucune{% endif %} demande
+        {% if suggest_d2|length>1 %}s{% endif %} correspondant avec vos offres (filière + matière + horaires)</h2>
     {% if suggest_d2|length>0 %}
         {% for demande in suggest_d2 %}
             <br/>
@@ -94,13 +96,13 @@
                             {% endfor %}
                         </div>
                     </div>
-                <form class="bouton" method="post" action="/apply">
-                    <input type="hidden" name="categorie" value="offre"/>
-                    <input type="hidden" name="id" value="{{ demande.id }}"/>
-                    <input type="submit" value="Accepter la demande"/>
-                </form>
+                    <form class="bouton" method="post" action="/apply">
+                        <input type="hidden" name="categorie" value="offre"/>
+                        <input type="hidden" name="id" value="{{ demande.id }}"/>
+                        <input type="submit" value="Accepter la demande"/>
+                    </form>
+                </div>
             </div>
-        </div>
             <br/>
         {% endfor %}
     {% else %}
@@ -114,8 +116,9 @@
 
 <!-- Liste des offres -->
 <div class="offres">
-    <h2>{% if suggest_d1|length>1 %}{{ suggest_d1|length }}{% else %}Aucune{% endif %} demande{% if suggest_d1|length>1 %}s{% endif %} 
-    susceptible{% if suggest_o1|length>1 %}s{% endif %} de correspondre avec vos offres (filière + matière)</h2>
+    <h2>{% if suggest_d1|length>1 %}{{ suggest_d1|length }}{% else %}Aucune{% endif %} demande
+        {% if suggest_d1|length>1 %}s{% endif %}
+        susceptible{% if suggest_o1|length>1 %}s{% endif %} de correspondre avec vos offres (filière + matière)</h2>
     {% if suggest_d1|length>0 %}
         {% for offre in suggest_d1 %}
             <br/>
@@ -136,31 +139,31 @@
                             {% endfor %}
                         </div>
                         <div class="table" id="table_horaires">
-                                <table class="heure-table">
-                                    <tr>
-                                        <th>08h</th>
-                                        <th></th>
-                                        <th>09h</th>
-                                        <th></th>
-                                        <th>10h</th>
-                                        <th></th>
-                                        <th>11h</th>
-                                        <th></th>
-                                        <th>12h</th>
-                                        <th></th>
-                                        <th>13h</th>
-                                        <th></th>
-                                        <th>14h</th>
-                                        <th></th>
-                                        <th>15h</th>
-                                        <th></th>
-                                        <th>16h</th>
-                                        <th></th>
-                                        <th>17h</th>
-                                        <th></th>
-                                        <th>18h</th>
-                                        <th></th>
-                                    </tr>
+                            <table class="heure-table">
+                                <tr>
+                                    <th>08h</th>
+                                    <th></th>
+                                    <th>09h</th>
+                                    <th></th>
+                                    <th>10h</th>
+                                    <th></th>
+                                    <th>11h</th>
+                                    <th></th>
+                                    <th>12h</th>
+                                    <th></th>
+                                    <th>13h</th>
+                                    <th></th>
+                                    <th>14h</th>
+                                    <th></th>
+                                    <th>15h</th>
+                                    <th></th>
+                                    <th>16h</th>
+                                    <th></th>
+                                    <th>17h</th>
+                                    <th></th>
+                                    <th>18h</th>
+                                    <th></th>
+                                </tr>
                             </table>
                             {% for i in range(0,6) %}
                                 <table>
@@ -177,7 +180,7 @@
                             {% endfor %}
 
                         </div>
-                </div>
+                    </div>
                     <form class="bouton" method="post" action="/apply">
                         <input type="hidden" name="categorie" value="offre"/>
                         <input type="hidden" name="id" value="{{ offre.id }}"/>

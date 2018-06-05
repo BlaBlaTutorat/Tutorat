@@ -37,26 +37,26 @@
         {% if option == "matiere" or option == "filiere" %}
             <!-- Paramètre de tri 2 -->
             <select id="option2" class="tri" name="option2" onchange="this.form.submit()">
-                
+
                 {% if option == "filiere" %}
-                	<option value="" disabled selected>- Sélectionner une filière -</option>
+                    <option value="" disabled selected>- Sélectionner une filière -</option>
                     {% for filiere in filieres %}
                         <option {% if option2 == filiere %}selected{% endif %}>{{ filiere }}</option>
                     {% endfor %}
                 {% elif option == "matiere" %}
-                	<option value="" disabled selected>- Sélectionner une matière -</option>
+                    <option value="" disabled selected>- Sélectionner une matière -</option>
                     {% for matiere in matieres %}
                         <option {% if option2 == matiere %}selected{% endif %}>{{ matiere }}</option>
                     {% endfor %}
                 {% endif %}
             </select>
         {% endif %}
-        
+
     </div>
 
     <!-- Gestion des pages-->
     {% include "blocs/gestion_pages.html" %}
-    
+
 </form>
 
 <!-- Liste des offres -->
@@ -73,22 +73,29 @@
                     <p class="element"><strong class="G">Pour des :</strong> {{ offre.filiere }}</p>
                     <p class="element"><strong class="G">Matière :</strong> {{ offre.matiere }}</p>
                     <p class="element"><strong class="G">Participant(s) :</strong>
-                        {% if offre.participant is none %}
+                        {% if offre.participant is none and offre.participant2 is none %}
                             Aucun
-                        {% else %}
+                        {% elif offre.participant2 is none %}
                             <a onclick="open_profile_page('{{ offre.participant }}')"
                                title="Voir le profil">{{ sql_obj.get_user_info(offre.participant).nom }}</a>
                             <br/>
                             (1 place restante)
+                        {% else %}
+                            <a onclick="open_profile_page('{{ offre.participant }}')"
+                               title="Voir le profil">{{ sql_obj.get_user_info(offre.participant).nom }}</a>,
+                            <br/>
+                            <a onclick="open_profile_page('{{ offre.participant2 }}')"
+                               title="Voir le profil">{{ sql_obj.get_user_info(offre.participant2).nom }}</a>
                         {% endif %}
                     </p>
                 </div>
                 <div id="horaires">
                     <p class="date_creation">Créée le {{ offre.date_time.strftime('%d/%m/%Y') }}</p>
-                    
+
                     {% with elem=offre %}{% include 'blocs/creneaux_horaires.html' %}{% endwith %}
                     
                     {% if not admin_user%}
+
                     <form class="bouton" method="post" action="/apply">
                         <input type="hidden" name="categorie" value="offre"/>
                         <input type="hidden" name="id" value="{{ offre.id }}"/>

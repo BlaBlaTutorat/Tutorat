@@ -139,7 +139,7 @@
                                 Aucun
                             {% else %}
                                 <a onclick="open_profile_page('{{ demande.tuteur }}')"
-                                   title="Voir le profil">{{ sql_obj.get_user_pseudo(demande.tuteur) }}</a>
+                                   title="Voir le profil">{{ sql_obj.get_user_info(demande.tuteur).nom }}</a>
                                 <br/>
                             {% endif %}
                         <p class="element"><strong class="G">Etat de la demande :</strong> {% if demande.dispo==0 %}En
