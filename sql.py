@@ -374,7 +374,7 @@ class MysqlObject:
         
         offres = []
         
-        if classe == "ADMIN":           # Amdinistrateur !
+        if classe == "ADMIN":           # Administrateur !
             condition = "(1>0)"         # Tout !
         else:
             condition = "disponible=1 AND (participant IS NULL OR participant2 IS NULL)"
@@ -397,7 +397,7 @@ class MysqlObject:
         # Tri des offres pour ne garder que celles où ...
         for row in rows:
             offre = objects.Offre(row)
-            if classe == "ADMIN":           # Amdinistrateur !
+            if classe == "ADMIN":           # Administrateur !
                 offres.append(offre)
                 continue
             
@@ -725,7 +725,7 @@ class MysqlObject:
         niveau = self.get_class_level(classe)
         demandes = []
         
-        if classe == "ADMIN":           # Amdinistrateur !
+        if classe == "ADMIN":           # Administrateur !
             condition = "(1>0)"         # Tout !
         else:
             condition = "disponible=1 AND tuteur IS NULL"
