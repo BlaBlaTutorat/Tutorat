@@ -173,7 +173,7 @@ header nav, .header nav {
 }
 
 .header_tools {
-	width: 20%;
+	width: 40%;
 	display: flex;
     flex-direction: row;
     justify-content: flex-end;

@@ -33,12 +33,12 @@
             <br/>
             <div class="bloc">
                 <div class="info">
-                    <p class="element"><strong class="G">Auteur:</strong> <a
+                    <p class="element"><strong class="G">Auteur :</strong> <a
                             onclick="open_profile_page('{{ offre.auteur }}')"
                             title="Voir le profil">{{ sql_obj.get_user_info(offre.auteur).nom }}</a>
                     </p>
-                    <p class="element"><strong class="G">Pour des:</strong> {{ offre.filiere }}</p>
-                    <p class="element"><strong class="G">Matière:</strong> {{ offre.matiere }}</p>
+                    <p class="element"><strong class="G">Pour des :</strong> {{ offre.filiere }}</p>
+                    <p class="element"><strong class="G">Matière :</strong> {{ offre.matiere }}</p>
                 </div>
                 <div id="horaires">
                     <p class="date_creation">Créée le {{ offre.date_time.strftime('%d/%m/%Y') }}</p>

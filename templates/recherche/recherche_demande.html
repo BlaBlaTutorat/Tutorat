@@ -5,7 +5,7 @@
 
 <body>
 
-{% with user=user %}{% include 'mise_en_page/HEADER.html' %}{% endwith %}
+{% include 'mise_en_page/HEADER.html' %}
 
 <!-- Critères de recherche -->
 <form class="search" method="post" action="/search">
@@ -70,11 +70,32 @@
                     
                     {% with elem=demande %}{% include 'blocs/creneaux_horaires.html' %}{% endwith %}
                     
+                    {% if not admin_user%}
                     <form class="bouton" method="post" action="/apply">
                         <input type="hidden" name="categorie" value="demande"/>
                         <input type="hidden" name="id" value="{{ demande.id }}"/>
                         <input type="submit" value="Se proposer comme tuteur"/>
                     </form>
+                    
+                    
+                    
+                    {% else %}
+	                    <a href="/delete2?id={{ demande.id }}">
+	                        <button>Supprimer la demande</button>
+	                    </a>
+	                    {% if not demande.dispo %}
+		                    <a href="/validate?id={{ demande.id }}">
+		                        <button>Valider la demande</button>
+		                    </a>
+	                    {% endif %}
+                    {% endif %}
+                    
+                    
+                    
+                    
+                    
+                    
+                    
                 </div>
             </div>
             <br/>
