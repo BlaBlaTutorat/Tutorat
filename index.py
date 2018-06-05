@@ -556,7 +556,7 @@ def recherche():
 
         if request.form.get("categorie") == "demande":
             # PARTIE DEMANDE
-            matieres = sql_obj.liste_dispo('matiere', 'demandes')
+            matieres = sql_obj.liste_dispo('matiere', 'demandes', admin_user)
 
             if request.form.get("option") and not request.form.get("option2"):
                 # Formulaire de tri première étape
@@ -597,8 +597,8 @@ def recherche():
 
         else:
             # PARTIE OFFRES
-            matieres = sql_obj.liste_dispo('matiere', 'offres')
-            filieres = sql_obj.liste_dispo('filiere', 'offres')
+            matieres = sql_obj.liste_dispo('matiere', 'offres', admin_user)
+            filieres = sql_obj.liste_dispo('filiere', 'offres', admin_user)
 
 
             if request.form.get("option") and not request.form.get("option2"):

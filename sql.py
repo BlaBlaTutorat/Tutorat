@@ -749,7 +749,7 @@ class MysqlObject:
         # Tri des demandes pour ne garder que celles où le niveau de l'utilisateur est supérieur au niveau de la demande
         for row in rows:
             demande = objects.Demande(row)
-            if classe == "ADMIN":           # Amdinistrateur !
+            if classe == "ADMIN":           # Administrateur !
                 demandes.append(demande)
                 continue
             
@@ -761,23 +761,24 @@ class MysqlObject:
     
     
     # Liste des matières/filieres parmis les offres/demandes disponibles
-    def liste_dispo(self, colonne, table):
+    def liste_dispo(self, colonne, table, admin):
         """ Renvoie la liste des matières parmi les offres/demandes disponibles
             :colonne: 'matiere' ou 'filiere'
             :table: type d'élément : 'offres' ou 'demandes'
         """
-        if table == 'demandes':
-            self.cursor.execute(
-                """SELECT DISTINCT """+colonne+""" FROM demandes WHERE disponible=1 AND tuteur IS NULL""")
-            mat = self.cursor.fetchall()
-            mat = [m[0] for m in mat]
-        elif table == 'offres':
-            self.cursor.execute(
-                """SELECT DISTINCT """+colonne+""" FROM offres WHERE disponible=1 AND (participant IS NULL OR participant2 IS NULL)""")
-            mat = self.cursor.fetchall()
-            mat = [m[0] for m in mat]
+
+        if admin:
+            self.cursor.execute("""SELECT DISTINCT """ + colonne + """ FROM """ + table)
         else:
-            mat = []
+            if table == 'demandes':
+                self.cursor.execute(
+                   """SELECT DISTINCT """ + colonne + """ FROM demandes WHERE disponible=1 AND tuteur IS NULL""")
+            elif table == 'offres':
+                self.cursor.execute(
+                   """SELECT DISTINCT """+colonne+""" FROM offres WHERE disponible=1 AND (participant IS NULL OR participant2 IS NULL)""")
+
+        mat = self.cursor.fetchall()
+        mat = [m[0] for m in mat]
         return mat
     
     
