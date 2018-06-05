@@ -15,6 +15,7 @@ days = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
 
 n_par_page = 4
 
+
 # Page d'accueil qui redirige vers la page de recherche ou page de login
 @app.route('/')
 def index():
@@ -525,7 +526,6 @@ def recherche():
     """Page de recherche"""
     sql_obj = sql.MysqlObject()
 
-
     if check_connexion():
         mail = session['mail']
         admin_user = check_admin()
@@ -550,12 +550,8 @@ def recherche():
         else:
             page = 0
 
-        # Variables locales utilisées dans les templates
-
-
-
         if request.form.get("categorie") == "demande":
-            # PARTIE DEMANDE
+            # PARTIE DEMANDES
             matieres = sql_obj.liste_dispo('matiere', 'demandes', admin_user)
 
             if request.form.get("option") and not request.form.get("option2"):
@@ -570,9 +566,9 @@ def recherche():
 
                 else:
                     lst = sql_obj.liste_demandes(mail, option)
-                    npages = (len(lst)-1)//npp + 1
+                    npages = (len(lst) - 1) // npp + 1
                     return render_template("recherche/recherche_demande.html",
-                                           demandes = lst[page*npp:(page+1)*npp],
+                                           demandes=lst[page * npp:(page + 1) * npp],
                                            days=days, **locals())
 
             elif request.form.get("option") and request.form.get("option2"):
@@ -580,17 +576,17 @@ def recherche():
                 option = request.form.get("option")
                 option2 = request.form.get("option2")
                 lst = sql_obj.liste_demandes(mail, option, option2)
-                npages = (len(lst)-1)//npp + 1
+                npages = (len(lst) - 1) // npp + 1
                 return render_template("recherche/recherche_demande.html",
-                                       demandes = lst[page*npp:(page+1)*npp],
+                                       demandes=lst[page * npp:(page + 1) * npp],
                                        days=days, **locals())
 
             else:
                 # Aucune option de tri sélectionnée
                 lst = sql_obj.liste_demandes(mail)
-                npages = (len(lst)-1)//npp + 1
+                npages = (len(lst) - 1) // npp + 1
                 return render_template("recherche/recherche_demande.html",
-                                       demandes = lst[page*npp:(page+1)*npp],
+                                       demandes=lst[page * npp:(page + 1) * npp],
                                        days=days, **locals())
 
 
@@ -599,7 +595,6 @@ def recherche():
             # PARTIE OFFRES
             matieres = sql_obj.liste_dispo('matiere', 'offres', admin_user)
             filieres = sql_obj.liste_dispo('filiere', 'offres', admin_user)
-
 
             if request.form.get("option") and not request.form.get("option2"):
                 # Formulaire de tri première étape
@@ -615,9 +610,9 @@ def recherche():
 
                 else:
                     lst = sql_obj.liste_offres(mail, option)
-                    npages = (len(lst)-1)//npp + 1
+                    npages = (len(lst) - 1) // npp + 1
                     return render_template("recherche/recherche_offre.html",
-                                           offres = lst[page*npp:(page+1)*npp],
+                                           offres=lst[page * npp:(page + 1) * npp],
                                            days=days, **locals())
 
 
@@ -626,24 +621,21 @@ def recherche():
                 option = request.form.get("option")
                 option2 = request.form.get("option2")
                 lst = sql_obj.liste_offres(mail, option, option2)
-                npages = (len(lst)-1)//npp + 1
+                npages = (len(lst) - 1) // npp + 1
                 return render_template("recherche/recherche_offre.html",
-                                       offres = lst[page*npp:(page+1)*npp],
+                                       offres=lst[page * npp:(page + 1) * npp],
                                        days=days, **locals())
             else:
                 # Aucune option de tri sélectionnée
                 lst = sql_obj.liste_offres(mail)
-                npages = (len(lst)-1)//npp + 1
+                npages = (len(lst) - 1) // npp + 1
                 return render_template("recherche/recherche_offre.html",
-                                       offres = lst[page*npp:(page+1)*npp],
+                                       offres=lst[page * npp:(page + 1) * npp],
                                        days=days, **locals())
 
     else:
         # Redirection si l'utilisateur n'est pas connecté
         return page_connexion()
-
-
-
 
 
 # Affichage du formulaire de création d'une offre
