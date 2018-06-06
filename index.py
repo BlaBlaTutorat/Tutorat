@@ -289,9 +289,9 @@ def stat():
 
     if check_connexion():
         mail = session['mail']
-        
-    admin_user = check_admin()
-    user = sql_obj.get_user_info(mail).nom
+        admin_user = check_admin()
+        user = sql_obj.get_user_info(mail).nom
+   
     if request.args.get('info_msg'):
         info_msg = request.args.get('info_msg')
         
