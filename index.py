@@ -79,8 +79,7 @@ def traitement_connexion():
                                                  " saisies puis réessayez."))
         elif sql_obj.mail_in_register(mail):
             return redirect(
-                url_for("confirm_register_get", code_msg=True, mail=mail,
-                        info_msg="Veuillez finaliser votre inscription."))
+                url_for("confirm_register_get", mail=mail, info_msg="Veuillez finaliser votre inscription."))
         else:
             return redirect(url_for('connexion',
                                     info_msg="Aucun compte ne correspond à l'adresse email renseignée."))
@@ -98,8 +97,6 @@ def inscription():
     if not check_connexion():
         if request.args.get('info_msg'):
             info_msg = request.args.get('info_msg')
-        if request.args.get('code_msg'):
-            code_msg = request.args.get('code_msg')
         return render_template("authentification/inscription.html", classes=sql_obj.classes_liste(), **locals())
     else:
         # Redirection vers la page d'accueil
@@ -127,7 +124,7 @@ def traitement_inscription():
                     sql_obj.create_compte_validate(nom, mot_de_passe_chiffre, mail,
                                                    classe, code)
 
-                    return redirect(url_for("confirm_register_get", code_msg=True, C=True, mail=mail))
+                    return redirect(url_for("confirm_register_get", C=True, mail=mail))
 
                 else:
                     return render_template("authentification/inscription.html",
