@@ -100,7 +100,7 @@ def inscription():
         return render_template("authentification/inscription.html", classes=sql_obj.classes_liste(), **locals())
     else:
         # Redirection vers la page d'accueil
-        return redirect(url_for("recherche"))
+        return page_recherche()
 
 
 @app.route('/register', methods=['POST'])
@@ -137,7 +137,7 @@ def traitement_inscription():
                                     info_msg="Cette adresse email existe déjà"))
     else:
         # Redirection vers la page d'accueil
-        return redirect(url_for("recherche"))
+        return page_recherche()
 
 
 # Confirmation inscription (affichage initial + renvoie du code)
@@ -235,13 +235,16 @@ def del_register():
 @app.route('/forgot', methods=['GET'])
 def mdp_oublie():
     """Page de mot de passe oublié"""
-    if request.args.get('info_msg'):
-        info_msg = request.args.get('info_msg')
-    # Vérification configuration complète
-    if config.email != "" and config.email_password != "":
-        return render_template("authentification/mdp_oublie.html", **locals())
+    if not check_connexion():
+        if request.args.get('info_msg'):
+            info_msg = request.args.get('info_msg')
+        # Vérification configuration complète
+        if config.email != "" and config.email_password != "":
+            return render_template("authentification/mdp_oublie.html", **locals())
+        else:
+            return redirect(url_for('connexion', info_msg="Veuillez vous adresser directement aux documentalistes."))
     else:
-        return redirect(url_for('connexion', info_msg="Veuillez vous adresser directement aux documentalistes."))
+        return page_recherche()
 
 
 # Traitement Mot de passe oublié
@@ -283,7 +286,7 @@ def traitement_mdp_oublie():
         else:
             return redirect(url_for("mdp_oublie", info_msg="Cette adresse e-mail ne correspond à aucun compte"))
     else:
-        return redirect(url_for("recherche"))
+        return page_recherche()
 
 
 # Page de Profil info utilisateur
@@ -836,10 +839,10 @@ def select():
                 url_for("recherche", info_msg="Vous avez bien été ajouté en tant que participant à ce tutorat."))
 
         else:
-            abort(404)
+            abort(403)
 
     else:
-        return redirect(url_for("connexion", info_msg='Connectez-vous avant de continuer.'))
+        return page_connexion()
 
 
 # Selection horaires (demande)
@@ -866,10 +869,10 @@ def select_2():
             return redirect(url_for("recherche", info_msg="Vous avez bien été ajouté en tant que tuteur."))
 
         else:
-            abort(404)
+            abort(403)
 
     else:
-        return redirect(url_for("connexion", info_msg='Connectez-vous avant de continuer.'))
+        return page_connexion()
 
 
 # Modification d'une demande (affichage)
@@ -893,7 +896,7 @@ def modifier_demande():
             abort(403)
 
     else:
-        return redirect(url_for("connexion", info_msg='Connectez-vous avant de continuer.'))
+        return page_connexion()
 
 
 # Modification d'une offre (affichage)
@@ -917,7 +920,7 @@ def modifier_offre():
             abort(403)
 
     else:
-        return redirect(url_for("connexion", info_msg='Connectez-vous avant de continuer.'))
+        return page_connexion()
 
 
 # Modification d'une offre/demande (formulaire)
@@ -949,7 +952,7 @@ def modification_offre_demande():
 
         return redirect(url_for("profil_2"))
     else:
-        return redirect(url_for("connexion", info_msg='Connectez-vous avant de continuer.'))
+        return page_connexion()
 
 
 # Suppression de la participation d'un utilisateur à une offre
@@ -1011,7 +1014,7 @@ def delete():
         else:
             abort(403)
     else:
-        return redirect(url_for("connexion", info_msg='Connectez-vous avant de continuer.'))
+        return page_connexion()
 
 
 # Suppression d'une demande
@@ -1033,7 +1036,7 @@ def delete3():
         else:
             abort(403)
     else:
-        return redirect(url_for("connexion", info_msg='Connectez-vous avant de continuer.'))
+        return page_connexion()
 
 
 # Suppression d'une offre (admin)
@@ -1053,7 +1056,7 @@ def delete2():
         else:
             abort(403)
     else:
-        return redirect(url_for("connexion", info_msg='Connectez-vous avant de continuer.'))
+        return page_connexion()
 
 
 # Suppression d'une demande (admin)
@@ -1073,7 +1076,7 @@ def delete4():
         else:
             abort(403)
     else:
-        return redirect(url_for("connexion", info_msg='Connectez-vous avant de continuer.'))
+        return page_connexion()
 
 
 # Validation d'une offre (admin)
@@ -1094,7 +1097,7 @@ def validate():
         else:
             abort(403)
     else:
-        return redirect(url_for("connexion", info_msg='Connectez-vous avant de continuer.'))
+        return page_connexion()
 
 
 # Validation d'une demande (admin)
@@ -1115,7 +1118,7 @@ def validate2():
         else:
             abort(403)
     else:
-        return redirect(url_for("connexion", info_msg='Connectez-vous avant de continuer.'))
+        return page_connexion()
 
 
 # Ban (admin)
@@ -1241,6 +1244,10 @@ def method_not_allowed(error):
 
 def page_connexion():
     return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
+
+
+def page_recherche():
+    return redirect(url_for("recherche"))
 
 
 # Vérification connexion
