@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+{% with name="Vérification" %}{% include "mise_en_page/HEAD.html" %}{% endwith %}
+
+<body>
+
+{% include 'mise_en_page/HEADER.html' %}
+
+{% if info_msg2 %}
+    <!-- Message d'information qui reload la page -->
+    <a href="/register/confirm?code_msg=True&mail={{ mail }}" class="info_msg">
+        <div>{{ info_msg2 }}</div>
+    </a>
+{% endif %}
+
+<h2 class="log">Inscrivez vous :</h2>
+<!-- Formulaire de création -->
+<form method="post" action="/register/confirm" class="register_bloc">
+    <div class="bloc_inscription">
+        <div class="inscription">
+            <div class="reg">
+                <div class="critere">
+                    <p title="Ce code vous a été envoyé par mail." id="code_de_v">Code de validation</p>
+                    <p><input required type="text" name="code_V"></p>
+                </div>
+            </div>
+            <div class="reg">
+                <a href="/del_register?mail={{ mail }}" class="button" id="register_button">Annuler</a>
+                <a href="/register/confirm?C=True&mail={{ mail }}&info_msg2=Un nouveau code vous a été envoyé par mail."
+                   class="button" id="register_button">Renvoyer</a>
+                <input type="submit" value="Valider"/>
+                <input type="hidden" name="nom" value="{{ nom }}"/>
+                <input type="hidden" name="mdp" value="{{ mdp }}"/>
+                <input type="hidden" name="mail" value="{{ mail }}"/>
+                <input type="hidden" name="classe" value="{{ classe }}"/>
+                <input type="hidden" name="code" value="{{ code }}"/>
+            </div>
+        </div>
+    </div>
+</form>
+
+{% include 'mise_en_page/FOOTER.html' %}
+
+</body>
+</html>

@@ -763,7 +763,8 @@ class MysqlObject:
                     """SELECT DISTINCT """ + colonne + """ FROM demandes WHERE disponible=1 AND tuteur IS NULL""")
             elif table == 'offres':
                 self.cursor.execute(
-                    """SELECT DISTINCT """ + colonne + """ FROM offres WHERE disponible=1 AND (participant IS NULL OR participant2 IS NULL)""")
+                    """SELECT DISTINCT """ + colonne + """ FROM offres WHERE disponible=1 AND (participant IS NULL
+                     OR participant2 IS NULL)""")
 
         mat = self.cursor.fetchall()
         mat = [m[0] for m in mat]
@@ -892,7 +893,7 @@ class MysqlObject:
         self.cursor.execute("""SELECT classement FROM classes WHERE NOM = %s""", (classe,))
         lvl = self.cursor.fetchall()[0]
         return lvl
-    
+
     # Niveau filière
     def get_filiere_level(self, filiere):
         self.cursor.execute("""SELECT classement FROM filieres WHERE nom = %s""", (filiere,))
