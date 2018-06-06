@@ -46,7 +46,7 @@
 
                             {% if offre.participant2 is not none %}
                                 <a onclick="open_profile_page('{{ offre.participant2 }}')"
-                                   title="Voir le profil">{{ sql_obj.get_user_pseudo(offre.participant2) }}</a>
+                                   title="Voir le profil">{{ sql_obj.get_user_info(offre.participant2).nom }}</a>
                             {% endif %}
                         </p>
                         <p class="element"><strong class="G">Etat de l'offre :</strong> {% if offre.dispo==0 %}En
@@ -379,7 +379,7 @@
                     <br/>
             {% endfor %}
         {% endif %}
-        {% if demandes|length==0 and offres_suivies|length==0 %}
+        {% if demandes_t|length==0 and offres_suivies|length==0 %}
             <div class="bloc" id="none_offre">
                 <p class="none_offre">Vous ne participez à aucun tutorat</p>
                 <p class="none_offre"><a href="/search">
