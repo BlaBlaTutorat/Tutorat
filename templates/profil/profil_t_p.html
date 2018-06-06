@@ -103,10 +103,10 @@
                             </div>
                         </div>
                         <a href="/edit_o?id={{ offre.id }}">
-                            <button>Modifier l'offre</button>
+                            <button class="button_offre">Modifier l'offre</button>
                         </a>
                         <a href="/delete?id={{ offre.id }}">
-                            <button>Supprimer l'offre</button>
+                            <button class="button_offre">Supprimer l'offre</button>
                         </a>
                     </div>
                 </div>
@@ -116,7 +116,7 @@
             <div class="bloc" id="none_offre">
                 <p class="none_offre">Vous n'avez pas encore créé d'offre</p>
                 <p class="none_offre"><a href="/create">
-                    <button>Créer une offre</button>
+                    <button class="button_offre">Créer une offre</button>
                 </a></p>
             </div>
         {% endif %}
@@ -196,10 +196,10 @@
                             </div>
                         </div>
                         <a href="/edit_d?id={{ demande.id }}">
-                            <button>Modifier la demande</button>
+                            <button class="button_offre">Modifier la demande</button>
                         </a>
                         <a href="/delete3?id={{ demande.id }}">
-                            <button>Supprimer la demande</button>
+                            <button class="button_offre">Supprimer la demande</button>
                         </a>
                     </div>
                 </div>
@@ -209,7 +209,7 @@
             <div class="bloc" id="none_offre">
                 <p class="none_offre">Vous n'avez pas encore crée de demande</p>
                 <p class="none_offre"><a href="/create">
-                    <button>Créer une demande</button>
+                    <button class="button_offre">Créer une demande</button>
                 </a></p>
             </div>
         {% endif %}
@@ -298,7 +298,7 @@
                             </div>
                         </div>
                         <a href="/quit?id={{ offre.id }}">
-                            <button>Quitter ce tutorat</button>
+                            <button class="button_offre">Quitter ce tutorat</button>
                         </a>
                     </div>
                 </div>
@@ -372,7 +372,7 @@
                                 </div>
                             </div>
                             <a href="/quit_2?id={{ demande.id }}">
-                                <button>Quitter ce tutorat</button>
+                                <button class="button_offre">Quitter ce tutorat</button>
                             </a>
                         </div>
                     </div>
@@ -383,7 +383,7 @@
             <div class="bloc" id="none_offre">
                 <p class="none_offre">Vous ne participez à aucun tutorat</p>
                 <p class="none_offre"><a href="/search">
-                    <button>Rechercher une offre/demande</button>
+                    <button class="button_offre">Rechercher une offre/demande</button>
                 </a></p>
             </div>
         {% endif %}

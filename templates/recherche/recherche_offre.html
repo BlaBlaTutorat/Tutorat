@@ -104,16 +104,16 @@
                     <form class="bouton" method="post" action="/apply">
                         <input type="hidden" name="categorie" value="offre"/>
                         <input type="hidden" name="id" value="{{ offre.id }}"/>
-                        <input type="submit" value="Accepter l'offre"/>
+                        <input type="submit" class="button_offre" value="Accepter l'offre"/>
                     </form>
                     
                     {% else %}
 	                    <a href="/delete2?id={{ offre.id }}">
-	                        <button>Supprimer l'offre</button>
+	                        <button class="button_offre">Supprimer l'offre</button>
 	                    </a>
 	                    {% if not offre.dispo %}
 		                    <a href="/validate?id={{ offre.id }}">
-		                        <button>Valider l'offre</button>
+		                        <button class="button_offre">Valider l'offre</button>
 		                    </a>
 		                {% endif %}
                     {% endif %}

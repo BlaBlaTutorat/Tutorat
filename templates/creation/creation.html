@@ -50,7 +50,7 @@
                     </SELECT></p>
                 <div class="crea_offre_bloc">
                     {% if demande %}
-                        <input type="submit" class="crea_offre" value="Créer ma demande" title="La demande n'apparaitra qu'après validation par un administrateur."/>
+                        <input type="submit" id="crea_offre" class="button_demande" value="Créer ma demande" title="La demande n'apparaitra qu'après validation par un administrateur."/>
                         <p class="remarque">Remarques :</p>
                         <ul class="remarque">
                         	<li>La demande n'apparaitra qu'après validation par un administrateur.
@@ -59,7 +59,7 @@
                         
                             
                     {% else %}
-                        <input type="submit" class="crea_offre" value="Créer mon offre" title="L'offre n'apparaitra qu'après validation par un administrateur."/>
+                        <input type="submit" id="crea_offre" class="button_offre" value="Créer mon offre" title="L'offre n'apparaitra qu'après validation par un administrateur."/>
                         <p class="remarque">Remarques :</p>
                         <ul class="remarque">
                         	<li>l'offre n'apparaitra qu'après validation par un administrateur.
