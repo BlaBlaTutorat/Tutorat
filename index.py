@@ -79,7 +79,7 @@ def traitement_connexion():
                                                  " saisies puis réessayez."))
         elif sql_obj.mail_in_register(mail):
             return redirect(
-                url_for("confirm_register", code_msg=True, mail=mail, info_msg="Veuillez finaliser votre inscription."))
+                url_for("confirm_register_get", mail=mail, info_msg="Veuillez finaliser votre inscription."))
         else:
             return redirect(url_for('connexion',
                                     info_msg="Aucun compte ne correspond à l'adresse email renseignée."))
@@ -97,12 +97,10 @@ def inscription():
     if not check_connexion():
         if request.args.get('info_msg'):
             info_msg = request.args.get('info_msg')
-        if request.args.get('code_msg'):
-            code_msg = request.args.get('code_msg')
         return render_template("authentification/inscription.html", classes=sql_obj.classes_liste(), **locals())
     else:
         # Redirection vers la page d'accueil
-        return redirect(url_for("recherche"))
+        return page_recherche()
 
 
 @app.route('/register', methods=['POST'])
@@ -126,7 +124,7 @@ def traitement_inscription():
                     sql_obj.create_compte_validate(nom, mot_de_passe_chiffre, mail,
                                                    classe, code)
 
-                    return redirect(url_for("confirm_register", code_msg=True, C=True, mail=mail))
+                    return redirect(url_for("confirm_register_get", C=True, mail=mail))
 
                 else:
                     return render_template("authentification/inscription.html",
@@ -139,32 +137,30 @@ def traitement_inscription():
                                     info_msg="Cette adresse email existe déjà"))
     else:
         # Redirection vers la page d'accueil
-        return redirect(url_for("recherche"))
+        return page_recherche()
 
 
-# Confirmation inscription
-@app.route('/register/confirm', methods=['GET', 'POST'])
-def confirm_register():
+# Confirmation inscription (affichage initial + renvoie du code)
+@app.route('/register/confirm', methods=['GET'])
+def confirm_register_get():
     """Page confirmation d'inscription"""
     sql_obj = sql.MysqlObject()
     if request.args.get('mail'):
         mail = request.args.get('mail')
+    else:
+        return redirect(url_for("inscription"))
+
     if request.args.get('info_msg2'):
         info_msg2 = request.args.get('info_msg2')
     else:
         info_msg2 = ""
-    if request.args.get('C'):
-        envoyer_code = request.args.get('C')
-    else:
-        envoyer_code = False
 
-    if envoyer_code:
+    if request.args.get('C'):
         # Génération du code
         element = "0123456789"
         code = ""
         for i in range(6):
             code = code + element[random.randint(0, 9)]
-
         # Envoi de l'email
         msg = MIMEMultipart()
         msg['From'] = config.email
@@ -180,34 +176,42 @@ def confirm_register():
         mailserver.login(config.email, config.email_password)
         mailserver.sendmail(msg['From'], msg['To'], msg.as_string())
         mailserver.quit()
-
         sql_obj.code_update(code, mail)
         if info_msg2 != "":
-            return redirect(url_for("confirm_register", code_msg=True, mail=mail, info_msg2=info_msg2))
+            return redirect(url_for("confirm_register_get", mail=mail, info_msg2=info_msg2))
         else:
-            return redirect(url_for("confirm_register", code_msg=True, mail=mail))
+            return redirect(url_for("confirm_register_get", mail=mail))
 
-    if len(request.form) == 0:
-        info = sql_obj.info_register(mail)
+    info = sql_obj.info_register(mail)
+    if len(info) > 0:
         nom = info[0][0]
         mdp = info[0][1]
         mail = info[0][2]
         classe = info[0][3]
         code = info[0][4]
-        return render_template("authentification/inscription.html", code_msg=True, **locals())
+        return render_template("authentification/verification.html", **locals())
     else:
-        if request.form.get('code_V') == request.form.get('code'):
-            # Envoi des infos à la base de données
-            sql_obj.delete_register(request.form.get('mail'))
-            sql_obj.create_compte(request.form.get('nom'), request.form.get('mdp'), request.form.get('mail'),
-                                  request.form.get('classe'))
-            return redirect(url_for("connexion",
-                                    info_msg="Votre compte a bien été créé,\n"
-                                             "vous pouvez dès à présent vous connecter"))
-        else:
-            return redirect(
-                url_for("confirm_register", code_msg=True, C=True, mail=request.form.get('mail'),
-                        info_msg2="Vous n'avez pas tapé le bon code. Un nouveau vous a été envoyé par mail."))
+        return redirect(url_for("inscription"))
+
+
+# Confirmation inscription (vérification code)
+@app.route('/register/confirm', methods=['POST'])
+def confirm_register_post():
+    """Page confirmation d'inscription"""
+    sql_obj = sql.MysqlObject()
+
+    if request.form.get('code_V') == request.form.get('code'):
+        # Envoi des infos à la base de données
+        sql_obj.delete_register(request.form.get('mail'))
+        sql_obj.create_compte(request.form.get('nom'), request.form.get('mdp'), request.form.get('mail'),
+                              request.form.get('classe'))
+        return redirect(url_for("connexion",
+                                info_msg="Votre compte a bien été créé,\n"
+                                         "vous pouvez dès à présent vous connecter"))
+    else:
+        return redirect(
+            url_for("confirm_register_get", C=True, mail=request.form.get('mail'),
+                    info_msg2="Vous n'avez pas tapé le bon code. Un nouveau vous a été envoyé par mail."))
 
 
 # Annuler l'inscription
@@ -231,13 +235,16 @@ def del_register():
 @app.route('/forgot', methods=['GET'])
 def mdp_oublie():
     """Page de mot de passe oublié"""
-    if request.args.get('info_msg'):
-        info_msg = request.args.get('info_msg')
-    # Vérification configuration complète
-    if config.email != "" and config.email_password != "":
-        return render_template("authentification/mdp_oublie.html", **locals())
+    if not check_connexion():
+        if request.args.get('info_msg'):
+            info_msg = request.args.get('info_msg')
+        # Vérification configuration complète
+        if config.email != "" and config.email_password != "":
+            return render_template("authentification/mdp_oublie.html", **locals())
+        else:
+            return redirect(url_for('connexion', info_msg="Veuillez vous adresser directement aux documentalistes."))
     else:
-        return redirect(url_for('connexion', info_msg="Veuillez vous adresser directement aux documentalistes."))
+        return page_recherche()
 
 
 # Traitement Mot de passe oublié
@@ -279,7 +286,8 @@ def traitement_mdp_oublie():
         else:
             return redirect(url_for("mdp_oublie", info_msg="Cette adresse e-mail ne correspond à aucun compte"))
     else:
-        return redirect(url_for("recherche"))
+        return page_recherche()
+
 
 # Page de Profil info utilisateur
 @app.route('/stat')
@@ -291,12 +299,12 @@ def stat():
         mail = session['mail']
         admin_user = check_admin()
         user = sql_obj.get_user_info(mail).nom
-   
+
     if request.args.get('info_msg'):
         info_msg = request.args.get('info_msg')
-        
-    filieres = sql_obj.get_all_filieres()
-    matieres = sql_obj.get_all_matieres()
+
+    filieres = sql_obj.filieres_liste()
+    matieres = sql_obj.matieres_liste()
     offres = sql_obj.get_all_offres()
     demandes = sql_obj.get_all_demandes()
     t = []
@@ -314,7 +322,7 @@ def stat():
                     del offres[i]
                 else:
                     i += 1
-                    
+
             i = 0
             while i < len(demandes):
                 d = demandes[i]
@@ -323,12 +331,8 @@ def stat():
                     del demandes[i]
                 else:
                     i += 1
-                
-            
-            
+
     return render_template("statistiques.html", **locals())
-
-
 
 
 # Page de Profil info utilisateur
@@ -638,8 +642,6 @@ def recherche():
                                        demandes=lst[page * npp:(page + 1) * npp],
                                        days=days, **locals())
 
-
-
         else:
             # PARTIE OFFRES
             matieres = sql_obj.liste_dispo('matiere', 'offres', admin_user)
@@ -656,14 +658,12 @@ def recherche():
                     return render_template("suggestion/suggest_o.html",
                                            days=days, **locals())
 
-
                 else:
                     lst = sql_obj.liste_offres(mail, option)
                     npages = (len(lst) - 1) // npp + 1
                     return render_template("recherche/recherche_offre.html",
                                            offres=lst[page * npp:(page + 1) * npp],
                                            days=days, **locals())
-
 
             elif request.form.get("option") and request.form.get("option2"):
                 # Formulaire de tri deuxième étape
@@ -839,10 +839,10 @@ def select():
                 url_for("recherche", info_msg="Vous avez bien été ajouté en tant que participant à ce tutorat."))
 
         else:
-            abort(404)
+            abort(403)
 
     else:
-        return redirect(url_for("connexion", info_msg='Connectez-vous avant de continuer.'))
+        return page_connexion()
 
 
 # Selection horaires (demande)
@@ -869,10 +869,10 @@ def select_2():
             return redirect(url_for("recherche", info_msg="Vous avez bien été ajouté en tant que tuteur."))
 
         else:
-            abort(404)
+            abort(403)
 
     else:
-        return redirect(url_for("connexion", info_msg='Connectez-vous avant de continuer.'))
+        return page_connexion()
 
 
 # Modification d'une demande (affichage)
@@ -896,7 +896,7 @@ def modifier_demande():
             abort(403)
 
     else:
-        return redirect(url_for("connexion", info_msg='Connectez-vous avant de continuer.'))
+        return page_connexion()
 
 
 # Modification d'une offre (affichage)
@@ -920,7 +920,7 @@ def modifier_offre():
             abort(403)
 
     else:
-        return redirect(url_for("connexion", info_msg='Connectez-vous avant de continuer.'))
+        return page_connexion()
 
 
 # Modification d'une offre/demande (formulaire)
@@ -952,7 +952,7 @@ def modification_offre_demande():
 
         return redirect(url_for("profil_2"))
     else:
-        return redirect(url_for("connexion", info_msg='Connectez-vous avant de continuer.'))
+        return page_connexion()
 
 
 # Suppression de la participation d'un utilisateur à une offre
@@ -1014,7 +1014,7 @@ def delete():
         else:
             abort(403)
     else:
-        return redirect(url_for("connexion", info_msg='Connectez-vous avant de continuer.'))
+        return page_connexion()
 
 
 # Suppression d'une demande
@@ -1036,7 +1036,7 @@ def delete3():
         else:
             abort(403)
     else:
-        return redirect(url_for("connexion", info_msg='Connectez-vous avant de continuer.'))
+        return page_connexion()
 
 
 # Suppression d'une offre (admin)
@@ -1056,7 +1056,7 @@ def delete2():
         else:
             abort(403)
     else:
-        return redirect(url_for("connexion", info_msg='Connectez-vous avant de continuer.'))
+        return page_connexion()
 
 
 # Suppression d'une demande (admin)
@@ -1076,7 +1076,7 @@ def delete4():
         else:
             abort(403)
     else:
-        return redirect(url_for("connexion", info_msg='Connectez-vous avant de continuer.'))
+        return page_connexion()
 
 
 # Validation d'une offre (admin)
@@ -1097,7 +1097,7 @@ def validate():
         else:
             abort(403)
     else:
-        return redirect(url_for("connexion", info_msg='Connectez-vous avant de continuer.'))
+        return page_connexion()
 
 
 # Validation d'une demande (admin)
@@ -1118,7 +1118,7 @@ def validate2():
         else:
             abort(403)
     else:
-        return redirect(url_for("connexion", info_msg='Connectez-vous avant de continuer.'))
+        return page_connexion()
 
 
 # Ban (admin)
@@ -1244,6 +1244,10 @@ def method_not_allowed(error):
 
 def page_connexion():
     return redirect(url_for('connexion', info_msg="Veuillez vous connecter pour continuer."))
+
+
+def page_recherche():
+    return redirect(url_for("recherche"))
 
 
 # Vérification connexion

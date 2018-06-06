@@ -10,33 +10,32 @@
 <h2 class="page_title">Aperçu rapide</h2>
 
 <div class="stat">
-	<table>
-		<tr>
-		    <td style="border:none;"></td>
-		    {% for f in t[0] %}
-		    <th class="h_filiere">{{ filieres[loop.index-1] }}</th>
-		    {% endfor %}
-  		</tr>
-  		
-  		{% for m in t %}
-  		<tr {% if loop.index%2 == 0 %}style="background:#bbbbbb"{% endif %}>
-		    <th class="h_matiere">{{ matieres[loop.index-1] }}</th>
-		    {% for c in m %}
-		    <td class="cell" >
-		    {% if c[0]|length>0 %}
-		    	<a class="offre" href="" title="Offres">{{ c[0]|length }}</a>
-		    {% endif %}
-		    {% if c[1]|length>0 %}
-		    	<a class="demande" href="" title="Demandes">{{ c[1]|length }}</a>
-		    {% endif %}
-		    </td>
-		    {% endfor %}
-  		</tr>
-  		{% endfor %}
-  		
-	</table>
-</div>
+    <table>
+        <tr>
+            <td style="border:none;"></td>
+            {% for f in t[0] %}
+                <th class="h_filiere">{{ filieres[loop.index - 1] }}</th>
+            {% endfor %}
+        </tr>
 
+        {% for m in t %}
+            <tr {% if loop.index%2 == 0 %}style="background:#bbbbbb"{% endif %}>
+                <th class="h_matiere">{{ matieres[loop.index - 1] }}</th>
+                {% for c in m %}
+                    <td class="cell">
+                        {% if c[0]|length>0 %}
+                            <a class="offre" href="" title="Offres">{{ c[0]|length }}</a>
+                        {% endif %}
+                        {% if c[1]|length>0 %}
+                            <a class="demande" href="" title="Demandes">{{ c[1]|length }}</a>
+                        {% endif %}
+                    </td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+
+    </table>
+</div>
 
 
 {% include 'mise_en_page/FOOTER.html' %}
