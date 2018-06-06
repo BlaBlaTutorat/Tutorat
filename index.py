@@ -290,13 +290,13 @@ def stat():
     if check_connexion():
         mail = session['mail']
         
-    admin_user = check_admin()
-    user = sql_obj.get_user_info(mail).nom
+        admin_user = check_admin()
+        user = sql_obj.get_user_info(mail).nom
     if request.args.get('info_msg'):
         info_msg = request.args.get('info_msg')
         
-    filieres = sql_obj.get_all_filieres()
-    matieres = sql_obj.get_all_matieres()
+    filieres = sql_obj.filieres_liste()
+    matieres = sql_obj.matieres_liste()
     offres = sql_obj.get_all_offres()
     demandes = sql_obj.get_all_demandes()
     t = []

@@ -892,27 +892,6 @@ class MysqlObject:
         self.cursor.execute("""SELECT classement FROM classes WHERE NOM = %s""", (classe,))
         lvl = self.cursor.fetchall()[0]
         return lvl
-
-    def get_all_filieres(self):
-        filieres = []
-        self.cursor.execute("""SELECT * FROM filieres""")
-        # Conversion en objet Demande
-        rows = self.cursor.fetchall()
-        rows.sort(key=itemgetter(1))
-        for row in rows:
-            filieres.append(row[0])
-        
-        return filieres
-    
-    def get_all_matieres(self):
-        matieres = []
-        self.cursor.execute("""SELECT * FROM matieres""")
-        # Conversion en objet Demande
-        rows = self.cursor.fetchall()
-        for row in rows:
-            matieres.append(row[0])
-        
-        return matieres
     
     # Niveau filière
     def get_filiere_level(self, filiere):
