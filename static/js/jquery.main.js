@@ -17,16 +17,16 @@ function open_profile_page(mail) {
     window.open('/profile/view/' + mail, 'profil', 'height=625,width=700');
 }
 
-function setCharAt(str,index,chr) {
-    if(index > str.length-1) return str;
-    return str.substr(0,index) + chr + str.substr(index+1);
+function setCharAt(str, index, chr) {
+    if (index > str.length - 1) return str;
+    return str.substr(0, index) + chr + str.substr(index + 1);
 }
 
 function horaire_click(event, id, class_name) {
-    var data = document.getElementById('horaires_data').value;
-    var day = parseInt(id.split(" ")[0]);
-    var hour = parseInt(id.split(" ")[1]);
-    var index = (day*22)+hour;
+    let data = document.getElementById('horaires_data').value;
+    const day = parseInt(id.split(" ")[0]);
+    const hour = parseInt(id.split(" ")[1]);
+    const index = (day * 22) + hour;
 
     if (class_name === "red") {
         document.getElementById(id).classList.remove("red");

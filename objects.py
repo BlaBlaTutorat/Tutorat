@@ -2,7 +2,6 @@
 
 
 class Offre:
-
     def __init__(self, sql):
         self.id = sql[0]
         self.auteur = sql[1]
