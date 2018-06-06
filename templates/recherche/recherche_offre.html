@@ -14,6 +14,11 @@
         <a class="button" id="reset_filter" onclick="window.location.href=window.location.pathname">Réinitialiser les
             filtres</a>
 
+		<div class="tool">
+            <a href="/stat" class="admin" title="Statistiques complètes"><img
+                    src="/static/img/stat.png"></a>
+        </div>
+        
         <!-- Rechargement de la page lors du changement de catégorie -->
         <select class="tri" name="categorie"
                 onchange="if(document.getElementById('option2')!=null){document.getElementById('option2').selectedIndex = -1}

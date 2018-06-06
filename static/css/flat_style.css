@@ -189,11 +189,7 @@ header nav, .header nav {
     margin: 0 0 0 0;
     vertical-align: middle;
   	filter: blur(0px) brightness(150%) drop-shadow(1px 2px 2px #ffffff) ;
-  	
 }
-
-
-
 
 
 .header nav {
@@ -298,6 +294,51 @@ header li a:hover, .header li a:hover {
 
 
 /* END HEADER */
+
+/* STATISTIQUES **********************************************************************************/
+
+.stat {
+	margin: 0 0 25px;
+}
+
+.stat table{
+	width: 100%;
+}
+
+
+.stat td{
+	padding : 1px;
+	text-align: center;
+}
+
+.h_matiere{
+	text-align: right;
+	padding-right: 4px;
+	}
+	
+.h_filiere{
+	text-align: center;
+	}
+
+.offre {
+    background: #a318fa;
+    padding: 0px 4px 0px 4px;
+    font-size: 0.8em;
+}
+
+.demande {
+    background: #10fa95;
+    padding: 0px 4px 0px 4px;
+    font-size: 0.8em;
+}
+
+.page_title{
+	margin-top: 100px;
+}
+
+
+
+
 
 
 

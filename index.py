@@ -280,6 +280,55 @@ def traitement_mdp_oublie():
     else:
         return redirect(url_for("recherche"))
 
+# Page de Profil info utilisateur
+@app.route('/stat')
+def stat():
+    """Page de de profil avec les informations de l'utilisateur"""
+    sql_obj = sql.MysqlObject()
+
+    if check_connexion():
+        mail = session['mail']
+        
+    admin_user = check_admin()
+    user = sql_obj.get_user_info(mail).nom
+    if request.args.get('info_msg'):
+        info_msg = request.args.get('info_msg')
+        
+    filieres = sql_obj.get_all_filieres()
+    matieres = sql_obj.get_all_matieres()
+    offres = sql_obj.get_all_offres()
+    demandes = sql_obj.get_all_demandes()
+    t = []
+    for m in matieres:
+        l = []
+        t.append(l)
+        for f in filieres:
+            c = [[], []]
+            l.append(c)
+            i = 0
+            while i < len(offres):
+                o = offres[i]
+                if o.filiere == f and o.matiere == m:
+                    c[0].append(o)
+                    del offres[i]
+                else:
+                    i += 1
+                    
+            i = 0
+            while i < len(demandes):
+                d = demandes[i]
+                if sql_obj.get_class_level(d.classe) == sql_obj.get_filiere_level(f) and d.matiere == m:
+                    c[1].append(d)
+                    del demandes[i]
+                else:
+                    i += 1
+                
+            
+            
+    return render_template("statistiques.html", **locals())
+
+
+
 
 # Page de Profil info utilisateur
 @app.route('/profile/view')
