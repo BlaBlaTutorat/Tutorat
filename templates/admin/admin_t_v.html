@@ -46,10 +46,10 @@
                     {% with elem=offre %}{% include 'blocs/creneaux_horaires.html' %}{% endwith %}
                     
                     <a href="/delete2?id={{ offre.id }}">
-                        <button>Supprimer l'offre</button>
+                        <button class="button_offre">Supprimer l'offre</button>
                     </a>
                     <a href="/validate?id={{ offre.id }}">
-                        <button>Valider l'offre</button>
+                        <button class="button_offre">Valider l'offre</button>
                     </a>
                 </div>
             </div>
@@ -82,10 +82,10 @@
                     {% with elem=demande %}{% include 'blocs/creneaux_horaires.html' %}{% endwith %}
                     
                     <a href="/delete4?id={{ demande.id }}">
-                        <button>Supprimer la demande</button>
+                        <button class="button_demande">Supprimer la demande</button>
                     </a>
                     <a href="/validate2?id={{ demande.id }}">
-                        <button>Valider la demande</button>
+                        <button class="button_demande">Valider la demande</button>
                     </a>
                 </div>
             </div>

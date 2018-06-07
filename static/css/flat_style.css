@@ -341,11 +341,15 @@ header li a:hover, .header li a:hover {
 /* STATISTIQUES **********************************************************************************/
 
 .stat {
-	margin: 0 0 25px;
+	margin: 0 0 25px 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
 }
 
 .stat table{
-	width: 100%;
+	width: 98%;
 }
 
 
@@ -441,7 +445,6 @@ footer a ul:visited, footer a:visited, footer a ul, footer a {
 
 footer a:hover {
     color: #7d7f81;
-    font-size: 0.8em;
 }
 
 /* END FOOTER */
