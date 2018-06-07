@@ -121,7 +121,7 @@
             </div>
         {% endif %}
     </div>
-    <div class="offres" id="tutorat_en_cours">
+    <div class="demandes" id="tutorat_en_cours">
         <h2>Vos demandes créées</h2>
         {% if demandes|length>0 %}
             {% for demande in demandes %}
@@ -196,10 +196,10 @@
                             </div>
                         </div>
                         <a href="/edit_d?id={{ demande.id }}">
-                            <button class="button_offre">Modifier la demande</button>
+                            <button class="button_demande">Modifier la demande</button>
                         </a>
                         <a href="/delete3?id={{ demande.id }}">
-                            <button class="button_offre">Supprimer la demande</button>
+                            <button class="button_demande">Supprimer la demande</button>
                         </a>
                     </div>
                 </div>
