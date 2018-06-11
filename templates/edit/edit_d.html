@@ -15,14 +15,14 @@
 <form method="post" action="/edit_apply" class="form_crea">
     <input type="hidden" name="categorie" value="demande"/>
     <input type="hidden" name="id" value="{{ demande.id }}"/>
-    <div class="creation">
+    <div class="creation demandes">
         <div class="bloc">
             <div class="info_crea">
                 <p class="element"><strong class="G">Vous êtes en :</strong> {{ demande.classe }}</p>
                 <!-- Matière -->
                 <p class="element"><strong class="G">Vous souhaitez être aidé en : </strong>{{ demande.matiere }}</p>
                 <div class="crea_offre_bloc">
-                    <input type="submit" class="crea_offre" value="Modifier ma demande"/>
+                    <input type="submit" class="button_demande" value="Modifier ma demande"/>
                 </div>
             </div>
             <!-- Horaires -->

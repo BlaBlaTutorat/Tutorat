@@ -13,7 +13,7 @@
 <form method="post" action="/edit_apply" class="form_crea">
     <input type="hidden" name="categorie" value="offre"/>
     <input type="hidden" name="id" value="{{ offre.id }}"/>
-    <div class="creation">
+    <div class="creation offres">
         <div class="bloc">
             <div class="info_crea">
                 <!-- Filière -->
@@ -21,7 +21,7 @@
                 <!-- Matière -->
                 <p class="element"><strong class="G">Vous souhaitez l'aider en : </strong>{{ offre.matiere }}</p>
                 <div class="crea_offre_bloc">
-                    <input type="submit" class="crea_offre" value="Modifier mon offre"/>
+                    <input type="submit" class="button_offre" value="Modifier mon offre"/>
                     <p class="remarque">
                         <a title="Si elles sont dans la même classe">Remarque : un tuteur peut aider deux
                             personnes</a></p>

@@ -744,7 +744,7 @@ class MysqlObject:
                 demandes.append(demande)
                 continue
 
-            if niveau > self.get_class_level(demande.classe):
+            if niveau >= self.get_class_level(demande.classe):
                 demandes.append(demande)
         return demandes
 
