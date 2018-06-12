@@ -45,13 +45,14 @@ email_password = "mdpmail"        # Mot de passe
 webmaster = ({'nom': "nom_du_webmaster",  # Identité du webmaster du site BlaBla-Tutorat
               'email': "email_du_webmaster"},)
 
-developp = ({'nom': "developpeur1",       # Identités des développeurs du site BlaBla-Tutorat
-             'email': "marcel@bougnat.fr"},
-            {'nom': "developpeur2",
-             'email': "dede63@pdd.auv"},
-
-             ...
-             )
+developp = ({'nom': "Blancheton Tao", # Identité des développeurs du site
+             'email': "taotom63@gmail.com"},
+            {'nom': "Desmoulins Marco",
+             'email': "marco.desmoulins@lilo.org"},
+            {'nom': "Faury Cédrick",
+             'email': "cedrick.faury@ac-clermont.Fr"},
+            {'nom': "Labarussias Antoine",
+             'email': "antoinelabarussias@orange.fr"})
 
 # Infos établissement visibles par l'utilisateur
 infos_etab = [
