@@ -8,8 +8,10 @@ npages : nombre de pages
 <div class="pages">
     <p>
         <input type="hidden" name="page" value="{{ page }}">
-        <input class="btn_page" type="submit" name="precedent" value="Page précédente"  {% if page<=0 %}disabled{% endif %}>
+        <input class="btn_page" type="submit" name="precedent" value="Page précédente"
+               {% if page<=0 %}disabled{% endif %}>
         <strong class="G">{{ page + 1 }} / {{ npages }}</strong>
-        <input class="btn_page" type="submit" name="suivant" value="Page suivante" {% if page+1>=npages %}disabled{% endif %}>
+        <input class="btn_page" type="submit" name="suivant" value="Page suivante"
+               {% if page + 1>=npages %}disabled{% endif %}>
     </p>
 </div>

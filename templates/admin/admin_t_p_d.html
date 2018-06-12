@@ -39,9 +39,9 @@
                 </div>
                 <div id="horaires">
                     <p class="date_creation">Créée le {{ demande.date_time.strftime('%d/%m/%Y') }}</p>
-                    
+
                     {% with elem=demande %}{% include 'blocs/creneaux_horaires.html' %}{% endwith %}
-                    
+
                     <a href="/delete4?id={{ demande.id }}">
                         <button class="button_demande">Supprimer</button>
                     </a>

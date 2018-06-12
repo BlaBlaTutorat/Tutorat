@@ -14,11 +14,11 @@
         <a class="button" id="reset_filter" onclick="window.location.href=window.location.pathname">Réinitialiser les
             filtres</a>
 
-		<div class="tool">
+        <div class="tool">
             <a href="/stat" class="admin" title="Aperçu rapide"><img
                     src="/static/img/stat.png"></a>
         </div>
-        
+
         <!-- Rechargement de la page lors du changement de catégorie -->
         <select class="tri" name="categorie"
                 onchange="if(document.getElementById('option2')!=null){document.getElementById('option2').selectedIndex = -1}
@@ -98,27 +98,27 @@
                     <p class="date_creation">Créée le {{ offre.date_time.strftime('%d/%m/%Y') }}</p>
 
                     {% with elem=offre %}{% include 'blocs/creneaux_horaires.html' %}{% endwith %}
-                    
-                    {% if not admin_user%}
 
-                    <form class="bouton" method="post" action="/apply">
-                        <input type="hidden" name="categorie" value="offre"/>
-                        <input type="hidden" name="id" value="{{ offre.id }}"/>
-                        <input type="submit" class="button_offre" value="Accepter l'offre"/>
-                    </form>
-                    
+                    {% if not admin_user %}
+
+                        <form class="bouton" method="post" action="/apply">
+                            <input type="hidden" name="categorie" value="offre"/>
+                            <input type="hidden" name="id" value="{{ offre.id }}"/>
+                            <input type="submit" class="button_offre" value="Accepter l'offre"/>
+                        </form>
+
                     {% else %}
-	                    <a href="/delete2?id={{ offre.id }}">
-	                        <button class="button_offre">Supprimer l'offre</button>
-	                    </a>
-	                    {% if not offre.dispo %}
-		                    <a href="/validate?id={{ offre.id }}">
-		                        <button class="button_offre">Valider l'offre</button>
-		                    </a>
-		                {% endif %}
+                        <a href="/delete2?id={{ offre.id }}">
+                            <button class="button_offre">Supprimer l'offre</button>
+                        </a>
+                        {% if not offre.dispo %}
+                            <a href="/validate?id={{ offre.id }}">
+                                <button class="button_offre">Valider l'offre</button>
+                            </a>
+                        {% endif %}
                     {% endif %}
-                    
-         
+
+
                 </div>
             </div>
             <br/>

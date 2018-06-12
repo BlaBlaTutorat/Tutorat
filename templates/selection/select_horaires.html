@@ -15,11 +15,12 @@
         <div class="bloc">
             <div class="info">
                 <p class="element"><strong class="G">Auteur:</strong>
-                    <a onclick="open_profile_page('{{ o.auteur }}')" title="Voir le profil">{{ sql_obj.get_user_info(o.auteur).nom }}</a>
+                    <a onclick="open_profile_page('{{ o.auteur }}')"
+                       title="Voir le profil">{{ sql_obj.get_user_info(o.auteur).nom }}</a>
                 </p>
                 <p class="element"><strong class="G">Pour des:</strong> {{ o.filiere }}</p>
                 <p class="element"><strong class="G">Matière:</strong> {{ o.matiere }}</p>
-                </div>
+            </div>
             <!-- Horaires -->
             <div id="horaires_crea">
                 <input type="hidden" id="horaires_data" name="horaires_data" value="{{ o.horaires }}"/>
@@ -70,7 +71,8 @@
                     </div>
                 </div>
                 <div class="under_H">
-                    <p title="Décochez les horaires qui ne vous correspondent pas. Attention, vous devez au minimum avoir 30 minutes de tutorat." class="help">Aide</p>
+                    <p title="Décochez les horaires qui ne vous correspondent pas. Attention, vous devez au minimum avoir 30 minutes de tutorat."
+                       class="help">Aide</p>
                     <input type="submit" class="button_offre" value="Terminer"/>
                 </div>
             </div>

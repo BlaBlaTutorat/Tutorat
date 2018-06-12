@@ -13,12 +13,12 @@
 
         <a class="button" id="reset_filter" onclick="window.location.href=window.location.pathname">Réinitialiser les
             filtres</a>
-            
-		<div class="tool">
+
+        <div class="tool">
             <a href="/stat" class="admin" title="Aperçu rapide"><img
                     src="/static/img/stat.png"></a>
         </div>
-        
+
         <!-- Rechargement de la page lors du changement de catégorie -->
         <select class="tri" name="categorie"
                 onchange="if(document.getElementById('option2')!=null){document.getElementById('option2').selectedIndex = -1}
@@ -77,30 +77,25 @@
                     <p class="date_creation">Créée le {{ demande.date_time.strftime('%d/%m/%Y') }}</p>
 
                     {% with elem=demande %}{% include 'blocs/creneaux_horaires.html' %}{% endwith %}
-                    
+
                     {% if not admin_user %}
-                    <form class="bouton" method="post" action="/apply">
-                        <input type="hidden" name="categorie" value="demande"/>
-                        <input type="hidden" name="id" value="{{ demande.id }}"/>
-                        <input type="submit" class="button_demande" value="Se proposer comme tuteur"/>
-                    </form>
+                        <form class="bouton" method="post" action="/apply">
+                            <input type="hidden" name="categorie" value="demande"/>
+                            <input type="hidden" name="id" value="{{ demande.id }}"/>
+                            <input type="submit" class="button_demande" value="Se proposer comme tuteur"/>
+                        </form>
                     {% else %}
-	                    <a href="/delete2?id={{ demande.id }}">
-	                        <button class="button_demande">Supprimer la demande</button>
-	                    </a>
-	                    {% if not demande.dispo %}
-		                    <a href="/validate?id={{ demande.id }}">
-		                        <button class="button_demande">Valider la demande</button>
-		                    </a>
-	                    {% endif %}
+                        <a href="/delete2?id={{ demande.id }}">
+                            <button class="button_demande">Supprimer la demande</button>
+                        </a>
+                        {% if not demande.dispo %}
+                            <a href="/validate?id={{ demande.id }}">
+                                <button class="button_demande">Valider la demande</button>
+                            </a>
+                        {% endif %}
                     {% endif %}
 
-                    
 
-
-                    
-                    
-                    
                 </div>
             </div>
             <br/>

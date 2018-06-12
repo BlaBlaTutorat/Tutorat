@@ -37,7 +37,6 @@ def index():
 @app.route('/login', methods=['GET'])
 def connexion():
     """Page de connexion"""
-    # Verif que l'utilisateur est connecté si connecté --> page de recherche sinon --> chargement template
     sql_obj = sql.MysqlObject()
     if check_connexion():
         return redirect(url_for('recherche',
@@ -99,7 +98,6 @@ def inscription():
             info_msg = request.args.get('info_msg')
         return render_template("authentification/inscription.html", classes=sql_obj.classes_liste(), **locals())
     else:
-        # Redirection vers la page d'accueil
         return page_recherche()
 
 
@@ -136,7 +134,6 @@ def traitement_inscription():
             return redirect(url_for('inscription',
                                     info_msg="Cette adresse email existe déjà"))
     else:
-        # Redirection vers la page d'accueil
         return page_recherche()
 
 
@@ -1295,7 +1292,7 @@ def get_infos_footer():
     return config.infos_etab, config.url_cgu
 
 
-def get_crenau(n):
+def get_creneau(n):
     return get_heure(n) + " - " + get_heure(n + 1)
 
 
@@ -1312,7 +1309,7 @@ def get_heure(n):
 app.jinja_env.globals.update(check_connexion=check_connexion)
 app.jinja_env.globals.update(get_identites=get_identites)
 app.jinja_env.globals.update(get_infos_footer=get_infos_footer)
-app.jinja_env.globals.update(get_crenau=get_crenau)
+app.jinja_env.globals.update(get_crenau=get_creneau)
 # Nécessaire pour faire fontionner les sessions
 # (à garder secret pour que l'utilisateur ne puisse pas modifier les cookies)
 app.secret_key = config.secret_key

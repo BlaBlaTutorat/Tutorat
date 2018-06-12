@@ -226,8 +226,8 @@
                                 onclick="open_profile_page('{{ offre.auteur }}')"
                                 title="Voir le profil">{{ sql_obj.get_user_info(offre.auteur).nom }}</a>
                         </p>
-                        <p class="element"><strong class="G">Mail du tuteur :</strong> <a href="mailto:{{ offre.auteur }}"
-                                                                                          title="Envoyer un mail">{{ offre.auteur }}</a>
+                        <p class="element"><strong class="G">Mail du tuteur :</strong>
+                            <a href="mailto:{{ offre.auteur }}" title="Envoyer un mail">{{ offre.auteur }}</a>
                         </p>
                         <p class="element"><strong class="G">Matière:</strong> {{ offre.matiere }}</p>
                         <p class="element"><strong class="G">Participants 1:</strong>
@@ -307,76 +307,76 @@
         {% endif %}
         {% if demandes_t|length>0 %}
             {% for demande in demandes_t %}
-                    <br/>
-                    <div class="bloc">
-                        <div class="info">
-                            <p class="element"><strong class="G">Tuteur :</strong> <a
-                                    onclick="open_profile_page('{{ demande.tuteur }}')"
-                                    title="Voir le profil">{{ sql_obj.get_user_info(demande.tuteur).nom }}</a>
-                            </p>
-                            <p class="element"><strong class="G">Participants :</strong> <a
-                                    onclick="open_profile_page('{{ demande.auteur }}')"
-                                    title="Voir le profil">{{ sql_obj.get_user_info(demande.auteur).nom }}</a></p>
-                            <p class="element"><strong class="G">Mail du tutoré :</strong> <a
-                                    href="mailto:{{ demande.auteur }}" title="Envoyer un mail">{{ demande.auteur }}</a></p>
-                            <p class="element"><strong class="G">Matière:</strong> {{ demande.matiere }}</p>
-                        </div>
-                        <div id="horaires">
-                            <p class="date_creation">Créée le {{ demande.date_time.strftime('%d/%m/%Y') }}</p>
-                            <div class="horaire">
-                                <div class="table" id="jour-offre">
-                                    {% for i in range(0,6) %}
-                                        <p>{{ days[i] }}:</p>
-                                    {% endfor %}
-                                </div>
-                                <div class="table" id="table_horaires">
-                                    <table class="heure-table">
+                <br/>
+                <div class="bloc">
+                    <div class="info">
+                        <p class="element"><strong class="G">Tuteur :</strong> <a
+                                onclick="open_profile_page('{{ demande.tuteur }}')"
+                                title="Voir le profil">{{ sql_obj.get_user_info(demande.tuteur).nom }}</a>
+                        </p>
+                        <p class="element"><strong class="G">Participants :</strong> <a
+                                onclick="open_profile_page('{{ demande.auteur }}')"
+                                title="Voir le profil">{{ sql_obj.get_user_info(demande.auteur).nom }}</a></p>
+                        <p class="element"><strong class="G">Mail du tutoré :</strong> <a
+                                href="mailto:{{ demande.auteur }}" title="Envoyer un mail">{{ demande.auteur }}</a></p>
+                        <p class="element"><strong class="G">Matière:</strong> {{ demande.matiere }}</p>
+                    </div>
+                    <div id="horaires">
+                        <p class="date_creation">Créée le {{ demande.date_time.strftime('%d/%m/%Y') }}</p>
+                        <div class="horaire">
+                            <div class="table" id="jour-offre">
+                                {% for i in range(0,6) %}
+                                    <p>{{ days[i] }}:</p>
+                                {% endfor %}
+                            </div>
+                            <div class="table" id="table_horaires">
+                                <table class="heure-table">
+                                    <tr>
+                                        <th>08h</th>
+                                        <th></th>
+                                        <th>09h</th>
+                                        <th></th>
+                                        <th>10h</th>
+                                        <th></th>
+                                        <th>11h</th>
+                                        <th></th>
+                                        <th>12h</th>
+                                        <th></th>
+                                        <th>13h</th>
+                                        <th></th>
+                                        <th>14h</th>
+                                        <th></th>
+                                        <th>15h</th>
+                                        <th></th>
+                                        <th>16h</th>
+                                        <th></th>
+                                        <th>17h</th>
+                                        <th></th>
+                                        <th>18h</th>
+                                        <th></th>
+                                    </tr>
+                                </table>
+                                {% for i in range(0,6) %}
+                                    <table>
                                         <tr>
-                                            <th>08h</th>
-                                            <th></th>
-                                            <th>09h</th>
-                                            <th></th>
-                                            <th>10h</th>
-                                            <th></th>
-                                            <th>11h</th>
-                                            <th></th>
-                                            <th>12h</th>
-                                            <th></th>
-                                            <th>13h</th>
-                                            <th></th>
-                                            <th>14h</th>
-                                            <th></th>
-                                            <th>15h</th>
-                                            <th></th>
-                                            <th>16h</th>
-                                            <th></th>
-                                            <th>17h</th>
-                                            <th></th>
-                                            <th>18h</th>
-                                            <th></th>
+                                            {% for H in (demande.horaires|list)[i*22:(i + 1)*22] %}
+                                                {% if (H|int) == 0 %}
+                                                    <td class="white"></td>
+                                                {% elif (H|int) == 1 %}
+                                                    <td class="red"></td>
+                                                {% endif %}
+                                            {% endfor %}
                                         </tr>
                                     </table>
-                                    {% for i in range(0,6) %}
-                                        <table>
-                                            <tr>
-                                                {% for H in (demande.horaires|list)[i*22:(i + 1)*22] %}
-                                                    {% if (H|int) == 0 %}
-                                                        <td class="white"></td>
-                                                    {% elif (H|int) == 1 %}
-                                                        <td class="red"></td>
-                                                    {% endif %}
-                                                {% endfor %}
-                                            </tr>
-                                        </table>
-                                    {% endfor %}
-                                </div>
+                                {% endfor %}
                             </div>
-                            <a href="/quit_2?id={{ demande.id }}">
-                                <button class="button_offre">Quitter ce tutorat</button>
-                            </a>
                         </div>
+                        <a href="/quit_2?id={{ demande.id }}">
+                            <button class="button_offre">Quitter ce tutorat</button>
+                        </a>
                     </div>
-                    <br/>
+                </div>
+                <br/>
             {% endfor %}
         {% endif %}
         {% if demandes_t|length==0 and offres_suivies|length==0 %}

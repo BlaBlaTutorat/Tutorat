@@ -42,9 +42,9 @@
                 </div>
                 <div id="horaires">
                     <p class="date_creation">Créée le {{ offre.date_time.strftime('%d/%m/%Y') }}</p>
-                    
+
                     {% with elem=offre %}{% include 'blocs/creneaux_horaires.html' %}{% endwith %}
-                    
+
                     <a href="/delete2?id={{ offre.id }}">
                         <button class="button_offre">Supprimer l'offre</button>
                     </a>
@@ -78,9 +78,9 @@
                 </div>
                 <div id="horaires">
                     <p class="date_creation">Créée le {{ demande.date_time.strftime('%d/%m/%Y') }}</p>
-                    
+
                     {% with elem=demande %}{% include 'blocs/creneaux_horaires.html' %}{% endwith %}
-                    
+
                     <a href="/delete4?id={{ demande.id }}">
                         <button class="button_demande">Supprimer la demande</button>
                     </a>

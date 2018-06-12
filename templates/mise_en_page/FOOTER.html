@@ -1,48 +1,49 @@
 <footer>
-{% with %}
-	{% set developp, webmaster = get_identites() %}
-    {% set infos, cgu = get_infos_footer() %}
-    <a target="_blank" href="{{ infos[3] }}" class="div">
-    	<img src="/static/img/footer_logo.png" title="Lien vers le site du lycée"></a>
-    <div class="div">
-        <div class="part">
-        	{% if developp|length>1 %}
-            <div class="s_part">
-                <ul>
-                    <li><h3>Développeur{% if developp|length>2 %}s{% endif %}</h3></li>
-                    {% for identite in developp %}
-                    	<li><a href="mailto:{{ identite.email }}">{{ identite.nom }}</a></li>
-                    {% endfor %}
-                </ul>
+    {% with %}
+        {% set developp, webmaster = get_identites() %}
+        {% set infos, cgu = get_infos_footer() %}
+        <a target="_blank" href="{{ infos[3] }}" class="div">
+            <img src="/static/img/footer_logo.png" title="Lien vers le site du lycée"></a>
+        <div class="div">
+            <div class="part">
+                {% if developp|length>1 %}
+                    <div class="s_part">
+                        <ul>
+                            <li><h3>Développeur{% if developp|length>2 %}s{% endif %}</h3></li>
+                            {% for identite in developp %}
+                                <li><a href="mailto:{{ identite.email }}">{{ identite.nom }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+
+
+                <div>
+                    <ul>
+                        <li><h3>Informations & Contact</h3></li>
+                        <li>{{ infos[0] }}</li>
+                        <li>{{ infos[1] }}</li>
+                        <li><a href="mailto:{{ infos[2] }}">{{ infos[2] }}</a></li>
+                    </ul>
+                </div>
             </div>
-            {% endif %}
-            
-            
-            <div>
-                <ul>
-                    <li><h3>Informations & Contact</h3></li>
-                    <li>{{ infos[0] }}</li>
-                    <li>{{ infos[1] }}</li>
-                    <li><a href="mailto:{{ infos[2] }}">{{ infos[2] }}</a></li>
-                </ul>
+
+            <div class="part">
+                <div class="s_part">
+                    <ul>
+                        <li><h3>Webmaster</h3></li>
+                        <li><a href="mailto:{{ webmaster[0].email }}">{{ webmaster[0].nom }}</a></li>
+                    </ul>
+                </div>
+
+                <div class="s_part">
+                    <p><a target="_blank" href="https://github.com/BlaBlaTutorat/Tutorat">
+                        <img src="/static/img/GitHub_Logo_G.png" title="Voir sur GitHub">
+                    </a></p>
+                    <p><a target="_blank" href="{{ cgu }}">Conditions d'utilisation</a></p>
+                </div>
             </div>
+
         </div>
-        
-        <div class="part">
-        	<div class="s_part">
-	        	<ul>
-	            	<li><h3>Webmaster</h3></li>
-	            	<li><a href="mailto:{{ webmaster[0].email }}">{{ webmaster[0].nom }}</a></li>
-	            </ul>
-			</div>
-			
-            <div class="s_part">
-                <p><a target="_blank" href="https://github.com/BlaBlaTutorat/Tutorat"><img
-                        src="/static/img/GitHub_Logo_G.png" title="Voir sur GitHub"></a></p>
-                <p><a target="_blank" href="{{ cgu }}">Conditions d'utilisation</a></p>
-            </div>
-        </div>
-        
-    </div>
-{% endwith %}
+    {% endwith %}
 </footer>

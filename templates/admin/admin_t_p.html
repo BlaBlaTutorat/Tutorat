@@ -34,30 +34,31 @@
                     </p>
                     <p class="element"><strong class="G">Pour des :</strong> {{ offre.filiere }}</p>
                     <p class="element"><strong class="G">Matière :</strong> {{ offre.classe }}</p>
-                    
-                    <p class="element"><strong class="G">Participant{% if offre.participant is not none and offre.participant2 is not none%}s{% endif %} :</strong>
+
+                    <p class="element"><strong class="G">Participant
+                        {% if offre.participant is not none and offre.participant2 is not none %}s{% endif %} :</strong>
                         {% if offre.participant is none  and offre.participant2 is none %}
-                        	aucun
+                            aucun
                         {% else %}
-                        	<ul>
-	                        {% for p in [offre.participant, offre.participant2] %}
-								{% if p is not none %}
-									<li>
-									<a onclick="open_profile_page('{{ p }}')"
-		                               title="Voir le profil">{{ sql_obj.get_user_info(p).nom }}</a>
-		                            </li>
-		                        {% endif %}
-	                        {% endfor %}
-	                        </ul>
+                            <ul>
+                                {% for p in [offre.participant, offre.participant2] %}
+                                    {% if p is not none %}
+                                        <li>
+                                            <a onclick="open_profile_page('{{ p }}')"
+                                               title="Voir le profil">{{ sql_obj.get_user_info(p).nom }}</a>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
                         {% endif %}
                     </p>
-                    
+
                 </div>
                 <div id="horaires">
                     <p class="date_creation">Créée le {{ offre.date_time.strftime('%d/%m/%Y') }}</p>
-                    
+
                     {% with elem=offre %}{% include 'blocs/creneaux_horaires.html' %}{% endwith %}
-                    
+
                     <a href="/delete2?id={{ offre.id }}">
                         <button class="button_offre">Supprimer</button>
                     </a>
