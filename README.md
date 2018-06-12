@@ -30,8 +30,8 @@ Structure du fichier :
 # coding: utf-8
 
 host = "192.168.xxx.xxx"      # Adresse IP du serveur
-user = "useruser"             # Nom d'utilisateur de la base de données
-password = "mdpmdp"           # Mot de passe de la base de données
+user = "user"             # Nom d'utilisateur de la base de données
+password = "mdp"           # Mot de passe de la base de données
 database = "tutorat"          # Nom de la base de données
 secret_key = "clefsecrète"    # Clef secrète Flask (voir [Sessions Flask](http://flask.pocoo.org/docs/1.0/quickstart/#sessions))
 
@@ -52,6 +52,19 @@ developp = ({'nom': "developpeur1",       # Identités des développeurs du site
 
              ...
              )
+
+# Infos établissement visibles par l'utilisateur
+infos_etab = [
+    # Nom
+    "Lycée ...",
+    # Adresse
+    "rue, code postal ville",
+    # Email
+    "uai@academie.fr",
+    # Site Internet du lycée
+    "http://..."
+]
+url_cgu = "http://.../cgu.pdf"
              
 ```
 

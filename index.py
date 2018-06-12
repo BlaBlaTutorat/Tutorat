@@ -1291,6 +1291,10 @@ def get_identites():
     return config.developp, config.webmaster
 
 
+def get_infos_footer():
+    return config.infos_etab, config.url_cgu
+
+
 def get_crenau(n):
     return get_heure(n) + " - " + get_heure(n + 1)
 
@@ -1307,6 +1311,7 @@ def get_heure(n):
 # Possibilité d'appeler différentes fonctions depuis un template html
 app.jinja_env.globals.update(check_connexion=check_connexion)
 app.jinja_env.globals.update(get_identites=get_identites)
+app.jinja_env.globals.update(get_infos_footer=get_infos_footer)
 app.jinja_env.globals.update(get_crenau=get_crenau)
 # Nécessaire pour faire fontionner les sessions
 # (à garder secret pour que l'utilisateur ne puisse pas modifier les cookies)
