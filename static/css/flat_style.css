@@ -229,9 +229,8 @@ header nav, .header nav {
 .tool:hover {
     margin: 0 2px 0 2px;
     vertical-align: middle;
-  	filter: blur(0px) brightness(150%) drop-shadow(1px 2px 2px #ffffff) ;
+    filter: blur(0px) brightness(150%) drop-shadow(1px 2px 2px #ffffff);
 }
-
 
 .header nav {
     margin-top: 5px;
@@ -356,57 +355,49 @@ header li a:hover, .header li a:hover {
 
 /* END HEADER */
 
-
 /* STATISTIQUES **********************************************************************************/
 
 .stat {
-	margin: 0 0 25px 0;
+    margin: 0 0 25px 0;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
 }
 
-.stat table{
-	width: 98%;
+.stat table {
+    width: 98%;
 }
 
-
-.stat td{
-	padding : 1px;
-	text-align: center;
+.stat td {
+    padding: 1px;
+    text-align: center;
 }
 
-.h_matiere{
-	text-align: right;
-	padding-right: 4px;
-	}
-	
-.h_filiere{
-	text-align: center;
-	}
+.h_matiere {
+    text-align: right;
+    padding-right: 4px;
+}
+
+.h_filiere {
+    text-align: center;
+}
 
 .offre {
     background: #a318fa;
-    padding: 0px 4px 0px 4px;
+    padding: 0 4px 0 4px;
     font-size: 0.8em;
 }
 
 .demande {
     background: #ec7610;
-    padding: 0px 4px 0px 4px;
+    padding: 0 4px 0 4px;
     font-size: 0.8em;
 }
 
-.page_title{
-	margin-top: 100px;
+.page_title {
+    margin-top: 100px;
 }
-
-
-
-
-
-
 
 /* FOOTER **********************************************************************************/
 footer {
@@ -1292,9 +1283,9 @@ END Create
 }
 
 .search_btn {
-    padding: 0px;
+    padding: 0;
     background: none;
-    border-radius: 0px;
+    border-radius: 0;
     border: none;
     vertical-align: middle;
 }
@@ -1313,7 +1304,7 @@ END Create
     font-family: "Gotham SSm A", sans-serif;
     font-size: 0.85em;
     cursor: auto;
-    padding: 0px 10px 0px 10px;
+    padding: 0 10px 0 10px;
 }
 
 #tuteur, #tutore {

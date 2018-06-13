@@ -30,10 +30,10 @@ Structure du fichier :
 # coding: utf-8
 
 host = "192.168.xxx.xxx"      # Adresse IP du serveur
-user = "user"             # Nom d'utilisateur de la base de données
-password = "mdp"           # Mot de passe de la base de données
+user = "user"                 # Nom d'utilisateur de la base de données
+password = "mdp"              # Mot de passe de la base de données
 database = "tutorat"          # Nom de la base de données
-secret_key = "clefsecrète"    # Clef secrète Flask (voir [Sessions Flask](http://flask.pocoo.org/docs/1.0/quickstart/#sessions))
+secret_key = "clefsecrète"    # Clef secrète Flask (voir http://flask.pocoo.org/docs/latest/quickstart/#sessions)
 
 # MAIL
 smtp = "smtp.gmail.com"           # Nom du serveur smtp
@@ -50,7 +50,7 @@ developp = ({'nom': "Blancheton Tao", # Identité des développeurs du site
             {'nom': "Desmoulins Marco",
              'email': "marco.desmoulins@lilo.org"},
             {'nom': "Faury Cédrick",
-             'email': "cedrick.faury@ac-clermont.Fr"},
+             'email': "cedrick.faury@ac-clermont.fr"},
             {'nom': "Labarussias Antoine",
              'email': "antoinelabarussias@orange.fr"})
 
