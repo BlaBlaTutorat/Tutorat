@@ -72,7 +72,7 @@ h2, h1 {
     flex-direction: column;
     justify-content: center;
     text-align: center;
-    background: url("../img/croix.png") top right no-repeat, black;
+    background: url("/img/croix.png") top right no-repeat, black;
     color: white;
     font-size: 0.9em;
     line-height: 30px;
