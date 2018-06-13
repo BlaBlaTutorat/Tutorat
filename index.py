@@ -947,7 +947,7 @@ def modification_offre_demande():
             else:
                 abort(403)
 
-        return redirect(url_for("profil_2"))
+        return redirect(url_for("profil_2", info_msg="Votre modification a bien été enregistrée."))
     else:
         return page_connexion()
 
@@ -1047,7 +1047,7 @@ def delete2():
                 offre_id = request.args.get('id')
                 sql_obj = sql.MysqlObject()
                 sql_obj.delete_offer(offre_id)
-                return redirect(url_for("admin_oc", info_msg="La suppression a bien été effectuée."))
+                return redirect(request.referrer + "?info_msg=La suppression a bien été effectuée.")
             else:
                 abort(403)
         else:
@@ -1067,7 +1067,7 @@ def delete4():
                 demande_id = request.args.get('id')
                 sql_obj = sql.MysqlObject()
                 sql_obj.delete_demande(demande_id)
-                return redirect(url_for("admin_oc", info_msg="La suppression a bien été effectuée."))
+                return redirect(request.referrer + "?info_msg=La suppression a bien été effectuée.")
             else:
                 abort(403)
         else:
@@ -1088,7 +1088,7 @@ def validate():
                 offre_id = request.args.get('id')
                 sql_obj = sql.MysqlObject()
                 sql_obj.validate_offer(offre_id, disponible)
-                return redirect(url_for("admin_ov", info_msg="L'offre a bien été validée."))
+                return redirect(request.referrer + "?info_msg=L'offre a bien été validée.")
             else:
                 abort(403)
         else:
@@ -1109,7 +1109,7 @@ def validate2():
                 demande_id = request.args.get('id')
                 sql_obj = sql.MysqlObject()
                 sql_obj.validate_demande(demande_id, disponible)
-                return redirect(url_for("admin_ov", info_msg="La demande a bien été validée."))
+                return redirect(request.referrer + "?info_msg=La demande a bien été validée.")
             else:
                 abort(403)
         else:
@@ -1211,7 +1211,7 @@ def reset():
         admin_user = check_admin()
         if admin_user == 1:
             sql_obj.reset()
-            return redirect(url_for('admin_ov', info_msg='Le site BlaBla Tutorat a bien été remis à zéro.'))
+            return redirect(url_for('admin_ov', info_msg='Le site BlaBla-Tutorat a bien été remis à zéro.'))
         else:
             abort(403)
     else:

@@ -84,11 +84,11 @@
                             <input type="submit" class="button_demande" value="Se proposer comme tuteur"/>
                         </form>
                     {% else %}
-                        <a href="/delete2?id={{ demande.id }}">
+                        <a href="/delete4?id={{ demande.id }}">
                             <button class="button_demande">Supprimer la demande</button>
                         </a>
                         {% if not demande.dispo %}
-                            <a href="/validate?id={{ demande.id }}">
+                            <a href="/validate2?id={{ demande.id }}">
                                 <button class="button_demande">Valider la demande</button>
                             </a>
                         {% endif %}

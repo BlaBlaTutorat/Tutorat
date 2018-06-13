@@ -1436,7 +1436,7 @@ END Create
 }
 
 .quit_reset {
-    background-image: url("/static/img/croix.png");
+    background-image: url("/img/croix.png");
     width: 20px;
     height: 20px;
 }
