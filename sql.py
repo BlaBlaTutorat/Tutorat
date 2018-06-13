@@ -296,6 +296,8 @@ class MysqlObject:
             if offre.participant is None:  # ... les deux places sont disponibles
                 offres.append(offre)
             else:
+                if mail == offre.participant:  # ... l'utilisateur est déjà inscrit
+                    continue
                 if classe == self.get_user_info(
                         offre.participant).classe:  # ... la classe du 1er participant est identique à celle de user
                     offres.append(offre)
