@@ -17,11 +17,13 @@ function open_profile_page(mail) {
     window.open('/profile/view/' + mail, 'profil', 'height=625,width=700');
 }
 
+// Modifie un caractère à un certain index d'une chaine de caractère
 function setCharAt(str, index, chr) {
     if (index > str.length - 1) return str;
     return str.substr(0, index) + chr + str.substr(index + 1);
 }
 
+// Changement couleur carré + modification valeur horaires_data
 function horaire_click(event, id, class_name) {
     let data = document.getElementById('horaires_data').value;
     const day = parseInt(id.split(" ")[0]);

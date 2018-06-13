@@ -26,7 +26,7 @@
                 <div class="info_profil informations2">
                     <p>{{ user.nom }}
                         {% if user.classe=='ADMIN' %}
-                            <img src="/static/img/administrateur.png" title="Administrateur" width=20>
+                            <img src="/img/administrateur.png" title="Administrateur" width=20>
                         {% endif %}
                     </p>
                 </div>
@@ -55,19 +55,19 @@
                 <div class="info_profil informations2">
                     {% for tutorat in tutorats_actifs %}
                         {% if tutorat.auteur == user.mail %}
-                            <img src="/static/img/tuteur.png" id="tuteur"
+                            <img src="/img/tuteur.png" id="tuteur"
                                  title="Nombre d'offres créées par cet utilisateur">
                         {% endif %}
                     {% endfor %}
                     {% for tutorat in tutorats_actifs %}
                         {% if tutorat.participant == user.mail or tutorat.participant2 == user.mail %}
-                            <img src="/static/img/tutore.png" id="tutore"
+                            <img src="/img/tutore.png" id="tutore"
                                  title="Nombre de tutorats suivis par cet utilisateur">
                         {% endif %}
                     {% endfor %}
                     {% for demande in demandes %}
                         {% if demande.auteur == user.mail %}
-                            <img src="/static/img/demandeur.png" id="tutore"
+                            <img src="/img/demandeur.png" id="tutore"
                                  title="Nombre de demandes créées par cet utilisateur">
                         {% endif %}
                     {% endfor %}

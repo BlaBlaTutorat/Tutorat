@@ -10,7 +10,7 @@ from flask import *
 import config  # config1 en production
 import sql
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='')
 days = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
 
 n_par_page = 4
