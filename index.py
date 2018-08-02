@@ -4,10 +4,9 @@ import random
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-
 from flask import *
 
-import config  # config1 en production
+import config
 import sql
 
 app = Flask(__name__, static_url_path='')
