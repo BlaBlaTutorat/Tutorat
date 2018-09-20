@@ -387,16 +387,12 @@ header li a:hover, .header li a:hover {
     background: #a318fa;
     padding: 0 4px 0 4px;
     font-size: 0.8em;
-    color:white;
-    font-weight: bold;
 }
 
 .demande {
     background: #ec7610;
     padding: 0 4px 0 4px;
     font-size: 0.8em;
-    color:white;
-    font-weight: bold;
 }
 
 .page_title {
@@ -1127,15 +1123,6 @@ END Create
     align-items: center;
 }
 
-
-.bloc_boutons {
-    grid-column: 1  / span 2;
-    display: grid;
-	grid-template-columns: 33% 33% 33%;
-	align-items: center;
-}
-
-
 #visit-profil {
     width: 650px;
     align-self: center;
@@ -1461,7 +1448,7 @@ END Create
     flex-direction: column;
     justify-content: center;
     font-size: 0.9em;
-	align-items: center;
+
 }
 
 /* END Admin */

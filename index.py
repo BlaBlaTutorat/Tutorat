@@ -990,27 +990,7 @@ def quit_2():
         # Redirection si l'utilisateur n'est pas connecté
         return page_connexion()
 
-# Suppression d'un utilisateur
-@app.route('/delete_user')
-def delete_user():
-    """Supprime un utilisateur"""
-    if check_connexion():
-        mail = session['mail']
-        if request.args.get('mail'):
-            sql_obj = sql.MysqlObject()
-            u_mail = request.args.get('mail')
-            # Vérification que l'auteur ne se supprime pas lui-même
-            if mail != u_mail:
-                sql_obj.delete_account(u_mail)
-                return redirect(request.referrer + "?info_msg=L'utilisateur a bien été supprimé.")
-            else:
-                abort(403)
-        else:
-            abort(403)
-    else:
-        return page_connexion()
-    
-    
+
 # Suppression d'une offre
 @app.route('/delete')
 def delete():
@@ -1322,10 +1302,6 @@ def get_heure(n):
     else:
         m = "00"
     return h + m
-
-@app.route('/favicon.ico', methods=['GET', 'POST'])
-def download():
-    return send_from_directory(directory='', filename='favicon.ico')
 
 
 # Possibilité d'appeler différentes fonctions depuis un template html

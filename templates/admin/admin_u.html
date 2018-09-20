@@ -72,44 +72,34 @@
                         {% endif %}
                     {% endfor %}
                 </div>
-			
-			    <div class="bloc_boutons">
-	                <div class="info_profil user_updateAB">
-	                    {% if user.ban==1 %}
-	                        <a href="/ban?mail={{ user.mail }}" class="ban">
-	                            <button title="Réintégrer l'utilisateur">Réintégrer</button>
-	                        </a>
-	                    {% else %}
-	                        <a href="/ban?mail={{ user.mail }}" class="ban">
-	                            <button title="Bannir l'utilisateur = lui interdire l'accès au site.">Bannir</button>
-	                        </a>
-	                    {% endif %}
-	                </div>
-	
-	                <div class="info_profil user_updateAB">
-	
-	                    {% if user.classe!='ADMIN' %}
-	                        <a href="/promote?mail={{ user.mail }}" class="ban">
-	                            <button title="Promouvoir au grade d'administrateur">Promouvoir</button>
-	                        </a>
-	                    {% else %}
-	                        <a href="/retrogr?mail={{ user.mail }}" class="ban">
-	                            <button title="Rétrograder au grade d'utilisateur">Rétrograder</button>
-	                        </a>
-	                    {% endif %}
-	                </div>
-	                
-	                <div class="info_profil user_updateAB">
-		                {% if user.mail!=mail %}
-		                    <a href="/delete_user?mail={{ user.mail }}" class="reset_bb">
-		                        <button title="Supprimer définitivement cet utilisateur">Supprimer</button>
-		                    </a>
-		                 {% endif %}
-	                </div>
-	            </div>
-            </div>
 
-            
+
+                <div class="info_profil informations user_updateAB">
+                    {% if user.ban==1 %}
+                        <a href="/ban?mail={{ user.mail }}" class="ban">
+                            <button title="Réintégrer l'utilisateur">Réintégrer</button>
+                        </a>
+                    {% else %}
+                        <a href="/ban?mail={{ user.mail }}" class="ban">
+                            <button title="Bannir l'utilisateur = lui interdire l'accès au site.">Bannir</button>
+                        </a>
+                    {% endif %}
+                </div>
+
+                <div class="info_profil user_updateAB">
+
+                    {% if user.classe!='ADMIN' %}
+                        <a href="/promote?mail={{ user.mail }}" class="ban">
+                            <button title="Promouvoir au grade d'administrateur">Promouvoir</button>
+                        </a>
+                    {% else %}
+                        <a href="/retrogr?mail={{ user.mail }}" class="ban">
+                            <button title="Rétrograder au grade d'utilisateur">Rétrograder</button>
+                        </a>
+                    {% endif %}
+                </div>
+
+            </div>
         {% endfor %}
     {% else %}
         <div class="bloc" id="none_offre">
