@@ -35,8 +35,7 @@
 
 <!-- Liste des demandes -->
 <div class="demandes">
-    <h2>{% if suggest_d2|length>1 %}{{ suggest_d2|length }}{% else %}Aucune{% endif %} demande
-        {% if suggest_d2|length>1 %}s{% endif %} correspondant avec vos offres (filière + matière + horaires)</h2>
+    <h2>Demande{% if suggest_d2|length>1 %}s{% endif %} correspondant avec vos offres (filière + matière + horaires)</h2>
     {% if suggest_d2|length>0 %}
         {% for demande in suggest_d2 %}
             <br/>
@@ -118,9 +117,7 @@
 
 <!-- Liste des offres -->
 <div class="offres">
-    <h2>{% if suggest_d1|length>1 %}{{ suggest_d1|length }}{% else %}Aucune{% endif %} demande
-        {% if suggest_d1|length>1 %}s{% endif %}
-        susceptible{% if suggest_o1|length>1 %}s{% endif %} de correspondre avec vos offres (filière + matière)</h2>
+    <h2>Demande{% if suggest_d1|length>1 %}s{% endif %} susceptible{% if suggest_o1|length>1 %}s{% endif %} de correspondre avec vos offres (filière + matière)</h2>
     {% if suggest_d1|length>0 %}
         {% for offre in suggest_d1 %}
             <br/>
