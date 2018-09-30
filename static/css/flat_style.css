@@ -325,6 +325,7 @@ header li a:hover, .header li a:hover {
     display: flex;
     justify-content: flex-start;
     margin-left: 50px;
+    margin-top: 5px;
 }
 
 #header_icon2 {
@@ -1129,10 +1130,10 @@ END Create
 
 
 .bloc_boutons {
-    grid-column: 1  / span 2;
-    display: grid;
-	grid-template-columns: 33% 33% 33%;
-	align-items: center;
+    display: flex;
+    justify-content: space-around;
+    padding-left: 100%;
+    margin-left: 60%;
 }
 
 
