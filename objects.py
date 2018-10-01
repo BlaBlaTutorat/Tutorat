@@ -24,7 +24,15 @@ class Demande:
         self.tuteur = sql[5]
         self.dispo = sql[6]
         self.horaires = sql[7]
-
+        self.nomTuteur = ""
+    
+    def SetNomTuteur(self, cursor):
+        cursor.execute(
+            """SELECT * FROM users WHERE mail=""" + self.tuteur)
+        lu = cursor.fetchall()
+        if len(lu)>0:
+            self.nomTuteur = Utilisateur(lu[0]).nom
+                
 
 class Utilisateur:
     def __init__(self, sql):

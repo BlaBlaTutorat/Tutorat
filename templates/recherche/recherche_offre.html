@@ -76,22 +76,22 @@
                     </p>
                     <p class="element"><strong class="G">Pour des :</strong> {{ offre.filiere }}</p>
                     <p class="element"><strong class="G">Matière :</strong> {{ offre.matiere }}</p>
-                    <p class="element"><strong class="G">Participant(s) :</strong>
-                        {% if offre.participant is none and offre.participant2 is none %}
-                            Aucun
-                        {% elif offre.participant2 is none %}
-                            <a onclick="open_profile_page('{{ offre.participant }}')"
-                               title="Voir le profil">{{ sql_obj.get_user_info(offre.participant).nom }}</a>
-                            <br/>
-                            (1 place restante)
-                        {% else %}
-                            <a onclick="open_profile_page('{{ offre.participant }}')"
-                               title="Voir le profil">{{ sql_obj.get_user_info(offre.participant).nom }}</a>,
-                            <br/>
-                            <a onclick="open_profile_page('{{ offre.participant2 }}')"
-                               title="Voir le profil">{{ sql_obj.get_user_info(offre.participant2).nom }}</a>
-                        {% endif %}
+                    
+                    {% if offre.participant is not none or offre.participant2 is not none %}
+                    <p class="relation"><strong class="G">Participant{% if offre.participant is not none and offre.participant2 is not none %}s{% endif %} :</strong>
+                        <ul>
+                            {% for p in [offre.participant, offre.participant2] %}
+                                {% if p is not none %}
+                                    <li>
+                                        <a onclick="open_profile_page('{{ p }}')"
+                                           title="Voir le profil">{{ sql_obj.get_user_info(p).nom }}</a>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
                     </p>
+                    {% endif %}
+                
                 </div>
                 <div id="horaires">
                     <p class="date_creation">Créée le {{ offre.date_time.strftime('%d/%m/%Y') }}</p>

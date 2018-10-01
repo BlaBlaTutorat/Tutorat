@@ -597,6 +597,8 @@ class MysqlObject:
         # Tri des demandes pour ne garder que celles où le niveau de l'utilisateur est supérieur au niveau de la demande
         for row in rows:
             demande = objects.Demande(row)
+#             demande.SetNomTuteur(self.cursor)
+            
             if classe == "ADMIN":  # Administrateur !
                 demandes.append(demande)
                 continue

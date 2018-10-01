@@ -1,4 +1,27 @@
 @charset "utf-8";
+
+/**************************************************************************
+  Constantes
+
+Fond : #161616
+Couleur du thème : #18a3fa
+
+Offres : #a318fa
+Demandes  :#10fa95 // #ec7610
+
+***************************************************************************/
+
+
+
+/* variables globales */
+:root {
+    --offre-color:#a318fa;
+    --demande-color:#ec7610;
+    --theme-color:#18a3fa;
+    --fond-color:#161616;
+}
+
+
 /* Commun */
 @font-face {
     font-family: "Gotham SSm A";
@@ -168,8 +191,8 @@ th, td {
 }
 
 .button_demande {
-    border-color: #ec7610;
-    background: #ec7610;
+    border-color: var(--demande-color);
+    background: var(--demande-color);
 }
 
 .button_demande:hover {
@@ -178,8 +201,8 @@ th, td {
 }
 
 .button_offre {
-    border-color: #a318fa;
-    background: #a318fa;
+    border-color: var(--offre-color);
+    background: var(--offre-color);
 }
 
 .button_offre:hover {
@@ -189,16 +212,6 @@ th, td {
 
 /* END Commun */
 
-/**************************************************************************
-  Constantes
-
-Fond : #161616
-Couleur du thÃ¨me : #18a3fa
-
-Offres : #a318fa
-Demandes  :#10fa95 // #ec7610
-
-***************************************************************************/
 
 /* HEADER */
 header nav, .header nav {
@@ -249,7 +262,7 @@ header {
     margin: 0;
     padding: 0;
     min-height: 75px;
-    background-color: #161616;
+    background-color: var(--fond-color);
     min-width: 100%;
 }
 
@@ -309,7 +322,7 @@ header li a:hover, .header li a:hover {
     margin: 0;
     padding: 0;
     height: 75px;
-    background-color: #161616;
+    background-color: var(--fond-color);
     min-width: 100%;
     display: flex;
     flex-direction: column;
@@ -385,7 +398,7 @@ header li a:hover, .header li a:hover {
 }
 
 .offre {
-    background: #a318fa;
+    background: var(--offre-color);
     padding: 0 4px 0 4px;
     font-size: 0.8em;
     color:white;
@@ -393,7 +406,7 @@ header li a:hover, .header li a:hover {
 }
 
 .demande {
-    background: #ec7610;
+    background: var(--demande-color);
     padding: 0 4px 0 4px;
     font-size: 0.8em;
     color:white;
@@ -786,7 +799,7 @@ footer a:hover {
 
 .search {
     margin-top: 75px;
-    background-color: #161616;
+    background-color: var(--fond-color);
 }
 
 .search .critere {
@@ -840,14 +853,14 @@ footer a:hover {
 }
 
 .offres .bloc {
-    border-color: #a318fa;
+    border-color: var(--offre-color);
     min-width: 1100px;
     min-height: 215px;
     margin: 10px auto 10px auto;
 }
 
 .demandes .bloc {
-    border-color: #ec7610;
+    border-color: var(--demande-color);
     min-width: 1100px;
     min-height: 215px;
     margin: 10px auto 10px auto;
@@ -856,6 +869,15 @@ footer a:hover {
 .offres .element, .demandes .element {
     margin-bottom: 2px;
     margin-top: 2px;
+    padding: 0 0 5px 0;
+    color: black;
+    font-size: 1.3em;
+    font-family: "Gotham SSm A", sans-serif;
+}
+
+.offres .relation, .demandes .relation {
+    margin-bottom: 10px;
+    margin-top: 6px;
     padding: 0 0 5px 0;
     color: black;
     font-size: 1.3em;
@@ -889,11 +911,11 @@ footer a:hover {
 }
 
 .offres .horaire {
-    background: #a318fa;
+    background: var(--offre-color);
 }
 
 .demandes .horaire {
-    background: #ec7610;
+    background: var(--demande-color);
 }
 
 #table_horaires {
@@ -975,11 +997,11 @@ footer a:hover {
 }
 
 .creation.offres .bloc {
-    border-color: #a318fa;
+    border-color: var(--offre-color);
 }
 
 .creation.demandes .bloc {
-    border-color: #ec7610;
+    border-color: var(--demande-color);
 }
 
 .creation .element {
@@ -1008,11 +1030,11 @@ footer a:hover {
 }
 
 .creation.offres .horaire {
-    background: #a318fa;
+    background: var(--offre-color);
 }
 
 .creation.demandes .horaire {
-    background: #ec7610;
+    background: var(--demande-color);
 }
 
 #table_horaires_crea {
@@ -1028,7 +1050,7 @@ footer a:hover {
     width: 45%;
     height: 40px;
     box-sizing: border-box;
-    border: 1px solid #18a3fa;
+    border: 1px solid var(--theme-color);
     border-radius: 4px;
     background-color: white;
 }
@@ -1073,7 +1095,7 @@ END Create
 
 .help {
     font-size: 0.6em;
-    color: #18a3fa;
+    color: var(--theme-color);
     margin-right: 10px;
     cursor: pointer;
 }
@@ -1110,7 +1132,7 @@ END Create
     font-size: 1em;
     background: white;
     border-radius: 40px;
-    border: 1px solid #18a3fa;
+    border: 1px solid var(--theme-color);
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -1260,7 +1282,7 @@ END Create
 .tri4 {
     margin-top: 0;
     background-color: white;
-    border: 1px solid #18a3fa;
+    border: 1px solid var(--theme-color);
     color: black;
     text-decoration: none;
     cursor: text;
@@ -1277,7 +1299,7 @@ END Create
     width: 100%;
     height: 30px;
     box-sizing: border-box;
-    border: 1px solid #18a3fa;
+    border: 1px solid var(--theme-color);
     border-radius: 4px;
     background-color: white;
 }
@@ -1312,8 +1334,8 @@ END Create
 .user_search_admin {
     width: 300px;
     height: 30px;
-    border: 1px solid #161616;
-    background-color: #18a3fa;
+    border: 1px solid var(--fond-color);
+    background-color: var(--theme-color);
     color: white;
     font-family: "Gotham SSm A", sans-serif;
     font-size: 0.85em;
@@ -1395,7 +1417,7 @@ END Create
     font-size: 1em;
     background: white;
     border-radius: 40px;
-    border: 1px solid #18a3fa;
+    border: 1px solid var(--theme-color);
 
     padding: 10px 5px 10px 5px;
     min-width: 650px;
@@ -1429,11 +1451,11 @@ END Create
     justify-content: flex-start;
     align-items: center;
     background-color: #eaeaec;
-    border: 1px solid #161616;
+    border: 1px solid var(--fond-color);
 }
 
 .header_reset {
-    background-color: #18a3fa;
+    background-color: var(--theme-color);
     width: 100%;
     height: 5%;
     display: flex;

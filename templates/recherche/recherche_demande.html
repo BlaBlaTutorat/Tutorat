@@ -69,7 +69,10 @@
                     <p class="element"><strong class="G">En classe de :</strong> {{ demande.classe }}</p>
                     <p class="element"><strong class="G">Matière :</strong> {{ demande.matiere }}</p>
                     {% if demande.tuteur is not none %}
-                        <p class="element"><strong class="G">Tuteur :</strong> {{ demande.tuteur }}</p>
+                        <p class="relation"><strong class="G">Tuteur :</strong>
+                        	<a onclick="open_profile_page('{{ demande.tuteur }}')"
+                               title="Voir le profil">{{ sql_obj.get_user_info(demande.tuteur).nom }}</a>
+                        </p>
                     {% endif %}
                 </div>
                 <div id="horaires">
