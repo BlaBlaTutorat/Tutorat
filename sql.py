@@ -265,7 +265,7 @@ class MysqlObject:
         """
 
         classe = self.get_user_info(mail).classe
-
+        niveau = self.get_class_level(classe)
         offres = []
 
         if classe == "ADMIN":  # Administrateur !
@@ -293,14 +293,15 @@ class MysqlObject:
                 offres.append(offre)
                 continue
 
-            if offre.participant is None:  # ... les deux places sont disponibles
-                offres.append(offre)
-            else:
-                if mail == offre.participant:  # ... l'utilisateur est déjà inscrit
-                    continue
-                if classe == self.get_user_info(
-                        offre.participant).classe:  # ... la classe du 1er participant est identique à celle de user
+            if niveau <= self.get_filiere_level(offre.filiere):
+                if offre.participant is None:  # ... les deux places sont disponibles
                     offres.append(offre)
+                else:
+                    if mail == offre.participant:  # ... l'utilisateur est déjà inscrit
+                        continue
+                    if classe == self.get_user_info(
+                            offre.participant).classe:  # ... la classe du 1er participant est identique à celle de user
+                        offres.append(offre)
 
         return offres
 
