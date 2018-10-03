@@ -8,51 +8,8 @@
 {% include 'mise_en_page/HEADER.html' %}
 
 <!-- Critères de recherche -->
-<form class="search" method="post" action="/search">
-    <div class="critere">
+{% include 'recherche/form_recherche.html' %}
 
-        <a class="button" id="reset_filter" onclick="window.location.href=window.location.pathname">Réinitialiser les
-            filtres</a>
-
-        <div class="tool">
-            <a href="/stat" class="admin" title="Aperçu rapide"><img src="/img/stat.png"></a>
-        </div>
-
-        <!-- Rechargement de la page lors du changement de catégorie -->
-        <select class="tri" name="categorie"
-                onchange="if(document.getElementById('option2')!=null){document.getElementById('option2').selectedIndex = -1}
-			              if(document.getElementById('option')!=null){document.getElementById('option').selectedIndex = -1}
-			              this.form.submit()">
-            <option value="offre">Offre</option>
-            <option value="demande" selected>Demande</option>
-        </select>
-
-        <!-- Rechargement de la page lors du changement de la méthode de tri -->
-        <select class="tri" name="option" id="option"
-                onchange="if(document.getElementById('option2')!=null){document.getElementById('option2').selectedIndex = -1}
-                this.form.submit()">
-            <option value="" disabled {% if not option %}selected{% endif %}>- Trier par -</option>
-            <option value="date_time" {% if option == "date_time" %}selected{% endif %}>Date croissante</option>
-            <option value="matiere" {% if option == "matiere" %}selected{% endif %}>Matière</option>
-            <option value="suggestion">Suggestion</option>
-        </select>
-
-        {% if option == "matiere" %}
-            <!-- Paramètre de tri 2 -->
-            <select id="option2" class="tri" name="option2" onchange="this.form.submit()">
-                <option value="" disabled selected>- Sélectionner une matière -</option>
-                {% for matiere in matieres %}
-                    <option {% if option2 == matiere %}selected{% endif %}>{{ matiere }}</option>
-                {% endfor %}
-            </select>
-        {% endif %}
-
-    </div>
-
-    <!-- Gestion des pages-->
-    {% include "blocs/gestion_pages.html" %}
-
-</form>
 
 
 <!-- Liste des demandes -->

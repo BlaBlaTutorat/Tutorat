@@ -1,0 +1,59 @@
+<form class="search" method="post" action="/search">
+    <div class="critere">
+
+        <a class="button" id="reset_filter" onclick="window.location.href=window.location.pathname">Réinitialiser les
+            filtres</a>
+
+        <div class="tool">
+            <a href="/stat" class="admin" title="Aperçu rapide"><img src="/img/stat.png"></a>
+        </div>
+
+        <!-- Rechargement de la page lors du changement de catégorie -->
+        <select class="tri" name="categorie"
+                onchange="if(document.getElementById('option2')!=null){document.getElementById('option2').selectedIndex = -1}
+			              if(document.getElementById('option')!=null){document.getElementById('option').selectedIndex = -1}
+			              this.form.submit()">
+            <option value="offre" {% if type_obj == "offre" %}selected{% endif %}>Offre</option>
+            <option value="demande" {% if type_obj == "demande" %}selected{% endif %}>Demande</option>
+        </select>
+
+        <!-- Rechargement de la page lors du changement de la méthode de tri -->
+        <select class="tri" name="option" id="option"
+                onchange="if(document.getElementById('option2')!=null){document.getElementById('option2').selectedIndex = -1}
+                this.form.submit()">
+            <option value="" disabled {% if not option %}selected{% endif %}>- Trier par -</option>
+            <option value="date_time" {% if option == "date_time" %}selected{% endif %}>Date croissante</option>
+            {% if type_obj == "offre" %}
+               <option value="filiere" {% if option == "filiere" %}selected{% endif %}>Filiere</option>
+            {% endif %}
+            <option value="matiere" {% if option == "matiere" %}selected{% endif %}>Matière</option>
+            <option value="suggestion" {% if option == "suggestion" %}selected{% endif %}>Suggestion</option>
+            <option value="relation" {% if option == "relation" %}selected{% endif %}>{% if type_obj == "offre" %}Acceptées{% elif type_obj == "demande" %}Satisfaites{% else %}Acceptées{% endif %}</option>
+        </select>
+
+        {% if option == "matiere" or option == "filiere" %}
+            <!-- Paramètre de tri 2 -->
+            <select id="option2" class="tri" name="option2" onchange="this.form.submit()">
+
+                {% if option == "filiere" %}
+                    <option value="" disabled selected>- Sélectionner une filière -</option>
+                    {% for filiere in filieres %}
+                        <option {% if option2 == filiere %}selected{% endif %}>{{ filiere }}</option>
+                    {% endfor %}
+                
+                {% elif option == "matiere" %}
+                    <option value="" disabled selected>- Sélectionner une matière -</option>
+                    {% for matiere in matieres %}
+                        <option {% if option2 == matiere %}selected{% endif %}>{{ matiere }}</option>
+                    {% endfor %}
+                {% endif %}
+                
+            </select>
+        {% endif %}
+
+    </div>
+
+    <!-- Gestion des pages-->
+    {% include "blocs/gestion_pages.html" %}
+
+</form>

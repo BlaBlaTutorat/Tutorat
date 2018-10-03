@@ -274,7 +274,10 @@ class MysqlObject:
             condition = "disponible=1 AND (participant IS NULL OR participant2 IS NULL)"
 
         if option is not None:
-            if option2 is not None:
+            if option == "relation":
+                self.cursor.execute(
+                    """SELECT * FROM offres WHERE participant is not NULL OR participant2 is not NULL""")
+            elif option2 is not None:
                 self.cursor.execute(
                     """SELECT * FROM offres WHERE """ + condition + """
                      AND """ + option + """ = '""" + option2 + "'")
@@ -563,7 +566,7 @@ class MysqlObject:
         return objects.Demande(self.cursor.fetchall()[0])
 
     # Liste des offres compatibles avec l'utilisateur
-    def liste_demandes(self, mail, option=None, option2=None):
+    def liste_demandes(self, mail, option = None, option2 = None):
         """Renvoie la liste des demandes compatibles avec l'utilisateur connecté (classe inférieure)
         
             :mail: adresse de l'utilisateur connecté
@@ -580,8 +583,12 @@ class MysqlObject:
         else:
             condition = "disponible=1 AND tuteur IS NULL"
 
+
         if option is not None:
-            if option2 is not None:
+            if option == "relation":
+                self.cursor.execute(
+                    """SELECT * FROM demandes WHERE tuteur is not NULL""")
+            elif option2 is not None:
                 self.cursor.execute(
                     """SELECT * FROM demandes WHERE """ + condition + """
                      AND """ + option + """ = '""" + option2 + """'""")
@@ -751,6 +758,24 @@ class MysqlObject:
         lvl_o = self.cursor.fetchall()[0]
         return lvl_o
 
+    # Filière à partir du niveau
+    def get_nom_niveau(self, niveau):
+        nn = ["Seconde", "Première", "Terminale", "CPGE 1", "CPGE 2"]
+        return nn[niveau]
+    
+#     # Filière d'une classe
+#     def get_filiere_classe(self, classe):
+#         level = self.get_class_level(classe)
+#         self.cursor.execute("""SELECT nom FROM filieres WHERE classement = %s""", (level,))
+#         lst_filieres = self.cursor.fetchall()
+#         if len(lst_filieres) == 1:
+#             return lst_filieres[0]
+#         if level == 1 or level == 2: # premère ou terminale
+#             lst_filieres=[f for f in lst_filieres if f.split()[1] in classe]
+#         
+#         return
+    
+    
     # Demande a-t-elle un tuteur ?
     def demande_tuteur(self, id_d):
         self.cursor.execute("""SELECT * FROM demandes WHERE id=%s""", (id_d,))
