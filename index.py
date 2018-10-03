@@ -1346,11 +1346,6 @@ def get_heure(n):
         m = "00"
     return h + m
 
-@app.route('/favicon.ico', methods=['GET', 'POST'])
-def download():
-    return send_from_directory(directory='', filename='favicon.ico')
-
-
 # Possibilité d'appeler différentes fonctions depuis un template html
 app.jinja_env.globals.update(check_connexion=check_connexion)
 app.jinja_env.globals.update(get_identites=get_identites)
