@@ -413,6 +413,25 @@ header li a:hover, .header li a:hover {
     font-weight: bold;
 }
 
+.puce {
+    font-size: 0.1em;
+    padding: 0;
+    width:8px;
+    height:auto;
+}
+
+.cell {
+	font-size: 0.5em;
+}
+
+.dot {
+  height: 4px;
+  width: 4px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+}
+
 .page_title {
     margin-top: 100px;
 }

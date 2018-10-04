@@ -23,12 +23,23 @@
                 <th class="h_matiere">{{ matieres[loop.index - 1] }}</th>
                 {% for c in m %}
                     <td class="cell">
-                        {% if c[0]|length>0 %}
-                            <a class="offre" href="" title="Offres">{{ c[0]|length }}</a>
-                        {% endif %}
-                        {% if c[1]|length>0 %}
-                            <a class="demande" href="" title="Demandes">{{ c[1]|length }}</a>
-                        {% endif %}
+                        {% for o in c[0] %}
+                        	{% if o.participant is not none or o.participant2 is not none %}
+                        	<img class="puce" src="/img/puce_offre_r.png" title="Offre acceptée">
+                            {% else %}
+                            <img class="puce" src="/img/puce_offre.png" title="Offre">
+                            {% endif %}
+                        {% endfor %}
+                        </br>
+                        {% for d in c[1] %}
+                        	{% if d.tuteur is not none %}
+                        	<img class="puce" src="/img/puce_demande_r.png"
+                                 title="Demande satisfaite">
+                            {% else %}
+                            <img class="puce" src="/img/puce_demande.png"
+                                 title="Demande">
+                            {% endif %}
+                        {% endfor %}
                     </td>
                 {% endfor %}
             </tr>

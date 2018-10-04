@@ -285,10 +285,10 @@ def traitement_mdp_oublie():
         return page_recherche()
 
 
-# Page de Profil info utilisateur
+# Page de statistiques
 @app.route('/stat')
 def stat():
-    """Page de de profil avec les informations de l'utilisateur"""
+    """Page de statistiques"""
     sql_obj = sql.MysqlObject()
 
     if check_connexion():
