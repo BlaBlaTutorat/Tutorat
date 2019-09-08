@@ -46,8 +46,23 @@
                     <div class="info_profil informations2">
                         <p>{{ user.classe }}</p>
                     </div>
+                {% else %}
+					{% if user.get_list_responsabilite_texte()|length>0 %}
+					<div class="info_profil informations">
+                        <p title="Filières en responsabilité"><strong class="G">Filières :</strong></p>
+                    </div>
+                    <div class="info_filiere informations2">
+						
+						{% for filiere in user.get_list_responsabilite_texte() %}
+							{{ filiere }}
+                        {% endfor %}
+                        
+                    </div>
+                    {% endif %}
                 {% endif %}
-
+                
+                
+				{% if user.classe!='ADMIN' %}
                 <div class="info_profil informations">
                     <p><strong class="G">Activité :</strong></p>
                 </div>
@@ -72,7 +87,9 @@
                         {% endif %}
                     {% endfor %}
                 </div>
-			
+				{% endif %}
+				
+				
 			    <div class="bloc_boutons">
 	                <div class="info_profil user_updateAB">
 	                    {% if user.ban==1 %}
@@ -101,7 +118,7 @@
 	                
 	                <div class="info_profil user_updateAB">
 		                {% if user.mail!=mail %}
-		                    <a href="/delete_user?mail={{ user.mail }}" class="ban">
+		                    <a href="/delete_user?mail={{ user.mail }}" class="reset_bb">
 		                        <button title="Supprimer définitivement cet utilisateur">Supprimer</button>
 		                    </a>
 		                 {% endif %}

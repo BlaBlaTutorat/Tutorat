@@ -1,7 +1,7 @@
 .idea/
 __pycache__/
 /config.py
-
+ressources/
 
 .project
 .pydevproject

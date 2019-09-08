@@ -23,19 +23,16 @@
 <div class="bloc_page_profil">
     <!-- Liste des offres crées par l'utilisateur -->
     <div class="offres" id="tutorat_en_cours">
-        <h2>Vos offres créées</h2>
+        <h2>Les offres que vous avez créées</h2>
         {% if offres_creees|length>0 %}
             {% for offre in offres_creees %}
                 <br/>
                 <div class="bloc" id="bloc_tuto">
                     <div class="info">
-                        <p class="element"><strong class="G">Auteur:</strong>
-                            <a onclick="open_profile_page('{{ offre.auteur }}')"
-                               title="Voir le profil">{{ sql_obj.get_user_info(offre.auteur).nom }}</a>
-                        </p>
                         <p class="element"><strong class="G">Pour des :</strong> {{ offre.filiere }}</p>
-                        <p class="element"><strong class="G">Matière:</strong> {{ offre.matiere }}</p>
-                        <p class="element"><strong class="G">Participant(s) :</strong>
+                        <p class="element"><strong class="G">Matière :</strong> {{ offre.matiere }}</p>
+                        <p></p>
+                        <p class="element"><strong class="G">Participant{% if offre.participant2 is not none %}s{% endif %} :</strong>
                             {% if offre.participant is none %}
                                 Aucun
                             {% else %}
@@ -49,8 +46,9 @@
                                    title="Voir le profil">{{ sql_obj.get_user_info(offre.participant2).nom }}</a>
                             {% endif %}
                         </p>
-                        <p class="element"><strong class="G">Etat de l'offre :</strong> {% if offre.dispo==0 %}En
-                            attente de validation{% else %}Publiée{% endif %}</p>
+                        <p></p>
+                        <p class="element"><strong class="G">Etat de l'offre :</strong> {% if offre.dispo==0 %}<span style="color:red">En
+                            attente de validation</span>{% else %}<span style="color:green">Publiée</span>{% endif %}</p>
                     </div>
                     <div id="horaires">
                         <p class="date_creation">Créée le {{ offre.date_time.strftime('%d/%m/%Y') }}</p>
@@ -122,18 +120,15 @@
         {% endif %}
     </div>
     <div class="demandes" id="tutorat_en_cours">
-        <h2>Vos demandes créées</h2>
+        <h2>Les demandes que vous avez créées</h2>
         {% if demandes|length>0 %}
             {% for demande in demandes %}
                 <br/>
                 <div class="bloc">
                     <div class="info">
-                        <p class="element"><strong class="G">Auteur:</strong>
-                            <a onclick="open_profile_page('{{ demande.auteur }}')"
-                               title="Voir le profil">{{ sql_obj.get_user_info(demande.auteur).nom }}</a>
-                        </p>
                         <p class="element"><strong class="G">En classe de :</strong> {{ demande.classe }}</p>
-                        <p class="element"><strong class="G">Matière:</strong> {{ demande.matiere }}</p>
+                        <p class="element"><strong class="G">Matière :</strong> {{ demande.matiere }}</p>
+                        <p></p>
                         <p class="element"><strong class="G">Tuteur :</strong>
                             {% if demande.tuteur is none %}
                                 Aucun
@@ -142,8 +137,9 @@
                                    title="Voir le profil">{{ sql_obj.get_user_info(demande.tuteur).nom }}</a>
                                 <br/>
                             {% endif %}
-                        <p class="element"><strong class="G">Etat de la demande :</strong> {% if demande.dispo==0 %}En
-                            attente de validation{% else %}Publiée{% endif %}</p>
+                        <p></p>
+                        <p class="element"><strong class="G">Etat de la demande :</strong> {% if demande.dispo==0 %}<span style="color:red">En
+                            attente de validation</span>{% else %}<span style="color:green">Publiée</span>{% endif %}</p>
                     </div>
                     <div id="horaires">
                         <p class="date_creation">Créée le {{ demande.date_time.strftime('%d/%m/%Y') }}</p>

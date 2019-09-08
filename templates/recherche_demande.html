@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+{% with name="Liste des demandes" %}{% include "mise_en_page/HEAD.html" %}{% endwith %}
+
+<body>
+
+{% include 'mise_en_page/HEADER.html' %}
+
+<!-- Critères de recherche -->
+<form class="search" method="post" action="/search">
+    <div class="critere">
+
+        <a class="button" id="reset_filter" onclick="window.location.href=window.location.pathname">Réinitialiser les
+            filtres</a>
+
+        <!-- Rechargement de la page lors du changement de catégorie -->
+        <select class="tri" name="categorie"
+                onchange="if(document.getElementById('option2')!=null){document.getElementById('option2').selectedIndex = -1}
+			              if(document.getElementById('option')!=null){document.getElementById('option').selectedIndex = -1}
+			              this.form.submit()">
+            <option value="offre">Offre</option>
+            <option value="demande" selected>Demande</option>
+        </select>
+
+		<!-- Rechargement de la page lors du changement de la méthode de tri -->
+        <select class="tri" name="option" id="option"
+                onchange="if(document.getElementById('option2')!=null){document.getElementById('option2').selectedIndex = -1}
+                this.form.submit()">
+            <option value="" disabled {% if not option %}selected{% endif %}>- Trier par -</option>
+            <option value="date_time" {% if option == "date_time" %}selected{% endif %}>Date croissante</option>
+            <option value="matiere" {% if option == "matiere" %}selected{% endif %}>Matière
+            <option value="suggestion">Suggestion</option>
+        </select>
+        
+        {% if option == "matiere" %}
+            <!-- Paramètre de tri 2 -->
+            <select id="option2" class="tri" name="option2" onchange="this.form.submit()">
+	        	<option value="" disabled selected>- Sélectionner une matière -</option>
+	            {% for matiere in matieres %}
+	                <option {% if option2 == matiere %}selected{% endif %}>{{ matiere }}</option>
+	            {% endfor %}
+            </select>
+        {% endif %}
+
+    </div>
+
+    <!-- Gestion des pages-->
+    {% with page=page %}{% include "blocs/gestion_pages.html" %}{% endwith %}
+    
+</form>
+
+
+<!-- Liste des demandes -->
+<div class="demandes">
+    {% if demandes|length>0 %}
+        {% for demande in demandes %}
+            <br/>
+            <div class="bloc">
+                <div class="info">
+                    <p class="element"><strong class="G">Auteur :</strong>
+                        <a onclick="open_profile_page('{{ demande.auteur }}')"
+                           title="Voir le profil">{{ sql_obj.get_user_info(demande.auteur).nom }}</a>
+                    </p>
+                    <p class="element"><strong class="G">En classe de :</strong> {{ demande.classe }}</p>
+                    <p class="element"><strong class="G">Matière :</strong> {{ demande.matiere }}</p>
+                </div>
+                <div id="horaires">
+                    <p class="date_creation">Créée le {{ demande.date_time.strftime('%d/%m/%Y') }}</p>
+                    
+                    {% with elem=demande %}{% include 'blocs/creneaux_horaires.html' %}{% endwith %}
+                    
+                    <form class="bouton" method="post" action="/apply">
+                        <input type="hidden" name="categorie" value="demande"/>
+                        <input type="hidden" name="id" value="{{ demande.id }}"/>
+                        <input type="submit" value="Se proposer comme tuteur"/>
+                    </form>
+                </div>
+            </div>
+            <br/>
+        {% endfor %}
+    {% else %}
+        <div class="search_none">
+            <div class="bloc" id="none_offre">
+                <p class="none_offre">Aucune demande n'a été trouvée</p>
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+{% include 'mise_en_page/FOOTER.html' %}
+
+</body>
+</html>

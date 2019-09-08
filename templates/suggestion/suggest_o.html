@@ -29,7 +29,6 @@
             <option value="filiere">Filière</option>
             <option value="matiere">Matière
             <option value="suggestion" selected>Suggestion</option>
-            <option value="relation">Acceptées</option>
         </select>
 
     </div>
@@ -38,7 +37,9 @@
 
 <!-- Liste des offres -->
 <div class="offres">
-    <h2>Offre{% if suggest_o2|length>1 %}s{% endif %} correspondant avec vos demandes (filière + matière + horaires)</h2>
+    <h2>{% if suggest_o2|length>1 %}{{ suggest_o2|length }}{% else %}Aucune{% endif %} offre{% if suggest_o2|length>1 %}
+        s{% endif %}
+        correspondant avec vos demandes (filière + matière + horaires)</h2>
     {% if suggest_o2|length>0 %}
         {% for offre in suggest_o2 %}
             <br/>
@@ -119,7 +120,10 @@
 </div>
 
 <div class="offres">
-    <h2>Offre{% if suggest_o1|length>1 %}s{% endif %} susceptible{% if suggest_o1|length>1 %}s{% endif %} de correspondre avec vos demandes (filière + matière)</h2>
+    <h2>{% if suggest_o1|length>1 %}{{ suggest_o1|length }}{% else %}Aucune{% endif %} offre{% if suggest_o1|length>1 %}
+        s{% endif %}
+        susceptible{% if suggest_o1|length>1 %}s{% endif %}
+        de correspondre avec vos demandes (filière + matière)</h2>
     {% if suggest_o1|length>0 %}
         {% for offre in suggest_o1 %}
             <br/>

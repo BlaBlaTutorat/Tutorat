@@ -20,15 +20,15 @@
             <div class="bloc">
                 <div class="info">
                     <p class="element"><strong class="G">Auteur :</strong>
-                        <a onclick="open_profile_page('{{ demande.auteur }}')"
-                           title="Voir le profil">{{ sql_obj.get_user_info(demande.auteur).nom }}</a>
+                        <a {% if admin_user %}onclick="open_profile_page('{{ demande.auteur }}')"
+                           title="Voir le profil"{% endif %}>{{ sql_obj.get_user_info(demande.auteur).nom }}</a>
                     </p>
                     <p class="element"><strong class="G">En classe de :</strong> {{ demande.classe }}</p>
                     <p class="element"><strong class="G">Matière :</strong> {{ demande.matiere }}</p>
                     {% if demande.tuteur is not none %}
                         <p class="relation"><strong class="G">Tuteur :</strong>
-                        	<a onclick="open_profile_page('{{ demande.tuteur }}')"
-                               title="Voir le profil">{{ sql_obj.get_user_info(demande.tuteur).nom }}</a>
+                        	<a {% if admin_user %}onclick="open_profile_page('{{ demande.tuteur }}')"
+                               title="Voir le profil"{% endif %}>{{ sql_obj.get_user_info(demande.tuteur).nom }}</a>
                         </p>
                     {% endif %}
                 </div>

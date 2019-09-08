@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+{% if demande %}
+    {% with name="Poster une demande" %}{% include "mise_en_page/HEAD.html" %}{% endwith %}
+{% else %}
+    {% with name="Poster une offre" %}{% include "mise_en_page/HEAD.html" %}{% endwith %}
+{% endif %}
+
+<body>
+
+{% include 'mise_en_page/HEADER.html' %}
+
+<form method="post" action="/create">
+    <h2 class="crea_title">Création d'une
+        <select class="offre_demande" name="categorie" onchange="this.form.submit()">
+            <option value="offre">offre</option>
+            <option value="demande" {% if demande %}selected{% endif %}>demande</option>
+        </select>
+        de Tutorat
+    </h2>
+</form>
+
+<!-- Formulaire de création -->
+<form method="post" action="/create" class="form_crea">
+    <div class="creation {% if demande %} demandes {% else %} offres {% endif %}">
+        <div class="bloc">
+            <div class="info_crea">
+                {% if demande %}
+                    <p class="element"><strong class="G">Vous êtes en :</strong> {{ classe }}</p>
+                    <input type="hidden" name="classe" value="{{ classe }}"/>
+                {% else %}
+                    <!-- Filière -->
+                    <p class="element"><strong class="G">Vous voulez aider un élève de : </strong>
+                        <SELECT name="filiere" class="tri3" required>
+                            <option value="" disabled selected>- Filière -</option>
+                            {% for filiere in filieres %}
+                                <option>{{ filiere }}</option>
+                            {% endfor %}
+                        </SELECT></p>
+                {% endif %}
+                <!-- Matière -->
+                <p class="element"><strong class="G">Vous souhaitez {% if demande %}être aidé{% else %}
+                    l'aider{% endif %} en : </strong>
+                    <SELECT name="matiere" class="tri3" required>
+                        <option value="" disabled selected>- Matière -</option>
+                        {% for matiere in matieres %}
+                            <option>{{ matiere }}</option>
+                        {% endfor %}
+                    </SELECT></p>
+                <div class="crea_offre_bloc">
+                    {% if demande %}
+                        <input type="submit" class="crea_offre" value="Créer ma demande" title="La demande n'apparaitra qu'après validation par un administrateur."/>
+                        <p class="remarque">Remarques :</p>
+                        <ul class="remarque">
+                        	<li>La demande n'apparaitra qu'après validation par un administrateur.
+                        	</li>
+                        </ul>
+                        
+                            
+                    {% else %}
+                        <input type="submit" class="crea_offre" value="Créer mon offre" title="L'offre n'apparaitra qu'après validation par un administrateur."/>
+                        <p class="remarque">Remarques :</p>
+                        <ul class="remarque">
+                        	<li>l'offre n'apparaitra qu'après validation par un administrateur.
+                        	</li>
+                        	<li>un tuteur peut aider jusqu'à deux personnes, si elles sont dans la même classe
+                        	</li>
+                        </ul>
+                        
+                    {% endif %}
+                </div>
+            </div>
+            <!-- Horaires -->
+            <div id="horaires_crea">
+                <input type="hidden" id="horaires_data" name="horaires_data" value="000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"/>
+                <p class="element"><strong class="G">Vos créneaux horaires disponibles :</strong></p>
+                <div class="horaire">
+                    <div class="table" id="jour-offre">
+                        {% for i in range(0,6) %}
+                            <p>{{ days[i] }}</p>
+                        {% endfor %}
+                    </div>
+                    <div class="table" id="table_horaires-2">
+                        <table class="heure-table">
+                            <tr>
+                                <th>08h</th>
+                                <th></th>
+                                <th>09h</th>
+                                <th></th>
+                                <th>10h</th>
+                                <th></th>
+                                <th>11h</th>
+                                <th></th>
+                                <th>12h</th>
+                                <th></th>
+                                <th>13h</th>
+                                <th></th>
+                                <th>14h</th>
+                                <th></th>
+                                <th>15h</th>
+                                <th></th>
+                                <th>16h</th>
+                                <th></th>
+                                <th>17h</th>
+                                <th></th>
+                                <th>18h</th>
+                                <th></th>
+                            </tr>
+                        </table>
+                        {% for i in range(0,6) %}
+                            <table>
+                                <tr>
+                                    {% for j in range(0,22) %}
+                                        <td id="{{ i }} {{ j }}" class="white" onclick="horaire_click(event, this.id, this.className)"
+                                            title="Cliquer pour séléctionner/déselectionner le créneau horaire&#13;{{ get_crenau(loop.index) }}"></td>
+                                    {% endfor %}
+                                </tr>
+                            </table>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+{% include 'mise_en_page/FOOTER.html' %}
+
+</body>
+</html>

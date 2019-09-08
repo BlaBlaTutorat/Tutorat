@@ -1192,6 +1192,11 @@ END Create
     font-size: 1.5em;
 }
 
+.info_filiere {
+    color: black;
+    font-size: 1em;
+}
+
 .page_profil .offres {
     margin-top: 20px;
 }
@@ -1439,7 +1444,7 @@ END Create
     border: 1px solid var(--theme-color);
 
     padding: 10px 5px 10px 5px;
-    min-width: 650px;
+    width: 650px;
 
     margin-top: 10px;
     margin-bottom: 10px;

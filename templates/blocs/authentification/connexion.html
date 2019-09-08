@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+
+{% with name="Connexion" %}{% include "mise_en_page/HEAD.html" %}{% endwith %}
+
+<body>
+
+{% include 'mise_en_page/HEADER.html' %}
+
+<h2 class="log">Connectez vous :</h2>
+
+<form method="post" class="login_bloc">
+    <div class="bloc_connexion">
+        <div class="connexion">
+
+            <div class="champs">
+                <p class="login">Adresse e-mail :</p>
+                <p><input name="mail" class="password"/></p>
+            </div>
+            <div class="champs">
+                <p class="login">Mot de passe :</p>
+                <p><input type="password" name="mdp" class="password"/></p>
+            </div>
+            <div class="champs">
+                <p><input class="btn_connect" type="submit" value="Connexion"/>
+                </p>
+            </div>
+            <div class="champs">
+                <p><a class="mdp_oublie" href="/forgot"
+                      title="Cliquer ici pour recevoir de nouveaux identifiants par email">
+                    <input type="button" value="Mot de passe oublié"/>
+                </a></p>
+            </div>
+            <div class="champs">
+                <p class="not_register">Pas encore inscrit ! Inscrivez vous en cliquant ici :</p>
+                <p><a href="/register">
+                    <input type="button" value="Inscription"/>
+                </a></p>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+{% include 'mise_en_page/FOOTER.html' %}
+
+</body>
+</html>

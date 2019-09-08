@@ -14,14 +14,18 @@
             <div class="profil" id="visit-profil2">
                 <div class="info_profil" id="informations">
                     <p><strong class="G">Nom:</strong></p>
+                    {% if admin_user or infos.mail == mail %}
                     <p><strong class="G">Mail:</strong></p>
+                    {% endif %}
                     <p><strong class="G">Classe:</strong></p>
                 </div>
                 <div class="info_profil" id="informations2">
                     <!-- Nom -->
                     <p>{{ infos.nom }}</p>
                     <!-- Mail -->
+                    {% if admin_user or infos.mail == mail %}
                     <p><a href="mailto:{{ infos.mail }}">{{ infos.mail }}</a></p>
+                    {% endif %}
                     <!-- Classe -->
                     <p>{{ infos.classe }}</p>
                 </div>

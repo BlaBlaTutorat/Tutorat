@@ -20,8 +20,8 @@
             <div class="bloc">
                 <div class="info">
                     <p class="element"><strong class="G">Auteur :</strong>
-                        <a onclick="open_profile_page('{{ offre.auteur }}')"
-                           title="Voir le profil">{{ sql_obj.get_user_info(offre.auteur).nom }}</a>
+                        <a {% if admin_user %}onclick="open_profile_page('{{ offre.auteur }}')"
+                           title="Voir le profil"{% endif %}>{{ sql_obj.get_user_info(offre.auteur).nom }}</a>
                     </p>
                     <p class="element"><strong class="G">Pour des :</strong> {{ offre.filiere }}</p>
                     <p class="element"><strong class="G">Matière :</strong> {{ offre.matiere }}</p>
@@ -32,8 +32,8 @@
                             {% for p in [offre.participant, offre.participant2] %}
                                 {% if p is not none %}
                                     <li>
-                                        <a onclick="open_profile_page('{{ p }}')"
-                                           title="Voir le profil">{{ sql_obj.get_user_info(p).nom }}</a>
+                                        <a {% if admin_user %}onclick="open_profile_page('{{ p }}')"
+                                           title="Voir le profil"{% endif %}>{{ sql_obj.get_user_info(p).nom }}</a>
                                     </li>
                                 {% endif %}
                             {% endfor %}
